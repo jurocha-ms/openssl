@@ -97,9 +97,11 @@ static char *strip_end(char *name);
 static MIME_HEADER *mime_hdr_new(char *name, char *value);
 static int mime_hdr_addparam(MIME_HEADER *mhdr, char *name, char *value);
 static STACK_OF(MIME_HEADER) *mime_parse_hdr(BIO *bio);
-static int mime_hdr_cmp(const MIME_HEADER *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl mime_hdr_cmp(const MIME_HEADER *const *a,
                         const MIME_HEADER *const *b);
-static int mime_param_cmp(const MIME_PARAM *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl mime_param_cmp(const MIME_PARAM *const *a,
                           const MIME_PARAM *const *b);
 static void mime_param_free(MIME_PARAM *param);
 static int mime_bound_check(char *line, int linelen, char *bound, int blen);
@@ -873,7 +875,8 @@ static int mime_hdr_addparam(MIME_HEADER *mhdr, char *name, char *value)
     return 1;
 }
 
-static int mime_hdr_cmp(const MIME_HEADER *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl mime_hdr_cmp(const MIME_HEADER *const *a,
                         const MIME_HEADER *const *b)
 {
     if (!(*a)->name || !(*b)->name)
@@ -882,7 +885,8 @@ static int mime_hdr_cmp(const MIME_HEADER *const *a,
     return (strcmp((*a)->name, (*b)->name));
 }
 
-static int mime_param_cmp(const MIME_PARAM *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl mime_param_cmp(const MIME_PARAM *const *a,
                           const MIME_PARAM *const *b)
 {
     if (!(*a)->param_name || !(*b)->param_name)

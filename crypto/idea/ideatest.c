@@ -109,7 +109,7 @@ static unsigned char cfb_cipher64[CFB_TEST_SIZE] = {
 
 static int cfb64_test(unsigned char *cfb_cipher);
 static char *pt(unsigned char *p);
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int i, err = 0;
     IDEA_KEY_SCHEDULE key, dkey;

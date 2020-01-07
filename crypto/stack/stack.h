@@ -68,7 +68,7 @@ typedef struct stack_st {
     char **data;
     int sorted;
     int num_alloc;
-    int (*comp) (const void *, const void *);
+    int (__cdecl *comp) (const void *, const void *); // OfficeDev: add __cdecl
 } _STACK;                       /* Use STACK_OF(...) instead */
 
 # define M_sk_num(sk)            ((sk) ? (sk)->num:-1)
@@ -79,7 +79,7 @@ void *sk_value(const _STACK *, int);
 
 void *sk_set(_STACK *, int, void *);
 
-_STACK *sk_new(int (*cmp) (const void *, const void *));
+_STACK *sk_new(int (__cdecl *cmp) (const void *, const void *)); // OfficeDev: add __cdecl
 _STACK *sk_new_null(void);
 void sk_free(_STACK *);
 void sk_pop_free(_STACK *st, void (*func) (void *));
@@ -94,8 +94,14 @@ int sk_unshift(_STACK *st, void *data);
 void *sk_shift(_STACK *st);
 void *sk_pop(_STACK *st);
 void sk_zero(_STACK *st);
-int (*sk_set_cmp_func(_STACK *sk, int (*c) (const void *, const void *)))
+// OfficeDev: add __cdecl
+#ifdef _M_ARM64
+int (*sk_set_cmp_func(_STACK *sk, int (__cdecl *c) (const void *, const void *)))
  (const void *, const void *);
+#else
+int (__cdecl *sk_set_cmp_func(_STACK *sk, int (__cdecl *c) (const void *, const void *)))
+ (const void *, const void *);
+#endif
 _STACK *sk_dup(_STACK *st);
 void sk_sort(_STACK *st);
 int sk_is_sorted(const _STACK *st);

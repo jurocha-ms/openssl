@@ -139,7 +139,7 @@ static const char rnd_seed[] =
 
 static BIO *bio_err = NULL;
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv) // OfficeDev: add __cdecl
 {
     BN_GENCB cb;
     DSA *dsa = NULL;

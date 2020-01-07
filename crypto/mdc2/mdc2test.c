@@ -90,7 +90,7 @@ static unsigned char pad2[16] = {
     0x35, 0xD8, 0x7A, 0xFE, 0xAB, 0x33, 0xBE, 0xE2
 };
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int ret = 0;
     unsigned char md[MDC2_DIGEST_LENGTH];

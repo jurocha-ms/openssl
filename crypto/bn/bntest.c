@@ -140,7 +140,7 @@ static void message(BIO *out, char *m)
     BIO_puts(out, "\\n\"\n");
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     BN_CTX *ctx;
     BIO *out;

@@ -113,7 +113,7 @@ static unsigned char output[7][30] = {
     {0},
 };
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int i, err = 0;
     int j;

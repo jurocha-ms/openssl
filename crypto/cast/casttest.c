@@ -140,7 +140,7 @@ static unsigned char cfb_cipher64[CFB_TEST_SIZE] = {
 };
 # endif
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
 # ifdef FULL_TEST
     long l;

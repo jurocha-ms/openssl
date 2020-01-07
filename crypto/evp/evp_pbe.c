@@ -202,7 +202,8 @@ int EVP_PBE_CipherInit(ASN1_OBJECT *pbe_obj, const char *pass, int passlen,
 
 DECLARE_OBJ_BSEARCH_CMP_FN(EVP_PBE_CTL, EVP_PBE_CTL, pbe2);
 
-static int pbe2_cmp(const EVP_PBE_CTL *pbe1, const EVP_PBE_CTL *pbe2)
+// OfficeDev: add __cdecl
+static int __cdecl pbe2_cmp(const EVP_PBE_CTL *pbe1, const EVP_PBE_CTL *pbe2)
 {
     int ret = pbe1->pbe_type - pbe2->pbe_type;
     if (ret)
@@ -213,7 +214,8 @@ static int pbe2_cmp(const EVP_PBE_CTL *pbe1, const EVP_PBE_CTL *pbe2)
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(EVP_PBE_CTL, EVP_PBE_CTL, pbe2);
 
-static int pbe_cmp(const EVP_PBE_CTL *const *a, const EVP_PBE_CTL *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl pbe_cmp(const EVP_PBE_CTL *const *a, const EVP_PBE_CTL *const *b)
 {
     int ret = (*a)->pbe_type - (*b)->pbe_type;
     if (ret)

@@ -85,7 +85,7 @@
  */
 #define TEST_SET_SESSION_TICK_DATA_VER_NEG      1
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     SSL_CTX *ctx;
     SSL *con;

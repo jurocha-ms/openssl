@@ -73,13 +73,13 @@ static int allow_customize_debug = 1; /* exchanging memory-related functions
  * the following pointers may be changed as long as 'allow_customize' is set
  */
 
-static void *(*malloc_func) (size_t) = malloc;
-static void *default_malloc_ex(size_t num, const char *file, int line)
+static void *(__cdecl *malloc_func) (size_t) = malloc; // OfficeDev: add __cdecl
+static void * __cdecl default_malloc_ex(size_t num, const char *file, int line) // OfficeDev: add __cdecl
 {
     return malloc_func(num);
 }
 
-static void *(*malloc_ex_func) (size_t, const char *file, int line)
+static void *(__cdecl *malloc_ex_func) (size_t, const char *file, int line) // OfficeDev: add __cdecl
     = default_malloc_ex;
 
 #ifdef OPENSSL_SYS_VMS
@@ -90,65 +90,66 @@ static void *(*malloc_ex_func) (size_t, const char *file, int line)
 # endif
 #endif
 
-static void *(*realloc_func) (void *, size_t) = realloc;
-static void *default_realloc_ex(void *str, size_t num,
+static void *(__cdecl *realloc_func) (void *, size_t) = realloc; // OfficeDev: add __cdecl
+static void * __cdecl default_realloc_ex(void *str, size_t num, // OfficeDev: add __cdecl
                                 const char *file, int line)
 {
     return realloc_func(str, num);
 }
 
-static void *(*realloc_ex_func) (void *, size_t, const char *file, int line)
+static void * (__cdecl *realloc_ex_func) (void *, size_t, const char *file, int line) // OfficeDev: add __cdecl
     = default_realloc_ex;
 
 #ifdef OPENSSL_SYS_VMS
-   static void (*free_func) (__void_ptr64) = free;
+   static void (__cdecl *free_func) (__void_ptr64) = free; // OfficeDev: add __cdecl
 #else
-   static void (*free_func) (void *) = free;
+   static void (__cdecl *free_func) (void *) = free; // OfficeDev: add __cdecl
 #endif
 
-static void *(*malloc_locked_func) (size_t) = malloc;
-static void *default_malloc_locked_ex(size_t num, const char *file, int line)
+static void *(__cdecl *malloc_locked_func) (size_t) = malloc; // OfficeDev: add __cdecl
+static void * __cdecl default_malloc_locked_ex(size_t num, const char *file, int line) // OfficeDev: add __cdecl
 {
     return malloc_locked_func(num);
 }
 
-static void *(*malloc_locked_ex_func) (size_t, const char *file, int line)
+static void *(__cdecl *malloc_locked_ex_func) (size_t, const char *file, int line) // OfficeDev: add __cdecl
     = default_malloc_locked_ex;
 
 #ifdef OPENSSL_SYS_VMS
-   static void (*free_locked_func) (__void_ptr64) = free;
+   static void (__cdecl *free_locked_func) (__void_ptr64) = free; // OfficeDev: add __cdecl
 #else
-   static void (*free_locked_func) (void *) = free;
+   static void (__cdecl *free_locked_func) (void *) = free; // OfficeDev: add __cdecl
 #endif
 
 /* may be changed as long as 'allow_customize_debug' is set */
 /* XXX use correct function pointer types */
 #ifdef CRYPTO_MDEBUG
 /* use default functions from mem_dbg.c */
-static void (*malloc_debug_func) (void *, int, const char *, int, int)
+static void (__cdecl *malloc_debug_func) (void *, int, const char *, int, int) // OfficeDev: add __cdecl
     = CRYPTO_dbg_malloc;
-static void (*realloc_debug_func) (void *, void *, int, const char *, int,
+static void (__cdecl *realloc_debug_func) (void *, void *, int, const char *, int, // OfficeDev: add __cdecl
                                    int)
     = CRYPTO_dbg_realloc;
-static void (*free_debug_func) (void *, int) = CRYPTO_dbg_free;
-static void (*set_debug_options_func) (long) = CRYPTO_dbg_set_options;
-static long (*get_debug_options_func) (void) = CRYPTO_dbg_get_options;
+static void (__cdecl *free_debug_func) (void *, int) = CRYPTO_dbg_free; // OfficeDev: add __cdecl
+static void (__cdecl *set_debug_options_func) (long) = CRYPTO_dbg_set_options; // OfficeDev: add __cdecl
+static long (__cdecl *get_debug_options_func) (void) = CRYPTO_dbg_get_options; // OfficeDev: add __cdecl
 #else
 /*
  * applications can use CRYPTO_malloc_debug_init() to select above case at
  * run-time
  */
-static void (*malloc_debug_func) (void *, int, const char *, int, int) = NULL;
-static void (*realloc_debug_func) (void *, void *, int, const char *, int,
+static void (__cdecl *malloc_debug_func) (void *, int, const char *, int, int) = NULL; // OfficeDev: add __cdecl
+static void (__cdecl *realloc_debug_func) (void *, void *, int, const char *, int, // OfficeDev: add __cdecl
                                    int)
     = NULL;
-static void (*free_debug_func) (void *, int) = NULL;
-static void (*set_debug_options_func) (long) = NULL;
-static long (*get_debug_options_func) (void) = NULL;
+static void (__cdecl *free_debug_func) (void *, int) = NULL; // OfficeDev: add __cdecl
+static void (*set_debug_options_func) (long) = NULL; // OfficeDev: add __cdecl
+static long (*get_debug_options_func) (void) = NULL; // OfficeDev: add __cdecl
 #endif
 
-int CRYPTO_set_mem_functions(void *(*m) (size_t), void *(*r) (void *, size_t),
-                             void (*f) (void *))
+// OfficeDev: add __cdecl
+int CRYPTO_set_mem_functions(void *(__cdecl *m) (size_t), void *(__cdecl *r) (void *, size_t),
+                             void (__cdecl *f) (void *))
 {
     if (!allow_customize)
         return 0;
@@ -167,9 +168,10 @@ int CRYPTO_set_mem_functions(void *(*m) (size_t), void *(*r) (void *, size_t),
     return 1;
 }
 
-int CRYPTO_set_mem_ex_functions(void *(*m) (size_t, const char *, int),
-                                void *(*r) (void *, size_t, const char *,
-                                            int), void (*f) (void *))
+// OfficeDev: add __cdecl
+int CRYPTO_set_mem_ex_functions(void *(__cdecl *m) (size_t, const char *, int),
+                                void *(__cdecl *r) (void *, size_t, const char *,
+                                            int), void (__cdecl *f) (void *))
 {
     if (!allow_customize)
         return 0;
@@ -186,7 +188,8 @@ int CRYPTO_set_mem_ex_functions(void *(*m) (size_t, const char *, int),
     return 1;
 }
 
-int CRYPTO_set_locked_mem_functions(void *(*m) (size_t), void (*f) (void *))
+// OfficeDev: add __cdecl
+int CRYPTO_set_locked_mem_functions(void *(__cdecl *m) (size_t), void (__cdecl *f) (void *))
 {
     if (!allow_customize)
         return 0;
@@ -198,8 +201,9 @@ int CRYPTO_set_locked_mem_functions(void *(*m) (size_t), void (*f) (void *))
     return 1;
 }
 
-int CRYPTO_set_locked_mem_ex_functions(void *(*m) (size_t, const char *, int),
-                                       void (*f) (void *))
+// OfficeDev: add __cdecl
+int CRYPTO_set_locked_mem_ex_functions(void *(__cdecl *m) (size_t, const char *, int),
+                                       void (__cdecl *f) (void *))
 {
     if (!allow_customize)
         return 0;
@@ -211,11 +215,12 @@ int CRYPTO_set_locked_mem_ex_functions(void *(*m) (size_t, const char *, int),
     return 1;
 }
 
-int CRYPTO_set_mem_debug_functions(void (*m)
+// OfficeDev: add __cdecl
+int CRYPTO_set_mem_debug_functions(void (__cdecl *m)
                                     (void *, int, const char *, int, int),
-                                   void (*r) (void *, void *, int,
+                                   void (__cdecl *r) (void *, void *, int,
                                               const char *, int, int),
-                                   void (*f) (void *, int), void (*so) (long),
+                                   void (__cdecl *f) (void *, int), void (*so) (long),
                                    long (*go) (void))
 {
     if (!allow_customize_debug)
@@ -229,9 +234,10 @@ int CRYPTO_set_mem_debug_functions(void (*m)
     return 1;
 }
 
-void CRYPTO_get_mem_functions(void *(**m) (size_t),
-                              void *(**r) (void *, size_t),
-                              void (**f) (void *))
+// OfficeDev: add __cdecl
+void CRYPTO_get_mem_functions(void *(__cdecl **m) (size_t),
+                              void *(__cdecl **r) (void *, size_t),
+                              void (__cdecl **f) (void *))
 {
     if (m != NULL)
         *m = (malloc_ex_func == default_malloc_ex) ? malloc_func : 0;
@@ -241,9 +247,10 @@ void CRYPTO_get_mem_functions(void *(**m) (size_t),
         *f = free_func;
 }
 
-void CRYPTO_get_mem_ex_functions(void *(**m) (size_t, const char *, int),
-                                 void *(**r) (void *, size_t, const char *,
-                                              int), void (**f) (void *))
+// OfficeDev: add __cdecl
+void CRYPTO_get_mem_ex_functions(void *(__cdecl **m) (size_t, const char *, int),
+                                 void *(__cdecl **r) (void *, size_t, const char *,
+                                              int), void (__cdecl **f) (void *))
 {
     if (m != NULL)
         *m = (malloc_ex_func != default_malloc_ex) ? malloc_ex_func : 0;
@@ -253,8 +260,9 @@ void CRYPTO_get_mem_ex_functions(void *(**m) (size_t, const char *, int),
         *f = free_func;
 }
 
-void CRYPTO_get_locked_mem_functions(void *(**m) (size_t),
-                                     void (**f) (void *))
+// OfficeDev: add __cdecl
+void CRYPTO_get_locked_mem_functions(void *(__cdecl **m) (size_t),
+                                     void (__cdecl **f) (void *))
 {
     if (m != NULL)
         *m = (malloc_locked_ex_func == default_malloc_locked_ex) ?
@@ -263,9 +271,10 @@ void CRYPTO_get_locked_mem_functions(void *(**m) (size_t),
         *f = free_locked_func;
 }
 
+// OfficeDev: add __cdecl
 void CRYPTO_get_locked_mem_ex_functions(void
-                                        *(**m) (size_t, const char *, int),
-                                        void (**f) (void *))
+                                        *(__cdecl **m) (size_t, const char *, int),
+                                        void (__cdecl **f) (void *))
 {
     if (m != NULL)
         *m = (malloc_locked_ex_func != default_malloc_locked_ex) ?
@@ -274,11 +283,12 @@ void CRYPTO_get_locked_mem_ex_functions(void
         *f = free_locked_func;
 }
 
-void CRYPTO_get_mem_debug_functions(void (**m)
+// OfficeDev: add __cdecl
+void CRYPTO_get_mem_debug_functions(void (__cdecl **m)
                                      (void *, int, const char *, int, int),
-                                    void (**r) (void *, void *, int,
+                                    void (__cdecl **r) (void *, void *, int,
                                                 const char *, int, int),
-                                    void (**f) (void *, int),
+                                    void (__cdecl **f) (void *, int),
                                     void (**so) (long), long (**go) (void))
 {
     if (m != NULL)
@@ -293,6 +303,7 @@ void CRYPTO_get_mem_debug_functions(void (**m)
         *go = get_debug_options_func;
 }
 
+// OfficeDev: add __cdecl
 void *CRYPTO_malloc_locked(int num, const char *file, int line)
 {
     void *ret = NULL;

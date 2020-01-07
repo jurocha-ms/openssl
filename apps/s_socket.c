@@ -189,7 +189,7 @@ static int ssl_sock_init(void)
         int err;
 
 #  ifdef SIGINT
-        signal(SIGINT, (void (*)(int))ssl_sock_cleanup);
+        signal(SIGINT, (void (__cdecl *)(int))ssl_sock_cleanup); // OfficeDev: add __cdecl
 #  endif
         wsa_init_done = 1;
         memset(&wsa_state, 0, sizeof(wsa_state));

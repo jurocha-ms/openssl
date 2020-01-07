@@ -108,7 +108,7 @@ static int test_dtls_unprocessed(int testidx)
     return testresult;
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     BIO *err = NULL;
     int testresult = 0;

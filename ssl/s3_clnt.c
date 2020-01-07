@@ -167,7 +167,8 @@
 # include <openssl/engine.h>
 #endif
 
-static int ca_dn_cmp(const X509_NAME *const *a, const X509_NAME *const *b);
+// OfficeDev: add __cdecl
+static int __cdecl ca_dn_cmp(const X509_NAME *const *a, const X509_NAME *const *b);
 #ifndef OPENSSL_NO_TLSEXT
 static int ssl3_check_finished(SSL *s);
 #endif
@@ -2272,7 +2273,8 @@ int ssl3_get_certificate_request(SSL *s)
     return (ret);
 }
 
-static int ca_dn_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl ca_dn_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
 {
     return (X509_NAME_cmp(*a, *b));
 }

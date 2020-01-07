@@ -94,7 +94,7 @@ static char *ret[] = {
 };
 
 static char *pt(unsigned char *md);
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int i, err = 0;
     char **P, **R;

@@ -102,7 +102,8 @@ static const EVP_PKEY_METHOD *standard_methods[] = {
 DECLARE_OBJ_BSEARCH_CMP_FN(const EVP_PKEY_METHOD *, const EVP_PKEY_METHOD *,
                            pmeth);
 
-static int pmeth_cmp(const EVP_PKEY_METHOD *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl pmeth_cmp(const EVP_PKEY_METHOD *const *a,
                      const EVP_PKEY_METHOD *const *b)
 {
     return ((*a)->pkey_id - (*b)->pkey_id);

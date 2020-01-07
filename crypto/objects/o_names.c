@@ -14,8 +14,9 @@
  * pointers.  One way is to define a macro that takes care of casting them
  * correctly.
  */
+// OfficeDev: add __cdecl
 #ifdef OPENSSL_SYS_VMS_DECC
-# define OPENSSL_strcmp (int (*)(const char *,const char *))strcmp
+# define OPENSSL_strcmp (int (__cdecl *)(const char *,const char *))strcmp
 #else
 # define OPENSSL_strcmp strcmp
 #endif
@@ -28,9 +29,10 @@ DECLARE_LHASH_OF(OBJ_NAME);
 static LHASH_OF(OBJ_NAME) *names_lh = NULL;
 static int names_type_num = OBJ_NAME_TYPE_NUM;
 
+// OfficeDev: add __cdecl
 typedef struct name_funcs_st {
     unsigned long (*hash_func) (const char *name);
-    int (*cmp_func) (const char *a, const char *b);
+    int (__cdecl *cmp_func) (const char *a, const char *b);
     void (*free_func) (const char *, int, const char *);
 } NAME_FUNCS;
 
@@ -63,8 +65,9 @@ int OBJ_NAME_init(void)
     return (names_lh != NULL);
 }
 
+// OfficeDev: add __cdecl
 int OBJ_NAME_new_index(unsigned long (*hash_func) (const char *),
-                       int (*cmp_func) (const char *, const char *),
+                       int (__cdecl *cmp_func) (const char *, const char *),
                        void (*free_func) (const char *, int, const char *))
 {
     int ret;
@@ -295,7 +298,7 @@ static void do_all_sorted_fn(const OBJ_NAME *name, void *d_)
     d->names[d->n++] = name;
 }
 
-static int do_all_sorted_cmp(const void *n1_, const void *n2_)
+static int __cdecl do_all_sorted_cmp(const void *n1_, const void *n2_) // OfficeDev: add __cdecl
 {
     const OBJ_NAME *const *n1 = n1_;
     const OBJ_NAME *const *n2 = n2_;

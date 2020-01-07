@@ -101,7 +101,8 @@ static const EVP_PKEY_ASN1_METHOD *standard_methods[] = {
 #endif
 };
 
-typedef int sk_cmp_fn_type(const char *const *a, const char *const *b);
+// OfficeDev: add __cdecl
+typedef int __cdecl sk_cmp_fn_type(const char *const *a, const char *const *b);
 DECLARE_STACK_OF(EVP_PKEY_ASN1_METHOD)
 static STACK_OF(EVP_PKEY_ASN1_METHOD) *app_methods = NULL;
 
@@ -120,7 +121,8 @@ void main()
 DECLARE_OBJ_BSEARCH_CMP_FN(const EVP_PKEY_ASN1_METHOD *,
                            const EVP_PKEY_ASN1_METHOD *, ameth);
 
-static int ameth_cmp(const EVP_PKEY_ASN1_METHOD *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl ameth_cmp(const EVP_PKEY_ASN1_METHOD *const *a,
                      const EVP_PKEY_ASN1_METHOD *const *b)
 {
     return ((*a)->pkey_id - (*b)->pkey_id);

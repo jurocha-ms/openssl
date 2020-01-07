@@ -56,6 +56,9 @@
  * [including the GNU Public Licence.]
  */
 
+#define STRINGIFY2(x) #x
+#define STRINGIFY(x) STRINGIFY2(x)
+
 #include "cryptlib.h"
 
 #ifndef NO_WINDOWS_BRAINDEATH
@@ -79,7 +82,7 @@ const char *SSLeay_version(int t)
     }
     if (t == SSLEAY_CFLAGS) {
 #ifdef CFLAGS
-        return (CFLAGS);
+        return STRINGIFY(CFLAGS);
 #else
         return ("compiler: information not available");
 #endif

@@ -66,7 +66,7 @@
 #include <openssl/bn.h>
 
 static char *strip_spaces(char *name);
-static int sk_strcmp(const char *const *a, const char *const *b);
+static int __cdecl sk_strcmp(const char *const *a, const char *const *b); // OfficeDev: add __cdecl
 static STACK_OF(OPENSSL_STRING) *get_email(X509_NAME *name,
                                            GENERAL_NAMES *gens);
 static void str_free(OPENSSL_STRING str);
@@ -517,7 +517,8 @@ int name_cmp(const char *name, const char *cmp)
     return 1;
 }
 
-static int sk_strcmp(const char *const *a, const char *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl sk_strcmp(const char *const *a, const char *const *b)
 {
     return strcmp(*a, *b);
 }

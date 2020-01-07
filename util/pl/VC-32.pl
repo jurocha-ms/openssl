@@ -154,9 +154,17 @@ else
 	$cflags=$opt_cflags.$base_cflags;
 	}
 
-# generate symbols.pdb unconditionally
-$app_cflag.=" /Zi /Fd\$(TMP_D)/app";
-$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib";
+# generate symbols.pdb when building dlls and embed symbols when building static libs
+if ($shlib)
+	{
+	$app_cflag.=" /Zi /Fd\$(TMP_D)/app.pdb";
+	$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib.pdb";
+	}
+else
+	{
+	$app_cflag.=" /Z7";
+	$lib_cflag.=" /Z7";
+	}
 $lflags.=" /debug";
 
 $obj='.obj';

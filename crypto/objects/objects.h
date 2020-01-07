@@ -991,8 +991,9 @@ typedef struct obj_name_st {
 # define         OBJ_create_and_add_object(a,b,c) OBJ_create(a,b,c)
 
 int OBJ_NAME_init(void);
+// OfficeDev: add __cdecl
 int OBJ_NAME_new_index(unsigned long (*hash_func) (const char *),
-                       int (*cmp_func) (const char *, const char *),
+                       int (__cdecl *cmp_func) (const char *, const char *),
                        void (*free_func) (const char *, int, const char *));
 const char *OBJ_NAME_get(const char *name, int type);
 int OBJ_NAME_add(const char *name, int type, const char *data);
@@ -1016,15 +1017,16 @@ int OBJ_ln2nid(const char *s);
 int OBJ_sn2nid(const char *s);
 int OBJ_cmp(const ASN1_OBJECT *a, const ASN1_OBJECT *b);
 const void *OBJ_bsearch_(const void *key, const void *base, int num, int size,
-                         int (*cmp) (const void *, const void *));
+                         int (__cdecl *cmp) (const void *, const void *)); // OfficeDev: add __cdecl
 const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
                             int size,
-                            int (*cmp) (const void *, const void *),
+                            int (__cdecl *cmp) (const void *, const void *), // OfficeDev: add __cdecl
                             int flags);
 
+// OfficeDev: add __cdecl
 # define _DECLARE_OBJ_BSEARCH_CMP_FN(scope, type1, type2, nm)    \
-  static int nm##_cmp_BSEARCH_CMP_FN(const void *, const void *); \
-  static int nm##_cmp(type1 const *, type2 const *); \
+  static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *, const void *); \
+  static int __cdecl nm##_cmp(type1 const *, type2 const *); \
   scope type2 * OBJ_bsearch_##nm(type1 *key, type2 const *base, int num)
 
 # define DECLARE_OBJ_BSEARCH_CMP_FN(type1, type2, cmp)   \
@@ -1059,8 +1061,9 @@ const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
  * comparison routines do always not touch their arguments.
  */
 
+// OfficeDev: add __cdecl, casts
 # define IMPLEMENT_OBJ_BSEARCH_CMP_FN(type1, type2, nm)  \
-  static int nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
+  static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
       { \
       type1 const *a = a_; \
       type2 const *b = b_; \
@@ -1073,8 +1076,9 @@ const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
       } \
       extern void dummy_prototype(void)
 
+// OfficeDev: add __cdecl, casts
 # define IMPLEMENT_OBJ_BSEARCH_GLOBAL_CMP_FN(type1, type2, nm)   \
-  static int nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
+  static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
       { \
       type1 const *a = a_; \
       type2 const *b = b_; \

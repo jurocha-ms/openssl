@@ -748,9 +748,9 @@ void ENGINE_add_conf_module(void);
  * same static data as the calling application (or library), and thus whether
  * these callbacks need to be set or not.
  */
-typedef void *(*dyn_MEM_malloc_cb) (size_t);
-typedef void *(*dyn_MEM_realloc_cb) (void *, size_t);
-typedef void (*dyn_MEM_free_cb) (void *);
+typedef void *(__cdecl *dyn_MEM_malloc_cb) (size_t); // OfficeDev: add __cdecl
+typedef void *(__cdecl *dyn_MEM_realloc_cb) (void *, size_t); // OfficeDev: add __cdecl
+typedef void (__cdecl *dyn_MEM_free_cb) (void *); // OfficeDev: add __cdecl
 typedef struct st_dynamic_MEM_fns {
     dyn_MEM_malloc_cb malloc_cb;
     dyn_MEM_realloc_cb realloc_cb;

@@ -496,37 +496,38 @@ void (*CRYPTO_get_dynlock_destroy_callback(void)) (struct CRYPTO_dynlock_value
  * CRYPTO_set_mem_functions includes CRYPTO_set_locked_mem_functions -- call
  * the latter last if you need different functions
  */
-int CRYPTO_set_mem_functions(void *(*m) (size_t), void *(*r) (void *, size_t),
-                             void (*f) (void *));
-int CRYPTO_set_locked_mem_functions(void *(*m) (size_t),
-                                    void (*free_func) (void *));
-int CRYPTO_set_mem_ex_functions(void *(*m) (size_t, const char *, int),
-                                void *(*r) (void *, size_t, const char *,
-                                            int), void (*f) (void *));
-int CRYPTO_set_locked_mem_ex_functions(void *(*m) (size_t, const char *, int),
-                                       void (*free_func) (void *));
-int CRYPTO_set_mem_debug_functions(void (*m)
+// OfficeDev: add __cdecl to stdlib function pointers
+int CRYPTO_set_mem_functions(void *(__cdecl *m) (size_t), void *(__cdecl *r) (void *, size_t),
+                             void (__cdecl *f) (void *));
+int CRYPTO_set_locked_mem_functions(void *(__cdecl *m) (size_t),
+                                    void (__cdecl *free_func) (void *));
+int CRYPTO_set_mem_ex_functions(void *(__cdecl *m) (size_t, const char *, int),
+                                void *(__cdecl *r) (void *, size_t, const char *,
+                                            int), void (__cdecl *f) (void *));
+int CRYPTO_set_locked_mem_ex_functions(void *(__cdecl *m) (size_t, const char *, int),
+                                       void (__cdecl *free_func) (void *));
+int CRYPTO_set_mem_debug_functions(void (__cdecl *m)
                                     (void *, int, const char *, int, int),
-                                   void (*r) (void *, void *, int,
+                                   void (__cdecl *r) (void *, void *, int,
                                               const char *, int, int),
-                                   void (*f) (void *, int), void (*so) (long),
+                                   void (__cdecl *f) (void *, int), void (*so) (long),
                                    long (*go) (void));
-void CRYPTO_get_mem_functions(void *(**m) (size_t),
-                              void *(**r) (void *, size_t),
-                              void (**f) (void *));
-void CRYPTO_get_locked_mem_functions(void *(**m) (size_t),
-                                     void (**f) (void *));
-void CRYPTO_get_mem_ex_functions(void *(**m) (size_t, const char *, int),
-                                 void *(**r) (void *, size_t, const char *,
-                                              int), void (**f) (void *));
+void CRYPTO_get_mem_functions(void *(__cdecl **m) (size_t),
+                              void *(__cdecl **r) (void *, size_t),
+                              void (__cdecl **f) (void *));
+void CRYPTO_get_locked_mem_functions(void *(__cdecl **m) (size_t),
+                                     void (__cdecl **f) (void *));
+void CRYPTO_get_mem_ex_functions(void *(__cdecl **m) (size_t, const char *, int),
+                                 void *(__cdecl **r) (void *, size_t, const char *,
+                                              int), void (__cdecl **f) (void *));
 void CRYPTO_get_locked_mem_ex_functions(void
-                                        *(**m) (size_t, const char *, int),
-                                        void (**f) (void *));
-void CRYPTO_get_mem_debug_functions(void (**m)
+                                        *(__cdecl **m) (size_t, const char *, int),
+                                        void (__cdecl **f) (void *));
+void CRYPTO_get_mem_debug_functions(void (__cdecl **m)
                                      (void *, int, const char *, int, int),
-                                    void (**r) (void *, void *, int,
+                                    void (__cdecl **r) (void *, void *, int,
                                                 const char *, int, int),
-                                    void (**f) (void *, int),
+                                    void (__cdecl **f) (void *, int),
                                     void (**so) (long), long (**go) (void));
 
 void *CRYPTO_malloc_locked(int num, const char *file, int line);
@@ -560,11 +561,12 @@ int CRYPTO_remove_all_info(void);
  * 0:   called before the actual memory allocation has taken place
  * 1:   called after the actual memory allocation has taken place
  */
-void CRYPTO_dbg_malloc(void *addr, int num, const char *file, int line,
+// OfficeDev: add __cdecl
+void __cdecl CRYPTO_dbg_malloc(void *addr, int num, const char *file, int line,
                        int before_p);
-void CRYPTO_dbg_realloc(void *addr1, void *addr2, int num, const char *file,
+void __cdecl CRYPTO_dbg_realloc(void *addr1, void *addr2, int num, const char *file,
                         int line, int before_p);
-void CRYPTO_dbg_free(void *addr, int before_p);
+void __cdecl CRYPTO_dbg_free(void *addr, int before_p);
 /*-
  * Tell the debugging code about options.  By default, the following values
  * apply:

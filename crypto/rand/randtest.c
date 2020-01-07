@@ -65,7 +65,7 @@
 /* some FIPS 140-1 random number test */
 /* some simple tests */
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv) // OfficeDev: add __cdecl
 {
     unsigned char buf[2500];
     int i, j, k, s, sign, nsign, err = 0;

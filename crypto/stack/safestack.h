@@ -81,9 +81,10 @@ extern "C" {
 # define CHECKED_SK_FREE_FUNC(type, p) \
     ((void (*)(void *)) ((1 ? p : (void (*)(type *))0)))
 
+// OfficeDev: add __cdecl
 # define CHECKED_SK_CMP_FUNC(type, p) \
-    ((int (*)(const void *, const void *)) \
-        ((1 ? p : (int (*)(const type * const *, const type * const *))0)))
+    ((int (__cdecl *)(const void *, const void *)) \
+        ((1 ? p : (int (__cdecl *)(const type * const *, const type * const *))0)))
 
 # define STACK_OF(type) struct stack_st_##type
 # define PREDECLARE_STACK_OF(type) STACK_OF(type);
@@ -171,7 +172,7 @@ DECLARE_SPECIAL_STACK_OF(OPENSSL_BLOCK, void)
 # define SKM_sk_insert(type, st,val, i) \
         sk_insert(CHECKED_STACK_OF(type, st), CHECKED_PTR_OF(type, val), i)
 # define SKM_sk_set_cmp_func(type, st, cmp) \
-        ((int (*)(const type * const *,const type * const *)) \
+        ((int (__cdecl *)(const type * const *,const type * const *)) \
         sk_set_cmp_func(CHECKED_STACK_OF(type, st), CHECKED_SK_CMP_FUNC(type, cmp)))
 # define SKM_sk_dup(type, st) \
         (STACK_OF(type) *)sk_dup(CHECKED_STACK_OF(type, st))

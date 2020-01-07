@@ -60,7 +60,7 @@ unsigned char addenum_3[SHA224_DIGEST_LENGTH] = {
     0x4e, 0xe7, 0xad, 0x67
 };
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv) // OfficeDev: add __cdecl
 {
     unsigned char md[SHA256_DIGEST_LENGTH];
     int i;

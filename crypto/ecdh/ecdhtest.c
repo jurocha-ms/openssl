@@ -476,7 +476,7 @@ static int ecdh_kat(BIO *out, const char *cname, int nid,
                 bp##bits##_db, sizeof(bp##bits##_db), \
                 bp##bits##_Z, sizeof(bp##bits##_Z))
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     BN_CTX *ctx = NULL;
     int ret = 1;

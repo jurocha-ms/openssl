@@ -175,7 +175,7 @@ static int test_exp_mod_zero()
     return ret;
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     BN_CTX *ctx;
     BIO *out = NULL;

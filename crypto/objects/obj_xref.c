@@ -63,7 +63,8 @@
 DECLARE_STACK_OF(nid_triple)
 STACK_OF(nid_triple) *sig_app, *sigx_app;
 
-static int sig_cmp(const nid_triple *a, const nid_triple *b)
+// OfficeDev: add __cdecl
+static int __cdecl sig_cmp(const nid_triple *a, const nid_triple *b)
 {
     return a->sign_id - b->sign_id;
 }
@@ -71,14 +72,16 @@ static int sig_cmp(const nid_triple *a, const nid_triple *b)
 DECLARE_OBJ_BSEARCH_CMP_FN(nid_triple, nid_triple, sig);
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(nid_triple, nid_triple, sig);
 
-static int sig_sk_cmp(const nid_triple *const *a, const nid_triple *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl sig_sk_cmp(const nid_triple *const *a, const nid_triple *const *b)
 {
     return (*a)->sign_id - (*b)->sign_id;
 }
 
 DECLARE_OBJ_BSEARCH_CMP_FN(const nid_triple *, const nid_triple *, sigx);
 
-static int sigx_cmp(const nid_triple *const *a, const nid_triple *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl sigx_cmp(const nid_triple *const *a, const nid_triple *const *b)
 {
     int ret;
     ret = (*a)->hash_id - (*b)->hash_id;

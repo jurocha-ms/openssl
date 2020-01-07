@@ -463,7 +463,8 @@ void ssl_load_ciphers(void)
 
 #ifndef OPENSSL_NO_COMP
 
-static int sk_comp_cmp(const SSL_COMP *const *a, const SSL_COMP *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl sk_comp_cmp(const SSL_COMP *const *a, const SSL_COMP *const *b)
 {
     return ((*a)->id - (*b)->id);
 }

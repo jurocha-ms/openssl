@@ -80,7 +80,7 @@ static int checksslv2(int test, int sslv2)
     return ((options & SSL_OP_NO_SSLv2) == 0) ^ (sslv2 == SSLV2OFF);
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     BIO *err;
     int testresult = 0;

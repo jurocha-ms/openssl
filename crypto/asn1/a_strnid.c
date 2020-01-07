@@ -65,7 +65,8 @@
 
 static STACK_OF(ASN1_STRING_TABLE) *stable = NULL;
 static void st_free(ASN1_STRING_TABLE *tbl);
-static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl sk_table_cmp(const ASN1_STRING_TABLE *const *a,
                         const ASN1_STRING_TABLE *const *b);
 
 /*
@@ -196,7 +197,8 @@ static const ASN1_STRING_TABLE tbl_standard[] = {
     {NID_jurisdictionCountryName, 2, 2, B_ASN1_PRINTABLESTRING, STABLE_NO_MASK}
 };
 
-static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl sk_table_cmp(const ASN1_STRING_TABLE *const *a,
                         const ASN1_STRING_TABLE *const *b)
 {
     return (*a)->nid - (*b)->nid;
@@ -204,7 +206,8 @@ static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
 
 DECLARE_OBJ_BSEARCH_CMP_FN(ASN1_STRING_TABLE, ASN1_STRING_TABLE, table);
 
-static int table_cmp(const ASN1_STRING_TABLE *a, const ASN1_STRING_TABLE *b)
+// OfficeDev: add __cdecl
+static int __cdecl table_cmp(const ASN1_STRING_TABLE *a, const ASN1_STRING_TABLE *b)
 {
     return a->nid - b->nid;
 }

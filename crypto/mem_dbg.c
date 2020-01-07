@@ -463,7 +463,8 @@ int CRYPTO_remove_all_info(void)
 }
 
 static unsigned long break_order_num = 0;
-void CRYPTO_dbg_malloc(void *addr, int num, const char *file, int line,
+// OfficeDev: add __cdecl
+void __cdecl CRYPTO_dbg_malloc(void *addr, int num, const char *file, int line,
                        int before_p)
 {
     MEM *m, *mm;
@@ -540,7 +541,8 @@ void CRYPTO_dbg_malloc(void *addr, int num, const char *file, int line,
     return;
 }
 
-void CRYPTO_dbg_free(void *addr, int before_p)
+// OfficeDev: add __cdecl
+void __cdecl CRYPTO_dbg_free(void *addr, int before_p)
 {
     MEM m, *mp;
 
@@ -573,7 +575,8 @@ void CRYPTO_dbg_free(void *addr, int before_p)
     }
 }
 
-void CRYPTO_dbg_realloc(void *addr1, void *addr2, int num,
+// OfficeDev: add __cdecl
+void __cdecl CRYPTO_dbg_realloc(void *addr1, void *addr2, int num,
                         const char *file, int line, int before_p)
 {
     MEM m, *mp;

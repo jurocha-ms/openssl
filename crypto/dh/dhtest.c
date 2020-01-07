@@ -98,7 +98,7 @@ static const char rnd_seed[] =
 
 static int run_rfc5114_tests(void);
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     BN_GENCB _cb;
     DH *a;

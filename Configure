@@ -972,7 +972,7 @@ PROCESS_ARGS:
 				}
 			elsif (/^--with-zlib-include=(.*)$/)
 				{
-				$withargs{"zlib-include"}="-I$1";
+				$withargs{"zlib-include"}="-I\"$1\"";
 				}
 			elsif (/^--with-fipsdir=(.*)$/)
 				{

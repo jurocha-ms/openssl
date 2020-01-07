@@ -11,7 +11,7 @@
 #include <openssl/err.h>
 #include "ssltestlib.h"
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *sssl = NULL, *cssl = NULL;

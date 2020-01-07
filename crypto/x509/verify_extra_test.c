@@ -183,7 +183,7 @@ static int test_alt_chains_cert_forgery(void)
     return ret;
 }
 
-int main(void)
+int __cdecl main(void)
 {
     CRYPTO_malloc_debug_init();
     CRYPTO_set_mem_debug_options(V_CRYPTO_MDEBUG_ALL);

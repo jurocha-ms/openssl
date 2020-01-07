@@ -22,7 +22,8 @@ static void unimplemented(void)
     ExitProcess(1);
 }
 
-void OPENSSL_Uplink(volatile void **table, int index)
+// OfficeDev: make __cdecl (since OpenSSL's inline assembly code that calls this assumes __cdecl)
+void __cdecl OPENSSL_Uplink(volatile void **table, int index)
 {
     static HMODULE volatile apphandle = NULL;
     static void **volatile applinktable = NULL;

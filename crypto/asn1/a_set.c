@@ -71,7 +71,7 @@ typedef struct {
 /*
  * SetBlobCmp This function compares two elements of SET_OF block
  */
-static int SetBlobCmp(const void *elem1, const void *elem2)
+static int __cdecl SetBlobCmp(const void *elem1, const void *elem2)
 {
     const MYBLOB *b1 = (const MYBLOB *)elem1;
     const MYBLOB *b2 = (const MYBLOB *)elem2;

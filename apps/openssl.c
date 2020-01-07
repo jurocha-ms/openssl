@@ -215,7 +215,7 @@ static void lock_dbg_cb(int mode, int type, const char *file, int line)
 # define ARGV Argv
 #endif
 
-int main(int Argc, char *ARGV[])
+int __cdecl main(int Argc, char *ARGV[]) // OfficeDev: add __cdecl
 {
     ARGS arg;
 #define PROG_NAME_SIZE  39
@@ -587,7 +587,8 @@ static int do_cmd(LHASH_OF(FUNCTION) *prog, int argc, char *argv[])
     return (ret);
 }
 
-static int SortFnByName(const void *_f1, const void *_f2)
+// OfficeDev: add __cdecl
+static int __cdecl SortFnByName(const void *_f1, const void *_f2)
 {
     const FUNCTION *f1 = _f1;
     const FUNCTION *f2 = _f2;

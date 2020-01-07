@@ -358,7 +358,7 @@ static char *pt(unsigned char *p);
 static int cfb_test(int bits, unsigned char *cfb_cipher);
 static int cfb64_test(unsigned char *cfb_cipher);
 static int ede_cfb64_test(unsigned char *cfb_cipher);
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int j, err = 0;
     unsigned int i;

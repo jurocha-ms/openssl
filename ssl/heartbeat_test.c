@@ -467,7 +467,7 @@ int main(int argc, char *argv[])
 
 #else                           /* OPENSSL_NO_HEARTBEATS */
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     return EXIT_SUCCESS;
 }

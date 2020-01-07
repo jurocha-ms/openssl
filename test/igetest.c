@@ -271,7 +271,7 @@ static int run_test_vectors(void)
     return errs;
 }
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv) // OfficeDev: add __cdecl
 {
     unsigned char rkey[16];
     unsigned char rkey2[16];

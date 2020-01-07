@@ -78,9 +78,15 @@ const char STACK_version[] = "Stack" OPENSSL_VERSION_PTEXT;
 
 #include <errno.h>
 
-int (*sk_set_cmp_func(_STACK *sk, int (*c) (const void *, const void *)))
+// OfficeDev: add __cdecl
+#ifdef _M_ARM64
+int (*sk_set_cmp_func(_STACK *sk, int (__cdecl *c) (const void *, const void *)))
  (const void *, const void *) {
-    int (*old) (const void *, const void *) = sk->comp;
+#else
+int (__cdecl *sk_set_cmp_func(_STACK *sk, int (__cdecl *c) (const void *, const void *)))
+ (const void *, const void *) {
+#endif
+    int (__cdecl *old) (const void *, const void *) = sk->comp;
 
     if (sk->comp != c)
         sk->sorted = 0;
@@ -151,10 +157,10 @@ _STACK *sk_deep_copy(_STACK *sk, void *(*copy_func) (void *),
 
 _STACK *sk_new_null(void)
 {
-    return sk_new((int (*)(const void *, const void *))0);
+    return sk_new((int (__cdecl *)(const void *, const void *))0); // OfficeDev: add __cdecl
 }
 
-_STACK *sk_new(int (*c) (const void *, const void *))
+_STACK *sk_new(int (__cdecl *c) (const void *, const void *)) // OfficeDev: add __cdecl
 {
     _STACK *ret;
     int i;
@@ -361,7 +367,7 @@ void *sk_set(_STACK *st, int i, void *value)
 void sk_sort(_STACK *st)
 {
     if (st && !st->sorted && st->comp != NULL) {
-        int (*comp_func) (const void *, const void *);
+        int (__cdecl *comp_func) (const void *, const void *); // OfficeDev: add __cdecl
 
         /*
          * same comment as in sk_find ... previously st->comp was declared as
@@ -370,7 +376,7 @@ void sk_sort(_STACK *st)
          * type**, so we leave the casting until absolutely necessary (ie.
          * "now").
          */
-        comp_func = (int (*)(const void *, const void *))(st->comp);
+        comp_func = (int (__cdecl *)(const void *, const void *))(st->comp); // OfficeDev: add __cdecl
         qsort(st->data, st->num, sizeof(char *), comp_func);
         st->sorted = 1;
     }

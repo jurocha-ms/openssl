@@ -1829,7 +1829,7 @@ static void nistp_tests()
 static const char rnd_seed[] =
     "string to make the random number generator think it has entropy";
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
 
     /* enable memory leak checking unless explicitly disabled */

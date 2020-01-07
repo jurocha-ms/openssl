@@ -1295,7 +1295,8 @@ long SSL_CTX_callback_ctrl(SSL_CTX *ctx, int cmd, void (*fp) (void))
     }
 }
 
-int ssl_cipher_id_cmp(const SSL_CIPHER *a, const SSL_CIPHER *b)
+// OfficeDev: add __cdecl
+int __cdecl ssl_cipher_id_cmp(const SSL_CIPHER *a, const SSL_CIPHER *b)
 {
     long l;
 
@@ -1306,7 +1307,8 @@ int ssl_cipher_id_cmp(const SSL_CIPHER *a, const SSL_CIPHER *b)
         return ((l > 0) ? 1 : -1);
 }
 
-int ssl_cipher_ptr_id_cmp(const SSL_CIPHER *const *ap,
+// OfficeDev: add __cdecl
+int __cdecl ssl_cipher_ptr_id_cmp(const SSL_CIPHER *const *ap,
                           const SSL_CIPHER *const *bp)
 {
     long l;

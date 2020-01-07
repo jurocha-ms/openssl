@@ -1031,7 +1031,7 @@ int opaque_prf_input_cb(SSL *ssl, void *peerinput, size_t len, void *arg_)
 }
 #endif
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char **argv) // OfficeDev: add __cdecl
 {
     char *CApath = NULL, *CAfile = NULL;
     int badop = 0;

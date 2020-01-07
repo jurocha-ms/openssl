@@ -450,7 +450,7 @@ static int test_digest(const char *digest,
     return 1;
 }
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv) // OfficeDev: add __cdecl
 {
     const char *szTestFile;
     FILE *f;

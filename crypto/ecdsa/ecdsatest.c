@@ -515,7 +515,7 @@ int test_builtin(BIO *out)
     return ret;
 }
 
-int main(void)
+int __cdecl main(void) // OfficeDev: add __cdecl
 {
     int ret = 1;
     BIO *out;

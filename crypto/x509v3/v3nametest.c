@@ -321,7 +321,7 @@ static void run_cert(X509 *crt, const char *nameincert,
     }
 }
 
-int main(void)
+int __cdecl main(void) // OfficeDev: add __cdecl
 {
     const struct set_name_fn *pfn = name_fns;
     while (pfn->name) {

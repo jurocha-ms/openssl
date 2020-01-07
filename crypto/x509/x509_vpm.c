@@ -587,7 +587,8 @@ static const X509_VERIFY_PARAM default_table[] = {
 
 static STACK_OF(X509_VERIFY_PARAM) *param_table = NULL;
 
-static int table_cmp(const X509_VERIFY_PARAM *a, const X509_VERIFY_PARAM *b)
+// OfficeDev: add __cdecl
+static int __cdecl table_cmp(const X509_VERIFY_PARAM *a, const X509_VERIFY_PARAM *b)
 {
     return strcmp(a->name, b->name);
 }
@@ -595,7 +596,8 @@ static int table_cmp(const X509_VERIFY_PARAM *a, const X509_VERIFY_PARAM *b)
 DECLARE_OBJ_BSEARCH_CMP_FN(X509_VERIFY_PARAM, X509_VERIFY_PARAM, table);
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(X509_VERIFY_PARAM, X509_VERIFY_PARAM, table);
 
-static int param_cmp(const X509_VERIFY_PARAM *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl param_cmp(const X509_VERIFY_PARAM *const *a,
                      const X509_VERIFY_PARAM *const *b)
 {
     return strcmp((*a)->name, (*b)->name);

@@ -856,7 +856,8 @@ int SSL_CTX_add_client_CA(SSL_CTX *ctx, X509 *x)
     return (add_client_CA(&(ctx->client_CA), x));
 }
 
-static int xname_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
+// OfficeDev: add __cdecl
+static int __cdecl xname_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
 {
     return (X509_NAME_cmp(*a, *b));
 }
@@ -947,7 +948,8 @@ int SSL_add_file_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
     X509 *x = NULL;
     X509_NAME *xn = NULL;
     int ret = 1;
-    int (*oldcmp) (const X509_NAME *const *a, const X509_NAME *const *b);
+    // OfficeDev: add __cdecl
+    int (__cdecl *oldcmp) (const X509_NAME *const *a, const X509_NAME *const *b);
 
     oldcmp = sk_X509_NAME_set_cmp_func(stack, xname_cmp);
 

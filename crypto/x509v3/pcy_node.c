@@ -63,7 +63,8 @@
 
 #include "pcy_int.h"
 
-static int node_cmp(const X509_POLICY_NODE *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl node_cmp(const X509_POLICY_NODE *const *a,
                     const X509_POLICY_NODE *const *b)
 {
     return OBJ_cmp((*a)->data->valid_policy, (*b)->data->valid_policy);

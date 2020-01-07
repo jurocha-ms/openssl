@@ -432,7 +432,7 @@ static int test_EVP_PKCS82PKEY(void)
 }
 #endif
 
-int main(void)
+int __cdecl main(void) // OfficeDev: add __cdecl
 {
     CRYPTO_malloc_debug_init();
     CRYPTO_set_mem_debug_options(V_CRYPTO_MDEBUG_ALL);

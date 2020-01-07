@@ -412,7 +412,8 @@ typedef struct {
     ASN1_VALUE *field;
 } DER_ENC;
 
-static int der_cmp(const void *a, const void *b)
+// OfficeDev: add __cdecl
+static int __cdecl der_cmp(const void *a, const void *b)
 {
     const DER_ENC *d1 = a, *d2 = b;
     int cmplen, i;

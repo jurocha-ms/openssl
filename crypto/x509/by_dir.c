@@ -164,7 +164,8 @@ static void by_dir_hash_free(BY_DIR_HASH *hash)
     OPENSSL_free(hash);
 }
 
-static int by_dir_hash_cmp(const BY_DIR_HASH *const *a,
+// OfficeDev: add __cdecl
+static int __cdecl by_dir_hash_cmp(const BY_DIR_HASH *const *a,
                            const BY_DIR_HASH *const *b)
 {
     if ((*a)->hash > (*b)->hash)

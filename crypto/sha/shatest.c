@@ -103,7 +103,7 @@ static char *bigret = "34aa973cd4c4daa4f61eeb2bdbad27316534016f";
 # endif
 
 static char *pt(unsigned char *md);
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int i, err = 0;
     char **P, **R;

@@ -280,7 +280,7 @@ static unsigned char key_out[KEY_TEST_NUM][8] = {
 
 static int test(void);
 static int print_test_data(void);
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     int ret;
 

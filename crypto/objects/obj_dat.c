@@ -99,14 +99,16 @@ DECLARE_LHASH_OF(ADDED_OBJ);
 static int new_nid = NUM_NID;
 static LHASH_OF(ADDED_OBJ) *added = NULL;
 
-static int sn_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
+// OfficeDev: add __cdecl
+static int __cdecl sn_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
 {
     return (strcmp((*a)->sn, nid_objs[*b].sn));
 }
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(const ASN1_OBJECT *, unsigned int, sn);
 
-static int ln_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
+// OfficeDev: add __cdecl
+static int __cdecl ln_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
 {
     return (strcmp((*a)->ln, nid_objs[*b].ln));
 }
@@ -148,7 +150,8 @@ static unsigned long added_obj_hash(const ADDED_OBJ *ca)
 
 static IMPLEMENT_LHASH_HASH_FN(added_obj, ADDED_OBJ)
 
-static int added_obj_cmp(const ADDED_OBJ *ca, const ADDED_OBJ *cb)
+// OfficeDev: add __cdecl
+static int __cdecl added_obj_cmp(const ADDED_OBJ *ca, const ADDED_OBJ *cb)
 {
     ASN1_OBJECT *a, *b;
     int i;
@@ -390,7 +393,8 @@ const char *OBJ_nid2ln(int n)
     }
 }
 
-static int obj_cmp(const ASN1_OBJECT *const *ap, const unsigned int *bp)
+// OfficeDev: add __cdecl
+static int __cdecl obj_cmp(const ASN1_OBJECT *const *ap, const unsigned int *bp)
 {
     int j;
     const ASN1_OBJECT *a = *ap;
@@ -669,15 +673,17 @@ int OBJ_sn2nid(const char *s)
     return (nid_objs[*op].nid);
 }
 
+// OfficeDev: add __cdecl
 const void *OBJ_bsearch_(const void *key, const void *base, int num, int size,
-                         int (*cmp) (const void *, const void *))
+                         int (__cdecl *cmp) (const void *, const void *))
 {
     return OBJ_bsearch_ex_(key, base, num, size, cmp, 0);
 }
 
+// OfficeDev: add __cdecl
 const void *OBJ_bsearch_ex_(const void *key, const void *base_, int num,
                             int size,
-                            int (*cmp) (const void *, const void *),
+                            int (__cdecl *cmp) (const void *, const void *),
                             int flags)
 {
     const char *base = base_;

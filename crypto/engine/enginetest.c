@@ -94,7 +94,7 @@ static void display_engine_list(void)
     ENGINE_free(h);
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[]) // OfficeDev: add __cdecl
 {
     ENGINE *block[512];
     char buf[256];
