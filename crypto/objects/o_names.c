@@ -30,7 +30,7 @@
  * transparently assign function pointers to it.
  */
 #if defined(OPENSSL_SYS_VMS_DECC) || defined(OPENSSL_SYS_UEFI)
-static int obj_strcasecmp(const char *a, const char *b)
+static int __cdecl obj_strcasecmp(const char *a, const char *b)
 {
     return strcasecmp(a, b);
 }
@@ -48,7 +48,7 @@ static CRYPTO_RWLOCK *obj_lock = NULL;
 
 struct name_funcs_st {
     unsigned long (*hash_func) (const char *name);
-    int (*cmp_func) (const char *a, const char *b);
+    int (__cdecl *cmp_func) (const char *a, const char *b);
     void (*free_func) (const char *, int, const char *);
 };
 
@@ -79,7 +79,7 @@ int OBJ_NAME_init(void)
 }
 
 int OBJ_NAME_new_index(unsigned long (*hash_func) (const char *),
-                       int (*cmp_func) (const char *, const char *),
+                       int (__cdecl *cmp_func) (const char *, const char *),
                        void (*free_func) (const char *, int, const char *))
 {
     int ret = 0, i, push;
@@ -334,7 +334,7 @@ static void do_all_sorted_fn(const OBJ_NAME *name, void *d_)
     d->names[d->n++] = name;
 }
 
-static int do_all_sorted_cmp(const void *n1_, const void *n2_)
+static int __cdecl do_all_sorted_cmp(const void *n1_, const void *n2_)
 {
     const OBJ_NAME *const *n1 = n1_;
     const OBJ_NAME *const *n2 = n2_;

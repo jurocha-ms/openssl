@@ -119,7 +119,7 @@ err:
 
 static CRYPTO_ONCE register_atexit = CRYPTO_ONCE_STATIC_INIT;
 #if !defined(OPENSSL_SYS_UEFI) && defined(_WIN32)
-static int win32atexit(void)
+static int __cdecl win32atexit(void)
 {
     OPENSSL_cleanup();
     return 0;

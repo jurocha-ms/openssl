@@ -18,7 +18,7 @@ static UINT saved_cp;
 static int newargc;
 static char **newargv;
 
-static void cleanup(void)
+static void __cdecl cleanup(void)
 {
     int i;
 
