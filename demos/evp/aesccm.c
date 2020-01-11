@@ -118,7 +118,7 @@ void aes_ccm_decrypt(void)
     EVP_CIPHER_CTX_free(ctx);
 }
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv)
 {
     aes_ccm_encrypt();
     aes_ccm_decrypt();

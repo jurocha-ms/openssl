@@ -45,7 +45,7 @@ void sigsetup(void)
     sigaction(SIGINT, &sa, NULL);
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     char *port = NULL;
     BIO *in = NULL;

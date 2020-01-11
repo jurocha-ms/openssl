@@ -294,7 +294,7 @@ end:
  * it to link against libcrypto (which the framework uses). The point of the
  * test is to check dynamic loading and unloading of libcrypto/libssl.
  */
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     const char *p;
 

@@ -15,7 +15,7 @@
 #include <openssl/cms.h>
 #include <openssl/err.h>
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv)
 {
     BIO *in = NULL, *out = NULL, *tbio = NULL, *dcont = NULL;
     X509 *rcert = NULL;

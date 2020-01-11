@@ -872,7 +872,7 @@ static int set_protocol_version(const char *version, SSL *ssl, int setting)
     return 1;
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     const char *CApath = NULL, *CAfile = NULL;
     int badop = 0;

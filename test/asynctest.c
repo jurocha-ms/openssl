@@ -269,7 +269,7 @@ static int test_ASYNC_block_pause(void)
     return 1;
 }
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv)
 {
     if (!ASYNC_is_capable()) {
         fprintf(stderr,

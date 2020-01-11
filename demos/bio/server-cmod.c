@@ -19,7 +19,7 @@
 #include <openssl/ssl.h>
 #include <openssl/conf.h>
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     unsigned char buf[512];
     char *port = "*:4433";

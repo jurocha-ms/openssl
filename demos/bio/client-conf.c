@@ -12,7 +12,7 @@
 #include <openssl/ssl.h>
 #include <openssl/conf.h>
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv)
 {
     BIO *sbio = NULL, *out = NULL;
     int i, len, rv;

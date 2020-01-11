@@ -244,7 +244,7 @@ The following example demonstrates how to use most of the core async APIs:
      return 1;
  }
 
- int main(void)
+ int __cdecl main(void)
  {
      ASYNC_JOB *job = NULL;
      ASYNC_WAIT_CTX *ctx = NULL;

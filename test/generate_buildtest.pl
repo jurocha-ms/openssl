@@ -27,7 +27,7 @@ print <<"_____";
 # include <openssl/$name.h>
 #endif
 
-int main(void)
+int __cdecl main(void)
 {
     return 0;
 }

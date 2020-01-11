@@ -12,7 +12,7 @@
 #include <openssl/crypto.h>
 
 /* A simple helper for the perl function OpenSSL::Test::openssl_versions */
-int main(void)
+int __cdecl main(void)
 {
     printf("Build version: 0x%08lX\n", OPENSSL_VERSION_NUMBER);
     printf("Library version: 0x%08lX\n", OpenSSL_version_num());

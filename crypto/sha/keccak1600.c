@@ -1146,7 +1146,7 @@ void SHA3_sponge(const unsigned char *inp, size_t len,
 
 # include <stdio.h>
 
-int main()
+int __cdecl main()
 {
     /*
      * This is 5-bit SHAKE128 test from http://csrc.nist.gov/groups/ST/toolkit/examples.html#aHashing

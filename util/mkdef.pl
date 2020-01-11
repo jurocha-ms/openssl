@@ -297,7 +297,7 @@ if($do_crypto == 1) {
  * to link to all of them. This is *not* intended to be run!
  */
 
-int main()
+int __cdecl main()
 {
 EOF
 	&print_test_file(*STDOUT,"LIBSSL",*ssl_list,$do_ctestall,@ssl_symbols)

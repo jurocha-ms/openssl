@@ -15,7 +15,7 @@
 
 /* Simple PKCS#12 file creator */
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv)
 {
     FILE *fp;
     EVP_PKEY *pkey;

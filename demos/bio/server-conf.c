@@ -21,7 +21,7 @@
 #include <openssl/ssl.h>
 #include <openssl/conf.h>
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     char *port = "*:4433";
     BIO *in = NULL;

@@ -23,7 +23,7 @@
  * but that is worse than avoiding the test framework's main.
  */
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
 #ifndef OPENSSL_NO_CRYPTO_MDEBUG
     char *p;

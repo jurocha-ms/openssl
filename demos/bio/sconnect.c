@@ -25,7 +25,7 @@
 #define HOSTPORT "localhost:4433"
 #define CAFILE "root.pem"
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     const char *hostport = HOSTPORT;
     const char *CAfile = CAFILE;

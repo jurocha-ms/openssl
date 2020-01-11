@@ -313,7 +313,7 @@ digest name passed on the command line.
  #include <string.h>
  #include <openssl/evp.h>
 
- int main(int argc, char *argv[])
+ int __cdecl main(int argc, char *argv[])
  {
      EVP_MD_CTX *mdctx;
      const EVP_MD *md;

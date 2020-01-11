@@ -58,7 +58,7 @@ static void testfile(const char *pathname)
     fclose(f);
 }
 
-int main(int argc, char **argv) {
+int __cdecl main(int argc, char **argv) {
     int n;
 
     FuzzerInitialize(&argc, &argv);

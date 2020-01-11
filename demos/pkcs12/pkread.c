@@ -45,7 +45,7 @@ static char *find_friendly_name(PKCS12 *p12)
     return name;
 }
 
-int main(int argc, char **argv)
+int __cdecl main(int argc, char **argv)
 {
     FILE *fp;
     EVP_PKEY *pkey = NULL;
