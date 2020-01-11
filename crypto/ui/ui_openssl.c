@@ -159,7 +159,7 @@ struct IOSB {
 # ifdef SIGACTION
 static struct sigaction savsig[NX509_SIG];
 # else
-static void (*savsig[NX509_SIG]) (int);
+static void (__cdecl *savsig[NX509_SIG]) (int);
 # endif
 
 # ifdef OPENSSL_SYS_VMS
@@ -183,7 +183,7 @@ static int is_a_tty;
 /* Declare static functions */
 # if !defined(OPENSSL_SYS_WINCE)
 static int read_till_nl(FILE *);
-static void recsig(int);
+static void __cdecl recsig(int);
 static void pushsig(void);
 static void popsig(void);
 # endif
@@ -659,7 +659,7 @@ static void popsig(void)
 #  endif
 }
 
-static void recsig(int i)
+static void __cdecl recsig(int i)
 {
     intr_signal = i;
 }

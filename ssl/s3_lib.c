@@ -3198,7 +3198,7 @@ static SSL_CIPHER ssl3_scsvs[] = {
     },
 };
 
-static int cipher_compare(const void *a, const void *b)
+static int __cdecl cipher_compare(const void *a, const void *b)
 {
     const SSL_CIPHER *ap = (const SSL_CIPHER *)a;
     const SSL_CIPHER *bp = (const SSL_CIPHER *)b;

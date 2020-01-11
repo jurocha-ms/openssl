@@ -116,7 +116,7 @@ static char *make_config_name(void)
     return p;
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     FUNCTION f, *fp;
     LHASH_OF(FUNCTION) *prog = NULL;
@@ -640,7 +640,7 @@ static unsigned long function_hash(const FUNCTION * a)
     return OPENSSL_LH_strhash(a->name);
 }
 
-static int SortFnByName(const void *_f1, const void *_f2)
+static int __cdecl SortFnByName(const void *_f1, const void *_f2)
 {
     const FUNCTION *f1 = _f1;
     const FUNCTION *f2 = _f2;

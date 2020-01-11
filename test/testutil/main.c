@@ -31,7 +31,7 @@ static void check_arg_usage(void)
         test_printf_stderr("Warning arguments %zu and later unchecked\n", i);
 }
 
-int main(int argc, char *argv[])
+int __cdecl main(int argc, char *argv[])
 {
     int ret = EXIT_FAILURE;
 
