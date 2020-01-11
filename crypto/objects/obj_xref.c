@@ -14,7 +14,7 @@
 
 static STACK_OF(nid_triple) *sig_app, *sigx_app;
 
-static int sig_cmp(const nid_triple *a, const nid_triple *b)
+static int __cdecl sig_cmp(const nid_triple *a, const nid_triple *b)
 {
     return a->sign_id - b->sign_id;
 }
@@ -22,14 +22,14 @@ static int sig_cmp(const nid_triple *a, const nid_triple *b)
 DECLARE_OBJ_BSEARCH_CMP_FN(nid_triple, nid_triple, sig);
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(nid_triple, nid_triple, sig);
 
-static int sig_sk_cmp(const nid_triple *const *a, const nid_triple *const *b)
+static int __cdecl sig_sk_cmp(const nid_triple *const *a, const nid_triple *const *b)
 {
     return (*a)->sign_id - (*b)->sign_id;
 }
 
 DECLARE_OBJ_BSEARCH_CMP_FN(const nid_triple *, const nid_triple *, sigx);
 
-static int sigx_cmp(const nid_triple *const *a, const nid_triple *const *b)
+static int __cdecl sigx_cmp(const nid_triple *const *a, const nid_triple *const *b)
 {
     int ret;
     ret = (*a)->hash_id - (*b)->hash_id;
@@ -125,7 +125,7 @@ int OBJ_add_sigid(int signid, int dig_id, int pkey_id)
     return 1;
 }
 
-static void sid_free(nid_triple *tt)
+static void __cdecl sid_free(nid_triple *tt)
 {
     OPENSSL_free(tt);
 }

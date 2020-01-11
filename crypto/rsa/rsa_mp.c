@@ -12,14 +12,14 @@
 #include <openssl/err.h>
 #include "rsa_locl.h"
 
-void rsa_multip_info_free_ex(RSA_PRIME_INFO *pinfo)
+void __cdecl rsa_multip_info_free_ex(RSA_PRIME_INFO *pinfo)
 {
     /* free pp and pinfo only */
     BN_clear_free(pinfo->pp);
     OPENSSL_free(pinfo);
 }
 
-void rsa_multip_info_free(RSA_PRIME_INFO *pinfo)
+void __cdecl rsa_multip_info_free(RSA_PRIME_INFO *pinfo)
 {
     /* free a RSA_PRIME_INFO structure */
     BN_clear_free(pinfo->r);

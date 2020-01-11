@@ -118,12 +118,12 @@ static int new_dir(X509_LOOKUP *lu)
     return 0;
 }
 
-static void by_dir_hash_free(BY_DIR_HASH *hash)
+static void __cdecl by_dir_hash_free(BY_DIR_HASH *hash)
 {
     OPENSSL_free(hash);
 }
 
-static int by_dir_hash_cmp(const BY_DIR_HASH *const *a,
+static int __cdecl by_dir_hash_cmp(const BY_DIR_HASH *const *a,
                            const BY_DIR_HASH *const *b)
 {
     if ((*a)->hash > (*b)->hash)
@@ -133,7 +133,7 @@ static int by_dir_hash_cmp(const BY_DIR_HASH *const *a,
     return 0;
 }
 
-static void by_dir_entry_free(BY_DIR_ENTRY *ent)
+static void __cdecl by_dir_entry_free(BY_DIR_ENTRY *ent)
 {
     OPENSSL_free(ent->dir);
     sk_BY_DIR_HASH_pop_free(ent->hashes, by_dir_hash_free);

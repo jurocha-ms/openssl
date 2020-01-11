@@ -138,7 +138,7 @@ SCT *SCT_new_from_base64(unsigned char version,
 /*
  * Frees the SCT and the underlying data structures.
  */
-void SCT_free(SCT *sct);
+void __cdecl SCT_free(SCT *sct);
 
 /*
  * Free a stack of SCTs, and the underlying SCTs themselves.
@@ -422,7 +422,7 @@ int CTLOG_new_from_base64(CTLOG ** ct_log,
 /*
  * Deletes a CT log instance and its fields.
  */
-void CTLOG_free(CTLOG *log);
+void __cdecl CTLOG_free(CTLOG *log);
 
 /* Gets the name of the CT log */
 const char *CTLOG_get0_name(const CTLOG *log);

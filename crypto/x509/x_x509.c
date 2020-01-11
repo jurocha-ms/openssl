@@ -197,7 +197,7 @@ static int i2d_x509_aux_internal(X509 *a, unsigned char **pp)
  * the allocation, nor can we allow i2d_X509_CERT_AUX() to increment the
  * allocated buffer.
  */
-int i2d_X509_AUX(X509 *a, unsigned char **pp)
+int __cdecl i2d_X509_AUX(X509 *a, unsigned char **pp)
 {
     int length;
     unsigned char *tmp;

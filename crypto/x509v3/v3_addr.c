@@ -316,7 +316,7 @@ static int IPAddressOrRange_cmp(const IPAddressOrRange *a,
  * IPv4-specific closure over IPAddressOrRange_cmp, since sk_sort()
  * comparison routines are only allowed two arguments.
  */
-static int v4IPAddressOrRange_cmp(const IPAddressOrRange *const *a,
+static int __cdecl v4IPAddressOrRange_cmp(const IPAddressOrRange *const *a,
                                   const IPAddressOrRange *const *b)
 {
     return IPAddressOrRange_cmp(*a, *b, 4);
@@ -326,7 +326,7 @@ static int v4IPAddressOrRange_cmp(const IPAddressOrRange *const *a,
  * IPv6-specific closure over IPAddressOrRange_cmp, since sk_sort()
  * comparison routines are only allowed two arguments.
  */
-static int v6IPAddressOrRange_cmp(const IPAddressOrRange *const *a,
+static int __cdecl v6IPAddressOrRange_cmp(const IPAddressOrRange *const *a,
                                   const IPAddressOrRange *const *b)
 {
     return IPAddressOrRange_cmp(*a, *b, 16);
@@ -666,7 +666,7 @@ int X509v3_addr_get_range(IPAddressOrRange *aor,
  * null-SAFI rule to apply only within a single AFI, which is what I
  * would have expected and is what the following code implements.
  */
-static int IPAddressFamily_cmp(const IPAddressFamily *const *a_,
+static int __cdecl IPAddressFamily_cmp(const IPAddressFamily *const *a_,
                                const IPAddressFamily *const *b_)
 {
     const ASN1_OCTET_STRING *a = (*a_)->addressFamily;

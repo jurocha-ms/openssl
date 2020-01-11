@@ -23,12 +23,12 @@
 #define SET_HOST 0
 #define ADD_HOST 1
 
-static char *str_copy(const char *s)
+static char * __cdecl str_copy(const char *s)
 {
     return OPENSSL_strdup(s);
 }
 
-static void str_free(char *s)
+static void __cdecl str_free(char *s)
 {
     OPENSSL_free(s);
 }
@@ -95,7 +95,7 @@ X509_VERIFY_PARAM *X509_VERIFY_PARAM_new(void)
     return param;
 }
 
-void X509_VERIFY_PARAM_free(X509_VERIFY_PARAM *param)
+void __cdecl X509_VERIFY_PARAM_free(X509_VERIFY_PARAM *param)
 {
     if (param == NULL)
         return;
@@ -531,7 +531,7 @@ static const X509_VERIFY_PARAM default_table[] = {
 
 static STACK_OF(X509_VERIFY_PARAM) *param_table = NULL;
 
-static int table_cmp(const X509_VERIFY_PARAM *a, const X509_VERIFY_PARAM *b)
+static int __cdecl table_cmp(const X509_VERIFY_PARAM *a, const X509_VERIFY_PARAM *b)
 {
     return strcmp(a->name, b->name);
 }
@@ -539,7 +539,7 @@ static int table_cmp(const X509_VERIFY_PARAM *a, const X509_VERIFY_PARAM *b)
 DECLARE_OBJ_BSEARCH_CMP_FN(X509_VERIFY_PARAM, X509_VERIFY_PARAM, table);
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(X509_VERIFY_PARAM, X509_VERIFY_PARAM, table);
 
-static int param_cmp(const X509_VERIFY_PARAM *const *a,
+static int __cdecl param_cmp(const X509_VERIFY_PARAM *const *a,
                      const X509_VERIFY_PARAM *const *b)
 {
     return strcmp((*a)->name, (*b)->name);

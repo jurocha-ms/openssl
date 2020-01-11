@@ -200,7 +200,7 @@ EVP_PKEY *d2i_PUBKEY(EVP_PKEY **a, const unsigned char **pp, long length)
     return pktmp;
 }
 
-int i2d_PUBKEY(EVP_PKEY *a, unsigned char **pp)
+int __cdecl i2d_PUBKEY(EVP_PKEY *a, unsigned char **pp)
 {
     X509_PUBKEY *xpk = NULL;
     int ret;
@@ -238,7 +238,7 @@ RSA *d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length)
     return key;
 }
 
-int i2d_RSA_PUBKEY(RSA *a, unsigned char **pp)
+int __cdecl i2d_RSA_PUBKEY(RSA *a, unsigned char **pp)
 {
     EVP_PKEY *pktmp;
     int ret;
@@ -278,7 +278,7 @@ DSA *d2i_DSA_PUBKEY(DSA **a, const unsigned char **pp, long length)
     return key;
 }
 
-int i2d_DSA_PUBKEY(DSA *a, unsigned char **pp)
+int __cdecl i2d_DSA_PUBKEY(DSA *a, unsigned char **pp)
 {
     EVP_PKEY *pktmp;
     int ret;
@@ -318,7 +318,7 @@ EC_KEY *d2i_EC_PUBKEY(EC_KEY **a, const unsigned char **pp, long length)
     return key;
 }
 
-int i2d_EC_PUBKEY(EC_KEY *a, unsigned char **pp)
+int __cdecl i2d_EC_PUBKEY(EC_KEY *a, unsigned char **pp)
 {
     EVP_PKEY *pktmp;
     int ret;

@@ -135,7 +135,7 @@ X509_STORE *X509_LOOKUP_get_store(const X509_LOOKUP *ctx)
 }
 
 
-static int x509_object_cmp(const X509_OBJECT *const *a,
+static int __cdecl x509_object_cmp(const X509_OBJECT *const *a,
                            const X509_OBJECT *const *b)
 {
     int ret;
@@ -465,7 +465,7 @@ int X509_OBJECT_set1_X509_CRL(X509_OBJECT *a, X509_CRL *obj)
     return 1;
 }
 
-void X509_OBJECT_free(X509_OBJECT *a)
+void __cdecl X509_OBJECT_free(X509_OBJECT *a)
 {
     x509_object_free_internal(a);
     OPENSSL_free(a);

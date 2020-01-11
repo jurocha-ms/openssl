@@ -510,18 +510,18 @@ EVP_PKEY *X509_PUBKEY_get0(X509_PUBKEY *key);
 EVP_PKEY *X509_PUBKEY_get(X509_PUBKEY *key);
 int X509_get_pubkey_parameters(EVP_PKEY *pkey, STACK_OF(X509) *chain);
 long X509_get_pathlen(X509 *x);
-int i2d_PUBKEY(EVP_PKEY *a, unsigned char **pp);
+int __cdecl i2d_PUBKEY(EVP_PKEY *a, unsigned char **pp);
 EVP_PKEY *d2i_PUBKEY(EVP_PKEY **a, const unsigned char **pp, long length);
 # ifndef OPENSSL_NO_RSA
-int i2d_RSA_PUBKEY(RSA *a, unsigned char **pp);
+int __cdecl i2d_RSA_PUBKEY(RSA *a, unsigned char **pp);
 RSA *d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length);
 # endif
 # ifndef OPENSSL_NO_DSA
-int i2d_DSA_PUBKEY(DSA *a, unsigned char **pp);
+int __cdecl i2d_DSA_PUBKEY(DSA *a, unsigned char **pp);
 DSA *d2i_DSA_PUBKEY(DSA **a, const unsigned char **pp, long length);
 # endif
 # ifndef OPENSSL_NO_EC
-int i2d_EC_PUBKEY(EC_KEY *a, unsigned char **pp);
+int __cdecl i2d_EC_PUBKEY(EC_KEY *a, unsigned char **pp);
 EC_KEY *d2i_EC_PUBKEY(EC_KEY **a, const unsigned char **pp, long length);
 # endif
 
@@ -555,7 +555,7 @@ DECLARE_ASN1_FUNCTIONS(X509_CERT_AUX)
     CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_X509, l, p, newf, dupf, freef)
 int X509_set_ex_data(X509 *r, int idx, void *arg);
 void *X509_get_ex_data(X509 *r, int idx);
-int i2d_X509_AUX(X509 *a, unsigned char **pp);
+int __cdecl i2d_X509_AUX(X509 *a, unsigned char **pp);
 X509 *d2i_X509_AUX(X509 **a, const unsigned char **pp, long length);
 
 int i2d_re_X509_tbs(X509 *x, unsigned char **pp);
@@ -605,7 +605,7 @@ DECLARE_ASN1_FUNCTIONS(NETSCAPE_SPKAC)
 DECLARE_ASN1_FUNCTIONS(NETSCAPE_CERT_SEQUENCE)
 
 X509_INFO *X509_INFO_new(void);
-void X509_INFO_free(X509_INFO *a);
+void __cdecl X509_INFO_free(X509_INFO *a);
 char *X509_NAME_oneline(const X509_NAME *a, char *buf, int size);
 
 int ASN1_verify(i2d_of_void *i2d, X509_ALGOR *algor1,

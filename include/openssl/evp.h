@@ -1048,7 +1048,7 @@ EVP_PKEY *d2i_PrivateKey(int type, EVP_PKEY **a, const unsigned char **pp,
                          long length);
 EVP_PKEY *d2i_AutoPrivateKey(EVP_PKEY **a, const unsigned char **pp,
                              long length);
-int i2d_PrivateKey(EVP_PKEY *a, unsigned char **pp);
+int __cdecl i2d_PrivateKey(EVP_PKEY *a, unsigned char **pp);
 
 int EVP_PKEY_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from);
 int EVP_PKEY_missing_parameters(const EVP_PKEY *pkey);
@@ -1329,7 +1329,7 @@ EVP_PKEY_METHOD *EVP_PKEY_meth_new(int id, int flags);
 void EVP_PKEY_meth_get0_info(int *ppkey_id, int *pflags,
                              const EVP_PKEY_METHOD *meth);
 void EVP_PKEY_meth_copy(EVP_PKEY_METHOD *dst, const EVP_PKEY_METHOD *src);
-void EVP_PKEY_meth_free(EVP_PKEY_METHOD *pmeth);
+void __cdecl EVP_PKEY_meth_free(EVP_PKEY_METHOD *pmeth);
 int EVP_PKEY_meth_add0(const EVP_PKEY_METHOD *pmeth);
 int EVP_PKEY_meth_remove(const EVP_PKEY_METHOD *pmeth);
 size_t EVP_PKEY_meth_get_count(void);

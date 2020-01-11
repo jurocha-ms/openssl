@@ -125,12 +125,12 @@ static void x509_name_ex_free(ASN1_VALUE **pval, const ASN1_ITEM *it)
     *pval = NULL;
 }
 
-static void local_sk_X509_NAME_ENTRY_free(STACK_OF(X509_NAME_ENTRY) *ne)
+static void __cdecl local_sk_X509_NAME_ENTRY_free(STACK_OF(X509_NAME_ENTRY) *ne)
 {
     sk_X509_NAME_ENTRY_free(ne);
 }
 
-static void local_sk_X509_NAME_ENTRY_pop_free(STACK_OF(X509_NAME_ENTRY) *ne)
+static void __cdecl local_sk_X509_NAME_ENTRY_pop_free(STACK_OF(X509_NAME_ENTRY) *ne)
 {
     sk_X509_NAME_ENTRY_pop_free(ne, X509_NAME_ENTRY_free);
 }

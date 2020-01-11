@@ -79,7 +79,7 @@ static EX_CALLBACKS *get_and_lock(int class_index)
     return ip;
 }
 
-static void cleanup_cb(EX_CALLBACK *funcs)
+static void __cdecl cleanup_cb(EX_CALLBACK *funcs)
 {
     OPENSSL_free(funcs);
 }

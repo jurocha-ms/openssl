@@ -173,7 +173,7 @@ static int t_tob64(char *dst, const unsigned char *src, int size)
     return 1;
 }
 
-void SRP_user_pwd_free(SRP_user_pwd *user_pwd)
+void __cdecl SRP_user_pwd_free(SRP_user_pwd *user_pwd)
 {
     if (user_pwd == NULL)
         return;

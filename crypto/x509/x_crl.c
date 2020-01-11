@@ -15,7 +15,7 @@
 #include <openssl/x509v3.h>
 #include "x509_lcl.h"
 
-static int X509_REVOKED_cmp(const X509_REVOKED *const *a,
+static int __cdecl X509_REVOKED_cmp(const X509_REVOKED *const *a,
                             const X509_REVOKED *const *b);
 static void setup_idp(X509_CRL *crl, ISSUING_DIST_POINT *idp);
 
@@ -311,7 +311,7 @@ IMPLEMENT_ASN1_FUNCTIONS(X509_CRL)
 
 IMPLEMENT_ASN1_DUP_FUNCTION(X509_CRL)
 
-static int X509_REVOKED_cmp(const X509_REVOKED *const *a,
+static int __cdecl X509_REVOKED_cmp(const X509_REVOKED *const *a,
                             const X509_REVOKED *const *b)
 {
     return (ASN1_STRING_cmp((ASN1_STRING *)&(*a)->serialNumber,

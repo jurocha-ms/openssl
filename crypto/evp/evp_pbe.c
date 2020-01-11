@@ -135,7 +135,7 @@ int EVP_PBE_CipherInit(ASN1_OBJECT *pbe_obj, const char *pass, int passlen,
 
 DECLARE_OBJ_BSEARCH_CMP_FN(EVP_PBE_CTL, EVP_PBE_CTL, pbe2);
 
-static int pbe2_cmp(const EVP_PBE_CTL *pbe1, const EVP_PBE_CTL *pbe2)
+static int __cdecl pbe2_cmp(const EVP_PBE_CTL *pbe1, const EVP_PBE_CTL *pbe2)
 {
     int ret = pbe1->pbe_type - pbe2->pbe_type;
     if (ret)
@@ -146,7 +146,7 @@ static int pbe2_cmp(const EVP_PBE_CTL *pbe1, const EVP_PBE_CTL *pbe2)
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(EVP_PBE_CTL, EVP_PBE_CTL, pbe2);
 
-static int pbe_cmp(const EVP_PBE_CTL *const *a, const EVP_PBE_CTL *const *b)
+static int __cdecl pbe_cmp(const EVP_PBE_CTL *const *a, const EVP_PBE_CTL *const *b)
 {
     int ret = (*a)->pbe_type - (*b)->pbe_type;
     if (ret)
@@ -235,7 +235,7 @@ int EVP_PBE_find(int type, int pbe_nid,
     return 1;
 }
 
-static void free_evp_pbe_ctl(EVP_PBE_CTL *pbe)
+static void __cdecl free_evp_pbe_ctl(EVP_PBE_CTL *pbe)
 {
     OPENSSL_free(pbe);
 }

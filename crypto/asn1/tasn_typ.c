@@ -20,7 +20,7 @@ sname *sname##_new(void) \
 { \
     return ASN1_STRING_type_new(V_##sname); \
 } \
-void sname##_free(sname *x) \
+void __cdecl sname##_free(sname *x) \
 { \
     ASN1_STRING_free(x); \
 }

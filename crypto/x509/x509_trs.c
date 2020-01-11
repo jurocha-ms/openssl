@@ -12,8 +12,8 @@
 #include <openssl/x509v3.h>
 #include "internal/x509_int.h"
 
-static int tr_cmp(const X509_TRUST *const *a, const X509_TRUST *const *b);
-static void trtable_free(X509_TRUST *p);
+static int __cdecl tr_cmp(const X509_TRUST *const *a, const X509_TRUST *const *b);
+static void __cdecl trtable_free(X509_TRUST *p);
 
 static int trust_1oidany(X509_TRUST *trust, X509 *x, int flags);
 static int trust_1oid(X509_TRUST *trust, X509 *x, int flags);
@@ -49,7 +49,7 @@ static X509_TRUST trstandard[] = {
 
 static STACK_OF(X509_TRUST) *trtable = NULL;
 
-static int tr_cmp(const X509_TRUST *const *a, const X509_TRUST *const *b)
+static int __cdecl tr_cmp(const X509_TRUST *const *a, const X509_TRUST *const *b)
 {
     return (*a)->trust - (*b)->trust;
 }
@@ -182,7 +182,7 @@ int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
     return 0;
 }
 
-static void trtable_free(X509_TRUST *p)
+static void __cdecl trtable_free(X509_TRUST *p)
 {
     if (!p)
         return;

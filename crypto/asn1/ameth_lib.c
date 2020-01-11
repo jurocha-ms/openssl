@@ -18,13 +18,13 @@
 
 #include "standard_methods.h"
 
-typedef int sk_cmp_fn_type(const char *const *a, const char *const *b);
+typedef int __cdecl sk_cmp_fn_type(const char *const *a, const char *const *b);
 static STACK_OF(EVP_PKEY_ASN1_METHOD) *app_methods = NULL;
 
 DECLARE_OBJ_BSEARCH_CMP_FN(const EVP_PKEY_ASN1_METHOD *,
                            const EVP_PKEY_ASN1_METHOD *, ameth);
 
-static int ameth_cmp(const EVP_PKEY_ASN1_METHOD *const *a,
+static int __cdecl ameth_cmp(const EVP_PKEY_ASN1_METHOD *const *a,
                      const EVP_PKEY_ASN1_METHOD *const *b)
 {
     return ((*a)->pkey_id - (*b)->pkey_id);

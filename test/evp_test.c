@@ -106,7 +106,7 @@ struct evp_test_buffer_st {
     int count_set;
 };
 
-static void evp_test_buffer_free(EVP_TEST_BUFFER *db)
+static void __cdecl evp_test_buffer_free(EVP_TEST_BUFFER *db)
 {
     if (db != NULL) {
         OPENSSL_free(db->buf);
@@ -919,7 +919,7 @@ static int mac_test_init(EVP_TEST *t, const char *alg)
 }
 
 /* Because OPENSSL_free is a macro, it can't be passed as a function pointer */
-static void openssl_free(char *m)
+static void __cdecl openssl_free(char *m)
 {
     OPENSSL_free(m);
 }

@@ -14,7 +14,7 @@
 
 #include "pcy_int.h"
 
-static int node_cmp(const X509_POLICY_NODE *const *a,
+static int __cdecl node_cmp(const X509_POLICY_NODE *const *a,
                     const X509_POLICY_NODE *const *b)
 {
     return OBJ_cmp((*a)->data->valid_policy, (*b)->data->valid_policy);
@@ -113,7 +113,7 @@ X509_POLICY_NODE *level_add_node(X509_POLICY_LEVEL *level,
     return NULL;
 }
 
-void policy_node_free(X509_POLICY_NODE *node)
+void __cdecl policy_node_free(X509_POLICY_NODE *node)
 {
     OPENSSL_free(node);
 }

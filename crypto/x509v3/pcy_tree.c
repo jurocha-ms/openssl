@@ -598,7 +598,7 @@ static int tree_evaluate(X509_POLICY_TREE *tree)
     return X509_PCY_TREE_VALID;
 }
 
-static void exnode_free(X509_POLICY_NODE *node)
+static void __cdecl exnode_free(X509_POLICY_NODE *node)
 {
     if (node->data && (node->data->flags & POLICY_DATA_FLAG_EXTRA_NODE))
         OPENSSL_free(node);

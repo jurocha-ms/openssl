@@ -49,7 +49,7 @@ UI *UI_new_method(const UI_METHOD *method)
     return ret;
 }
 
-static void free_string(UI_STRING *uis)
+static void __cdecl free_string(UI_STRING *uis)
 {
     if (uis->flags & OUT_STRING_FREEABLE) {
         OPENSSL_free((char *)uis->out_string);

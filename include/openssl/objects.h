@@ -75,7 +75,7 @@ const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
 
 # define _DECLARE_OBJ_BSEARCH_CMP_FN(scope, type1, type2, nm)    \
   static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *, const void *); \
-  static int nm##_cmp(type1 const *, type2 const *); \
+  static int __cdecl nm##_cmp(type1 const *, type2 const *); \
   scope type2 * OBJ_bsearch_##nm(type1 *key, type2 const *base, int num)
 
 # define DECLARE_OBJ_BSEARCH_CMP_FN(type1, type2, cmp)   \

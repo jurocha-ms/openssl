@@ -17,7 +17,7 @@
 #include "internal/evp_int.h"
 #include "internal/numbers.h"
 
-typedef int sk_cmp_fn_type(const char *const *a, const char *const *b);
+typedef int __cdecl sk_cmp_fn_type(const char *const *a, const char *const *b);
 
 static STACK_OF(EVP_PKEY_METHOD) *app_pkey_methods = NULL;
 
@@ -72,7 +72,7 @@ static const EVP_PKEY_METHOD *standard_methods[] = {
 DECLARE_OBJ_BSEARCH_CMP_FN(const EVP_PKEY_METHOD *, const EVP_PKEY_METHOD *,
                            pmeth);
 
-static int pmeth_cmp(const EVP_PKEY_METHOD *const *a,
+static int __cdecl pmeth_cmp(const EVP_PKEY_METHOD *const *a,
                      const EVP_PKEY_METHOD *const *b)
 {
     return ((*a)->pkey_id - (*b)->pkey_id);
@@ -234,7 +234,7 @@ void EVP_PKEY_meth_copy(EVP_PKEY_METHOD *dst, const EVP_PKEY_METHOD *src)
     dst->check = src->check;
 }
 
-void EVP_PKEY_meth_free(EVP_PKEY_METHOD *pmeth)
+void __cdecl EVP_PKEY_meth_free(EVP_PKEY_METHOD *pmeth)
 {
     if (pmeth && (pmeth->flags & EVP_PKEY_FLAG_DYNAMIC))
         OPENSSL_free(pmeth);

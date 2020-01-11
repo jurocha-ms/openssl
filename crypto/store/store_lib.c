@@ -439,7 +439,7 @@ X509_CRL *OSSL_STORE_INFO_get1_CRL(const OSSL_STORE_INFO *info)
 /*
  * Free the OSSL_STORE_INFO
  */
-void OSSL_STORE_INFO_free(OSSL_STORE_INFO *info)
+void __cdecl OSSL_STORE_INFO_free(OSSL_STORE_INFO *info)
 {
     if (info != NULL) {
         switch (info->type) {

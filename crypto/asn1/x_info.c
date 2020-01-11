@@ -26,7 +26,7 @@ X509_INFO *X509_INFO_new(void)
     return ret;
 }
 
-void X509_INFO_free(X509_INFO *x)
+void __cdecl X509_INFO_free(X509_INFO *x)
 {
     if (x == NULL)
         return;

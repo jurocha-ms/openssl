@@ -117,7 +117,7 @@ struct st_dynamic_data_ctx {
  */
 static int dynamic_ex_data_idx = -1;
 
-static void int_free_str(char *s)
+static void __cdecl int_free_str(char *s)
 {
     OPENSSL_free(s);
 }

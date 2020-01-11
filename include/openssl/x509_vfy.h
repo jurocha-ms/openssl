@@ -258,7 +258,7 @@ X509_OBJECT *X509_OBJECT_retrieve_match(STACK_OF(X509_OBJECT) *h,
                                         X509_OBJECT *x);
 int X509_OBJECT_up_ref_count(X509_OBJECT *a);
 X509_OBJECT *X509_OBJECT_new(void);
-void X509_OBJECT_free(X509_OBJECT *a);
+void __cdecl X509_OBJECT_free(X509_OBJECT *a);
 X509_LOOKUP_TYPE X509_OBJECT_get_type(const X509_OBJECT *a);
 X509 *X509_OBJECT_get0_X509(const X509_OBJECT *a);
 int X509_OBJECT_set1_X509(X509_OBJECT *a, X509 *obj);
@@ -526,7 +526,7 @@ void X509_STORE_CTX_set0_dane(X509_STORE_CTX *ctx, SSL_DANE *dane);
 /* X509_VERIFY_PARAM functions */
 
 X509_VERIFY_PARAM *X509_VERIFY_PARAM_new(void);
-void X509_VERIFY_PARAM_free(X509_VERIFY_PARAM *param);
+void __cdecl X509_VERIFY_PARAM_free(X509_VERIFY_PARAM *param);
 int X509_VERIFY_PARAM_inherit(X509_VERIFY_PARAM *to,
                               const X509_VERIFY_PARAM *from);
 int X509_VERIFY_PARAM_set1(X509_VERIFY_PARAM *to,

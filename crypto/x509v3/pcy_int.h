@@ -137,7 +137,7 @@ struct X509_POLICY_TREE_st {
 
 X509_POLICY_DATA *policy_data_new(POLICYINFO *policy, const ASN1_OBJECT *id,
                                   int crit);
-void policy_data_free(X509_POLICY_DATA *data);
+void __cdecl policy_data_free(X509_POLICY_DATA *data);
 
 X509_POLICY_DATA *policy_cache_find_data(const X509_POLICY_CACHE *cache,
                                          const ASN1_OBJECT *id);
@@ -160,7 +160,7 @@ X509_POLICY_NODE *level_add_node(X509_POLICY_LEVEL *level,
                                  X509_POLICY_DATA *data,
                                  X509_POLICY_NODE *parent,
                                  X509_POLICY_TREE *tree);
-void policy_node_free(X509_POLICY_NODE *node);
+void __cdecl policy_node_free(X509_POLICY_NODE *node);
 int policy_node_match(const X509_POLICY_LEVEL *lvl,
                       const X509_POLICY_NODE *node, const ASN1_OBJECT *oid);
 

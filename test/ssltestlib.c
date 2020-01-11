@@ -279,7 +279,7 @@ struct mempacket_st {
     unsigned int type;
 };
 
-static void mempacket_free(MEMPACKET *pkt)
+static void __cdecl mempacket_free(MEMPACKET *pkt)
 {
     if (pkt->data != NULL)
         OPENSSL_free(pkt->data);

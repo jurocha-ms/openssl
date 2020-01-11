@@ -450,7 +450,7 @@ int ssl_load_ciphers(void)
 
 #ifndef OPENSSL_NO_COMP
 
-static int sk_comp_cmp(const SSL_COMP *const *a, const SSL_COMP *const *b)
+static int __cdecl sk_comp_cmp(const SSL_COMP *const *a, const SSL_COMP *const *b)
 {
     return ((*a)->id - (*b)->id);
 }
@@ -1946,7 +1946,7 @@ STACK_OF(SSL_COMP) *SSL_COMP_set0_compression_methods(STACK_OF(SSL_COMP)
     return old_meths;
 }
 
-static void cmeth_free(SSL_COMP *cm)
+static void __cdecl cmeth_free(SSL_COMP *cm)
 {
     OPENSSL_free(cm);
 }

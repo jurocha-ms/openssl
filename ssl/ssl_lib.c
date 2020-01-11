@@ -179,7 +179,7 @@ static void dane_ctx_final(struct dane_ctx_st *dctx)
     dctx->mdmax = 0;
 }
 
-static void tlsa_free(danetls_record *t)
+static void __cdecl tlsa_free(danetls_record *t)
 {
     if (t == NULL)
         return;
@@ -2420,7 +2420,7 @@ int ssl_cipher_id_cmp(const SSL_CIPHER *a, const SSL_CIPHER *b)
     return 0;
 }
 
-int ssl_cipher_ptr_id_cmp(const SSL_CIPHER *const *ap,
+int __cdecl ssl_cipher_ptr_id_cmp(const SSL_CIPHER *const *ap,
                           const SSL_CIPHER *const *bp)
 {
     if ((*ap)->id > (*bp)->id)

@@ -377,7 +377,7 @@ static void names_lh_free_doall(OBJ_NAME *onp)
         OBJ_NAME_remove(onp->name, onp->type);
 }
 
-static void name_funcs_free(NAME_FUNCS *ptr)
+static void __cdecl name_funcs_free(NAME_FUNCS *ptr)
 {
     OPENSSL_free(ptr);
 }

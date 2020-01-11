@@ -33,7 +33,7 @@ SCT *SCT_new(void)
     return sct;
 }
 
-void SCT_free(SCT *sct)
+void __cdecl SCT_free(SCT *sct)
 {
     if (sct == NULL)
         return;

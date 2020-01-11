@@ -553,7 +553,7 @@ void BIO_set_init(BIO *a, int init);
 int BIO_get_init(BIO *a);
 void BIO_set_shutdown(BIO *a, int shut);
 int BIO_get_shutdown(BIO *a);
-void BIO_vfree(BIO *a);
+void __cdecl BIO_vfree(BIO *a);
 int BIO_up_ref(BIO *a);
 int BIO_read(BIO *b, void *data, int dlen);
 int BIO_read_ex(BIO *b, void *data, size_t dlen, size_t *readbytes);

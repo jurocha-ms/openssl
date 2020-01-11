@@ -229,12 +229,12 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
 
 # define DECLARE_ASN1_ENCODE_FUNCTIONS(type, itname, name) \
         type *d2i_##name(type **a, const unsigned char **in, long len); \
-        int i2d_##name(type *a, unsigned char **out); \
+        int __cdecl i2d_##name(type *a, unsigned char **out); \
         DECLARE_ASN1_ITEM(itname)
 
 # define DECLARE_ASN1_ENCODE_FUNCTIONS_const(type, name) \
         type *d2i_##name(type **a, const unsigned char **in, long len); \
-        int i2d_##name(const type *a, unsigned char **out); \
+        int __cdecl i2d_##name(const type *a, unsigned char **out); \
         DECLARE_ASN1_ITEM(name)
 
 # define DECLARE_ASN1_NDEF_FUNCTION(name) \
@@ -246,7 +246,7 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
 
 # define DECLARE_ASN1_ALLOC_FUNCTIONS_name(type, name) \
         type *name##_new(void); \
-        void name##_free(type *a);
+        void __cdecl name##_free(type *a);
 
 # define DECLARE_ASN1_PRINT_FUNCTION(stname) \
         DECLARE_ASN1_PRINT_FUNCTION_fname(stname, stname)
@@ -256,8 +256,8 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
                                          const ASN1_PCTX *pctx);
 
 # define D2I_OF(type) type *(*)(type **,const unsigned char **,long)
-# define I2D_OF(type) int (*)(type *,unsigned char **)
-# define I2D_OF_const(type) int (*)(const type *,unsigned char **)
+# define I2D_OF(type) int (__cdecl *)(type *,unsigned char **)
+# define I2D_OF_const(type) int (__cdecl *)(const type *,unsigned char **)
 
 # define CHECKED_D2I_OF(type, d2i) \
     ((d2i_of_void*) (1 ? d2i : ((D2I_OF(type))0)))
@@ -271,7 +271,7 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
     ((void**) (1 ? p : (type**)0))
 
 # define TYPEDEF_D2I_OF(type) typedef type *d2i_of_##type(type **,const unsigned char **,long)
-# define TYPEDEF_I2D_OF(type) typedef int i2d_of_##type(type *,unsigned char **)
+# define TYPEDEF_I2D_OF(type) typedef int __cdecl i2d_of_##type(type *,unsigned char **)
 # define TYPEDEF_D2I2D_OF(type) TYPEDEF_D2I_OF(type); TYPEDEF_I2D_OF(type)
 
 TYPEDEF_D2I2D_OF(void);
@@ -526,7 +526,7 @@ ASN1_TYPE *ASN1_TYPE_pack_sequence(const ASN1_ITEM *it, void *s, ASN1_TYPE **t);
 void *ASN1_TYPE_unpack_sequence(const ASN1_ITEM *it, const ASN1_TYPE *t);
 
 ASN1_OBJECT *ASN1_OBJECT_new(void);
-void ASN1_OBJECT_free(ASN1_OBJECT *a);
+void __cdecl ASN1_OBJECT_free(ASN1_OBJECT *a);
 int i2d_ASN1_OBJECT(const ASN1_OBJECT *a, unsigned char **pp);
 ASN1_OBJECT *d2i_ASN1_OBJECT(ASN1_OBJECT **a, const unsigned char **pp,
                              long length);
@@ -536,7 +536,7 @@ DECLARE_ASN1_ITEM(ASN1_OBJECT)
 DEFINE_STACK_OF(ASN1_OBJECT)
 
 ASN1_STRING *ASN1_STRING_new(void);
-void ASN1_STRING_free(ASN1_STRING *a);
+void __cdecl ASN1_STRING_free(ASN1_STRING *a);
 void ASN1_STRING_clear_free(ASN1_STRING *a);
 int ASN1_STRING_copy(ASN1_STRING *dst, const ASN1_STRING *str);
 ASN1_STRING *ASN1_STRING_dup(const ASN1_STRING *a);
@@ -715,7 +715,7 @@ void *ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x);
                         CHECKED_PPTR_OF(type, x)))
 
 void *ASN1_item_d2i_fp(const ASN1_ITEM *it, FILE *in, void *x);
-int ASN1_i2d_fp(i2d_of_void *i2d, FILE *out, void *x);
+int __cdecl ASN1_i2d_fp(i2d_of_void *i2d, FILE *out, void *x);
 
 #  define ASN1_i2d_fp_of(type,i2d,out,x) \
     (ASN1_i2d_fp(CHECKED_I2D_OF(type, i2d), \
@@ -742,7 +742,7 @@ void *ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x);
                           CHECKED_PPTR_OF(type, x)))
 
 void *ASN1_item_d2i_bio(const ASN1_ITEM *it, BIO *in, void *x);
-int ASN1_i2d_bio(i2d_of_void *i2d, BIO *out, unsigned char *x);
+int __cdecl ASN1_i2d_bio(i2d_of_void *i2d, BIO *out, unsigned char *x);
 
 #  define ASN1_i2d_bio_of(type,i2d,out,x) \
     (ASN1_i2d_bio(CHECKED_I2D_OF(type, i2d), \

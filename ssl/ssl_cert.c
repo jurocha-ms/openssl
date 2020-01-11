@@ -591,7 +591,7 @@ static int xname_cmp(const X509_NAME *a, const X509_NAME *b)
     return ret;
 }
 
-static int xname_sk_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
+static int __cdecl xname_sk_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
 {
     return xname_cmp(*a, *b);
 }
@@ -682,7 +682,7 @@ int SSL_add_file_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
     X509 *x = NULL;
     X509_NAME *xn = NULL;
     int ret = 1;
-    int (*oldcmp) (const X509_NAME *const *a, const X509_NAME *const *b);
+    int (__cdecl *oldcmp) (const X509_NAME *const *a, const X509_NAME *const *b);
 
     oldcmp = sk_X509_NAME_set_cmp_func(stack, xname_sk_cmp);
 

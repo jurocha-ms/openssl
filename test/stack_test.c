@@ -41,7 +41,7 @@ DEFINE_SPECIAL_STACK_OF_CONST(uchar, unsigned char)
 DEFINE_STACK_OF(SS)
 DEFINE_STACK_OF_CONST(SU)
 
-static int int_compare(const int *const *a, const int *const *b)
+static int __cdecl int_compare(const int *const *a, const int *const *b)
 {
     if (**a < **b)
         return -1;
@@ -165,7 +165,7 @@ end:
     return testresult;
 }
 
-static int uchar_compare(const unsigned char *const *a,
+static int __cdecl uchar_compare(const unsigned char *const *a,
                          const unsigned char *const *b)
 {
     return **a - (signed int)**b;
@@ -251,7 +251,7 @@ end:
     return testresult;
 }
 
-static SS *SS_copy(const SS *p)
+static SS * __cdecl SS_copy(const SS *p)
 {
     SS *q = OPENSSL_malloc(sizeof(*q));
 
@@ -260,7 +260,7 @@ static SS *SS_copy(const SS *p)
     return q;
 }
 
-static void SS_free(SS *p) {
+static void __cdecl SS_free(SS *p) {
     OPENSSL_free(p);
 }
 

@@ -149,7 +149,7 @@ const char *OSSL_STORE_INFO_type_string(int type);
 /*
  * Free the OSSL_STORE_INFO
  */
-void OSSL_STORE_INFO_free(OSSL_STORE_INFO *info);
+void __cdecl OSSL_STORE_INFO_free(OSSL_STORE_INFO *info);
 
 
 /*-

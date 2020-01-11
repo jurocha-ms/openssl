@@ -21,10 +21,10 @@
 #include "ext_dat.h"
 
 static char *strip_spaces(char *name);
-static int sk_strcmp(const char *const *a, const char *const *b);
+static int __cdecl sk_strcmp(const char *const *a, const char *const *b);
 static STACK_OF(OPENSSL_STRING) *get_email(X509_NAME *name,
                                            GENERAL_NAMES *gens);
-static void str_free(OPENSSL_STRING str);
+static void __cdecl str_free(OPENSSL_STRING str);
 static int append_ia5(STACK_OF(OPENSSL_STRING) **sk, const ASN1_IA5STRING *email);
 
 static int ipv4_from_asc(unsigned char *v4, const char *in);
@@ -75,7 +75,7 @@ int X509V3_add_value_uchar(const char *name, const unsigned char *value,
 
 /* Free function for STACK_OF(CONF_VALUE) */
 
-void X509V3_conf_free(CONF_VALUE *conf)
+void __cdecl X509V3_conf_free(CONF_VALUE *conf)
 {
     if (!conf)
         return;
@@ -410,7 +410,7 @@ int name_cmp(const char *name, const char *cmp)
     return 1;
 }
 
-static int sk_strcmp(const char *const *a, const char *const *b)
+static int __cdecl sk_strcmp(const char *const *a, const char *const *b)
 {
     return strcmp(*a, *b);
 }
@@ -491,7 +491,7 @@ static STACK_OF(OPENSSL_STRING) *get_email(X509_NAME *name,
     return ret;
 }
 
-static void str_free(OPENSSL_STRING str)
+static void __cdecl str_free(OPENSSL_STRING str)
 {
     OPENSSL_free(str);
 }

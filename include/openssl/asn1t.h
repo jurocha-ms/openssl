@@ -822,7 +822,7 @@ typedef struct ASN1_STREAM_ARG_st {
         { \
                 return (stname *)ASN1_item_new(ASN1_ITEM_rptr(itname)); \
         } \
-        void fname##_free(stname *a) \
+        void __cdecl fname##_free(stname *a) \
         { \
                 ASN1_item_free((ASN1_VALUE *)a, ASN1_ITEM_rptr(itname)); \
         }
@@ -836,7 +836,7 @@ typedef struct ASN1_STREAM_ARG_st {
         { \
                 return (stname *)ASN1_item_d2i((ASN1_VALUE **)a, in, len, ASN1_ITEM_rptr(itname));\
         } \
-        int i2d_##fname(stname *a, unsigned char **out) \
+        int __cdecl i2d_##fname(stname *a, unsigned char **out) \
         { \
                 return ASN1_item_i2d((ASN1_VALUE *)a, out, ASN1_ITEM_rptr(itname));\
         }
@@ -869,7 +869,7 @@ typedef struct ASN1_STREAM_ARG_st {
         { \
                 return (stname *)ASN1_item_d2i((ASN1_VALUE **)a, in, len, ASN1_ITEM_rptr(itname));\
         } \
-        int i2d_##fname(const stname *a, unsigned char **out) \
+        int __cdecl i2d_##fname(const stname *a, unsigned char **out) \
         { \
                 return ASN1_item_i2d((ASN1_VALUE *)a, out, ASN1_ITEM_rptr(itname));\
         }

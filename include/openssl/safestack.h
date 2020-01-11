@@ -21,9 +21,9 @@ extern "C" {
 
 # define SKM_DEFINE_STACK_OF(t1, t2, t3) \
     STACK_OF(t1); \
-    typedef int (*sk_##t1##_compfunc)(const t3 * const *a, const t3 *const *b); \
-    typedef void (*sk_##t1##_freefunc)(t3 *a); \
-    typedef t3 * (*sk_##t1##_copyfunc)(const t3 *a); \
+    typedef int (__cdecl *sk_##t1##_compfunc)(const t3 * const *a, const t3 *const *b); \
+    typedef void (__cdecl *sk_##t1##_freefunc)(t3 *a); \
+    typedef t3 * (__cdecl *sk_##t1##_copyfunc)(const t3 *a); \
     static ossl_unused ossl_inline int sk_##t1##_num(const STACK_OF(t1) *sk) \
     { \
         return OPENSSL_sk_num((const OPENSSL_STACK *)sk); \

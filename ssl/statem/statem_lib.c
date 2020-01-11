@@ -2218,7 +2218,7 @@ int create_synthetic_message_hash(SSL *s, const unsigned char *hashval,
     return 1;
 }
 
-static int ca_dn_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
+static int __cdecl ca_dn_cmp(const X509_NAME *const *a, const X509_NAME *const *b)
 {
     return X509_NAME_cmp(*a, *b);
 }

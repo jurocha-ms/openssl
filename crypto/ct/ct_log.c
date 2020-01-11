@@ -260,7 +260,7 @@ err:
 }
 
 /* Frees CT log and associated structures */
-void CTLOG_free(CTLOG *log)
+void __cdecl CTLOG_free(CTLOG *log)
 {
     if (log != NULL) {
         OPENSSL_free(log->name);

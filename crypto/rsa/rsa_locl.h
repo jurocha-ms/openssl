@@ -125,8 +125,8 @@ RSA_PSS_PARAMS *rsa_pss_params_create(const EVP_MD *sigmd,
 int rsa_pss_get_param(const RSA_PSS_PARAMS *pss, const EVP_MD **pmd,
                       const EVP_MD **pmgf1md, int *psaltlen);
 /* internal function to clear and free multi-prime parameters */
-void rsa_multip_info_free_ex(RSA_PRIME_INFO *pinfo);
-void rsa_multip_info_free(RSA_PRIME_INFO *pinfo);
+void __cdecl rsa_multip_info_free_ex(RSA_PRIME_INFO *pinfo);
+void __cdecl rsa_multip_info_free(RSA_PRIME_INFO *pinfo);
 RSA_PRIME_INFO *rsa_multip_info_new(void);
 int rsa_multip_calc_product(RSA *rsa);
 int rsa_multip_cap(int bits);

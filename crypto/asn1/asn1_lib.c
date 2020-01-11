@@ -332,7 +332,7 @@ void asn1_string_embed_free(ASN1_STRING *a, int embed)
         OPENSSL_free(a);
 }
 
-void ASN1_STRING_free(ASN1_STRING *a)
+void __cdecl ASN1_STRING_free(ASN1_STRING *a)
 {
     if (a == NULL)
         return;

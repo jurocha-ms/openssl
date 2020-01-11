@@ -15,7 +15,7 @@
 #ifndef NO_OLD_ASN1
 
 # ifndef OPENSSL_NO_STDIO
-int ASN1_i2d_fp(i2d_of_void *i2d, FILE *out, void *x)
+int __cdecl ASN1_i2d_fp(i2d_of_void *i2d, FILE *out, void *x)
 {
     BIO *b;
     int ret;
@@ -31,7 +31,7 @@ int ASN1_i2d_fp(i2d_of_void *i2d, FILE *out, void *x)
 }
 # endif
 
-int ASN1_i2d_bio(i2d_of_void *i2d, BIO *out, unsigned char *x)
+int __cdecl ASN1_i2d_bio(i2d_of_void *i2d, BIO *out, unsigned char *x)
 {
     char *b;
     unsigned char *p;

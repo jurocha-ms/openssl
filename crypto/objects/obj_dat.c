@@ -38,14 +38,14 @@ struct added_obj_st {
 static int new_nid = NUM_NID;
 static LHASH_OF(ADDED_OBJ) *added = NULL;
 
-static int sn_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
+static int __cdecl sn_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
 {
     return strcmp((*a)->sn, nid_objs[*b].sn);
 }
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(const ASN1_OBJECT *, unsigned int, sn);
 
-static int ln_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
+static int __cdecl ln_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
 {
     return strcmp((*a)->ln, nid_objs[*b].ln);
 }
@@ -298,7 +298,7 @@ const char *OBJ_nid2ln(int n)
     }
 }
 
-static int obj_cmp(const ASN1_OBJECT *const *ap, const unsigned int *bp)
+static int __cdecl obj_cmp(const ASN1_OBJECT *const *ap, const unsigned int *bp)
 {
     int j;
     const ASN1_OBJECT *a = *ap;

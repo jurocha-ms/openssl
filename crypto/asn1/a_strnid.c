@@ -13,8 +13,8 @@
 #include <openssl/objects.h>
 
 static STACK_OF(ASN1_STRING_TABLE) *stable = NULL;
-static void st_free(ASN1_STRING_TABLE *tbl);
-static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
+static void __cdecl st_free(ASN1_STRING_TABLE *tbl);
+static int __cdecl sk_table_cmp(const ASN1_STRING_TABLE *const *a,
                         const ASN1_STRING_TABLE *const *b);
 
 /*
@@ -109,7 +109,7 @@ ASN1_STRING *ASN1_STRING_set_by_NID(ASN1_STRING **out,
 
 #include "tbl_standard.h"
 
-static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
+static int __cdecl sk_table_cmp(const ASN1_STRING_TABLE *const *a,
                         const ASN1_STRING_TABLE *const *b)
 {
     return (*a)->nid - (*b)->nid;
@@ -117,7 +117,7 @@ static int sk_table_cmp(const ASN1_STRING_TABLE *const *a,
 
 DECLARE_OBJ_BSEARCH_CMP_FN(ASN1_STRING_TABLE, ASN1_STRING_TABLE, table);
 
-static int table_cmp(const ASN1_STRING_TABLE *a, const ASN1_STRING_TABLE *b)
+static int __cdecl table_cmp(const ASN1_STRING_TABLE *a, const ASN1_STRING_TABLE *b)
 {
     return a->nid - b->nid;
 }
@@ -212,7 +212,7 @@ void ASN1_STRING_TABLE_cleanup(void)
     sk_ASN1_STRING_TABLE_pop_free(tmp, st_free);
 }
 
-static void st_free(ASN1_STRING_TABLE *tbl)
+static void __cdecl st_free(ASN1_STRING_TABLE *tbl)
 {
     if (tbl->flags & STABLE_FLAGS_MALLOC)
         OPENSSL_free(tbl);

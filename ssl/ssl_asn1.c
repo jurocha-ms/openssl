@@ -101,7 +101,7 @@ static void ssl_session_sinit(ASN1_OCTET_STRING **dest, ASN1_OCTET_STRING *os,
         *dest = NULL;
 }
 
-int i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp)
+int __cdecl i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp)
 {
 
     SSL_SESSION_ASN1 as;

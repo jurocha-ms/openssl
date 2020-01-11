@@ -47,17 +47,17 @@ static char *strip_end(char *name);
 static MIME_HEADER *mime_hdr_new(const char *name, const char *value);
 static int mime_hdr_addparam(MIME_HEADER *mhdr, const char *name, const char *value);
 static STACK_OF(MIME_HEADER) *mime_parse_hdr(BIO *bio);
-static int mime_hdr_cmp(const MIME_HEADER *const *a,
+static int __cdecl mime_hdr_cmp(const MIME_HEADER *const *a,
                         const MIME_HEADER *const *b);
-static int mime_param_cmp(const MIME_PARAM *const *a,
+static int __cdecl mime_param_cmp(const MIME_PARAM *const *a,
                           const MIME_PARAM *const *b);
-static void mime_param_free(MIME_PARAM *param);
+static void __cdecl mime_param_free(MIME_PARAM *param);
 static int mime_bound_check(char *line, int linelen, const char *bound, int blen);
 static int multi_split(BIO *bio, const char *bound, STACK_OF(BIO) **ret);
 static int strip_eol(char *linebuf, int *plen, int flags);
 static MIME_HEADER *mime_hdr_find(STACK_OF(MIME_HEADER) *hdrs, const char *name);
 static MIME_PARAM *mime_param_find(MIME_HEADER *hdr, const char *name);
-static void mime_hdr_free(MIME_HEADER *hdr);
+static void __cdecl mime_hdr_free(MIME_HEADER *hdr);
 
 #define MAX_SMLEN 1024
 #define mime_debug(x)           /* x */
@@ -854,7 +854,7 @@ static int mime_hdr_addparam(MIME_HEADER *mhdr, const char *name, const char *va
     return 0;
 }
 
-static int mime_hdr_cmp(const MIME_HEADER *const *a,
+static int __cdecl mime_hdr_cmp(const MIME_HEADER *const *a,
                         const MIME_HEADER *const *b)
 {
     if (!(*a)->name || !(*b)->name)
@@ -863,7 +863,7 @@ static int mime_hdr_cmp(const MIME_HEADER *const *a,
     return strcmp((*a)->name, (*b)->name);
 }
 
-static int mime_param_cmp(const MIME_PARAM *const *a,
+static int __cdecl mime_param_cmp(const MIME_PARAM *const *a,
                           const MIME_PARAM *const *b)
 {
     if (!(*a)->param_name || !(*b)->param_name)
@@ -897,7 +897,7 @@ static MIME_PARAM *mime_param_find(MIME_HEADER *hdr, const char *name)
     return sk_MIME_PARAM_value(hdr->params, idx);
 }
 
-static void mime_hdr_free(MIME_HEADER *hdr)
+static void __cdecl mime_hdr_free(MIME_HEADER *hdr)
 {
     if (hdr == NULL)
         return;
@@ -908,7 +908,7 @@ static void mime_hdr_free(MIME_HEADER *hdr)
     OPENSSL_free(hdr);
 }
 
-static void mime_param_free(MIME_PARAM *param)
+static void __cdecl mime_param_free(MIME_PARAM *param)
 {
     OPENSSL_free(param->param_name);
     OPENSSL_free(param->param_value);

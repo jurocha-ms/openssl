@@ -933,7 +933,7 @@ EC_GROUP *d2i_ECPKParameters(EC_GROUP **a, const unsigned char **in, long len)
     return group;
 }
 
-int i2d_ECPKParameters(const EC_GROUP *a, unsigned char **out)
+int __cdecl i2d_ECPKParameters(const EC_GROUP *a, unsigned char **out)
 {
     int ret = 0;
     ECPKPARAMETERS *tmp = EC_GROUP_get_ecpkparameters(a, NULL);
@@ -1031,7 +1031,7 @@ EC_KEY *d2i_ECPrivateKey(EC_KEY **a, const unsigned char **in, long len)
     return NULL;
 }
 
-int i2d_ECPrivateKey(EC_KEY *a, unsigned char **out)
+int __cdecl i2d_ECPrivateKey(EC_KEY *a, unsigned char **out)
 {
     int ret = 0, ok = 0;
     unsigned char *priv= NULL, *pub= NULL;
@@ -1217,7 +1217,7 @@ ECDSA_SIG *ECDSA_SIG_new(void)
     return sig;
 }
 
-void ECDSA_SIG_free(ECDSA_SIG *sig)
+void __cdecl ECDSA_SIG_free(ECDSA_SIG *sig)
 {
     if (sig == NULL)
         return;

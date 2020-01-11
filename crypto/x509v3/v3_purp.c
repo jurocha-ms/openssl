@@ -36,8 +36,8 @@ static int check_purpose_timestamp_sign(const X509_PURPOSE *xp, const X509 *x,
 static int no_check(const X509_PURPOSE *xp, const X509 *x, int ca);
 static int ocsp_helper(const X509_PURPOSE *xp, const X509 *x, int ca);
 
-static int xp_cmp(const X509_PURPOSE *const *a, const X509_PURPOSE *const *b);
-static void xptable_free(X509_PURPOSE *p);
+static int __cdecl xp_cmp(const X509_PURPOSE *const *a, const X509_PURPOSE *const *b);
+static void __cdecl xptable_free(X509_PURPOSE *p);
 
 static X509_PURPOSE xstandard[] = {
     {X509_PURPOSE_SSL_CLIENT, X509_TRUST_SSL_CLIENT, 0,
@@ -65,7 +65,7 @@ static X509_PURPOSE xstandard[] = {
 
 static STACK_OF(X509_PURPOSE) *xptable = NULL;
 
-static int xp_cmp(const X509_PURPOSE *const *a, const X509_PURPOSE *const *b)
+static int __cdecl xp_cmp(const X509_PURPOSE *const *a, const X509_PURPOSE *const *b)
 {
     return (*a)->purpose - (*b)->purpose;
 }
@@ -214,7 +214,7 @@ int X509_PURPOSE_add(int id, int trust, int flags,
     return 0;
 }
 
-static void xptable_free(X509_PURPOSE *p)
+static void __cdecl xptable_free(X509_PURPOSE *p)
 {
     if (!p)
         return;
@@ -253,7 +253,7 @@ int X509_PURPOSE_get_trust(const X509_PURPOSE *xp)
     return xp->trust;
 }
 
-static int nid_cmp(const int *a, const int *b)
+static int __cdecl nid_cmp(const int *a, const int *b)
 {
     return *a - *b;
 }

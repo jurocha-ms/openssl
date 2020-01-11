@@ -345,7 +345,7 @@ ASN1_OBJECT *ASN1_OBJECT_new(void)
     return ret;
 }
 
-void ASN1_OBJECT_free(ASN1_OBJECT *a)
+void __cdecl ASN1_OBJECT_free(ASN1_OBJECT *a)
 {
     if (a == NULL)
         return;

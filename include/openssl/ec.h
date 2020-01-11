@@ -791,7 +791,7 @@ int EC_GROUP_get_pentanomial_basis(const EC_GROUP *, unsigned int *k1,
 # define OPENSSL_EC_NAMED_CURVE     0x001
 
 EC_GROUP *d2i_ECPKParameters(EC_GROUP **, const unsigned char **in, long len);
-int i2d_ECPKParameters(const EC_GROUP *, unsigned char **out);
+int __cdecl i2d_ECPKParameters(const EC_GROUP *, unsigned char **out);
 
 # define d2i_ECPKParameters_bio(bp,x) ASN1_d2i_bio_of(EC_GROUP,NULL,d2i_ECPKParameters,bp,x)
 # define i2d_ECPKParameters_bio(bp,x) ASN1_i2d_bio_of_const(EC_GROUP,i2d_ECPKParameters,bp,x)
@@ -1022,7 +1022,7 @@ EC_KEY *d2i_ECPrivateKey(EC_KEY **key, const unsigned char **in, long len);
  *               of bytes needed).
  *  \return 1 on success and 0 if an error occurred.
  */
-int i2d_ECPrivateKey(EC_KEY *key, unsigned char **out);
+int __cdecl i2d_ECPrivateKey(EC_KEY *key, unsigned char **out);
 
 /********************************************************************/
 /*        de- and encoding functions for EC parameters              */
@@ -1132,7 +1132,7 @@ ECDSA_SIG *ECDSA_SIG_new(void);
 /** frees a ECDSA_SIG structure
  *  \param  sig  pointer to the ECDSA_SIG structure
  */
-void ECDSA_SIG_free(ECDSA_SIG *sig);
+void __cdecl ECDSA_SIG_free(ECDSA_SIG *sig);
 
 /** DER encode content of ECDSA_SIG object (note: this function modifies *pp
  *  (*pp += length of the DER encoded signature)).
@@ -1141,7 +1141,7 @@ void ECDSA_SIG_free(ECDSA_SIG *sig);
  *  \return the length of the DER encoded ECDSA_SIG object or a negative value
  *          on error
  */
-int i2d_ECDSA_SIG(const ECDSA_SIG *sig, unsigned char **pp);
+int __cdecl i2d_ECDSA_SIG(const ECDSA_SIG *sig, unsigned char **pp);
 
 /** Decodes a DER encoded ECDSA signature (note: this function changes *pp
  *  (*pp += len)).

@@ -47,7 +47,7 @@ typedef struct SRP_user_pwd_st {
     char *info;
 } SRP_user_pwd;
 
-void SRP_user_pwd_free(SRP_user_pwd *user_pwd);
+void __cdecl SRP_user_pwd_free(SRP_user_pwd *user_pwd);
 
 DEFINE_STACK_OF(SRP_user_pwd)
 

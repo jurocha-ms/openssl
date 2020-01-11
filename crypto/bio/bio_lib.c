@@ -170,7 +170,7 @@ int BIO_get_shutdown(BIO *a)
     return a->shutdown;
 }
 
-void BIO_vfree(BIO *a)
+void __cdecl BIO_vfree(BIO *a)
 {
     BIO_free(a);
 }

@@ -15,7 +15,7 @@
 
 /* Policy Node routines */
 
-void policy_data_free(X509_POLICY_DATA *data)
+void __cdecl policy_data_free(X509_POLICY_DATA *data)
 {
     if (data == NULL)
         return;
