@@ -16,7 +16,7 @@ extern "C" {
 
 typedef struct stack_st OPENSSL_STACK; /* Use STACK_OF(...) instead */
 
-typedef int (*OPENSSL_sk_compfunc)(const void *, const void *);
+typedef int (__cdecl *OPENSSL_sk_compfunc)(const void *, const void *);
 typedef void (*OPENSSL_sk_freefunc)(void *);
 typedef void *(*OPENSSL_sk_copyfunc)(const void *);
 

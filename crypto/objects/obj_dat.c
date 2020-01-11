@@ -580,14 +580,14 @@ int OBJ_sn2nid(const char *s)
 }
 
 const void *OBJ_bsearch_(const void *key, const void *base, int num, int size,
-                         int (*cmp) (const void *, const void *))
+                         int (__cdecl *cmp) (const void *, const void *))
 {
     return OBJ_bsearch_ex_(key, base, num, size, cmp, 0);
 }
 
 const void *OBJ_bsearch_ex_(const void *key, const void *base_, int num,
                             int size,
-                            int (*cmp) (const void *, const void *),
+                            int (__cdecl *cmp) (const void *, const void *),
                             int flags)
 {
     const char *base = base_;

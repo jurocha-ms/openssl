@@ -67,14 +67,14 @@ int OBJ_ln2nid(const char *s);
 int OBJ_sn2nid(const char *s);
 int OBJ_cmp(const ASN1_OBJECT *a, const ASN1_OBJECT *b);
 const void *OBJ_bsearch_(const void *key, const void *base, int num, int size,
-                         int (*cmp) (const void *, const void *));
+                         int (__cdecl *cmp) (const void *, const void *));
 const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
                             int size,
-                            int (*cmp) (const void *, const void *),
+                            int (__cdecl *cmp) (const void *, const void *),
                             int flags);
 
 # define _DECLARE_OBJ_BSEARCH_CMP_FN(scope, type1, type2, nm)    \
-  static int nm##_cmp_BSEARCH_CMP_FN(const void *, const void *); \
+  static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *, const void *); \
   static int nm##_cmp(type1 const *, type2 const *); \
   scope type2 * OBJ_bsearch_##nm(type1 *key, type2 const *base, int num)
 
@@ -111,7 +111,7 @@ const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
  */
 
 # define IMPLEMENT_OBJ_BSEARCH_CMP_FN(type1, type2, nm)  \
-  static int nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
+  static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
       { \
       type1 const *a = a_; \
       type2 const *b = b_; \
@@ -125,7 +125,7 @@ const void *OBJ_bsearch_ex_(const void *key, const void *base, int num,
       extern void dummy_prototype(void)
 
 # define IMPLEMENT_OBJ_BSEARCH_GLOBAL_CMP_FN(type1, type2, nm)   \
-  static int nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
+  static int __cdecl nm##_cmp_BSEARCH_CMP_FN(const void *a_, const void *b_)    \
       { \
       type1 const *a = a_; \
       type2 const *b = b_; \
