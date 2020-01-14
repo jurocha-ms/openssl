@@ -357,7 +357,7 @@ void OPENSSL_sk_zero(OPENSSL_STACK *st)
     st->num = 0;
 }
 
-void OPENSSL_sk_pop_free(OPENSSL_STACK *st, OPENSSL_sk_freefunc func)
+void __cdecl OPENSSL_sk_pop_free(OPENSSL_STACK *st, OPENSSL_sk_freefunc func)
 {
     int i;
 

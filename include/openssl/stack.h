@@ -17,8 +17,8 @@ extern "C" {
 typedef struct stack_st OPENSSL_STACK; /* Use STACK_OF(...) instead */
 
 typedef int (__cdecl *OPENSSL_sk_compfunc)(const void *, const void *);
-typedef void (*OPENSSL_sk_freefunc)(void *);
-typedef void *(*OPENSSL_sk_copyfunc)(const void *);
+typedef void (__cdecl *OPENSSL_sk_freefunc)(void *);
+typedef void *(__cdecl *OPENSSL_sk_copyfunc)(const void *);
 
 int OPENSSL_sk_num(const OPENSSL_STACK *);
 void *OPENSSL_sk_value(const OPENSSL_STACK *, int);
@@ -30,7 +30,7 @@ OPENSSL_STACK *OPENSSL_sk_new_null(void);
 OPENSSL_STACK *OPENSSL_sk_new_reserve(OPENSSL_sk_compfunc c, int n);
 int OPENSSL_sk_reserve(OPENSSL_STACK *st, int n);
 void OPENSSL_sk_free(OPENSSL_STACK *);
-void OPENSSL_sk_pop_free(OPENSSL_STACK *st, void (*func) (void *));
+void __cdecl OPENSSL_sk_pop_free(OPENSSL_STACK *st, void (__cdecl *func) (void *));
 OPENSSL_STACK *OPENSSL_sk_deep_copy(const OPENSSL_STACK *,
                                     OPENSSL_sk_copyfunc c,
                                     OPENSSL_sk_freefunc f);
