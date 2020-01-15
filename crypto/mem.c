@@ -23,11 +23,11 @@
  */
 static int allow_customize = 1;
 
-static void *(*malloc_impl)(size_t, const char *, int)
+static void *(__cdecl *malloc_impl)(size_t, const char *, int)
     = CRYPTO_malloc;
-static void *(*realloc_impl)(void *, size_t, const char *, int)
+static void *(__cdecl *realloc_impl)(void *, size_t, const char *, int)
     = CRYPTO_realloc;
-static void (*free_impl)(void *, const char *, int)
+static void (__cdecl *free_impl)(void *, const char *, int)
     = CRYPTO_free;
 
 #ifndef OPENSSL_NO_CRYPTO_MDEBUG
@@ -58,9 +58,9 @@ static int call_malloc_debug = 0;
 #endif
 
 int CRYPTO_set_mem_functions(
-        void *(*m)(size_t, const char *, int),
-        void *(*r)(void *, size_t, const char *, int),
-        void (*f)(void *, const char *, int))
+        void *(__cdecl *m)(size_t, const char *, int),
+        void *(__cdecl *r)(void *, size_t, const char *, int),
+        void (__cdecl *f)(void *, const char *, int))
 {
     if (!allow_customize)
         return 0;
@@ -82,9 +82,9 @@ int CRYPTO_set_mem_debug(int flag)
 }
 
 void CRYPTO_get_mem_functions(
-        void *(**m)(size_t, const char *, int),
-        void *(**r)(void *, size_t, const char *, int),
-        void (**f)(void *, const char *, int))
+        void *(__cdecl **m)(size_t, const char *, int),
+        void *(__cdecl **r)(void *, size_t, const char *, int),
+        void (__cdecl **f)(void *, const char *, int))
 {
     if (m != NULL)
         *m = malloc_impl;
@@ -189,7 +189,7 @@ void ossl_malloc_setup_failures(void)
 }
 #endif
 
-void *CRYPTO_malloc(size_t num, const char *file, int line)
+void * __cdecl CRYPTO_malloc(size_t num, const char *file, int line)
 {
     void *ret = NULL;
 
@@ -235,7 +235,7 @@ void *CRYPTO_zalloc(size_t num, const char *file, int line)
     return ret;
 }
 
-void *CRYPTO_realloc(void *str, size_t num, const char *file, int line)
+void * __cdecl CRYPTO_realloc(void *str, size_t num, const char *file, int line)
 {
     INCREMENT(realloc_count);
     if (realloc_impl != NULL && realloc_impl != &CRYPTO_realloc)
@@ -292,7 +292,7 @@ void *CRYPTO_clear_realloc(void *str, size_t old_len, size_t num,
     return ret;
 }
 
-void CRYPTO_free(void *str, const char *file, int line)
+void __cdecl CRYPTO_free(void *str, const char *file, int line)
 {
     INCREMENT(free_count);
     if (free_impl != NULL && free_impl != &CRYPTO_free) {

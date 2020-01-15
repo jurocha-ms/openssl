@@ -254,23 +254,23 @@ typedef struct crypto_threadid_st {
 # endif /* OPENSSL_API_COMPAT < 0x10100000L */
 
 int CRYPTO_set_mem_functions(
-        void *(*m) (size_t, const char *, int),
-        void *(*r) (void *, size_t, const char *, int),
-        void (*f) (void *, const char *, int));
+        void *(__cdecl *m) (size_t, const char *, int),
+        void *(__cdecl *r) (void *, size_t, const char *, int),
+        void (__cdecl *f) (void *, const char *, int));
 int CRYPTO_set_mem_debug(int flag);
 void CRYPTO_get_mem_functions(
-        void *(**m) (size_t, const char *, int),
-        void *(**r) (void *, size_t, const char *, int),
-        void (**f) (void *, const char *, int));
+        void *(__cdecl **m) (size_t, const char *, int),
+        void *(__cdecl **r) (void *, size_t, const char *, int),
+        void (__cdecl **f) (void *, const char *, int));
 
-void *CRYPTO_malloc(size_t num, const char *file, int line);
+void * __cdecl CRYPTO_malloc(size_t num, const char *file, int line);
 void *CRYPTO_zalloc(size_t num, const char *file, int line);
 void *CRYPTO_memdup(const void *str, size_t siz, const char *file, int line);
 char *CRYPTO_strdup(const char *str, const char *file, int line);
 char *CRYPTO_strndup(const char *str, size_t s, const char *file, int line);
-void CRYPTO_free(void *ptr, const char *file, int line);
+void __cdecl CRYPTO_free(void *ptr, const char *file, int line);
 void CRYPTO_clear_free(void *ptr, size_t num, const char *file, int line);
-void *CRYPTO_realloc(void *addr, size_t num, const char *file, int line);
+void * __cdecl CRYPTO_realloc(void *addr, size_t num, const char *file, int line);
 void *CRYPTO_clear_realloc(void *addr, size_t old_num, size_t num,
                            const char *file, int line);
 

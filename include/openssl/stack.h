@@ -20,8 +20,8 @@ typedef int (__cdecl *OPENSSL_sk_compfunc)(const void *, const void *);
 typedef void (__cdecl *OPENSSL_sk_freefunc)(void *);
 typedef void *(__cdecl *OPENSSL_sk_copyfunc)(const void *);
 
-int OPENSSL_sk_num(const OPENSSL_STACK *);
-void *OPENSSL_sk_value(const OPENSSL_STACK *, int);
+int __cdecl OPENSSL_sk_num(const OPENSSL_STACK *);
+void * __cdecl OPENSSL_sk_value(const OPENSSL_STACK *, int);
 
 void *OPENSSL_sk_set(OPENSSL_STACK *st, int i, const void *data);
 

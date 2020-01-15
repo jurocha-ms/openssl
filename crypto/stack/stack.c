@@ -377,12 +377,12 @@ void OPENSSL_sk_free(OPENSSL_STACK *st)
     OPENSSL_free(st);
 }
 
-int OPENSSL_sk_num(const OPENSSL_STACK *st)
+int __cdecl OPENSSL_sk_num(const OPENSSL_STACK *st)
 {
     return st == NULL ? -1 : st->num;
 }
 
-void *OPENSSL_sk_value(const OPENSSL_STACK *st, int i)
+void * __cdecl OPENSSL_sk_value(const OPENSSL_STACK *st, int i)
 {
     if (st == NULL || i < 0 || i >= st->num)
         return NULL;

@@ -656,9 +656,9 @@ void ENGINE_add_conf_module(void);
  * same static data as the calling application (or library), and thus whether
  * these callbacks need to be set or not.
  */
-typedef void *(*dyn_MEM_malloc_fn) (size_t, const char *, int);
-typedef void *(*dyn_MEM_realloc_fn) (void *, size_t, const char *, int);
-typedef void (*dyn_MEM_free_fn) (void *, const char *, int);
+typedef void *(__cdecl *dyn_MEM_malloc_fn) (size_t, const char *, int);
+typedef void *(__cdecl *dyn_MEM_realloc_fn) (void *, size_t, const char *, int);
+typedef void (__cdecl *dyn_MEM_free_fn) (void *, const char *, int);
 typedef struct st_dynamic_MEM_fns {
     dyn_MEM_malloc_fn malloc_fn;
     dyn_MEM_realloc_fn realloc_fn;
