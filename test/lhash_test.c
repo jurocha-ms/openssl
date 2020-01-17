@@ -39,7 +39,7 @@ static unsigned long int int_hash(const int *p)
     return 3 & *p;      /* To force collisions */
 }
 
-static int int_cmp(const int *p, const int *q)
+static int __cdecl int_cmp(const int *p, const int *q)
 {
     return *p != *q;
 }

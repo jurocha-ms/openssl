@@ -31,7 +31,7 @@ static void unimplemented(void)
     TerminateProcess(GetCurrentProcess(), 1);
 }
 
-void OPENSSL_Uplink(volatile void **table, int index)
+void __cdecl OPENSSL_Uplink(volatile void **table, int index)
 {
     static HMODULE volatile apphandle = NULL;
     static void **volatile applinktable = NULL;

@@ -85,7 +85,7 @@ static unsigned long added_obj_hash(const ADDED_OBJ *ca)
     return ret;
 }
 
-static int added_obj_cmp(const ADDED_OBJ *ca, const ADDED_OBJ *cb)
+static int __cdecl added_obj_cmp(const ADDED_OBJ *ca, const ADDED_OBJ *cb)
 {
     ASN1_OBJECT *a, *b;
     int i;

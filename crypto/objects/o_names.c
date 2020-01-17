@@ -61,7 +61,7 @@ static STACK_OF(NAME_FUNCS) *name_funcs_stack;
  */
 
 static unsigned long obj_name_hash(const OBJ_NAME *a);
-static int obj_name_cmp(const OBJ_NAME *a, const OBJ_NAME *b);
+static int __cdecl obj_name_cmp(const OBJ_NAME *a, const OBJ_NAME *b);
 
 static CRYPTO_ONCE init = CRYPTO_ONCE_STATIC_INIT;
 DEFINE_RUN_ONCE_STATIC(o_names_init)
@@ -137,7 +137,7 @@ out:
     return ret;
 }
 
-static int obj_name_cmp(const OBJ_NAME *a, const OBJ_NAME *b)
+static int __cdecl obj_name_cmp(const OBJ_NAME *a, const OBJ_NAME *b)
 {
     int ret;
 

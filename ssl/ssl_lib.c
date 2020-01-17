@@ -2411,7 +2411,7 @@ long SSL_CTX_callback_ctrl(SSL_CTX *ctx, int cmd, void (*fp) (void))
     }
 }
 
-int ssl_cipher_id_cmp(const SSL_CIPHER *a, const SSL_CIPHER *b)
+int __cdecl ssl_cipher_id_cmp(const SSL_CIPHER *a, const SSL_CIPHER *b)
 {
     if (a->id > b->id)
         return 1;
@@ -2888,7 +2888,7 @@ static unsigned long ssl_session_hash(const SSL_SESSION *a)
  * being able to construct an SSL_SESSION that will collide with any existing
  * session with a matching session ID.
  */
-static int ssl_session_cmp(const SSL_SESSION *a, const SSL_SESSION *b)
+static int __cdecl ssl_session_cmp(const SSL_SESSION *a, const SSL_SESSION *b)
 {
     if (a->ssl_version != b->ssl_version)
         return 1;

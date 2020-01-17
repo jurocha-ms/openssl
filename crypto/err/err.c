@@ -164,7 +164,7 @@ static unsigned long err_string_data_hash(const ERR_STRING_DATA *a)
     return (ret ^ ret % 19 * 13);
 }
 
-static int err_string_data_cmp(const ERR_STRING_DATA *a,
+static int __cdecl err_string_data_cmp(const ERR_STRING_DATA *a,
                                const ERR_STRING_DATA *b)
 {
     if (a->error == b->error)

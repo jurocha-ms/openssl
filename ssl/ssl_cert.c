@@ -567,7 +567,7 @@ int SSL_CTX_add_client_CA(SSL_CTX *ctx, X509 *x)
     return add_ca_name(&ctx->client_ca_names, x);
 }
 
-static int xname_cmp(const X509_NAME *a, const X509_NAME *b)
+static int __cdecl xname_cmp(const X509_NAME *a, const X509_NAME *b)
 {
     unsigned char *abuf = NULL, *bbuf = NULL;
     int alen, blen, ret;

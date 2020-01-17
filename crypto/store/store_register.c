@@ -134,7 +134,7 @@ static unsigned long store_loader_hash(const OSSL_STORE_LOADER *v)
     return OPENSSL_LH_strhash(v->scheme);
 }
 
-static int store_loader_cmp(const OSSL_STORE_LOADER *a,
+static int __cdecl store_loader_cmp(const OSSL_STORE_LOADER *a,
                             const OSSL_STORE_LOADER *b)
 {
     assert(a->scheme != NULL && b->scheme != NULL);

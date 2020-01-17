@@ -104,7 +104,7 @@ static unsigned long conf_value_hash(const CONF_VALUE *v)
     return (OPENSSL_LH_strhash(v->section) << 2) ^ OPENSSL_LH_strhash(v->name);
 }
 
-static int conf_value_cmp(const CONF_VALUE *a, const CONF_VALUE *b)
+static int __cdecl conf_value_cmp(const CONF_VALUE *a, const CONF_VALUE *b)
 {
     int i;
 

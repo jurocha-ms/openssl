@@ -38,42 +38,42 @@
 # include <io.h>
 # include <fcntl.h>
 
-static void *app_stdin(void)
+static void * __cdecl app_stdin(void)
 {
     return stdin;
 }
 
-static void *app_stdout(void)
+static void * __cdecl app_stdout(void)
 {
     return stdout;
 }
 
-static void *app_stderr(void)
+static void * __cdecl app_stderr(void)
 {
     return stderr;
 }
 
-static int app_feof(FILE *fp)
+static int __cdecl app_feof(FILE *fp)
 {
     return feof(fp);
 }
 
-static int app_ferror(FILE *fp)
+static int __cdecl app_ferror(FILE *fp)
 {
     return ferror(fp);
 }
 
-static void app_clearerr(FILE *fp)
+static void __cdecl app_clearerr(FILE *fp)
 {
     clearerr(fp);
 }
 
-static int app_fileno(FILE *fp)
+static int __cdecl app_fileno(FILE *fp)
 {
     return _fileno(fp);
 }
 
-static int app_fsetmod(FILE *fp, char mod)
+static int __cdecl app_fsetmod(FILE *fp, char mod)
 {
     return _setmode(_fileno(fp), mod == 'b' ? _O_BINARY : _O_TEXT);
 }

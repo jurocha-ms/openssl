@@ -158,7 +158,7 @@ static unsigned long ext_name_hash(const OPENSSL_STRING *a)
     return OPENSSL_LH_strhash((const char *)a);
 }
 
-static int ext_name_cmp(const OPENSSL_STRING *a, const OPENSSL_STRING *b)
+static int __cdecl ext_name_cmp(const OPENSSL_STRING *a, const OPENSSL_STRING *b)
 {
     return strcmp((const char *)a, (const char *)b);
 }

@@ -56,7 +56,7 @@ static unsigned long engine_pile_hash(const ENGINE_PILE *c)
     return c->nid;
 }
 
-static int engine_pile_cmp(const ENGINE_PILE *a, const ENGINE_PILE *b)
+static int __cdecl engine_pile_cmp(const ENGINE_PILE *a, const ENGINE_PILE *b)
 {
     return a->nid - b->nid;
 }

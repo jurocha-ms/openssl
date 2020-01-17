@@ -184,8 +184,8 @@ static int is_a_tty;
 # if !defined(OPENSSL_SYS_WINCE)
 static int read_till_nl(FILE *);
 static void __cdecl recsig(int);
-static void pushsig(void);
-static void popsig(void);
+static void __cdecl pushsig(void);
+static void __cdecl popsig(void);
 # endif
 # if defined(OPENSSL_SYS_MSDOS) && !defined(_WIN32)
 static int noecho_fgets(char *buf, int size, FILE *tty);
@@ -584,7 +584,7 @@ static int close_console(UI *ui)
 
 # if !defined(OPENSSL_SYS_WINCE)
 /* Internal functions to handle signals and act on them */
-static void pushsig(void)
+static void __cdecl pushsig(void)
 {
 #  ifndef OPENSSL_SYS_WIN32
     int i;
@@ -630,7 +630,7 @@ static void pushsig(void)
 #  endif
 }
 
-static void popsig(void)
+static void __cdecl popsig(void)
 {
 #  ifdef OPENSSL_SYS_WIN32
     signal(SIGABRT, savsig[SIGABRT]);

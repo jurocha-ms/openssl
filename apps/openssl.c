@@ -630,7 +630,7 @@ static void list_pkey_meth(void)
     }
 }
 
-static int function_cmp(const FUNCTION * a, const FUNCTION * b)
+static int __cdecl function_cmp(const FUNCTION * a, const FUNCTION * b)
 {
     return strncmp(a->name, b->name, 8);
 }
