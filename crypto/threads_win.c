@@ -74,7 +74,7 @@ void CRYPTO_THREAD_lock_free(CRYPTO_RWLOCK *lock)
  * We don't use InitOnceExecuteOnce because that isn't available in WinXP which
  * we still have to support.
  */
-int CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void))
+int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void))
 {
     LONG volatile *lock = (LONG *)once;
     LONG result;

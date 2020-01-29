@@ -233,22 +233,22 @@ unsigned long ERR_peek_last_error_line(const char **file, int *line);
 unsigned long ERR_peek_last_error_line_data(const char **file, int *line,
                                             const char **data, int *flags);
 void __cdecl ERR_clear_error(void);
-char *ERR_error_string(unsigned long e, char *buf);
-void ERR_error_string_n(unsigned long e, char *buf, size_t len);
-const char *ERR_lib_error_string(unsigned long e);
-const char *ERR_func_error_string(unsigned long e);
-const char *ERR_reason_error_string(unsigned long e);
-void ERR_print_errors_cb(int (*cb) (const char *str, size_t len, void *u),
+char *__cdecl ERR_error_string(unsigned long e, char *buf);
+void __cdecl ERR_error_string_n(unsigned long e, char *buf, size_t len);
+const char * __cdecl ERR_lib_error_string(unsigned long e);
+const char * __cdecl ERR_func_error_string(unsigned long e);
+const char * __cdecl ERR_reason_error_string(unsigned long e);
+void __cdecl ERR_print_errors_cb(int (*cb) (const char *str, size_t len, void *u),
                          void *u);
 # ifndef OPENSSL_NO_STDIO
-void ERR_print_errors_fp(FILE *fp);
+void __cdecl ERR_print_errors_fp(FILE *fp);
 # endif
-void ERR_print_errors(BIO *bp);
-void ERR_add_error_data(int num, ...);
-void ERR_add_error_vdata(int num, va_list args);
-int ERR_load_strings(int lib, ERR_STRING_DATA *str);
-int ERR_load_strings_const(const ERR_STRING_DATA *str);
-int ERR_unload_strings(int lib, ERR_STRING_DATA *str);
+void __cdecl ERR_print_errors(BIO *bp);
+void __cdecl ERR_add_error_data(int num, ...);
+void __cdecl ERR_add_error_vdata(int num, va_list args);
+int __cdecl ERR_load_strings(int lib, ERR_STRING_DATA *str);
+int __cdecl ERR_load_strings_const(const ERR_STRING_DATA *str);
+int __cdecl ERR_unload_strings(int lib, ERR_STRING_DATA *str);
 int __cdecl ERR_load_ERR_strings(void);
 
 #if OPENSSL_API_COMPAT < 0x10100000L

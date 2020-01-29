@@ -13,7 +13,7 @@
 #include <openssl/buffer.h>
 #include <openssl/err.h>
 
-void ERR_print_errors_cb(int (*cb) (const char *str, size_t len, void *u),
+void __cdecl ERR_print_errors_cb(int (*cb) (const char *str, size_t len, void *u),
                          void *u)
 {
     unsigned long l;
@@ -47,13 +47,13 @@ static int print_bio(const char *str, size_t len, void *bp)
     return BIO_write((BIO *)bp, str, len);
 }
 
-void ERR_print_errors(BIO *bp)
+void __cdecl ERR_print_errors(BIO *bp)
 {
     ERR_print_errors_cb(print_bio, bp);
 }
 
 #ifndef OPENSSL_NO_STDIO
-void ERR_print_errors_fp(FILE *fp)
+void __cdecl ERR_print_errors_fp(FILE *fp)
 {
     BIO *bio = BIO_new_fp(fp, BIO_NOCLOSE);
     if (bio == NULL)

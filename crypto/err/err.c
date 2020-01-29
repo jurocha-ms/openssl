@@ -357,7 +357,7 @@ int __cdecl ERR_load_ERR_strings(void)
     return 1;
 }
 
-int ERR_load_strings(int lib, ERR_STRING_DATA *str)
+int __cdecl ERR_load_strings(int lib, ERR_STRING_DATA *str)
 {
     if (ERR_load_ERR_strings() == 0)
         return 0;
@@ -367,7 +367,7 @@ int ERR_load_strings(int lib, ERR_STRING_DATA *str)
     return 1;
 }
 
-int ERR_load_strings_const(const ERR_STRING_DATA *str)
+int __cdecl ERR_load_strings_const(const ERR_STRING_DATA *str)
 {
     if (ERR_load_ERR_strings() == 0)
         return 0;
@@ -375,7 +375,7 @@ int ERR_load_strings_const(const ERR_STRING_DATA *str)
     return 1;
 }
 
-int ERR_unload_strings(int lib, ERR_STRING_DATA *str)
+int __cdecl ERR_unload_strings(int lib, ERR_STRING_DATA *str)
 {
     if (!RUN_ONCE(&err_string_init, do_err_strings_init))
         return 0;
@@ -582,7 +582,7 @@ static unsigned long get_error_values(int inc, int top, const char **file,
     return ret;
 }
 
-void ERR_error_string_n(unsigned long e, char *buf, size_t len)
+void __cdecl ERR_error_string_n(unsigned long e, char *buf, size_t len)
 {
     char lsbuf[64], fsbuf[64], rsbuf[64];
     const char *ls, *fs, *rs;
@@ -623,7 +623,7 @@ void ERR_error_string_n(unsigned long e, char *buf, size_t len)
  * ERR_error_string_n should be used instead for ret != NULL as
  * ERR_error_string cannot know how large the buffer is
  */
-char *ERR_error_string(unsigned long e, char *ret)
+char * __cdecl ERR_error_string(unsigned long e, char *ret)
 {
     static char buf[256];
 
@@ -633,7 +633,7 @@ char *ERR_error_string(unsigned long e, char *ret)
     return ret;
 }
 
-const char *ERR_lib_error_string(unsigned long e)
+const char * __cdecl ERR_lib_error_string(unsigned long e)
 {
     ERR_STRING_DATA d, *p;
     unsigned long l;
@@ -648,7 +648,7 @@ const char *ERR_lib_error_string(unsigned long e)
     return ((p == NULL) ? NULL : p->string);
 }
 
-const char *ERR_func_error_string(unsigned long e)
+const char * __cdecl ERR_func_error_string(unsigned long e)
 {
     ERR_STRING_DATA d, *p;
     unsigned long l, f;
@@ -664,7 +664,7 @@ const char *ERR_func_error_string(unsigned long e)
     return ((p == NULL) ? NULL : p->string);
 }
 
-const char *ERR_reason_error_string(unsigned long e)
+const char * __cdecl ERR_reason_error_string(unsigned long e)
 {
     ERR_STRING_DATA d, *p = NULL;
     unsigned long l, r;
@@ -835,7 +835,7 @@ void ERR_set_error_data(char *data, int flags)
     err_set_error_data_int(data, flags);
 }
 
-void ERR_add_error_data(int num, ...)
+void __cdecl ERR_add_error_data(int num, ...)
 {
     va_list args;
     va_start(args, num);
@@ -843,7 +843,7 @@ void ERR_add_error_data(int num, ...)
     va_end(args);
 }
 
-void ERR_add_error_vdata(int num, va_list args)
+void __cdecl ERR_add_error_vdata(int num, va_list args)
 {
     int i, n, s;
     char *str, *p, *a;
