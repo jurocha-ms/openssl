@@ -494,7 +494,7 @@ int ossl_init_thread_start(uint64_t opts)
     return 1;
 }
 
-void OPENSSL_cleanup(void)
+void __cdecl OPENSSL_cleanup(void)
 {
     OPENSSL_INIT_STOP *currhandler, *lasthandler;
     CRYPTO_THREAD_LOCAL key;
@@ -759,7 +759,7 @@ int __cdecl OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *sett
     return 1;
 }
 
-int OPENSSL_atexit(void (*handler)(void))
+int __cdecl OPENSSL_atexit(void (*handler)(void))
 {
     OPENSSL_INIT_STOP *newhand;
 
