@@ -62,7 +62,7 @@ void CRYPTO_THREAD_lock_free(CRYPTO_RWLOCK *lock) {
     return;
 }
 
-int CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void))
+int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void))
 {
     if (*once != 0)
         return 1;

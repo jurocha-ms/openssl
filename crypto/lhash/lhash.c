@@ -93,7 +93,7 @@ void OPENSSL_LH_free(OPENSSL_LHASH *lh)
     OPENSSL_free(lh);
 }
 
-void *OPENSSL_LH_insert(OPENSSL_LHASH *lh, void *data)
+void * __cdecl OPENSSL_LH_insert(OPENSSL_LHASH *lh, void *data)
 {
     unsigned long hash;
     OPENSSL_LH_NODE *nn, **rn;

@@ -449,7 +449,7 @@ static void ossl_init_thread_stop(struct thread_local_inits_st *locals)
     OPENSSL_free(locals);
 }
 
-void OPENSSL_thread_stop(void)
+void __cdecl OPENSSL_thread_stop(void)
 {
     if (destructor_key.sane != -1)
         ossl_init_thread_stop(ossl_init_get_thread_local(0));
@@ -617,7 +617,7 @@ void OPENSSL_cleanup(void)
  * called prior to any threads making calls to any OpenSSL functions,
  * i.e. passing a non-null settings value is assumed to be single-threaded.
  */
-int OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings)
+int __cdecl OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings)
 {
     if (stopped) {
         if (!(opts & OPENSSL_INIT_BASE_ONLY))

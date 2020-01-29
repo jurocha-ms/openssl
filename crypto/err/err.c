@@ -342,7 +342,7 @@ static int err_load_strings(const ERR_STRING_DATA *str)
     return 1;
 }
 
-int ERR_load_ERR_strings(void)
+int __cdecl ERR_load_ERR_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (!RUN_ONCE(&err_string_init, do_err_strings_init))
@@ -392,7 +392,7 @@ int ERR_unload_strings(int lib, ERR_STRING_DATA *str)
     return 1;
 }
 
-void err_free_strings_int(void)
+void __cdecl err_free_strings_int(void)
 {
     if (!RUN_ONCE(&err_string_init, do_err_strings_init))
         return;
@@ -437,7 +437,7 @@ void ERR_put_error(int lib, int func, int reason, const char *file, int line)
     err_clear_data(es, es->top);
 }
 
-void ERR_clear_error(void)
+void __cdecl ERR_clear_error(void)
 {
     int i;
     ERR_STATE *es;
@@ -712,7 +712,7 @@ DEFINE_RUN_ONCE_STATIC(err_do_init)
     return CRYPTO_THREAD_init_local(&err_thread_local, NULL);
 }
 
-ERR_STATE *ERR_get_state(void)
+ERR_STATE *__cdecl ERR_get_state(void)
 {
     ERR_STATE *state;
     int saveerrno = get_last_sys_error();

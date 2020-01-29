@@ -385,9 +385,9 @@ int CRYPTO_memcmp(const void * in_a, const void * in_b, size_t len);
 
 /* Library initialisation functions */
 void OPENSSL_cleanup(void);
-int OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings);
+int __cdecl OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings);
 int OPENSSL_atexit(void (*handler)(void));
-void OPENSSL_thread_stop(void);
+void __cdecl OPENSSL_thread_stop(void);
 
 /* Low-level control of initialization */
 OPENSSL_INIT_SETTINGS *OPENSSL_INIT_new(void);
@@ -428,7 +428,7 @@ typedef unsigned int CRYPTO_THREAD_ID;
 #  define CRYPTO_ONCE_STATIC_INIT 0
 # endif
 
-int CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void));
+int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void));
 
 int CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *));
 void *CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key);

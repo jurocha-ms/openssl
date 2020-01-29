@@ -39,7 +39,7 @@
 #include <openssl/kdferr.h>
 #include <openssl/storeerr.h>
 
-int err_load_crypto_strings_int(void)
+int __cdecl err_load_crypto_strings_int(void)
 {
     if (
 #ifndef OPENSSL_NO_ERR

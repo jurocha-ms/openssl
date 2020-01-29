@@ -232,7 +232,7 @@ unsigned long ERR_peek_last_error(void);
 unsigned long ERR_peek_last_error_line(const char **file, int *line);
 unsigned long ERR_peek_last_error_line_data(const char **file, int *line,
                                             const char **data, int *flags);
-void ERR_clear_error(void);
+void __cdecl ERR_clear_error(void);
 char *ERR_error_string(unsigned long e, char *buf);
 void ERR_error_string_n(unsigned long e, char *buf, size_t len);
 const char *ERR_lib_error_string(unsigned long e);
@@ -249,7 +249,7 @@ void ERR_add_error_vdata(int num, va_list args);
 int ERR_load_strings(int lib, ERR_STRING_DATA *str);
 int ERR_load_strings_const(const ERR_STRING_DATA *str);
 int ERR_unload_strings(int lib, ERR_STRING_DATA *str);
-int ERR_load_ERR_strings(void);
+int __cdecl ERR_load_ERR_strings(void);
 
 #if OPENSSL_API_COMPAT < 0x10100000L
 # define ERR_load_crypto_strings() \
@@ -259,7 +259,7 @@ int ERR_load_ERR_strings(void);
 
 DEPRECATEDIN_1_1_0(void ERR_remove_thread_state(void *))
 DEPRECATEDIN_1_0_0(void ERR_remove_state(unsigned long pid))
-ERR_STATE *ERR_get_state(void);
+ERR_STATE * __cdecl ERR_get_state(void);
 
 int ERR_get_next_error_library(void);
 
