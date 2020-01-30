@@ -67,23 +67,23 @@ struct rsa_st {
 
 struct rsa_meth_st {
     char *name;
-    int (*rsa_pub_enc) (int flen, const unsigned char *from,
+    int (__cdecl *rsa_pub_enc) (int flen, const unsigned char *from,
                         unsigned char *to, RSA *rsa, int padding);
-    int (*rsa_pub_dec) (int flen, const unsigned char *from,
+    int (__cdecl *rsa_pub_dec) (int flen, const unsigned char *from,
                         unsigned char *to, RSA *rsa, int padding);
-    int (*rsa_priv_enc) (int flen, const unsigned char *from,
+    int (__cdecl *rsa_priv_enc) (int flen, const unsigned char *from,
                          unsigned char *to, RSA *rsa, int padding);
-    int (*rsa_priv_dec) (int flen, const unsigned char *from,
+    int (__cdecl *rsa_priv_dec) (int flen, const unsigned char *from,
                          unsigned char *to, RSA *rsa, int padding);
     /* Can be null */
-    int (*rsa_mod_exp) (BIGNUM *r0, const BIGNUM *I, RSA *rsa, BN_CTX *ctx);
+    int (__cdecl *rsa_mod_exp) (BIGNUM *r0, const BIGNUM *I, RSA *rsa, BN_CTX *ctx);
     /* Can be null */
-    int (*bn_mod_exp) (BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
+    int (__cdecl *bn_mod_exp) (BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
                        const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx);
     /* called at new */
-    int (*init) (RSA *rsa);
+    int (__cdecl *init) (RSA *rsa);
     /* called at free */
-    int (*finish) (RSA *rsa);
+    int (__cdecl *finish) (RSA *rsa);
     /* RSA_METHOD_FLAG_* things */
     int flags;
     /* may be needed! */
@@ -94,11 +94,11 @@ struct rsa_meth_st {
      * this to work the RSA_public_decrypt() and RSA_private_encrypt() should
      * *NOT* be used RSA_sign(), RSA_verify() should be used instead.
      */
-    int (*rsa_sign) (int type,
+    int (__cdecl *rsa_sign) (int type,
                      const unsigned char *m, unsigned int m_length,
                      unsigned char *sigret, unsigned int *siglen,
                      const RSA *rsa);
-    int (*rsa_verify) (int dtype, const unsigned char *m,
+    int (__cdecl *rsa_verify) (int dtype, const unsigned char *m,
                        unsigned int m_length, const unsigned char *sigbuf,
                        unsigned int siglen, const RSA *rsa);
     /*
@@ -107,8 +107,8 @@ struct rsa_meth_st {
      * rewired, but one day it would be nice to assume there are no such
      * things as "builtin software" implementations.
      */
-    int (*rsa_keygen) (RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
-    int (*rsa_multi_prime_keygen) (RSA *rsa, int bits, int primes,
+    int (__cdecl *rsa_keygen) (RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
+    int (__cdecl *rsa_multi_prime_keygen) (RSA *rsa, int bits, int primes,
                                    BIGNUM *e, BN_GENCB *cb);
 };
 

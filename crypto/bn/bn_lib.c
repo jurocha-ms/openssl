@@ -78,7 +78,7 @@ int BN_get_params(int which)
 }
 #endif
 
-const BIGNUM *BN_value_one(void)
+const BIGNUM * __cdecl BN_value_one(void)
 {
     static const BN_ULONG data_one = 1L;
     static const BIGNUM const_one =
@@ -87,7 +87,7 @@ const BIGNUM *BN_value_one(void)
     return &const_one;
 }
 
-int BN_num_bits_word(BN_ULONG l)
+int __cdecl BN_num_bits_word(BN_ULONG l)
 {
     BN_ULONG x, mask;
     int bits = (l != 0);
@@ -162,7 +162,7 @@ int bn_num_bits_consttime(const BIGNUM *a)
     return ret & mask;
 }
 
-int BN_num_bits(const BIGNUM *a)
+int __cdecl BN_num_bits(const BIGNUM *a)
 {
     int i = a->top - 1;
     bn_check_top(a);
@@ -197,7 +197,7 @@ static void bn_free_d(BIGNUM *a, int clear)
 }
 
 
-void BN_clear_free(BIGNUM *a)
+void __cdecl BN_clear_free(BIGNUM *a)
 {
     if (a == NULL)
         return;
@@ -209,7 +209,7 @@ void BN_clear_free(BIGNUM *a)
     }
 }
 
-void BN_free(BIGNUM *a)
+void __cdecl BN_free(BIGNUM *a)
 {
     if (a == NULL)
         return;
@@ -227,7 +227,7 @@ void bn_init(BIGNUM *a)
     bn_check_top(a);
 }
 
-BIGNUM *BN_new(void)
+BIGNUM * __cdecl BN_new(void)
 {
     BIGNUM *ret;
 
@@ -240,7 +240,7 @@ BIGNUM *BN_new(void)
     return ret;
 }
 
- BIGNUM *BN_secure_new(void)
+ BIGNUM * __cdecl BN_secure_new(void)
  {
      BIGNUM *ret = BN_new();
      if (ret != NULL)
@@ -301,7 +301,7 @@ BIGNUM *bn_expand2(BIGNUM *b, int words)
     return b;
 }
 
-BIGNUM *BN_dup(const BIGNUM *a)
+BIGNUM * __cdecl BN_dup(const BIGNUM *a)
 {
     BIGNUM *t;
 
@@ -320,7 +320,7 @@ BIGNUM *BN_dup(const BIGNUM *a)
     return t;
 }
 
-BIGNUM *BN_copy(BIGNUM *a, const BIGNUM *b)
+BIGNUM * __cdecl BN_copy(BIGNUM *a, const BIGNUM *b)
 {
     bn_check_top(b);
 
@@ -345,7 +345,7 @@ BIGNUM *BN_copy(BIGNUM *a, const BIGNUM *b)
                                     | BN_FLG_FIXED_TOP))
 #define FLAGS_STRUCT(flags) ((flags) & (BN_FLG_MALLOCED))
 
-void BN_swap(BIGNUM *a, BIGNUM *b)
+void __cdecl BN_swap(BIGNUM *a, BIGNUM *b)
 {
     int flags_old_a, flags_old_b;
     BN_ULONG *tmp_d;
@@ -378,7 +378,7 @@ void BN_swap(BIGNUM *a, BIGNUM *b)
     bn_check_top(b);
 }
 
-void BN_clear(BIGNUM *a)
+void __cdecl BN_clear(BIGNUM *a)
 {
     if (a == NULL)
         return;
@@ -390,7 +390,7 @@ void BN_clear(BIGNUM *a)
     a->flags &= ~BN_FLG_FIXED_TOP;
 }
 
-BN_ULONG BN_get_word(const BIGNUM *a)
+BN_ULONG __cdecl BN_get_word(const BIGNUM *a)
 {
     if (a->top > 1)
         return BN_MASK2;
@@ -400,7 +400,7 @@ BN_ULONG BN_get_word(const BIGNUM *a)
     return 0;
 }
 
-int BN_set_word(BIGNUM *a, BN_ULONG w)
+int __cdecl BN_set_word(BIGNUM *a, BN_ULONG w)
 {
     bn_check_top(a);
     if (bn_expand(a, (int)sizeof(BN_ULONG) * 8) == NULL)
@@ -413,7 +413,7 @@ int BN_set_word(BIGNUM *a, BN_ULONG w)
     return 1;
 }
 
-BIGNUM *BN_bin2bn(const unsigned char *s, int len, BIGNUM *ret)
+BIGNUM * __cdecl BN_bin2bn(const unsigned char *s, int len, BIGNUM *ret)
 {
     unsigned int i, m;
     unsigned int n;
@@ -511,19 +511,19 @@ int bn2binpad(const BIGNUM *a, unsigned char *to, int tolen, endianess_t endiane
     return tolen;
 }
 
-int BN_bn2binpad(const BIGNUM *a, unsigned char *to, int tolen)
+int __cdecl BN_bn2binpad(const BIGNUM *a, unsigned char *to, int tolen)
 {
     if (tolen < 0)
         return -1;
     return bn2binpad(a, to, tolen, big);
 }
 
-int BN_bn2bin(const BIGNUM *a, unsigned char *to)
+int __cdecl BN_bn2bin(const BIGNUM *a, unsigned char *to)
 {
     return bn2binpad(a, to, -1, big);
 }
 
-BIGNUM *BN_lebin2bn(const unsigned char *s, int len, BIGNUM *ret)
+BIGNUM * __cdecl BN_lebin2bn(const unsigned char *s, int len, BIGNUM *ret)
 {
     unsigned int i, m;
     unsigned int n;
@@ -570,14 +570,14 @@ BIGNUM *BN_lebin2bn(const unsigned char *s, int len, BIGNUM *ret)
     return ret;
 }
 
-int BN_bn2lebinpad(const BIGNUM *a, unsigned char *to, int tolen)
+int __cdecl BN_bn2lebinpad(const BIGNUM *a, unsigned char *to, int tolen)
 {
     if (tolen < 0)
         return -1;
     return bn2binpad(a, to, tolen, little);
 }
 
-int BN_ucmp(const BIGNUM *a, const BIGNUM *b)
+int __cdecl BN_ucmp(const BIGNUM *a, const BIGNUM *b)
 {
     int i;
     BN_ULONG t1, t2, *ap, *bp;
@@ -599,7 +599,7 @@ int BN_ucmp(const BIGNUM *a, const BIGNUM *b)
     return 0;
 }
 
-int BN_cmp(const BIGNUM *a, const BIGNUM *b)
+int __cdecl BN_cmp(const BIGNUM *a, const BIGNUM *b)
 {
     int i;
     int gt, lt;
@@ -646,7 +646,7 @@ int BN_cmp(const BIGNUM *a, const BIGNUM *b)
     return 0;
 }
 
-int BN_set_bit(BIGNUM *a, int n)
+int __cdecl BN_set_bit(BIGNUM *a, int n)
 {
     int i, j, k;
 
@@ -669,7 +669,7 @@ int BN_set_bit(BIGNUM *a, int n)
     return 1;
 }
 
-int BN_clear_bit(BIGNUM *a, int n)
+int __cdecl BN_clear_bit(BIGNUM *a, int n)
 {
     int i, j;
 
@@ -687,7 +687,7 @@ int BN_clear_bit(BIGNUM *a, int n)
     return 1;
 }
 
-int BN_is_bit_set(const BIGNUM *a, int n)
+int __cdecl BN_is_bit_set(const BIGNUM *a, int n)
 {
     int i, j;
 
@@ -701,7 +701,7 @@ int BN_is_bit_set(const BIGNUM *a, int n)
     return (int)(((a->d[i]) >> j) & ((BN_ULONG)1));
 }
 
-int BN_mask_bits(BIGNUM *a, int n)
+int __cdecl BN_mask_bits(BIGNUM *a, int n)
 {
     int b, w;
 
@@ -723,7 +723,7 @@ int BN_mask_bits(BIGNUM *a, int n)
     return 1;
 }
 
-void BN_set_negative(BIGNUM *a, int b)
+void __cdecl BN_set_negative(BIGNUM *a, int b)
 {
     if (b && !BN_is_zero(a))
         a->neg = 1;
@@ -788,7 +788,7 @@ int bn_cmp_part_words(const BN_ULONG *a, const BN_ULONG *b, int cl, int dl)
  * Assumes that at least nwords are allocated in both a and b.
  * Assumes that no more than nwords are used by either a or b.
  */
-void BN_consttime_swap(BN_ULONG condition, BIGNUM *a, BIGNUM *b, int nwords)
+void __cdecl BN_consttime_swap(BN_ULONG condition, BIGNUM *a, BIGNUM *b, int nwords)
 {
     BN_ULONG t;
     int i;
@@ -849,7 +849,7 @@ void BN_consttime_swap(BN_ULONG condition, BIGNUM *a, BIGNUM *b, int nwords)
 
 /* Bits of security, see SP800-57 */
 
-int BN_security_bits(int L, int N)
+int __cdecl BN_security_bits(int L, int N)
 {
     int secbits, bits;
     if (L >= 15360)
@@ -872,50 +872,50 @@ int BN_security_bits(int L, int N)
     return bits >= secbits ? secbits : bits;
 }
 
-void BN_zero_ex(BIGNUM *a)
+void __cdecl BN_zero_ex(BIGNUM *a)
 {
     a->neg = 0;
     a->top = 0;
     a->flags &= ~BN_FLG_FIXED_TOP;
 }
 
-int BN_abs_is_word(const BIGNUM *a, const BN_ULONG w)
+int __cdecl BN_abs_is_word(const BIGNUM *a, const BN_ULONG w)
 {
     return ((a->top == 1) && (a->d[0] == w)) || ((w == 0) && (a->top == 0));
 }
 
-int BN_is_zero(const BIGNUM *a)
+int __cdecl BN_is_zero(const BIGNUM *a)
 {
     return a->top == 0;
 }
 
-int BN_is_one(const BIGNUM *a)
+int __cdecl BN_is_one(const BIGNUM *a)
 {
     return BN_abs_is_word(a, 1) && !a->neg;
 }
 
-int BN_is_word(const BIGNUM *a, const BN_ULONG w)
+int __cdecl BN_is_word(const BIGNUM *a, const BN_ULONG w)
 {
     return BN_abs_is_word(a, w) && (!w || !a->neg);
 }
 
-int BN_is_odd(const BIGNUM *a)
+int __cdecl BN_is_odd(const BIGNUM *a)
 {
     return (a->top > 0) && (a->d[0] & 1);
 }
 
-int BN_is_negative(const BIGNUM *a)
+int __cdecl BN_is_negative(const BIGNUM *a)
 {
     return (a->neg != 0);
 }
 
-int BN_to_montgomery(BIGNUM *r, const BIGNUM *a, BN_MONT_CTX *mont,
+int __cdecl BN_to_montgomery(BIGNUM *r, const BIGNUM *a, BN_MONT_CTX *mont,
                      BN_CTX *ctx)
 {
     return BN_mod_mul_montgomery(r, a, &(mont->RR), mont, ctx);
 }
 
-void BN_with_flags(BIGNUM *dest, const BIGNUM *b, int flags)
+void __cdecl BN_with_flags(BIGNUM *dest, const BIGNUM *b, int flags)
 {
     dest->d = b->d;
     dest->top = b->top;
@@ -926,7 +926,7 @@ void BN_with_flags(BIGNUM *dest, const BIGNUM *b, int flags)
                    | BN_FLG_STATIC_DATA | flags);
 }
 
-BN_GENCB *BN_GENCB_new(void)
+BN_GENCB * __cdecl BN_GENCB_new(void)
 {
     BN_GENCB *ret;
 
@@ -938,25 +938,25 @@ BN_GENCB *BN_GENCB_new(void)
     return ret;
 }
 
-void BN_GENCB_free(BN_GENCB *cb)
+void __cdecl BN_GENCB_free(BN_GENCB *cb)
 {
     if (cb == NULL)
         return;
     OPENSSL_free(cb);
 }
 
-void BN_set_flags(BIGNUM *b, int n)
+void __cdecl BN_set_flags(BIGNUM *b, int n)
 {
     b->flags |= n;
 }
 
-int BN_get_flags(const BIGNUM *b, int n)
+int __cdecl BN_get_flags(const BIGNUM *b, int n)
 {
     return b->flags & n;
 }
 
 /* Populate a BN_GENCB structure with an "old"-style callback */
-void BN_GENCB_set_old(BN_GENCB *gencb, void (*callback) (int, int, void *),
+void __cdecl BN_GENCB_set_old(BN_GENCB *gencb, void (*callback) (int, int, void *),
                       void *cb_arg)
 {
     BN_GENCB *tmp_gencb = gencb;
@@ -966,7 +966,7 @@ void BN_GENCB_set_old(BN_GENCB *gencb, void (*callback) (int, int, void *),
 }
 
 /* Populate a BN_GENCB structure with a "new"-style callback */
-void BN_GENCB_set(BN_GENCB *gencb, int (*callback) (int, int, BN_GENCB *),
+void __cdecl BN_GENCB_set(BN_GENCB *gencb, int (*callback) (int, int, BN_GENCB *),
                   void *cb_arg)
 {
     BN_GENCB *tmp_gencb = gencb;
@@ -975,7 +975,7 @@ void BN_GENCB_set(BN_GENCB *gencb, int (*callback) (int, int, BN_GENCB *),
     tmp_gencb->cb.cb_2 = callback;
 }
 
-void *BN_GENCB_get_arg(BN_GENCB *cb)
+void * __cdecl BN_GENCB_get_arg(BN_GENCB *cb)
 {
     return cb->arg;
 }

@@ -27,7 +27,7 @@ static int probable_prime_dh_safe(BIGNUM *rnd, int bits,
                                   const BIGNUM *add, const BIGNUM *rem,
                                   BN_CTX *ctx);
 
-int BN_GENCB_call(BN_GENCB *cb, int a, int b)
+int __cdecl BN_GENCB_call(BN_GENCB *cb, int a, int b)
 {
     /* No callback means continue */
     if (!cb)
@@ -49,7 +49,7 @@ int BN_GENCB_call(BN_GENCB *cb, int a, int b)
     return 0;
 }
 
-int BN_generate_prime_ex(BIGNUM *ret, int bits, int safe,
+int __cdecl BN_generate_prime_ex(BIGNUM *ret, int bits, int safe,
                          const BIGNUM *add, const BIGNUM *rem, BN_GENCB *cb)
 {
     BIGNUM *t;
@@ -145,13 +145,13 @@ int BN_generate_prime_ex(BIGNUM *ret, int bits, int safe,
     return found;
 }
 
-int BN_is_prime_ex(const BIGNUM *a, int checks, BN_CTX *ctx_passed,
+int __cdecl BN_is_prime_ex(const BIGNUM *a, int checks, BN_CTX *ctx_passed,
                    BN_GENCB *cb)
 {
     return BN_is_prime_fasttest_ex(a, checks, ctx_passed, 0, cb);
 }
 
-int BN_is_prime_fasttest_ex(const BIGNUM *a, int checks, BN_CTX *ctx_passed,
+int __cdecl BN_is_prime_fasttest_ex(const BIGNUM *a, int checks, BN_CTX *ctx_passed,
                             int do_trial_division, BN_GENCB *cb)
 {
     int i, j, ret = -1;

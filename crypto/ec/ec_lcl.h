@@ -246,7 +246,7 @@ struct ec_group_st {
     /* method-specific */
     void *field_data2;
     /* method-specific */
-    int (*field_mod_func) (BIGNUM *, const BIGNUM *, const BIGNUM *,
+    int (__cdecl *field_mod_func) (BIGNUM *, const BIGNUM *, const BIGNUM *,
                            BN_CTX *);
     /* data for ECDSA inverse */
     BN_MONT_CTX *mont_data;

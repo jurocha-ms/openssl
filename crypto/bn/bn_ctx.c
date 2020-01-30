@@ -131,7 +131,7 @@ static void ctxdbg(BN_CTX *ctx)
 #endif
 
 
-BN_CTX *BN_CTX_new(void)
+BN_CTX * __cdecl BN_CTX_new(void)
 {
     BN_CTX *ret;
 
@@ -145,7 +145,7 @@ BN_CTX *BN_CTX_new(void)
     return ret;
 }
 
-BN_CTX *BN_CTX_secure_new(void)
+BN_CTX * __cdecl BN_CTX_secure_new(void)
 {
     BN_CTX *ret = BN_CTX_new();
 
@@ -154,7 +154,7 @@ BN_CTX *BN_CTX_secure_new(void)
     return ret;
 }
 
-void BN_CTX_free(BN_CTX *ctx)
+void __cdecl BN_CTX_free(BN_CTX *ctx)
 {
     if (ctx == NULL)
         return;
@@ -178,7 +178,7 @@ void BN_CTX_free(BN_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-void BN_CTX_start(BN_CTX *ctx)
+void __cdecl BN_CTX_start(BN_CTX *ctx)
 {
     CTXDBG_ENTRY("BN_CTX_start", ctx);
     /* If we're already overflowing ... */
@@ -192,7 +192,7 @@ void BN_CTX_start(BN_CTX *ctx)
     CTXDBG_EXIT(ctx);
 }
 
-void BN_CTX_end(BN_CTX *ctx)
+void __cdecl BN_CTX_end(BN_CTX *ctx)
 {
     if (ctx == NULL)
         return;
@@ -211,7 +211,7 @@ void BN_CTX_end(BN_CTX *ctx)
     CTXDBG_EXIT(ctx);
 }
 
-BIGNUM *BN_CTX_get(BN_CTX *ctx)
+BIGNUM * __cdecl BN_CTX_get(BN_CTX *ctx)
 {
     BIGNUM *ret;
 

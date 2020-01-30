@@ -122,14 +122,14 @@ CAPI_KEY *capi_find_key(CAPI_CTX *ctx, const char *id);
 
 static EVP_PKEY *capi_load_privkey(ENGINE *eng, const char *key_id,
                                    UI_METHOD *ui_method, void *callback_data);
-static int capi_rsa_sign(int dtype, const unsigned char *m,
+static int __cdecl capi_rsa_sign(int dtype, const unsigned char *m,
                          unsigned int m_len, unsigned char *sigret,
                          unsigned int *siglen, const RSA *rsa);
-static int capi_rsa_priv_enc(int flen, const unsigned char *from,
+static int __cdecl capi_rsa_priv_enc(int flen, const unsigned char *from,
                              unsigned char *to, RSA *rsa, int padding);
-static int capi_rsa_priv_dec(int flen, const unsigned char *from,
+static int __cdecl capi_rsa_priv_dec(int flen, const unsigned char *from,
                              unsigned char *to, RSA *rsa, int padding);
-static int capi_rsa_free(RSA *rsa);
+static int __cdecl capi_rsa_free(RSA *rsa);
 
 # ifndef OPENSSL_NO_DSA
 static DSA_SIG *capi_dsa_do_sign(const unsigned char *digest, int dlen,
@@ -808,14 +808,14 @@ static EVP_PKEY *capi_load_privkey(ENGINE *eng, const char *key_id,
 
 /* CryptoAPI RSA operations */
 
-int capi_rsa_priv_enc(int flen, const unsigned char *from,
+int __cdecl capi_rsa_priv_enc(int flen, const unsigned char *from,
                       unsigned char *to, RSA *rsa, int padding)
 {
     CAPIerr(CAPI_F_CAPI_RSA_PRIV_ENC, CAPI_R_FUNCTION_NOT_SUPPORTED);
     return -1;
 }
 
-int capi_rsa_sign(int dtype, const unsigned char *m, unsigned int m_len,
+int __cdecl capi_rsa_sign(int dtype, const unsigned char *m, unsigned int m_len,
                   unsigned char *sigret, unsigned int *siglen, const RSA *rsa)
 {
     ALG_ID alg;
@@ -910,7 +910,7 @@ int capi_rsa_sign(int dtype, const unsigned char *m, unsigned int m_len,
     return ret;
 }
 
-int capi_rsa_priv_dec(int flen, const unsigned char *from,
+int __cdecl capi_rsa_priv_dec(int flen, const unsigned char *from,
                       unsigned char *to, RSA *rsa, int padding)
 {
     int i;
@@ -977,7 +977,7 @@ int capi_rsa_priv_dec(int flen, const unsigned char *from,
     return flen;
 }
 
-static int capi_rsa_free(RSA *rsa)
+static int __cdecl capi_rsa_free(RSA *rsa)
 {
     CAPI_KEY *capi_key;
     capi_key = RSA_get_ex_data(rsa, rsa_capi_idx);

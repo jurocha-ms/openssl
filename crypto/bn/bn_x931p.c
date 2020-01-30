@@ -48,7 +48,7 @@ static int bn_x931_derive_pi(BIGNUM *pi, const BIGNUM *Xpi, BN_CTX *ctx,
  * will be returned too: this is needed for testing.
  */
 
-int BN_X931_derive_prime_ex(BIGNUM *p, BIGNUM *p1, BIGNUM *p2,
+int __cdecl BN_X931_derive_prime_ex(BIGNUM *p, BIGNUM *p1, BIGNUM *p2,
                             const BIGNUM *Xp, const BIGNUM *Xp1,
                             const BIGNUM *Xp2, const BIGNUM *e, BN_CTX *ctx,
                             BN_GENCB *cb)
@@ -157,7 +157,7 @@ int BN_X931_derive_prime_ex(BIGNUM *p, BIGNUM *p1, BIGNUM *p2,
  * parameter is sum of number of bits in both.
  */
 
-int BN_X931_generate_Xpq(BIGNUM *Xp, BIGNUM *Xq, int nbits, BN_CTX *ctx)
+int __cdecl BN_X931_generate_Xpq(BIGNUM *Xp, BIGNUM *Xq, int nbits, BN_CTX *ctx)
 {
     BIGNUM *t;
     int i;
@@ -212,7 +212,7 @@ int BN_X931_generate_Xpq(BIGNUM *Xp, BIGNUM *Xq, int nbits, BN_CTX *ctx)
  * previous function and supplied as input.
  */
 
-int BN_X931_generate_prime_ex(BIGNUM *p, BIGNUM *p1, BIGNUM *p2,
+int __cdecl BN_X931_generate_prime_ex(BIGNUM *p, BIGNUM *p1, BIGNUM *p2,
                               BIGNUM *Xp1, BIGNUM *Xp2,
                               const BIGNUM *Xp,
                               const BIGNUM *e, BN_CTX *ctx, BN_GENCB *cb)

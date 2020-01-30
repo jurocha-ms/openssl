@@ -17,7 +17,7 @@
 static const char Hex[] = "0123456789ABCDEF";
 
 /* Must 'OPENSSL_free' the returned data */
-char *BN_bn2hex(const BIGNUM *a)
+char * __cdecl BN_bn2hex(const BIGNUM *a)
 {
     int i, j, v, z = 0;
     char *buf;
@@ -50,7 +50,7 @@ char *BN_bn2hex(const BIGNUM *a)
 }
 
 /* Must 'OPENSSL_free' the returned data */
-char *BN_bn2dec(const BIGNUM *a)
+char * __cdecl BN_bn2dec(const BIGNUM *a)
 {
     int i = 0, num, ok = 0, n, tbytes;
     char *buf = NULL;
@@ -123,7 +123,7 @@ char *BN_bn2dec(const BIGNUM *a)
     return NULL;
 }
 
-int BN_hex2bn(BIGNUM **bn, const char *a)
+int __cdecl BN_hex2bn(BIGNUM **bn, const char *a)
 {
     BIGNUM *ret = NULL;
     BN_ULONG l = 0;
@@ -196,7 +196,7 @@ int BN_hex2bn(BIGNUM **bn, const char *a)
     return 0;
 }
 
-int BN_dec2bn(BIGNUM **bn, const char *a)
+int __cdecl BN_dec2bn(BIGNUM **bn, const char *a)
 {
     BIGNUM *ret = NULL;
     BN_ULONG l = 0;
@@ -266,7 +266,7 @@ int BN_dec2bn(BIGNUM **bn, const char *a)
     return 0;
 }
 
-int BN_asc2bn(BIGNUM **bn, const char *a)
+int __cdecl BN_asc2bn(BIGNUM **bn, const char *a)
 {
     const char *p = a;
 
@@ -287,7 +287,7 @@ int BN_asc2bn(BIGNUM **bn, const char *a)
 }
 
 # ifndef OPENSSL_NO_STDIO
-int BN_print_fp(FILE *fp, const BIGNUM *a)
+int __cdecl BN_print_fp(FILE *fp, const BIGNUM *a)
 {
     BIO *b;
     int ret;
@@ -301,7 +301,7 @@ int BN_print_fp(FILE *fp, const BIGNUM *a)
 }
 # endif
 
-int BN_print(BIO *bp, const BIGNUM *a)
+int __cdecl BN_print(BIO *bp, const BIGNUM *a)
 {
     int i, j, v, z = 0;
     int ret = 0;
@@ -326,7 +326,7 @@ int BN_print(BIO *bp, const BIGNUM *a)
     return ret;
 }
 
-char *BN_options(void)
+char * __cdecl BN_options(void)
 {
     static int init = 0;
     static char data[16];

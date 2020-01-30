@@ -23,7 +23,7 @@
 static int bn_from_montgomery_word(BIGNUM *ret, BIGNUM *r, BN_MONT_CTX *mont);
 #endif
 
-int BN_mod_mul_montgomery(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
+int __cdecl BN_mod_mul_montgomery(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
                           BN_MONT_CTX *mont, BN_CTX *ctx)
 {
     int ret = bn_mul_mont_fixed_top(r, a, b, mont, ctx);
@@ -159,7 +159,7 @@ static int bn_from_montgomery_word(BIGNUM *ret, BIGNUM *r, BN_MONT_CTX *mont)
 }
 #endif                          /* MONT_WORD */
 
-int BN_from_montgomery(BIGNUM *ret, const BIGNUM *a, BN_MONT_CTX *mont,
+int __cdecl BN_from_montgomery(BIGNUM *ret, const BIGNUM *a, BN_MONT_CTX *mont,
                        BN_CTX *ctx)
 {
     int retn;
@@ -225,7 +225,7 @@ int bn_to_mont_fixed_top(BIGNUM *r, const BIGNUM *a, BN_MONT_CTX *mont,
     return bn_mul_mont_fixed_top(r, a, &(mont->RR), mont, ctx);
 }
 
-BN_MONT_CTX *BN_MONT_CTX_new(void)
+BN_MONT_CTX * __cdecl BN_MONT_CTX_new(void)
 {
     BN_MONT_CTX *ret;
 
@@ -249,7 +249,7 @@ void BN_MONT_CTX_init(BN_MONT_CTX *ctx)
     ctx->flags = 0;
 }
 
-void BN_MONT_CTX_free(BN_MONT_CTX *mont)
+void __cdecl BN_MONT_CTX_free(BN_MONT_CTX *mont)
 {
     if (mont == NULL)
         return;
@@ -260,7 +260,7 @@ void BN_MONT_CTX_free(BN_MONT_CTX *mont)
         OPENSSL_free(mont);
 }
 
-int BN_MONT_CTX_set(BN_MONT_CTX *mont, const BIGNUM *mod, BN_CTX *ctx)
+int __cdecl BN_MONT_CTX_set(BN_MONT_CTX *mont, const BIGNUM *mod, BN_CTX *ctx)
 {
     int i, ret = 0;
     BIGNUM *Ri, *R;
@@ -408,7 +408,7 @@ int BN_MONT_CTX_set(BN_MONT_CTX *mont, const BIGNUM *mod, BN_CTX *ctx)
     return ret;
 }
 
-BN_MONT_CTX *BN_MONT_CTX_copy(BN_MONT_CTX *to, BN_MONT_CTX *from)
+BN_MONT_CTX * __cdecl BN_MONT_CTX_copy(BN_MONT_CTX *to, BN_MONT_CTX *from)
 {
     if (to == from)
         return to;
@@ -425,7 +425,7 @@ BN_MONT_CTX *BN_MONT_CTX_copy(BN_MONT_CTX *to, BN_MONT_CTX *from)
     return to;
 }
 
-BN_MONT_CTX *BN_MONT_CTX_set_locked(BN_MONT_CTX **pmont, CRYPTO_RWLOCK *lock,
+BN_MONT_CTX * __cdecl BN_MONT_CTX_set_locked(BN_MONT_CTX **pmont, CRYPTO_RWLOCK *lock,
                                     const BIGNUM *mod, BN_CTX *ctx)
 {
     BN_MONT_CTX *ret;

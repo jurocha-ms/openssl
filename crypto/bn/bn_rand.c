@@ -94,17 +94,17 @@ toosmall:
     return 0;
 }
 
-int BN_rand(BIGNUM *rnd, int bits, int top, int bottom)
+int __cdecl BN_rand(BIGNUM *rnd, int bits, int top, int bottom)
 {
     return bnrand(NORMAL, rnd, bits, top, bottom);
 }
 
-int BN_bntest_rand(BIGNUM *rnd, int bits, int top, int bottom)
+int __cdecl BN_bntest_rand(BIGNUM *rnd, int bits, int top, int bottom)
 {
     return bnrand(TESTING, rnd, bits, top, bottom);
 }
 
-int BN_priv_rand(BIGNUM *rnd, int bits, int top, int bottom)
+int __cdecl BN_priv_rand(BIGNUM *rnd, int bits, int top, int bottom)
 {
     return bnrand(PRIVATE, rnd, bits, top, bottom);
 }
@@ -174,22 +174,22 @@ static int bnrand_range(BNRAND_FLAG flag, BIGNUM *r, const BIGNUM *range)
     return 1;
 }
 
-int BN_rand_range(BIGNUM *r, const BIGNUM *range)
+int __cdecl BN_rand_range(BIGNUM *r, const BIGNUM *range)
 {
     return bnrand_range(NORMAL, r, range);
 }
 
-int BN_priv_rand_range(BIGNUM *r, const BIGNUM *range)
+int __cdecl BN_priv_rand_range(BIGNUM *r, const BIGNUM *range)
 {
     return bnrand_range(PRIVATE, r, range);
 }
 
-int BN_pseudo_rand(BIGNUM *rnd, int bits, int top, int bottom)
+int __cdecl BN_pseudo_rand(BIGNUM *rnd, int bits, int top, int bottom)
 {
     return BN_rand(rnd, bits, top, bottom);
 }
 
-int BN_pseudo_rand_range(BIGNUM *r, const BIGNUM *range)
+int __cdecl BN_pseudo_rand_range(BIGNUM *r, const BIGNUM *range)
 {
     return BN_rand_range(r, range);
 }
@@ -202,7 +202,7 @@ int BN_pseudo_rand_range(BIGNUM *r, const BIGNUM *range)
  * weakness leads directly to private key exposure unless this function is
  * used.
  */
-int BN_generate_dsa_nonce(BIGNUM *out, const BIGNUM *range,
+int __cdecl BN_generate_dsa_nonce(BIGNUM *out, const BIGNUM *range,
                           const BIGNUM *priv, const unsigned char *message,
                           size_t message_len, BN_CTX *ctx)
 {

@@ -17,7 +17,7 @@ void BN_RECP_CTX_init(BN_RECP_CTX *recp)
     bn_init(&(recp->Nr));
 }
 
-BN_RECP_CTX *BN_RECP_CTX_new(void)
+BN_RECP_CTX * __cdecl BN_RECP_CTX_new(void)
 {
     BN_RECP_CTX *ret;
 
@@ -32,7 +32,7 @@ BN_RECP_CTX *BN_RECP_CTX_new(void)
     return ret;
 }
 
-void BN_RECP_CTX_free(BN_RECP_CTX *recp)
+void __cdecl BN_RECP_CTX_free(BN_RECP_CTX *recp)
 {
     if (recp == NULL)
         return;
@@ -42,7 +42,7 @@ void BN_RECP_CTX_free(BN_RECP_CTX *recp)
         OPENSSL_free(recp);
 }
 
-int BN_RECP_CTX_set(BN_RECP_CTX *recp, const BIGNUM *d, BN_CTX *ctx)
+int __cdecl BN_RECP_CTX_set(BN_RECP_CTX *recp, const BIGNUM *d, BN_CTX *ctx)
 {
     if (!BN_copy(&(recp->N), d))
         return 0;
@@ -52,7 +52,7 @@ int BN_RECP_CTX_set(BN_RECP_CTX *recp, const BIGNUM *d, BN_CTX *ctx)
     return 1;
 }
 
-int BN_mod_mul_reciprocal(BIGNUM *r, const BIGNUM *x, const BIGNUM *y,
+int __cdecl BN_mod_mul_reciprocal(BIGNUM *r, const BIGNUM *x, const BIGNUM *y,
                           BN_RECP_CTX *recp, BN_CTX *ctx)
 {
     int ret = 0;
@@ -81,7 +81,7 @@ int BN_mod_mul_reciprocal(BIGNUM *r, const BIGNUM *x, const BIGNUM *y,
     return ret;
 }
 
-int BN_div_recp(BIGNUM *dv, BIGNUM *rem, const BIGNUM *m,
+int __cdecl BN_div_recp(BIGNUM *dv, BIGNUM *rem, const BIGNUM *m,
                 BN_RECP_CTX *recp, BN_CTX *ctx)
 {
     int i, j, ret = 0;
@@ -171,7 +171,7 @@ int BN_div_recp(BIGNUM *dv, BIGNUM *rem, const BIGNUM *m,
  * required.
  */
 /* r := 2^len / m */
-int BN_reciprocal(BIGNUM *r, const BIGNUM *m, int len, BN_CTX *ctx)
+int __cdecl BN_reciprocal(BIGNUM *r, const BIGNUM *m, int len, BN_CTX *ctx)
 {
     int ret = -1;
     BIGNUM *t;

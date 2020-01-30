@@ -14,7 +14,7 @@
 
 /* The old slow way */
 #if 0
-int BN_div(BIGNUM *dv, BIGNUM *rem, const BIGNUM *m, const BIGNUM *d,
+int __cdecl BN_div(BIGNUM *dv, BIGNUM *rem, const BIGNUM *m, const BIGNUM *d,
            BN_CTX *ctx)
 {
     int i, nm, nd;
@@ -206,7 +206,7 @@ static int bn_left_align(BIGNUM *num)
  *     rm->neg == num->neg                 (unless the remainder is zero)
  * If 'dv' or 'rm' is NULL, the respective value is not returned.
  */
-int BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
+int __cdecl BN_div(BIGNUM *dv, BIGNUM *rm, const BIGNUM *num, const BIGNUM *divisor,
            BN_CTX *ctx)
 {
     int ret;

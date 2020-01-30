@@ -11,7 +11,7 @@
 #include "bn_lcl.h"
 
 /* signed add of b to a. */
-int BN_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
+int __cdecl BN_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 {
     int ret, r_neg, cmp_res;
 
@@ -42,7 +42,7 @@ int BN_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 }
 
 /* signed sub of b from a. */
-int BN_sub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
+int __cdecl BN_sub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 {
     int ret, r_neg, cmp_res;
 
@@ -73,7 +73,7 @@ int BN_sub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 }
 
 /* unsigned add of b to a, r can be equal to a or b. */
-int BN_uadd(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
+int __cdecl BN_uadd(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 {
     int max, min, dif;
     const BN_ULONG *ap, *bp;
@@ -122,7 +122,7 @@ int BN_uadd(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 }
 
 /* unsigned subtraction of b from a, a must be larger than b. */
-int BN_usub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
+int __cdecl BN_usub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b)
 {
     int max, min, dif;
     BN_ULONG t1, t2, borrow, *rp;

@@ -224,27 +224,27 @@ static const BIGNUM _bignum_nist_p_521 = {
     BN_FLG_STATIC_DATA
 };
 
-const BIGNUM *BN_get0_nist_prime_192(void)
+const BIGNUM * __cdecl BN_get0_nist_prime_192(void)
 {
     return &_bignum_nist_p_192;
 }
 
-const BIGNUM *BN_get0_nist_prime_224(void)
+const BIGNUM * __cdecl BN_get0_nist_prime_224(void)
 {
     return &_bignum_nist_p_224;
 }
 
-const BIGNUM *BN_get0_nist_prime_256(void)
+const BIGNUM * __cdecl BN_get0_nist_prime_256(void)
 {
     return &_bignum_nist_p_256;
 }
 
-const BIGNUM *BN_get0_nist_prime_384(void)
+const BIGNUM * __cdecl BN_get0_nist_prime_384(void)
 {
     return &_bignum_nist_p_384;
 }
 
-const BIGNUM *BN_get0_nist_prime_521(void)
+const BIGNUM * __cdecl BN_get0_nist_prime_521(void)
 {
     return &_bignum_nist_p_521;
 }
@@ -315,7 +315,7 @@ static void nist_cp_bn(BN_ULONG *dst, const BN_ULONG *src, int top)
         bn_cp_64(to, 2, from, (a1) - 3) \
         }
 
-int BN_nist_mod_192(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
+int __cdecl BN_nist_mod_192(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
                     BN_CTX *ctx)
 {
     int top = a->top, i;
@@ -456,7 +456,7 @@ typedef BN_ULONG (*bn_addsub_f) (BN_ULONG *, const BN_ULONG *,
         bn_cp_32(to, 6, from, (a1) - 7) \
         }
 
-int BN_nist_mod_224(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
+int __cdecl BN_nist_mod_224(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
                     BN_CTX *ctx)
 {
     int top = a->top, i;
@@ -637,7 +637,7 @@ int BN_nist_mod_224(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
         bn_cp_32(to, 7, from, (a1) - 8) \
         }
 
-int BN_nist_mod_256(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
+int __cdecl BN_nist_mod_256(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
                     BN_CTX *ctx)
 {
     int i, top = a->top;
@@ -883,7 +883,7 @@ int BN_nist_mod_256(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
         bn_cp_32(to, 11, from, (a1) - 12)  \
         }
 
-int BN_nist_mod_384(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
+int __cdecl BN_nist_mod_384(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
                     BN_CTX *ctx)
 {
     int i, top = a->top;
@@ -1152,7 +1152,7 @@ int BN_nist_mod_384(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
 #define BN_NIST_521_LSHIFT      (BN_BITS2-BN_NIST_521_RSHIFT)
 #define BN_NIST_521_TOP_MASK    ((BN_ULONG)BN_MASK2>>BN_NIST_521_LSHIFT)
 
-int BN_nist_mod_521(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
+int __cdecl BN_nist_mod_521(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
                     BN_CTX *ctx)
 {
     int top = a->top, i;
@@ -1223,7 +1223,7 @@ int BN_nist_mod_521(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
     return 1;
 }
 
-int (*BN_nist_mod_func(const BIGNUM *p)) (BIGNUM *r, const BIGNUM *a,
+int (__cdecl *BN_nist_mod_func(const BIGNUM *p)) (BIGNUM *r, const BIGNUM *a,
                                           const BIGNUM *field, BN_CTX *ctx) {
     if (BN_ucmp(&_bignum_nist_p_192, p) == 0)
         return BN_nist_mod_192;

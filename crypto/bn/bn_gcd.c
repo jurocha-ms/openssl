@@ -12,7 +12,7 @@
 
 static BIGNUM *euclid(BIGNUM *a, BIGNUM *b);
 
-int BN_gcd(BIGNUM *r, const BIGNUM *in_a, const BIGNUM *in_b, BN_CTX *ctx)
+int __cdecl BN_gcd(BIGNUM *r, const BIGNUM *in_a, const BIGNUM *in_b, BN_CTX *ctx)
 {
     BIGNUM *a, *b, *t;
     int ret = 0;
@@ -121,7 +121,7 @@ static BIGNUM *BN_mod_inverse_no_branch(BIGNUM *in,
                                         const BIGNUM *a, const BIGNUM *n,
                                         BN_CTX *ctx);
 
-BIGNUM *BN_mod_inverse(BIGNUM *in,
+BIGNUM * __cdecl BN_mod_inverse(BIGNUM *in,
                        const BIGNUM *a, const BIGNUM *n, BN_CTX *ctx)
 {
     BIGNUM *rv;

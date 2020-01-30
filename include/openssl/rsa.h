@@ -427,81 +427,81 @@ int RSA_meth_get_flags(const RSA_METHOD *meth);
 int RSA_meth_set_flags(RSA_METHOD *meth, int flags);
 void *RSA_meth_get0_app_data(const RSA_METHOD *meth);
 int RSA_meth_set0_app_data(RSA_METHOD *meth, void *app_data);
-int (*RSA_meth_get_pub_enc(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_pub_enc(const RSA_METHOD *meth))
     (int flen, const unsigned char *from,
      unsigned char *to, RSA *rsa, int padding);
-int RSA_meth_set_pub_enc(RSA_METHOD *rsa,
-                         int (*pub_enc) (int flen, const unsigned char *from,
+int __cdecl RSA_meth_set_pub_enc(RSA_METHOD *rsa,
+                         int (__cdecl *pub_enc) (int flen, const unsigned char *from,
                                          unsigned char *to, RSA *rsa,
                                          int padding));
-int (*RSA_meth_get_pub_dec(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_pub_dec(const RSA_METHOD *meth))
     (int flen, const unsigned char *from,
      unsigned char *to, RSA *rsa, int padding);
-int RSA_meth_set_pub_dec(RSA_METHOD *rsa,
-                         int (*pub_dec) (int flen, const unsigned char *from,
+int __cdecl RSA_meth_set_pub_dec(RSA_METHOD *rsa,
+                         int (__cdecl *pub_dec) (int flen, const unsigned char *from,
                                          unsigned char *to, RSA *rsa,
                                          int padding));
-int (*RSA_meth_get_priv_enc(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_priv_enc(const RSA_METHOD *meth))
     (int flen, const unsigned char *from,
      unsigned char *to, RSA *rsa, int padding);
-int RSA_meth_set_priv_enc(RSA_METHOD *rsa,
-                          int (*priv_enc) (int flen, const unsigned char *from,
+int __cdecl RSA_meth_set_priv_enc(RSA_METHOD *rsa,
+                          int (__cdecl *priv_enc) (int flen, const unsigned char *from,
                                            unsigned char *to, RSA *rsa,
                                            int padding));
-int (*RSA_meth_get_priv_dec(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_priv_dec(const RSA_METHOD *meth))
     (int flen, const unsigned char *from,
      unsigned char *to, RSA *rsa, int padding);
-int RSA_meth_set_priv_dec(RSA_METHOD *rsa,
-                          int (*priv_dec) (int flen, const unsigned char *from,
+int __cdecl RSA_meth_set_priv_dec(RSA_METHOD *rsa,
+                          int (__cdecl *priv_dec) (int flen, const unsigned char *from,
                                            unsigned char *to, RSA *rsa,
                                            int padding));
-int (*RSA_meth_get_mod_exp(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_mod_exp(const RSA_METHOD *meth))
     (BIGNUM *r0, const BIGNUM *i, RSA *rsa, BN_CTX *ctx);
-int RSA_meth_set_mod_exp(RSA_METHOD *rsa,
-                         int (*mod_exp) (BIGNUM *r0, const BIGNUM *i, RSA *rsa,
+int __cdecl RSA_meth_set_mod_exp(RSA_METHOD *rsa,
+                         int (__cdecl *mod_exp) (BIGNUM *r0, const BIGNUM *i, RSA *rsa,
                                          BN_CTX *ctx));
-int (*RSA_meth_get_bn_mod_exp(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_bn_mod_exp(const RSA_METHOD *meth))
     (BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
      const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx);
-int RSA_meth_set_bn_mod_exp(RSA_METHOD *rsa,
-                            int (*bn_mod_exp) (BIGNUM *r,
+int __cdecl RSA_meth_set_bn_mod_exp(RSA_METHOD *rsa,
+                            int (__cdecl *bn_mod_exp) (BIGNUM *r,
                                                const BIGNUM *a,
                                                const BIGNUM *p,
                                                const BIGNUM *m,
                                                BN_CTX *ctx,
                                                BN_MONT_CTX *m_ctx));
-int (*RSA_meth_get_init(const RSA_METHOD *meth)) (RSA *rsa);
-int RSA_meth_set_init(RSA_METHOD *rsa, int (*init) (RSA *rsa));
-int (*RSA_meth_get_finish(const RSA_METHOD *meth)) (RSA *rsa);
-int RSA_meth_set_finish(RSA_METHOD *rsa, int (*finish) (RSA *rsa));
-int (*RSA_meth_get_sign(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_init(const RSA_METHOD *meth)) (RSA *rsa);
+int __cdecl RSA_meth_set_init(RSA_METHOD *rsa, int (__cdecl *init) (RSA *rsa));
+int (__cdecl *RSA_meth_get_finish(const RSA_METHOD *meth)) (RSA *rsa);
+int __cdecl RSA_meth_set_finish(RSA_METHOD *rsa, int (__cdecl *finish) (RSA *rsa));
+int (__cdecl *RSA_meth_get_sign(const RSA_METHOD *meth))
     (int type,
      const unsigned char *m, unsigned int m_length,
      unsigned char *sigret, unsigned int *siglen,
      const RSA *rsa);
-int RSA_meth_set_sign(RSA_METHOD *rsa,
-                      int (*sign) (int type, const unsigned char *m,
+int __cdecl RSA_meth_set_sign(RSA_METHOD *rsa,
+                      int (__cdecl *sign) (int type, const unsigned char *m,
                                    unsigned int m_length,
                                    unsigned char *sigret, unsigned int *siglen,
                                    const RSA *rsa));
-int (*RSA_meth_get_verify(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_verify(const RSA_METHOD *meth))
     (int dtype, const unsigned char *m,
      unsigned int m_length, const unsigned char *sigbuf,
      unsigned int siglen, const RSA *rsa);
-int RSA_meth_set_verify(RSA_METHOD *rsa,
-                        int (*verify) (int dtype, const unsigned char *m,
+int __cdecl RSA_meth_set_verify(RSA_METHOD *rsa,
+                        int (__cdecl *verify) (int dtype, const unsigned char *m,
                                        unsigned int m_length,
                                        const unsigned char *sigbuf,
                                        unsigned int siglen, const RSA *rsa));
-int (*RSA_meth_get_keygen(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_keygen(const RSA_METHOD *meth))
     (RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
-int RSA_meth_set_keygen(RSA_METHOD *rsa,
-                        int (*keygen) (RSA *rsa, int bits, BIGNUM *e,
+int __cdecl RSA_meth_set_keygen(RSA_METHOD *rsa,
+                        int (__cdecl *keygen) (RSA *rsa, int bits, BIGNUM *e,
                                        BN_GENCB *cb));
-int (*RSA_meth_get_multi_prime_keygen(const RSA_METHOD *meth))
+int (__cdecl *RSA_meth_get_multi_prime_keygen(const RSA_METHOD *meth))
     (RSA *rsa, int bits, int primes, BIGNUM *e, BN_GENCB *cb);
-int RSA_meth_set_multi_prime_keygen(RSA_METHOD *meth,
-                                    int (*keygen) (RSA *rsa, int bits,
+int __cdecl RSA_meth_set_multi_prime_keygen(RSA_METHOD *meth,
+                                    int (__cdecl *keygen) (RSA *rsa, int bits,
                                                    int primes, BIGNUM *e,
                                                    BN_GENCB *cb));
 

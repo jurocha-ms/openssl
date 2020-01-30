@@ -22,12 +22,12 @@ struct bn_blinding_st {
     int counter;
     unsigned long flags;
     BN_MONT_CTX *m_ctx;
-    int (*bn_mod_exp) (BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
+    int (__cdecl *bn_mod_exp) (BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
                        const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx);
     CRYPTO_RWLOCK *lock;
 };
 
-BN_BLINDING *BN_BLINDING_new(const BIGNUM *A, const BIGNUM *Ai, BIGNUM *mod)
+BN_BLINDING * __cdecl BN_BLINDING_new(const BIGNUM *A, const BIGNUM *Ai, BIGNUM *mod)
 {
     BN_BLINDING *ret = NULL;
 
@@ -78,7 +78,7 @@ BN_BLINDING *BN_BLINDING_new(const BIGNUM *A, const BIGNUM *Ai, BIGNUM *mod)
     return NULL;
 }
 
-void BN_BLINDING_free(BN_BLINDING *r)
+void __cdecl BN_BLINDING_free(BN_BLINDING *r)
 {
     if (r == NULL)
         return;
@@ -90,7 +90,7 @@ void BN_BLINDING_free(BN_BLINDING *r)
     OPENSSL_free(r);
 }
 
-int BN_BLINDING_update(BN_BLINDING *b, BN_CTX *ctx)
+int __cdecl BN_BLINDING_update(BN_BLINDING *b, BN_CTX *ctx)
 {
     int ret = 0;
 
@@ -126,12 +126,12 @@ int BN_BLINDING_update(BN_BLINDING *b, BN_CTX *ctx)
     return ret;
 }
 
-int BN_BLINDING_convert(BIGNUM *n, BN_BLINDING *b, BN_CTX *ctx)
+int __cdecl BN_BLINDING_convert(BIGNUM *n, BN_BLINDING *b, BN_CTX *ctx)
 {
     return BN_BLINDING_convert_ex(n, NULL, b, ctx);
 }
 
-int BN_BLINDING_convert_ex(BIGNUM *n, BIGNUM *r, BN_BLINDING *b, BN_CTX *ctx)
+int __cdecl BN_BLINDING_convert_ex(BIGNUM *n, BIGNUM *r, BN_BLINDING *b, BN_CTX *ctx)
 {
     int ret = 1;
 
@@ -159,12 +159,12 @@ int BN_BLINDING_convert_ex(BIGNUM *n, BIGNUM *r, BN_BLINDING *b, BN_CTX *ctx)
     return ret;
 }
 
-int BN_BLINDING_invert(BIGNUM *n, BN_BLINDING *b, BN_CTX *ctx)
+int __cdecl BN_BLINDING_invert(BIGNUM *n, BN_BLINDING *b, BN_CTX *ctx)
 {
     return BN_BLINDING_invert_ex(n, NULL, b, ctx);
 }
 
-int BN_BLINDING_invert_ex(BIGNUM *n, const BIGNUM *r, BN_BLINDING *b,
+int __cdecl BN_BLINDING_invert_ex(BIGNUM *n, const BIGNUM *r, BN_BLINDING *b,
                           BN_CTX *ctx)
 {
     int ret;
@@ -200,39 +200,39 @@ int BN_BLINDING_invert_ex(BIGNUM *n, const BIGNUM *r, BN_BLINDING *b,
     return ret;
 }
 
-int BN_BLINDING_is_current_thread(BN_BLINDING *b)
+int __cdecl BN_BLINDING_is_current_thread(BN_BLINDING *b)
 {
     return CRYPTO_THREAD_compare_id(CRYPTO_THREAD_get_current_id(), b->tid);
 }
 
-void BN_BLINDING_set_current_thread(BN_BLINDING *b)
+void __cdecl BN_BLINDING_set_current_thread(BN_BLINDING *b)
 {
     b->tid = CRYPTO_THREAD_get_current_id();
 }
 
-int BN_BLINDING_lock(BN_BLINDING *b)
+int __cdecl BN_BLINDING_lock(BN_BLINDING *b)
 {
     return CRYPTO_THREAD_write_lock(b->lock);
 }
 
-int BN_BLINDING_unlock(BN_BLINDING *b)
+int __cdecl BN_BLINDING_unlock(BN_BLINDING *b)
 {
     return CRYPTO_THREAD_unlock(b->lock);
 }
 
-unsigned long BN_BLINDING_get_flags(const BN_BLINDING *b)
+unsigned long __cdecl BN_BLINDING_get_flags(const BN_BLINDING *b)
 {
     return b->flags;
 }
 
-void BN_BLINDING_set_flags(BN_BLINDING *b, unsigned long flags)
+void __cdecl BN_BLINDING_set_flags(BN_BLINDING *b, unsigned long flags)
 {
     b->flags = flags;
 }
 
-BN_BLINDING *BN_BLINDING_create_param(BN_BLINDING *b,
+BN_BLINDING * __cdecl BN_BLINDING_create_param(BN_BLINDING *b,
                                       const BIGNUM *e, BIGNUM *m, BN_CTX *ctx,
-                                      int (*bn_mod_exp) (BIGNUM *r,
+                                      int (__cdecl *bn_mod_exp) (BIGNUM *r,
                                                          const BIGNUM *a,
                                                          const BIGNUM *p,
                                                          const BIGNUM *m,

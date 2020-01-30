@@ -12,18 +12,18 @@
 #include "rsa_locl.h"
 #include "internal/constant_time_locl.h"
 
-static int rsa_ossl_public_encrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_public_encrypt(int flen, const unsigned char *from,
                                   unsigned char *to, RSA *rsa, int padding);
-static int rsa_ossl_private_encrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_private_encrypt(int flen, const unsigned char *from,
                                    unsigned char *to, RSA *rsa, int padding);
-static int rsa_ossl_public_decrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_public_decrypt(int flen, const unsigned char *from,
                                   unsigned char *to, RSA *rsa, int padding);
-static int rsa_ossl_private_decrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_private_decrypt(int flen, const unsigned char *from,
                                    unsigned char *to, RSA *rsa, int padding);
-static int rsa_ossl_mod_exp(BIGNUM *r0, const BIGNUM *i, RSA *rsa,
+static int __cdecl rsa_ossl_mod_exp(BIGNUM *r0, const BIGNUM *i, RSA *rsa,
                            BN_CTX *ctx);
-static int rsa_ossl_init(RSA *rsa);
-static int rsa_ossl_finish(RSA *rsa);
+static int __cdecl rsa_ossl_init(RSA *rsa);
+static int __cdecl rsa_ossl_finish(RSA *rsa);
 static RSA_METHOD rsa_pkcs1_ossl_meth = {
     "OpenSSL PKCS#1 RSA",
     rsa_ossl_public_encrypt,
@@ -65,7 +65,7 @@ const RSA_METHOD *RSA_null_method(void)
     return NULL;
 }
 
-static int rsa_ossl_public_encrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_public_encrypt(int flen, const unsigned char *from,
                                   unsigned char *to, RSA *rsa, int padding)
 {
     BIGNUM *f, *ret;
@@ -230,7 +230,7 @@ static int rsa_blinding_invert(BN_BLINDING *b, BIGNUM *f, BIGNUM *unblind,
 }
 
 /* signing */
-static int rsa_ossl_private_encrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_private_encrypt(int flen, const unsigned char *from,
                                    unsigned char *to, RSA *rsa, int padding)
 {
     BIGNUM *f, *ret, *res;
@@ -364,7 +364,7 @@ static int rsa_ossl_private_encrypt(int flen, const unsigned char *from,
     return r;
 }
 
-static int rsa_ossl_private_decrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_private_decrypt(int flen, const unsigned char *from,
                                    unsigned char *to, RSA *rsa, int padding)
 {
     BIGNUM *f, *ret;
@@ -499,7 +499,7 @@ static int rsa_ossl_private_decrypt(int flen, const unsigned char *from,
 }
 
 /* signature verification */
-static int rsa_ossl_public_decrypt(int flen, const unsigned char *from,
+static int __cdecl rsa_ossl_public_decrypt(int flen, const unsigned char *from,
                                   unsigned char *to, RSA *rsa, int padding)
 {
     BIGNUM *f, *ret;
@@ -594,7 +594,7 @@ static int rsa_ossl_public_decrypt(int flen, const unsigned char *from,
     return r;
 }
 
-static int rsa_ossl_mod_exp(BIGNUM *r0, const BIGNUM *I, RSA *rsa, BN_CTX *ctx)
+static int __cdecl rsa_ossl_mod_exp(BIGNUM *r0, const BIGNUM *I, RSA *rsa, BN_CTX *ctx)
 {
     BIGNUM *r1, *m1, *vrfy, *r2, *m[RSA_MAX_PRIME_NUM - 2];
     int ret = 0, i, ex_primes = 0, smooth = 0;
@@ -954,13 +954,13 @@ static int rsa_ossl_mod_exp(BIGNUM *r0, const BIGNUM *I, RSA *rsa, BN_CTX *ctx)
     return ret;
 }
 
-static int rsa_ossl_init(RSA *rsa)
+static int __cdecl rsa_ossl_init(RSA *rsa)
 {
     rsa->flags |= RSA_FLAG_CACHE_PUBLIC | RSA_FLAG_CACHE_PRIVATE;
     return 1;
 }
 
-static int rsa_ossl_finish(RSA *rsa)
+static int __cdecl rsa_ossl_finish(RSA *rsa)
 {
     int i;
     RSA_PRIME_INFO *pinfo;

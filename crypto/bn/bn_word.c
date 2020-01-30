@@ -10,7 +10,7 @@
 #include "internal/cryptlib.h"
 #include "bn_lcl.h"
 
-BN_ULONG BN_mod_word(const BIGNUM *a, BN_ULONG w)
+BN_ULONG __cdecl BN_mod_word(const BIGNUM *a, BN_ULONG w)
 {
 #ifndef BN_LLONG
     BN_ULONG ret = 0;
@@ -58,7 +58,7 @@ BN_ULONG BN_mod_word(const BIGNUM *a, BN_ULONG w)
     return (BN_ULONG)ret;
 }
 
-BN_ULONG BN_div_word(BIGNUM *a, BN_ULONG w)
+BN_ULONG __cdecl BN_div_word(BIGNUM *a, BN_ULONG w)
 {
     BN_ULONG ret = 0;
     int i, j;
@@ -95,7 +95,7 @@ BN_ULONG BN_div_word(BIGNUM *a, BN_ULONG w)
     return ret;
 }
 
-int BN_add_word(BIGNUM *a, BN_ULONG w)
+int __cdecl BN_add_word(BIGNUM *a, BN_ULONG w)
 {
     BN_ULONG l;
     int i;
@@ -131,7 +131,7 @@ int BN_add_word(BIGNUM *a, BN_ULONG w)
     return 1;
 }
 
-int BN_sub_word(BIGNUM *a, BN_ULONG w)
+int __cdecl BN_sub_word(BIGNUM *a, BN_ULONG w)
 {
     int i;
 
@@ -178,7 +178,7 @@ int BN_sub_word(BIGNUM *a, BN_ULONG w)
     return 1;
 }
 
-int BN_mul_word(BIGNUM *a, BN_ULONG w)
+int __cdecl BN_mul_word(BIGNUM *a, BN_ULONG w)
 {
     BN_ULONG ll;
 

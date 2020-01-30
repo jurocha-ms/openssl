@@ -11,7 +11,7 @@
 #include "internal/cryptlib.h"
 #include "bn_lcl.h"
 
-int BN_bn2mpi(const BIGNUM *a, unsigned char *d)
+int __cdecl BN_bn2mpi(const BIGNUM *a, unsigned char *d)
 {
     int bits;
     int num = 0;
@@ -39,7 +39,7 @@ int BN_bn2mpi(const BIGNUM *a, unsigned char *d)
     return (num + 4 + ext);
 }
 
-BIGNUM *BN_mpi2bn(const unsigned char *d, int n, BIGNUM *ain)
+BIGNUM * __cdecl BN_mpi2bn(const unsigned char *d, int n, BIGNUM *ain)
 {
     long len;
     int neg = 0;

@@ -10,7 +10,7 @@
 #include "internal/cryptlib.h"
 #include "bn_lcl.h"
 
-int BN_nnmod(BIGNUM *r, const BIGNUM *m, const BIGNUM *d, BN_CTX *ctx)
+int __cdecl BN_nnmod(BIGNUM *r, const BIGNUM *m, const BIGNUM *d, BN_CTX *ctx)
 {
     /*
      * like BN_mod, but returns non-negative remainder (i.e., 0 <= r < |d|
@@ -25,7 +25,7 @@ int BN_nnmod(BIGNUM *r, const BIGNUM *m, const BIGNUM *d, BN_CTX *ctx)
     return (d->neg ? BN_sub : BN_add) (r, r, d);
 }
 
-int BN_mod_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
+int __cdecl BN_mod_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
                BN_CTX *ctx)
 {
     if (!BN_add(r, a, b))
@@ -92,7 +92,7 @@ int bn_mod_add_fixed_top(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
     return 1;
 }
 
-int BN_mod_add_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
+int __cdecl BN_mod_add_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
                      const BIGNUM *m)
 {
     int ret = bn_mod_add_fixed_top(r, a, b, m);
@@ -103,7 +103,7 @@ int BN_mod_add_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
     return ret;
 }
 
-int BN_mod_sub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
+int __cdecl BN_mod_sub(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
                BN_CTX *ctx)
 {
     if (!BN_sub(r, a, b))
@@ -179,7 +179,7 @@ int bn_mod_sub_fixed_top(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
  * BN_mod_sub variant that may be used if both a and b are non-negative and
  * less than m
  */
-int BN_mod_sub_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
+int __cdecl BN_mod_sub_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
                      const BIGNUM *m)
 {
     if (!BN_sub(r, a, b))
@@ -190,7 +190,7 @@ int BN_mod_sub_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
 }
 
 /* slow but works */
-int BN_mod_mul(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
+int __cdecl BN_mod_mul(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
                BN_CTX *ctx)
 {
     BIGNUM *t;
@@ -219,7 +219,7 @@ int BN_mod_mul(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, const BIGNUM *m,
     return ret;
 }
 
-int BN_mod_sqr(BIGNUM *r, const BIGNUM *a, const BIGNUM *m, BN_CTX *ctx)
+int __cdecl BN_mod_sqr(BIGNUM *r, const BIGNUM *a, const BIGNUM *m, BN_CTX *ctx)
 {
     if (!BN_sqr(r, a, ctx))
         return 0;
@@ -227,7 +227,7 @@ int BN_mod_sqr(BIGNUM *r, const BIGNUM *a, const BIGNUM *m, BN_CTX *ctx)
     return BN_mod(r, r, m, ctx);
 }
 
-int BN_mod_lshift1(BIGNUM *r, const BIGNUM *a, const BIGNUM *m, BN_CTX *ctx)
+int __cdecl BN_mod_lshift1(BIGNUM *r, const BIGNUM *a, const BIGNUM *m, BN_CTX *ctx)
 {
     if (!BN_lshift1(r, a))
         return 0;
@@ -239,7 +239,7 @@ int BN_mod_lshift1(BIGNUM *r, const BIGNUM *a, const BIGNUM *m, BN_CTX *ctx)
  * BN_mod_lshift1 variant that may be used if a is non-negative and less than
  * m
  */
-int BN_mod_lshift1_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *m)
+int __cdecl BN_mod_lshift1_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *m)
 {
     if (!BN_lshift1(r, a))
         return 0;
@@ -249,7 +249,7 @@ int BN_mod_lshift1_quick(BIGNUM *r, const BIGNUM *a, const BIGNUM *m)
     return 1;
 }
 
-int BN_mod_lshift(BIGNUM *r, const BIGNUM *a, int n, const BIGNUM *m,
+int __cdecl BN_mod_lshift(BIGNUM *r, const BIGNUM *a, int n, const BIGNUM *m,
                   BN_CTX *ctx)
 {
     BIGNUM *abs_m = NULL;
@@ -276,7 +276,7 @@ int BN_mod_lshift(BIGNUM *r, const BIGNUM *a, int n, const BIGNUM *m,
  * BN_mod_lshift variant that may be used if a is non-negative and less than
  * m
  */
-int BN_mod_lshift_quick(BIGNUM *r, const BIGNUM *a, int n, const BIGNUM *m)
+int __cdecl BN_mod_lshift_quick(BIGNUM *r, const BIGNUM *a, int n, const BIGNUM *m)
 {
     if (r != a) {
         if (BN_copy(r, a) == NULL)

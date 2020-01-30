@@ -14,7 +14,7 @@
 /*
  * I've just gone over this and it is now %20 faster on x86 - eay - 27 Jun 96
  */
-int BN_sqr(BIGNUM *r, const BIGNUM *a, BN_CTX *ctx)
+int __cdecl BN_sqr(BIGNUM *r, const BIGNUM *a, BN_CTX *ctx)
 {
     int ret = bn_sqr_fixed_top(r, a, ctx);
 
