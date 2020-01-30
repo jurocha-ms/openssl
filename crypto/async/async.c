@@ -164,7 +164,7 @@ void async_start_func(void)
     }
 }
 
-int ASYNC_start_job(ASYNC_JOB **job, ASYNC_WAIT_CTX *wctx, int *ret,
+int __cdecl ASYNC_start_job(ASYNC_JOB **job, ASYNC_WAIT_CTX *wctx, int *ret,
                     int (*func)(void *), void *args, size_t size)
 {
     async_ctx *ctx;
@@ -252,7 +252,7 @@ err:
     return ASYNC_ERR;
 }
 
-int ASYNC_pause_job(void)
+int __cdecl ASYNC_pause_job(void)
 {
     ASYNC_JOB *job;
     async_ctx *ctx = async_get_ctx();
@@ -313,7 +313,7 @@ void async_deinit(void)
     CRYPTO_THREAD_cleanup_local(&poolkey);
 }
 
-int ASYNC_init_thread(size_t max_size, size_t init_size)
+int __cdecl ASYNC_init_thread(size_t max_size, size_t init_size)
 {
     async_pool *pool;
     size_t curr_size = 0;
@@ -388,7 +388,7 @@ void async_delete_thread_state(void)
     async_ctx_free();
 }
 
-void ASYNC_cleanup_thread(void)
+void __cdecl ASYNC_cleanup_thread(void)
 {
     if (!OPENSSL_init_crypto(OPENSSL_INIT_ASYNC, NULL))
         return;
@@ -396,7 +396,7 @@ void ASYNC_cleanup_thread(void)
     async_delete_thread_state();
 }
 
-ASYNC_JOB *ASYNC_get_current_job(void)
+ASYNC_JOB * __cdecl ASYNC_get_current_job(void)
 {
     async_ctx *ctx;
 
@@ -410,12 +410,12 @@ ASYNC_JOB *ASYNC_get_current_job(void)
     return ctx->currjob;
 }
 
-ASYNC_WAIT_CTX *ASYNC_get_wait_ctx(ASYNC_JOB *job)
+ASYNC_WAIT_CTX * __cdecl ASYNC_get_wait_ctx(ASYNC_JOB *job)
 {
     return job->waitctx;
 }
 
-void ASYNC_block_pause(void)
+void __cdecl ASYNC_block_pause(void)
 {
     async_ctx *ctx;
 
@@ -432,7 +432,7 @@ void ASYNC_block_pause(void)
     ctx->blocked++;
 }
 
-void ASYNC_unblock_pause(void)
+void __cdecl ASYNC_unblock_pause(void)
 {
     async_ctx *ctx;
 

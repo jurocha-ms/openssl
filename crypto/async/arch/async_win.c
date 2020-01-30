@@ -15,7 +15,7 @@
 # include <windows.h>
 # include "internal/cryptlib.h"
 
-int ASYNC_is_capable(void)
+int __cdecl ASYNC_is_capable(void)
 {
     return 1;
 }

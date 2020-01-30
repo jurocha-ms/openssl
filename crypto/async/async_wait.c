@@ -12,12 +12,12 @@
 
 #include <openssl/err.h>
 
-ASYNC_WAIT_CTX *ASYNC_WAIT_CTX_new(void)
+ASYNC_WAIT_CTX * __cdecl ASYNC_WAIT_CTX_new(void)
 {
     return OPENSSL_zalloc(sizeof(ASYNC_WAIT_CTX));
 }
 
-void ASYNC_WAIT_CTX_free(ASYNC_WAIT_CTX *ctx)
+void __cdecl ASYNC_WAIT_CTX_free(ASYNC_WAIT_CTX *ctx)
 {
     struct fd_lookup_st *curr;
     struct fd_lookup_st *next;
@@ -40,7 +40,7 @@ void ASYNC_WAIT_CTX_free(ASYNC_WAIT_CTX *ctx)
 
     OPENSSL_free(ctx);
 }
-int ASYNC_WAIT_CTX_set_wait_fd(ASYNC_WAIT_CTX *ctx, const void *key,
+int __cdecl ASYNC_WAIT_CTX_set_wait_fd(ASYNC_WAIT_CTX *ctx, const void *key,
                                OSSL_ASYNC_FD fd, void *custom_data,
                                void (*cleanup)(ASYNC_WAIT_CTX *, const void *,
                                                OSSL_ASYNC_FD, void *))
@@ -63,7 +63,7 @@ int ASYNC_WAIT_CTX_set_wait_fd(ASYNC_WAIT_CTX *ctx, const void *key,
     return 1;
 }
 
-int ASYNC_WAIT_CTX_get_fd(ASYNC_WAIT_CTX *ctx, const void *key,
+int __cdecl ASYNC_WAIT_CTX_get_fd(ASYNC_WAIT_CTX *ctx, const void *key,
                           OSSL_ASYNC_FD *fd, void **custom_data)
 {
     struct fd_lookup_st *curr;
@@ -85,7 +85,7 @@ int ASYNC_WAIT_CTX_get_fd(ASYNC_WAIT_CTX *ctx, const void *key,
     return 0;
 }
 
-int ASYNC_WAIT_CTX_get_all_fds(ASYNC_WAIT_CTX *ctx, OSSL_ASYNC_FD *fd,
+int __cdecl ASYNC_WAIT_CTX_get_all_fds(ASYNC_WAIT_CTX *ctx, OSSL_ASYNC_FD *fd,
                                size_t *numfds)
 {
     struct fd_lookup_st *curr;
@@ -108,7 +108,7 @@ int ASYNC_WAIT_CTX_get_all_fds(ASYNC_WAIT_CTX *ctx, OSSL_ASYNC_FD *fd,
     return 1;
 }
 
-int ASYNC_WAIT_CTX_get_changed_fds(ASYNC_WAIT_CTX *ctx, OSSL_ASYNC_FD *addfd,
+int __cdecl ASYNC_WAIT_CTX_get_changed_fds(ASYNC_WAIT_CTX *ctx, OSSL_ASYNC_FD *addfd,
                                    size_t *numaddfds, OSSL_ASYNC_FD *delfd,
                                    size_t *numdelfds)
 {
@@ -137,7 +137,7 @@ int ASYNC_WAIT_CTX_get_changed_fds(ASYNC_WAIT_CTX *ctx, OSSL_ASYNC_FD *addfd,
     return 1;
 }
 
-int ASYNC_WAIT_CTX_clear_fd(ASYNC_WAIT_CTX *ctx, const void *key)
+int __cdecl ASYNC_WAIT_CTX_clear_fd(ASYNC_WAIT_CTX *ctx, const void *key)
 {
     struct fd_lookup_st *curr, *prev;
 

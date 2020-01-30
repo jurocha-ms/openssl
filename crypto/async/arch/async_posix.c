@@ -17,7 +17,7 @@
 
 #define STACKSIZE       32768
 
-int ASYNC_is_capable(void)
+int __cdecl ASYNC_is_capable(void)
 {
     ucontext_t ctx;
 

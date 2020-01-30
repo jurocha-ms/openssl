@@ -11,7 +11,7 @@
 #include "../async_locl.h"
 
 #ifdef ASYNC_NULL
-int ASYNC_is_capable(void)
+int __cdecl ASYNC_is_capable(void)
 {
     return 0;
 }
