@@ -34,7 +34,7 @@ typedef struct {
 
 /* N.B. The IV for this mode is _twice_ the block size */
 
-void AES_ige_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl AES_ige_encrypt(const unsigned char *in, unsigned char *out,
                      size_t length, const AES_KEY *key,
                      unsigned char *ivec, const int enc)
 {
@@ -166,7 +166,7 @@ void AES_ige_encrypt(const unsigned char *in, unsigned char *out,
 
 /* N.B. The IV for this mode is _four times_ the block size */
 
-void AES_bi_ige_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl AES_bi_ige_encrypt(const unsigned char *in, unsigned char *out,
                         size_t length, const AES_KEY *key,
                         const AES_KEY *key2, const unsigned char *ivec,
                         const int enc)

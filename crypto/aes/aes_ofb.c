@@ -10,7 +10,7 @@
 #include <openssl/aes.h>
 #include <openssl/modes.h>
 
-void AES_ofb128_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl AES_ofb128_encrypt(const unsigned char *in, unsigned char *out,
                         size_t length, const AES_KEY *key,
                         unsigned char *ivec, int *num)
 {
