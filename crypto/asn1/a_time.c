@@ -314,12 +314,12 @@ ASN1_TIME *asn1_time_from_tm(ASN1_TIME *s, struct tm *ts, int type)
     return NULL;
 }
 
-ASN1_TIME *ASN1_TIME_set(ASN1_TIME *s, time_t t)
+ASN1_TIME * __cdecl ASN1_TIME_set(ASN1_TIME *s, time_t t)
 {
     return ASN1_TIME_adj(s, t, 0, 0);
 }
 
-ASN1_TIME *ASN1_TIME_adj(ASN1_TIME *s, time_t t,
+ASN1_TIME * __cdecl ASN1_TIME_adj(ASN1_TIME *s, time_t t,
                          int offset_day, long offset_sec)
 {
     struct tm *ts;
@@ -337,7 +337,7 @@ ASN1_TIME *ASN1_TIME_adj(ASN1_TIME *s, time_t t,
     return asn1_time_from_tm(s, ts, V_ASN1_UNDEF);
 }
 
-int ASN1_TIME_check(const ASN1_TIME *t)
+int __cdecl ASN1_TIME_check(const ASN1_TIME *t)
 {
     if (t->type == V_ASN1_GENERALIZEDTIME)
         return ASN1_GENERALIZEDTIME_check(t);
@@ -347,7 +347,7 @@ int ASN1_TIME_check(const ASN1_TIME *t)
 }
 
 /* Convert an ASN1_TIME structure to GeneralizedTime */
-ASN1_GENERALIZEDTIME *ASN1_TIME_to_generalizedtime(const ASN1_TIME *t,
+ASN1_GENERALIZEDTIME * __cdecl ASN1_TIME_to_generalizedtime(const ASN1_TIME *t,
                                                    ASN1_GENERALIZEDTIME **out)
 {
     ASN1_GENERALIZEDTIME *ret = NULL;
@@ -367,7 +367,7 @@ ASN1_GENERALIZEDTIME *ASN1_TIME_to_generalizedtime(const ASN1_TIME *t,
     return ret;
 }
 
-int ASN1_TIME_set_string(ASN1_TIME *s, const char *str)
+int __cdecl ASN1_TIME_set_string(ASN1_TIME *s, const char *str)
 {
     /* Try UTC, if that fails, try GENERALIZED */
     if (ASN1_UTCTIME_set_string(s, str))
@@ -375,7 +375,7 @@ int ASN1_TIME_set_string(ASN1_TIME *s, const char *str)
     return ASN1_GENERALIZEDTIME_set_string(s, str);
 }
 
-int ASN1_TIME_set_string_X509(ASN1_TIME *s, const char *str)
+int __cdecl ASN1_TIME_set_string_X509(ASN1_TIME *s, const char *str)
 {
     ASN1_TIME t;
     struct tm tm;
@@ -434,7 +434,7 @@ out:
     return rv;
 }
 
-int ASN1_TIME_to_tm(const ASN1_TIME *s, struct tm *tm)
+int __cdecl ASN1_TIME_to_tm(const ASN1_TIME *s, struct tm *tm)
 {
     if (s == NULL) {
         time_t now_t;
@@ -449,7 +449,7 @@ int ASN1_TIME_to_tm(const ASN1_TIME *s, struct tm *tm)
     return asn1_time_to_tm(tm, s);
 }
 
-int ASN1_TIME_diff(int *pday, int *psec,
+int __cdecl ASN1_TIME_diff(int *pday, int *psec,
                    const ASN1_TIME *from, const ASN1_TIME *to)
 {
     struct tm tm_from, tm_to;
@@ -466,7 +466,7 @@ static const char _asn1_mon[12][4] = {
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
 
-int ASN1_TIME_print(BIO *bp, const ASN1_TIME *tm)
+int __cdecl ASN1_TIME_print(BIO *bp, const ASN1_TIME *tm)
 {
     char *v;
     int gmt = 0, l;
@@ -513,7 +513,7 @@ int ASN1_TIME_print(BIO *bp, const ASN1_TIME *tm)
     return 0;
 }
 
-int ASN1_TIME_cmp_time_t(const ASN1_TIME *s, time_t t)
+int __cdecl ASN1_TIME_cmp_time_t(const ASN1_TIME *s, time_t t)
 {
     struct tm stm, ttm;
     int day, sec;
@@ -534,7 +534,7 @@ int ASN1_TIME_cmp_time_t(const ASN1_TIME *s, time_t t)
     return 0;
 }
 
-int ASN1_TIME_normalize(ASN1_TIME *t)
+int __cdecl ASN1_TIME_normalize(ASN1_TIME *t)
 {
     struct tm tm;
 
@@ -544,7 +544,7 @@ int ASN1_TIME_normalize(ASN1_TIME *t)
     return asn1_time_from_tm(t, &tm, V_ASN1_UNDEF) != NULL;
 }
 
-int ASN1_TIME_compare(const ASN1_TIME *a, const ASN1_TIME *b)
+int __cdecl ASN1_TIME_compare(const ASN1_TIME *a, const ASN1_TIME *b)
 {
     int day, sec;
 

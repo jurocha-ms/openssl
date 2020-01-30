@@ -12,7 +12,7 @@
 #include "internal/cryptlib.h"
 #include <openssl/asn1.h>
 
-int ASN1_PRINTABLE_type(const unsigned char *s, int len)
+int __cdecl ASN1_PRINTABLE_type(const unsigned char *s, int len)
 {
     int c;
     int ia5 = 0;
@@ -37,7 +37,7 @@ int ASN1_PRINTABLE_type(const unsigned char *s, int len)
     return V_ASN1_PRINTABLESTRING;
 }
 
-int ASN1_UNIVERSALSTRING_to_string(ASN1_UNIVERSALSTRING *s)
+int __cdecl ASN1_UNIVERSALSTRING_to_string(ASN1_UNIVERSALSTRING *s)
 {
     int i;
     unsigned char *p;
@@ -65,7 +65,7 @@ int ASN1_UNIVERSALSTRING_to_string(ASN1_UNIVERSALSTRING *s)
     return 1;
 }
 
-int ASN1_STRING_print(BIO *bp, const ASN1_STRING *v)
+int __cdecl ASN1_STRING_print(BIO *bp, const ASN1_STRING *v)
 {
     int i, n;
     char buf[80];

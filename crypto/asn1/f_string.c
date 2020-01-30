@@ -13,7 +13,7 @@
 #include <openssl/buffer.h>
 #include <openssl/asn1.h>
 
-int i2a_ASN1_STRING(BIO *bp, const ASN1_STRING *a, int type)
+int __cdecl i2a_ASN1_STRING(BIO *bp, const ASN1_STRING *a, int type)
 {
     int i, n = 0;
     static const char *h = "0123456789ABCDEF";
@@ -45,7 +45,7 @@ int i2a_ASN1_STRING(BIO *bp, const ASN1_STRING *a, int type)
     return -1;
 }
 
-int a2i_ASN1_STRING(BIO *bp, ASN1_STRING *bs, char *buf, int size)
+int __cdecl a2i_ASN1_STRING(BIO *bp, ASN1_STRING *bs, char *buf, int size)
 {
     int i, j, k, m, n, again, bufsize;
     unsigned char *s = NULL, *sp;

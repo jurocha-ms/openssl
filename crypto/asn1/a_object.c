@@ -18,7 +18,7 @@
 #include "internal/asn1_int.h"
 #include "asn1_locl.h"
 
-int i2d_ASN1_OBJECT(const ASN1_OBJECT *a, unsigned char **pp)
+int __cdecl i2d_ASN1_OBJECT(const ASN1_OBJECT *a, unsigned char **pp)
 {
     unsigned char *p, *allocated = NULL;
     int objsize;
@@ -50,7 +50,7 @@ int i2d_ASN1_OBJECT(const ASN1_OBJECT *a, unsigned char **pp)
     return objsize;
 }
 
-int a2d_ASN1_OBJECT(unsigned char *out, int olen, const char *buf, int num)
+int __cdecl a2d_ASN1_OBJECT(unsigned char *out, int olen, const char *buf, int num)
 {
     int i, first, len = 0, c, use_bn;
     char ftmp[24], *tmp = ftmp;
@@ -177,12 +177,12 @@ int a2d_ASN1_OBJECT(unsigned char *out, int olen, const char *buf, int num)
     return 0;
 }
 
-int i2t_ASN1_OBJECT(char *buf, int buf_len, const ASN1_OBJECT *a)
+int __cdecl i2t_ASN1_OBJECT(char *buf, int buf_len, const ASN1_OBJECT *a)
 {
     return OBJ_obj2txt(buf, buf_len, a, 0);
 }
 
-int i2a_ASN1_OBJECT(BIO *bp, const ASN1_OBJECT *a)
+int __cdecl i2a_ASN1_OBJECT(BIO *bp, const ASN1_OBJECT *a)
 {
     char buf[80], *p = buf;
     int i;
@@ -208,7 +208,7 @@ int i2a_ASN1_OBJECT(BIO *bp, const ASN1_OBJECT *a)
     return i;
 }
 
-ASN1_OBJECT *d2i_ASN1_OBJECT(ASN1_OBJECT **a, const unsigned char **pp,
+ASN1_OBJECT * __cdecl d2i_ASN1_OBJECT(ASN1_OBJECT **a, const unsigned char **pp,
                              long length)
 {
     const unsigned char *p;
@@ -332,7 +332,7 @@ ASN1_OBJECT *c2i_ASN1_OBJECT(ASN1_OBJECT **a, const unsigned char **pp,
     return NULL;
 }
 
-ASN1_OBJECT *ASN1_OBJECT_new(void)
+ASN1_OBJECT * __cdecl ASN1_OBJECT_new(void)
 {
     ASN1_OBJECT *ret;
 
@@ -367,7 +367,7 @@ void __cdecl ASN1_OBJECT_free(ASN1_OBJECT *a)
         OPENSSL_free(a);
 }
 
-ASN1_OBJECT *ASN1_OBJECT_create(int nid, unsigned char *data, int len,
+ASN1_OBJECT * __cdecl ASN1_OBJECT_create(int nid, unsigned char *data, int len,
                                 const char *sn, const char *ln)
 {
     ASN1_OBJECT o;

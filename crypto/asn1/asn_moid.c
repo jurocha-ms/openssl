@@ -46,7 +46,7 @@ static void oid_module_finish(CONF_IMODULE *md)
 {
 }
 
-void ASN1_add_oid_module(void)
+void __cdecl ASN1_add_oid_module(void)
 {
     CONF_module_add("oid_section", oid_module_init, oid_module_finish);
 }

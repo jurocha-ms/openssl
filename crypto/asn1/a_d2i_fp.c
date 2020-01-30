@@ -18,7 +18,7 @@
 #ifndef NO_OLD_ASN1
 # ifndef OPENSSL_NO_STDIO
 
-void *ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x)
+void * __cdecl ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x)
 {
     BIO *b;
     void *ret;
@@ -34,7 +34,7 @@ void *ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x)
 }
 # endif
 
-void *ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x)
+void * __cdecl ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x)
 {
     BUF_MEM *b = NULL;
     const unsigned char *p;
@@ -54,7 +54,7 @@ void *ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x)
 
 #endif
 
-void *ASN1_item_d2i_bio(const ASN1_ITEM *it, BIO *in, void *x)
+void * __cdecl ASN1_item_d2i_bio(const ASN1_ITEM *it, BIO *in, void *x)
 {
     BUF_MEM *b = NULL;
     const unsigned char *p;
@@ -73,7 +73,7 @@ void *ASN1_item_d2i_bio(const ASN1_ITEM *it, BIO *in, void *x)
 }
 
 #ifndef OPENSSL_NO_STDIO
-void *ASN1_item_d2i_fp(const ASN1_ITEM *it, FILE *in, void *x)
+void * __cdecl ASN1_item_d2i_fp(const ASN1_ITEM *it, FILE *in, void *x)
 {
     BIO *b;
     char *ret;

@@ -44,7 +44,7 @@ static void stbl_module_finish(CONF_IMODULE *md)
     ASN1_STRING_TABLE_cleanup();
 }
 
-void ASN1_add_stable_module(void)
+void __cdecl ASN1_add_stable_module(void)
 {
     CONF_module_add("stbl_section", stbl_module_init, stbl_module_finish);
 }

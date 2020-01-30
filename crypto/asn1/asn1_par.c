@@ -55,12 +55,12 @@ static int asn1_print_info(BIO *bp, int tag, int xclass, int constructed,
     return 0;
 }
 
-int ASN1_parse(BIO *bp, const unsigned char *pp, long len, int indent)
+int __cdecl ASN1_parse(BIO *bp, const unsigned char *pp, long len, int indent)
 {
     return asn1_parse2(bp, &pp, len, 0, 0, indent, 0);
 }
 
-int ASN1_parse_dump(BIO *bp, const unsigned char *pp, long len, int indent,
+int __cdecl ASN1_parse_dump(BIO *bp, const unsigned char *pp, long len, int indent,
                     int dump)
 {
     return asn1_parse2(bp, &pp, len, 0, 0, indent, dump);
@@ -345,7 +345,7 @@ static int asn1_parse2(BIO *bp, const unsigned char **pp, long length,
     return ret;
 }
 
-const char *ASN1_tag2str(int tag)
+const char * __cdecl ASN1_tag2str(int tag)
 {
     static const char *const tag2str[] = {
         /* 0-4 */

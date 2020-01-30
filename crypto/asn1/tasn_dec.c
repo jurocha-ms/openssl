@@ -82,7 +82,7 @@ static const unsigned long tag2bit[32] = {
     B_ASN1_UNIVERSALSTRING, B_ASN1_UNKNOWN, B_ASN1_BMPSTRING, B_ASN1_UNKNOWN,
 };
 
-unsigned long ASN1_tag2bit(int tag)
+unsigned long __cdecl ASN1_tag2bit(int tag)
 {
     if ((tag < 0) || (tag > 30))
         return 0;
@@ -102,7 +102,7 @@ unsigned long ASN1_tag2bit(int tag)
  * this will simply be a special case.
  */
 
-ASN1_VALUE *ASN1_item_d2i(ASN1_VALUE **pval,
+ASN1_VALUE * __cdecl ASN1_item_d2i(ASN1_VALUE **pval,
                           const unsigned char **in, long len,
                           const ASN1_ITEM *it)
 {

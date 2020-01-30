@@ -13,7 +13,7 @@
 #include <openssl/objects.h>
 #include "asn1_locl.h"
 
-int ASN1_TYPE_get(const ASN1_TYPE *a)
+int __cdecl ASN1_TYPE_get(const ASN1_TYPE *a)
 {
     if (a->type == V_ASN1_BOOLEAN
             || a->type == V_ASN1_NULL
@@ -23,7 +23,7 @@ int ASN1_TYPE_get(const ASN1_TYPE *a)
         return 0;
 }
 
-void ASN1_TYPE_set(ASN1_TYPE *a, int type, void *value)
+void __cdecl ASN1_TYPE_set(ASN1_TYPE *a, int type, void *value)
 {
     if (a->type != V_ASN1_BOOLEAN
             && a->type != V_ASN1_NULL
@@ -38,7 +38,7 @@ void ASN1_TYPE_set(ASN1_TYPE *a, int type, void *value)
         a->value.ptr = value;
 }
 
-int ASN1_TYPE_set1(ASN1_TYPE *a, int type, const void *value)
+int __cdecl ASN1_TYPE_set1(ASN1_TYPE *a, int type, const void *value)
 {
     if (!value || (type == V_ASN1_BOOLEAN)) {
         void *p = (void *)value;
@@ -60,7 +60,7 @@ int ASN1_TYPE_set1(ASN1_TYPE *a, int type, const void *value)
 }
 
 /* Returns 0 if they are equal, != 0 otherwise. */
-int ASN1_TYPE_cmp(const ASN1_TYPE *a, const ASN1_TYPE *b)
+int __cdecl ASN1_TYPE_cmp(const ASN1_TYPE *a, const ASN1_TYPE *b)
 {
     int result = -1;
 
@@ -106,7 +106,7 @@ int ASN1_TYPE_cmp(const ASN1_TYPE *a, const ASN1_TYPE *b)
     return result;
 }
 
-ASN1_TYPE *ASN1_TYPE_pack_sequence(const ASN1_ITEM *it, void *s, ASN1_TYPE **t)
+ASN1_TYPE * __cdecl ASN1_TYPE_pack_sequence(const ASN1_ITEM *it, void *s, ASN1_TYPE **t)
 {
     ASN1_OCTET_STRING *oct;
     ASN1_TYPE *rt;
@@ -130,7 +130,7 @@ ASN1_TYPE *ASN1_TYPE_pack_sequence(const ASN1_ITEM *it, void *s, ASN1_TYPE **t)
     return rt;
 }
 
-void *ASN1_TYPE_unpack_sequence(const ASN1_ITEM *it, const ASN1_TYPE *t)
+void * __cdecl ASN1_TYPE_unpack_sequence(const ASN1_ITEM *it, const ASN1_TYPE *t)
 {
     if (t == NULL || t->type != V_ASN1_SEQUENCE || t->value.sequence == NULL)
         return NULL;

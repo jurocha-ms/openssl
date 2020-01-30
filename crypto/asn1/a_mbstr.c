@@ -32,13 +32,13 @@ static int cpy_utf8(unsigned long value, void *arg);
  * size limits too.
  */
 
-int ASN1_mbstring_copy(ASN1_STRING **out, const unsigned char *in, int len,
+int __cdecl ASN1_mbstring_copy(ASN1_STRING **out, const unsigned char *in, int len,
                        int inform, unsigned long mask)
 {
     return ASN1_mbstring_ncopy(out, in, len, inform, mask, 0, 0);
 }
 
-int ASN1_mbstring_ncopy(ASN1_STRING **out, const unsigned char *in, int len,
+int __cdecl ASN1_mbstring_ncopy(ASN1_STRING **out, const unsigned char *in, int len,
                         int inform, unsigned long mask,
                         long minsize, long maxsize)
 {

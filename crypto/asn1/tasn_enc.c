@@ -33,13 +33,13 @@ static int asn1_ex_i2c(ASN1_VALUE **pval, unsigned char *cout, int *putype,
  * indefinite length constructed encoding, where appropriate
  */
 
-int ASN1_item_ndef_i2d(ASN1_VALUE *val, unsigned char **out,
+int __cdecl ASN1_item_ndef_i2d(ASN1_VALUE *val, unsigned char **out,
                        const ASN1_ITEM *it)
 {
     return asn1_item_flags_i2d(val, out, it, ASN1_TFLG_NDEF);
 }
 
-int ASN1_item_i2d(ASN1_VALUE *val, unsigned char **out, const ASN1_ITEM *it)
+int __cdecl ASN1_item_i2d(ASN1_VALUE *val, unsigned char **out, const ASN1_ITEM *it)
 {
     return asn1_item_flags_i2d(val, out, it, 0);
 }

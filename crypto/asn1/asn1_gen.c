@@ -75,7 +75,7 @@ static ASN1_TYPE *asn1_multi(int utype, const char *section, X509V3_CTX *cnf,
 static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype);
 static int asn1_str2tag(const char *tagstr, int len);
 
-ASN1_TYPE *ASN1_generate_nconf(const char *str, CONF *nconf)
+ASN1_TYPE * __cdecl ASN1_generate_nconf(const char *str, CONF *nconf)
 {
     X509V3_CTX cnf;
 
@@ -86,7 +86,7 @@ ASN1_TYPE *ASN1_generate_nconf(const char *str, CONF *nconf)
     return ASN1_generate_v3(str, &cnf);
 }
 
-ASN1_TYPE *ASN1_generate_v3(const char *str, X509V3_CTX *cnf)
+ASN1_TYPE * __cdecl ASN1_generate_v3(const char *str, X509V3_CTX *cnf)
 {
     int err = 0;
     ASN1_TYPE *ret = generate_v3(str, cnf, 0, &err);
@@ -782,7 +782,7 @@ static int mask_cb(const char *elem, int len, void *arg)
     return 1;
 }
 
-int ASN1_str2mask(const char *str, unsigned long *pmask)
+int __cdecl ASN1_str2mask(const char *str, unsigned long *pmask)
 {
     *pmask = 0;
     return CONF_parse_list(str, '|', 1, mask_cb, pmask);

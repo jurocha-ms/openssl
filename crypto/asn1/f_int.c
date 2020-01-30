@@ -13,7 +13,7 @@
 #include <openssl/buffer.h>
 #include <openssl/asn1.h>
 
-int i2a_ASN1_INTEGER(BIO *bp, const ASN1_INTEGER *a)
+int __cdecl i2a_ASN1_INTEGER(BIO *bp, const ASN1_INTEGER *a)
 {
     int i, n = 0;
     static const char *h = "0123456789ABCDEF";
@@ -51,7 +51,7 @@ int i2a_ASN1_INTEGER(BIO *bp, const ASN1_INTEGER *a)
     return -1;
 }
 
-int a2i_ASN1_INTEGER(BIO *bp, ASN1_INTEGER *bs, char *buf, int size)
+int __cdecl a2i_ASN1_INTEGER(BIO *bp, ASN1_INTEGER *bs, char *buf, int size)
 {
     int i, j, k, m, n, again, bufsize;
     unsigned char *s = NULL, *sp;
@@ -142,12 +142,12 @@ int a2i_ASN1_INTEGER(BIO *bp, ASN1_INTEGER *bs, char *buf, int size)
     return 0;
 }
 
-int i2a_ASN1_ENUMERATED(BIO *bp, const ASN1_ENUMERATED *a)
+int __cdecl i2a_ASN1_ENUMERATED(BIO *bp, const ASN1_ENUMERATED *a)
 {
     return i2a_ASN1_INTEGER(bp, a);
 }
 
-int a2i_ASN1_ENUMERATED(BIO *bp, ASN1_ENUMERATED *bs, char *buf, int size)
+int __cdecl a2i_ASN1_ENUMERATED(BIO *bp, ASN1_ENUMERATED *bs, char *buf, int size)
 {
     int rv = a2i_ASN1_INTEGER(bp, bs, buf, size);
     if (rv == 1)

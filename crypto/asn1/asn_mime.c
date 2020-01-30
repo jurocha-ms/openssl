@@ -64,7 +64,7 @@ static void __cdecl mime_hdr_free(MIME_HEADER *hdr);
 
 /* Output an ASN1 structure in BER format streaming if necessary */
 
-int i2d_ASN1_bio_stream(BIO *out, ASN1_VALUE *val, BIO *in, int flags,
+int __cdecl i2d_ASN1_bio_stream(BIO *out, ASN1_VALUE *val, BIO *in, int flags,
                         const ASN1_ITEM *it)
 {
     /* If streaming create stream BIO and copy all content through it */
@@ -118,7 +118,7 @@ static int B64_write_ASN1(BIO *out, ASN1_VALUE *val, BIO *in, int flags,
 
 /* Streaming ASN1 PEM write */
 
-int PEM_write_bio_ASN1_stream(BIO *out, ASN1_VALUE *val, BIO *in, int flags,
+int __cdecl PEM_write_bio_ASN1_stream(BIO *out, ASN1_VALUE *val, BIO *in, int flags,
                               const char *hdr, const ASN1_ITEM *it)
 {
     int r;
@@ -219,7 +219,7 @@ static int asn1_write_micalg(BIO *out, STACK_OF(X509_ALGOR) *mdalgs)
 
 /* SMIME sender */
 
-int SMIME_write_ASN1(BIO *bio, ASN1_VALUE *val, BIO *data, int flags,
+int __cdecl SMIME_write_ASN1(BIO *bio, ASN1_VALUE *val, BIO *data, int flags,
                      int ctype_nid, int econt_nid,
                      STACK_OF(X509_ALGOR) *mdalgs, const ASN1_ITEM *it)
 {
@@ -367,7 +367,7 @@ static int asn1_output_data(BIO *out, BIO *data, ASN1_VALUE *val, int flags,
  * opaque this is set to NULL
  */
 
-ASN1_VALUE *SMIME_read_ASN1(BIO *bio, BIO **bcont, const ASN1_ITEM *it)
+ASN1_VALUE * __cdecl SMIME_read_ASN1(BIO *bio, BIO **bcont, const ASN1_ITEM *it)
 {
     BIO *asnin;
     STACK_OF(MIME_HEADER) *headers = NULL;
@@ -475,7 +475,7 @@ ASN1_VALUE *SMIME_read_ASN1(BIO *bio, BIO **bcont, const ASN1_ITEM *it)
 }
 
 /* Copy text from one BIO to another making the output CRLF at EOL */
-int SMIME_crlf_copy(BIO *in, BIO *out, int flags)
+int __cdecl SMIME_crlf_copy(BIO *in, BIO *out, int flags)
 {
     BIO *bf;
     char eol;
@@ -522,7 +522,7 @@ int SMIME_crlf_copy(BIO *in, BIO *out, int flags)
 }
 
 /* Strip off headers if they are text/plain */
-int SMIME_text(BIO *in, BIO *out)
+int __cdecl SMIME_text(BIO *in, BIO *out)
 {
     char iobuf[4096];
     int len;

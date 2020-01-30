@@ -49,7 +49,7 @@ static int ndef_suffix(BIO *b, unsigned char **pbuf, int *plen, void *parg);
 static int ndef_suffix_free(BIO *b, unsigned char **pbuf, int *plen,
                             void *parg);
 
-BIO *BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
+BIO * __cdecl BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
 {
     NDEF_SUPPORT *ndef_aux = NULL;
     BIO *asn_bio = NULL;

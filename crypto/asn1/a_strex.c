@@ -583,13 +583,13 @@ int X509_NAME_print_ex_fp(FILE *fp, const X509_NAME *nm, int indent,
 }
 #endif
 
-int ASN1_STRING_print_ex(BIO *out, const ASN1_STRING *str, unsigned long flags)
+int __cdecl ASN1_STRING_print_ex(BIO *out, const ASN1_STRING *str, unsigned long flags)
 {
     return do_print_ex(send_bio_chars, out, flags, str);
 }
 
 #ifndef OPENSSL_NO_STDIO
-int ASN1_STRING_print_ex_fp(FILE *fp, const ASN1_STRING *str, unsigned long flags)
+int __cdecl ASN1_STRING_print_ex_fp(FILE *fp, const ASN1_STRING *str, unsigned long flags)
 {
     return do_print_ex(send_fp_chars, fp, flags, str);
 }
@@ -600,7 +600,7 @@ int ASN1_STRING_print_ex_fp(FILE *fp, const ASN1_STRING *str, unsigned long flag
  * in output string or a negative error code
  */
 
-int ASN1_STRING_to_UTF8(unsigned char **out, const ASN1_STRING *in)
+int __cdecl ASN1_STRING_to_UTF8(unsigned char **out, const ASN1_STRING *in)
 {
     ASN1_STRING stmp, *str = &stmp;
     int mbflag, type, ret;

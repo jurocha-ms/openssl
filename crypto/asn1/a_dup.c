@@ -13,7 +13,7 @@
 
 #ifndef NO_OLD_ASN1
 
-void *ASN1_dup(i2d_of_void *i2d, d2i_of_void *d2i, void *x)
+void * __cdecl ASN1_dup(i2d_of_void *i2d, d2i_of_void *d2i, void *x)
 {
     unsigned char *b, *p;
     const unsigned char *p2;
@@ -46,7 +46,7 @@ void *ASN1_dup(i2d_of_void *i2d, d2i_of_void *d2i, void *x)
  * decode.
  */
 
-void *ASN1_item_dup(const ASN1_ITEM *it, void *x)
+void * __cdecl ASN1_item_dup(const ASN1_ITEM *it, void *x)
 {
     unsigned char *b = NULL;
     const unsigned char *p;

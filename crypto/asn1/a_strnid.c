@@ -25,12 +25,12 @@ static int __cdecl sk_table_cmp(const ASN1_STRING_TABLE *const *a,
 
 static unsigned long global_mask = B_ASN1_UTF8STRING;
 
-void ASN1_STRING_set_default_mask(unsigned long mask)
+void __cdecl ASN1_STRING_set_default_mask(unsigned long mask)
 {
     global_mask = mask;
 }
 
-unsigned long ASN1_STRING_get_default_mask(void)
+unsigned long __cdecl ASN1_STRING_get_default_mask(void)
 {
     return global_mask;
 }
@@ -45,7 +45,7 @@ unsigned long ASN1_STRING_get_default_mask(void)
  * default:   the default value, Printable, T61, BMP.
  */
 
-int ASN1_STRING_set_default_mask_asc(const char *p)
+int __cdecl ASN1_STRING_set_default_mask_asc(const char *p)
 {
     unsigned long mask;
     char *end;
@@ -76,7 +76,7 @@ int ASN1_STRING_set_default_mask_asc(const char *p)
  * a corresponding OID. For example certificates and certificate requests.
  */
 
-ASN1_STRING *ASN1_STRING_set_by_NID(ASN1_STRING **out,
+ASN1_STRING * __cdecl ASN1_STRING_set_by_NID(ASN1_STRING **out,
                                     const unsigned char *in, int inlen,
                                     int inform, int nid)
 {
@@ -124,7 +124,7 @@ static int __cdecl table_cmp(const ASN1_STRING_TABLE *a, const ASN1_STRING_TABLE
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(ASN1_STRING_TABLE, ASN1_STRING_TABLE, table);
 
-ASN1_STRING_TABLE *ASN1_STRING_TABLE_get(int nid)
+ASN1_STRING_TABLE * __cdecl ASN1_STRING_TABLE_get(int nid)
 {
     int idx;
     ASN1_STRING_TABLE fnd;
@@ -179,7 +179,7 @@ static ASN1_STRING_TABLE *stable_get(int nid)
     return rv;
 }
 
-int ASN1_STRING_TABLE_add(int nid,
+int __cdecl ASN1_STRING_TABLE_add(int nid,
                           long minsize, long maxsize, unsigned long mask,
                           unsigned long flags)
 {
@@ -201,7 +201,7 @@ int ASN1_STRING_TABLE_add(int nid,
     return 1;
 }
 
-void ASN1_STRING_TABLE_cleanup(void)
+void __cdecl ASN1_STRING_TABLE_cleanup(void)
 {
     STACK_OF(ASN1_STRING_TABLE) *tmp;
 

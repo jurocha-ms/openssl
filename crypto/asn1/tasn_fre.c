@@ -15,7 +15,7 @@
 
 /* Free up an ASN1 structure */
 
-void ASN1_item_free(ASN1_VALUE *val, const ASN1_ITEM *it)
+void __cdecl ASN1_item_free(ASN1_VALUE *val, const ASN1_ITEM *it)
 {
     asn1_item_embed_free(&val, it, 0);
 }
