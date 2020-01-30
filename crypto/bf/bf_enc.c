@@ -21,7 +21,7 @@
 to modify the code.
 #endif
 
-void BF_encrypt(BF_LONG *data, const BF_KEY *key)
+void __cdecl BF_encrypt(BF_LONG *data, const BF_KEY *key)
 {
     register BF_LONG l, r;
     register const BF_LONG *p, *s;
@@ -60,7 +60,7 @@ void BF_encrypt(BF_LONG *data, const BF_KEY *key)
     data[0] = r & 0xffffffffU;
 }
 
-void BF_decrypt(BF_LONG *data, const BF_KEY *key)
+void __cdecl BF_decrypt(BF_LONG *data, const BF_KEY *key)
 {
     register BF_LONG l, r;
     register const BF_LONG *p, *s;
@@ -99,7 +99,7 @@ void BF_decrypt(BF_LONG *data, const BF_KEY *key)
     data[0] = r & 0xffffffffU;
 }
 
-void BF_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
+void __cdecl BF_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
                     const BF_KEY *schedule, unsigned char *ivec, int encrypt)
 {
     register BF_LONG tin0, tin1;

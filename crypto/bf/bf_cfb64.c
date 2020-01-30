@@ -16,7 +16,7 @@
  * used is contained in *num;
  */
 
-void BF_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl BF_cfb64_encrypt(const unsigned char *in, unsigned char *out,
                       long length, const BF_KEY *schedule,
                       unsigned char *ivec, int *num, int encrypt)
 {
