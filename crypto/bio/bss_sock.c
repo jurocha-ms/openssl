@@ -32,7 +32,7 @@ static int sock_puts(BIO *h, const char *str);
 static long sock_ctrl(BIO *h, int cmd, long arg1, void *arg2);
 static int sock_new(BIO *h);
 static int sock_free(BIO *data);
-int BIO_sock_should_retry(int s);
+int __cdecl BIO_sock_should_retry(int s);
 
 static const BIO_METHOD methods_sockp = {
     BIO_TYPE_SOCKET,
@@ -51,12 +51,12 @@ static const BIO_METHOD methods_sockp = {
     NULL,                       /* sock_callback_ctrl */
 };
 
-const BIO_METHOD *BIO_s_socket(void)
+const BIO_METHOD * __cdecl BIO_s_socket(void)
 {
     return &methods_sockp;
 }
 
-BIO *BIO_new_socket(int fd, int close_flag)
+BIO * __cdecl BIO_new_socket(int fd, int close_flag)
 {
     BIO *ret;
 
@@ -167,7 +167,7 @@ static int sock_puts(BIO *bp, const char *str)
     return ret;
 }
 
-int BIO_sock_should_retry(int i)
+int __cdecl BIO_sock_should_retry(int i)
 {
     int err;
 
@@ -179,7 +179,7 @@ int BIO_sock_should_retry(int i)
     return 0;
 }
 
-int BIO_sock_non_fatal_error(int err)
+int __cdecl BIO_sock_non_fatal_error(int err)
 {
     switch (err) {
 # if defined(OPENSSL_SYS_WINDOWS)

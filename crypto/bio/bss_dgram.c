@@ -134,12 +134,12 @@ typedef struct bio_dgram_sctp_data_st {
 } bio_dgram_sctp_data;
 # endif
 
-const BIO_METHOD *BIO_s_datagram(void)
+const BIO_METHOD * __cdecl BIO_s_datagram(void)
 {
     return &methods_dgramp;
 }
 
-BIO *BIO_new_dgram(int fd, int close_flag)
+BIO * __cdecl BIO_new_dgram(int fd, int close_flag)
 {
     BIO *ret;
 
@@ -807,12 +807,12 @@ static int dgram_puts(BIO *bp, const char *str)
 }
 
 # ifndef OPENSSL_NO_SCTP
-const BIO_METHOD *BIO_s_datagram_sctp(void)
+const BIO_METHOD * __cdecl BIO_s_datagram_sctp(void)
 {
     return &methods_dgramp_sctp;
 }
 
-BIO *BIO_new_dgram_sctp(int fd, int close_flag)
+BIO * __cdecl BIO_new_dgram_sctp(int fd, int close_flag)
 {
     BIO *bio;
     int ret, optval = 20000;
@@ -944,7 +944,7 @@ BIO *BIO_new_dgram_sctp(int fd, int close_flag)
     return bio;
 }
 
-int BIO_dgram_is_sctp(BIO *bio)
+int __cdecl BIO_dgram_is_sctp(BIO *bio)
 {
     return (BIO_method_type(bio) == BIO_TYPE_DGRAM_SCTP);
 }
@@ -1573,7 +1573,7 @@ static long dgram_sctp_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-int BIO_dgram_sctp_notification_cb(BIO *b,
+int __cdecl BIO_dgram_sctp_notification_cb(BIO *b,
                                    void (*handle_notifications) (BIO *bio,
                                                                  void
                                                                  *context,
@@ -1604,7 +1604,7 @@ int BIO_dgram_sctp_notification_cb(BIO *b,
  *  0 when not dry yet
  *  1 when dry
  */
-int BIO_dgram_sctp_wait_for_dry(BIO *b)
+int __cdecl BIO_dgram_sctp_wait_for_dry(BIO *b)
 {
     int is_dry = 0;
     int sockflags = 0;
@@ -1762,7 +1762,7 @@ int BIO_dgram_sctp_wait_for_dry(BIO *b)
     return is_dry;
 }
 
-int BIO_dgram_sctp_msg_waiting(BIO *b)
+int __cdecl BIO_dgram_sctp_msg_waiting(BIO *b)
 {
     int n, sockflags;
     union sctp_notification snp;
@@ -1851,7 +1851,7 @@ static int BIO_dgram_should_retry(int i)
     return 0;
 }
 
-int BIO_dgram_non_fatal_error(int err)
+int __cdecl BIO_dgram_non_fatal_error(int err)
 {
     switch (err) {
 # if defined(OPENSSL_SYS_WINDOWS)

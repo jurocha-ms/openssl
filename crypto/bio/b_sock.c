@@ -85,7 +85,7 @@ int BIO_get_port(const char *str, unsigned short *port_ptr)
 }
 # endif
 
-int BIO_sock_error(int sock)
+int __cdecl BIO_sock_error(int sock)
 {
     int j = 0, i;
     socklen_t size = sizeof(j);
@@ -114,7 +114,7 @@ struct hostent *BIO_gethostbyname(const char *name)
 }
 # endif
 
-int BIO_sock_init(void)
+int __cdecl BIO_sock_init(void)
 {
 # ifdef OPENSSL_SYS_WINDOWS
     static struct WSAData wsa_state;
@@ -158,7 +158,7 @@ void bio_sock_cleanup_int(void)
 # endif
 }
 
-int BIO_socket_ioctl(int fd, long type, void *arg)
+int __cdecl BIO_socket_ioctl(int fd, long type, void *arg)
 {
     int i;
 
@@ -274,7 +274,7 @@ int BIO_accept(int sock, char **ip_port)
 }
 # endif
 
-int BIO_set_tcp_ndelay(int s, int on)
+int __cdecl BIO_set_tcp_ndelay(int s, int on)
 {
     int ret = 0;
 # if defined(TCP_NODELAY) && (defined(IPPROTO_TCP) || defined(SOL_TCP))
@@ -293,7 +293,7 @@ int BIO_set_tcp_ndelay(int s, int on)
     return (ret == 0);
 }
 
-int BIO_socket_nbio(int s, int mode)
+int __cdecl BIO_socket_nbio(int s, int mode)
 {
     int ret = -1;
     int l;
@@ -337,7 +337,7 @@ int BIO_socket_nbio(int s, int mode)
     return (ret == 0);
 }
 
-int BIO_sock_info(int sock,
+int __cdecl BIO_sock_info(int sock,
                   enum BIO_sock_info_type type, union BIO_sock_info_u *info)
 {
     switch (type) {

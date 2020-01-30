@@ -39,7 +39,7 @@ static const BIO_METHOD methods_nullf = {
     nullf_callback_ctrl,
 };
 
-const BIO_METHOD *BIO_f_null(void)
+const BIO_METHOD * __cdecl BIO_f_null(void)
 {
     return &methods_nullf;
 }

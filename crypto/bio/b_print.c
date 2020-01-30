@@ -850,7 +850,7 @@ doapr_outch(char **sbuffer,
 
 /***************************************************************************/
 
-int BIO_printf(BIO *bio, const char *format, ...)
+int __cdecl BIO_printf(BIO *bio, const char *format, ...)
 {
     va_list args;
     int ret;
@@ -863,7 +863,7 @@ int BIO_printf(BIO *bio, const char *format, ...)
     return ret;
 }
 
-int BIO_vprintf(BIO *bio, const char *format, va_list args)
+int __cdecl BIO_vprintf(BIO *bio, const char *format, va_list args)
 {
     int ret;
     size_t retlen;
@@ -896,7 +896,7 @@ int BIO_vprintf(BIO *bio, const char *format, va_list args)
  * closely related to BIO_printf, and we need *some* name prefix ... (XXX the
  * function should be renamed, but to what?)
  */
-int BIO_snprintf(char *buf, size_t n, const char *format, ...)
+int __cdecl BIO_snprintf(char *buf, size_t n, const char *format, ...)
 {
     va_list args;
     int ret;
@@ -909,7 +909,7 @@ int BIO_snprintf(char *buf, size_t n, const char *format, ...)
     return ret;
 }
 
-int BIO_vsnprintf(char *buf, size_t n, const char *format, va_list args)
+int __cdecl BIO_vsnprintf(char *buf, size_t n, const char *format, va_list args)
 {
     size_t retlen;
     int truncated;

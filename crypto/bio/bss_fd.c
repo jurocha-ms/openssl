@@ -16,22 +16,22 @@
 /*
  * Dummy placeholder for BIO_s_fd...
  */
-BIO *BIO_new_fd(int fd, int close_flag)
+BIO * __cdecl BIO_new_fd(int fd, int close_flag)
 {
     return NULL;
 }
 
-int BIO_fd_non_fatal_error(int err)
+int __cdecl BIO_fd_non_fatal_error(int err)
 {
     return 0;
 }
 
-int BIO_fd_should_retry(int i)
+int __cdecl BIO_fd_should_retry(int i)
 {
     return 0;
 }
 
-const BIO_METHOD *BIO_s_fd(void)
+const BIO_METHOD * __cdecl BIO_s_fd(void)
 {
     return NULL;
 }
@@ -55,7 +55,7 @@ static int fd_gets(BIO *h, char *buf, int size);
 static long fd_ctrl(BIO *h, int cmd, long arg1, void *arg2);
 static int fd_new(BIO *h);
 static int fd_free(BIO *data);
-int BIO_fd_should_retry(int s);
+int __cdecl BIO_fd_should_retry(int s);
 
 static const BIO_METHOD methods_fdp = {
     BIO_TYPE_FD,
@@ -74,12 +74,12 @@ static const BIO_METHOD methods_fdp = {
     NULL,                       /* fd_callback_ctrl */
 };
 
-const BIO_METHOD *BIO_s_fd(void)
+const BIO_METHOD * __cdecl BIO_s_fd(void)
 {
     return &methods_fdp;
 }
 
-BIO *BIO_new_fd(int fd, int close_flag)
+BIO * __cdecl BIO_new_fd(int fd, int close_flag)
 {
     BIO *ret;
     ret = BIO_new(BIO_s_fd());
@@ -220,7 +220,7 @@ static int fd_gets(BIO *bp, char *buf, int size)
     return ret;
 }
 
-int BIO_fd_should_retry(int i)
+int __cdecl BIO_fd_should_retry(int i)
 {
     int err;
 
@@ -232,7 +232,7 @@ int BIO_fd_should_retry(int i)
     return 0;
 }
 
-int BIO_fd_non_fatal_error(int err)
+int __cdecl BIO_fd_non_fatal_error(int err)
 {
     switch (err) {
 

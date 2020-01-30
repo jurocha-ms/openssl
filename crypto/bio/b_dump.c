@@ -19,13 +19,13 @@
 
 #define SPACE(buf, pos, n)   (sizeof(buf) - (pos) > (n))
 
-int BIO_dump_cb(int (*cb) (const void *data, size_t len, void *u),
+int __cdecl BIO_dump_cb(int (*cb) (const void *data, size_t len, void *u),
                 void *u, const char *s, int len)
 {
     return BIO_dump_indent_cb(cb, u, s, len, 0);
 }
 
-int BIO_dump_indent_cb(int (*cb) (const void *data, size_t len, void *u),
+int __cdecl BIO_dump_indent_cb(int (*cb) (const void *data, size_t len, void *u),
                        void *u, const char *s, int len, int indent)
 {
     int ret = 0;
@@ -96,12 +96,12 @@ static int write_fp(const void *data, size_t len, void *fp)
     return UP_fwrite(data, len, 1, fp);
 }
 
-int BIO_dump_fp(FILE *fp, const char *s, int len)
+int __cdecl BIO_dump_fp(FILE *fp, const char *s, int len)
 {
     return BIO_dump_cb(write_fp, fp, s, len);
 }
 
-int BIO_dump_indent_fp(FILE *fp, const char *s, int len, int indent)
+int __cdecl BIO_dump_indent_fp(FILE *fp, const char *s, int len, int indent)
 {
     return BIO_dump_indent_cb(write_fp, fp, s, len, indent);
 }
@@ -112,17 +112,17 @@ static int write_bio(const void *data, size_t len, void *bp)
     return BIO_write((BIO *)bp, (const char *)data, len);
 }
 
-int BIO_dump(BIO *bp, const char *s, int len)
+int __cdecl BIO_dump(BIO *bp, const char *s, int len)
 {
     return BIO_dump_cb(write_bio, bp, s, len);
 }
 
-int BIO_dump_indent(BIO *bp, const char *s, int len, int indent)
+int __cdecl BIO_dump_indent(BIO *bp, const char *s, int len, int indent)
 {
     return BIO_dump_indent_cb(write_bio, bp, s, len, indent);
 }
 
-int BIO_hex_string(BIO *out, int indent, int width, unsigned char *data,
+int __cdecl BIO_hex_string(BIO *out, int indent, int width, unsigned char *data,
                    int datalen)
 {
     int i, j = 0;

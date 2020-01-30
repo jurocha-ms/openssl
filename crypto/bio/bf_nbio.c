@@ -48,7 +48,7 @@ static const BIO_METHOD methods_nbiof = {
     nbiof_callback_ctrl,
 };
 
-const BIO_METHOD *BIO_f_nbio_test(void)
+const BIO_METHOD * __cdecl BIO_f_nbio_test(void)
 {
     return &methods_nbiof;
 }

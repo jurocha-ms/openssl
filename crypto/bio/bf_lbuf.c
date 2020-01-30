@@ -44,7 +44,7 @@ static const BIO_METHOD methods_linebuffer = {
     linebuffer_callback_ctrl,
 };
 
-const BIO_METHOD *BIO_f_linebuffer(void)
+const BIO_METHOD * __cdecl BIO_f_linebuffer(void)
 {
     return &methods_linebuffer;
 }

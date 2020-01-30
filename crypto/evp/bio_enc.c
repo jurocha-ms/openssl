@@ -405,7 +405,7 @@ int BIO_set_cipher(BIO *b, const EVP_CIPHER *c, const unsigned char *k,
                    const unsigned char *i, int e)
 {
     BIO_ENC_CTX *ctx;
-    long (*callback) (struct bio_st *, int, const char *, int, long, long);
+    long (__cdecl *callback) (struct bio_st *, int, const char *, int, long, long);
 
     ctx = BIO_get_data(b);
     if (ctx == NULL)

@@ -100,7 +100,7 @@ static const BIO_METHOD methods_slg = {
     NULL,                      /* slg_callback_ctrl */
 };
 
-const BIO_METHOD *BIO_s_log(void)
+const BIO_METHOD * __cdecl BIO_s_log(void)
 {
     return &methods_slg;
 }
@@ -409,7 +409,7 @@ static void xcloselog(BIO *bp)
 # endif                         /* Unix */
 
 #else                           /* NO_SYSLOG */
-const BIO_METHOD *BIO_s_log(void)
+const BIO_METHOD * __cdecl BIO_s_log(void)
 {
     return NULL;
 }

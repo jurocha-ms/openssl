@@ -21,7 +21,7 @@ static int         my_param_argi[MAXCOUNT];
 static long        my_param_argl[MAXCOUNT];
 static long        my_param_ret[MAXCOUNT];
 
-static long my_bio_callback(BIO *b, int oper, const char *argp, int argi,
+static long __cdecl my_bio_callback(BIO *b, int oper, const char *argp, int argi,
                             long argl, long ret)
 {
     if (my_param_count >= MAXCOUNT)

@@ -68,7 +68,7 @@ static const BIO_METHOD methods_acceptp = {
     NULL,                       /* connect_callback_ctrl */
 };
 
-const BIO_METHOD *BIO_s_accept(void)
+const BIO_METHOD * __cdecl BIO_s_accept(void)
 {
     return &methods_acceptp;
 }
@@ -544,7 +544,7 @@ static int acpt_puts(BIO *bp, const char *str)
     return ret;
 }
 
-BIO *BIO_new_accept(const char *str)
+BIO * __cdecl BIO_new_accept(const char *str)
 {
     BIO *ret;
 

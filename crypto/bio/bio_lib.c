@@ -68,7 +68,7 @@ static long bio_call_callback(BIO *b, int oper, const char *argp, size_t len,
     return ret;
 }
 
-BIO *BIO_new(const BIO_METHOD *method)
+BIO * __cdecl BIO_new(const BIO_METHOD *method)
 {
     BIO *bio = OPENSSL_zalloc(sizeof(*bio));
 
@@ -107,7 +107,7 @@ err:
     return NULL;
 }
 
-int BIO_free(BIO *a)
+int __cdecl BIO_free(BIO *a)
 {
     int ret;
 
@@ -140,32 +140,32 @@ int BIO_free(BIO *a)
     return 1;
 }
 
-void BIO_set_data(BIO *a, void *ptr)
+void __cdecl BIO_set_data(BIO *a, void *ptr)
 {
     a->ptr = ptr;
 }
 
-void *BIO_get_data(BIO *a)
+void * __cdecl BIO_get_data(BIO *a)
 {
     return a->ptr;
 }
 
-void BIO_set_init(BIO *a, int init)
+void __cdecl BIO_set_init(BIO *a, int init)
 {
     a->init = init;
 }
 
-int BIO_get_init(BIO *a)
+int __cdecl BIO_get_init(BIO *a)
 {
     return a->init;
 }
 
-void BIO_set_shutdown(BIO *a, int shut)
+void __cdecl BIO_set_shutdown(BIO *a, int shut)
 {
     a->shutdown = shut;
 }
 
-int BIO_get_shutdown(BIO *a)
+int __cdecl BIO_get_shutdown(BIO *a)
 {
     return a->shutdown;
 }
@@ -175,7 +175,7 @@ void __cdecl BIO_vfree(BIO *a)
     BIO_free(a);
 }
 
-int BIO_up_ref(BIO *a)
+int __cdecl BIO_up_ref(BIO *a)
 {
     int i;
 
@@ -187,57 +187,57 @@ int BIO_up_ref(BIO *a)
     return ((i > 1) ? 1 : 0);
 }
 
-void BIO_clear_flags(BIO *b, int flags)
+void __cdecl BIO_clear_flags(BIO *b, int flags)
 {
     b->flags &= ~flags;
 }
 
-int BIO_test_flags(const BIO *b, int flags)
+int __cdecl BIO_test_flags(const BIO *b, int flags)
 {
     return (b->flags & flags);
 }
 
-void BIO_set_flags(BIO *b, int flags)
+void __cdecl BIO_set_flags(BIO *b, int flags)
 {
     b->flags |= flags;
 }
 
-BIO_callback_fn BIO_get_callback(const BIO *b)
+BIO_callback_fn __cdecl BIO_get_callback(const BIO *b)
 {
     return b->callback;
 }
 
-void BIO_set_callback(BIO *b, BIO_callback_fn cb)
+void __cdecl BIO_set_callback(BIO *b, BIO_callback_fn cb)
 {
     b->callback = cb;
 }
 
-BIO_callback_fn_ex BIO_get_callback_ex(const BIO *b)
+BIO_callback_fn_ex __cdecl BIO_get_callback_ex(const BIO *b)
 {
     return b->callback_ex;
 }
 
-void BIO_set_callback_ex(BIO *b, BIO_callback_fn_ex cb)
+void __cdecl BIO_set_callback_ex(BIO *b, BIO_callback_fn_ex cb)
 {
     b->callback_ex = cb;
 }
 
-void BIO_set_callback_arg(BIO *b, char *arg)
+void __cdecl BIO_set_callback_arg(BIO *b, char *arg)
 {
     b->cb_arg = arg;
 }
 
-char *BIO_get_callback_arg(const BIO *b)
+char * __cdecl BIO_get_callback_arg(const BIO *b)
 {
     return b->cb_arg;
 }
 
-const char *BIO_method_name(const BIO *b)
+const char * __cdecl BIO_method_name(const BIO *b)
 {
     return b->method->name;
 }
 
-int BIO_method_type(const BIO *b)
+int __cdecl BIO_method_type(const BIO *b)
 {
     return b->method->type;
 }
@@ -285,7 +285,7 @@ static int bio_read_intern(BIO *b, void *data, size_t dlen, size_t *readbytes)
     return ret;
 }
 
-int BIO_read(BIO *b, void *data, int dlen)
+int __cdecl BIO_read(BIO *b, void *data, int dlen)
 {
     size_t readbytes;
     int ret;
@@ -303,7 +303,7 @@ int BIO_read(BIO *b, void *data, int dlen)
     return ret;
 }
 
-int BIO_read_ex(BIO *b, void *data, size_t dlen, size_t *readbytes)
+int __cdecl BIO_read_ex(BIO *b, void *data, size_t dlen, size_t *readbytes)
 {
     int ret;
 
@@ -352,7 +352,7 @@ static int bio_write_intern(BIO *b, const void *data, size_t dlen,
     return ret;
 }
 
-int BIO_write(BIO *b, const void *data, int dlen)
+int __cdecl BIO_write(BIO *b, const void *data, int dlen)
 {
     size_t written;
     int ret;
@@ -370,7 +370,7 @@ int BIO_write(BIO *b, const void *data, int dlen)
     return ret;
 }
 
-int BIO_write_ex(BIO *b, const void *data, size_t dlen, size_t *written)
+int __cdecl BIO_write_ex(BIO *b, const void *data, size_t dlen, size_t *written)
 {
     int ret;
 
@@ -384,7 +384,7 @@ int BIO_write_ex(BIO *b, const void *data, size_t dlen, size_t *written)
     return ret;
 }
 
-int BIO_puts(BIO *b, const char *buf)
+int __cdecl BIO_puts(BIO *b, const char *buf)
 {
     int ret;
     size_t written = 0;
@@ -429,7 +429,7 @@ int BIO_puts(BIO *b, const char *buf)
     return ret;
 }
 
-int BIO_gets(BIO *b, char *buf, int size)
+int __cdecl BIO_gets(BIO *b, char *buf, int size)
 {
     int ret;
     size_t readbytes = 0;
@@ -477,7 +477,7 @@ int BIO_gets(BIO *b, char *buf, int size)
     return ret;
 }
 
-int BIO_indent(BIO *b, int indent, int max)
+int __cdecl BIO_indent(BIO *b, int indent, int max)
 {
     if (indent < 0)
         indent = 0;
@@ -489,7 +489,7 @@ int BIO_indent(BIO *b, int indent, int max)
     return 1;
 }
 
-long BIO_int_ctrl(BIO *b, int cmd, long larg, int iarg)
+long __cdecl BIO_int_ctrl(BIO *b, int cmd, long larg, int iarg)
 {
     int i;
 
@@ -497,7 +497,7 @@ long BIO_int_ctrl(BIO *b, int cmd, long larg, int iarg)
     return BIO_ctrl(b, cmd, larg, (char *)&i);
 }
 
-void *BIO_ptr_ctrl(BIO *b, int cmd, long larg)
+void * __cdecl BIO_ptr_ctrl(BIO *b, int cmd, long larg)
 {
     void *p = NULL;
 
@@ -507,7 +507,7 @@ void *BIO_ptr_ctrl(BIO *b, int cmd, long larg)
         return p;
 }
 
-long BIO_ctrl(BIO *b, int cmd, long larg, void *parg)
+long __cdecl BIO_ctrl(BIO *b, int cmd, long larg, void *parg)
 {
     long ret;
 
@@ -534,7 +534,7 @@ long BIO_ctrl(BIO *b, int cmd, long larg, void *parg)
     return ret;
 }
 
-long BIO_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+long __cdecl BIO_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret;
 
@@ -568,18 +568,18 @@ long BIO_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
  * do; but those macros have inappropriate return type, and for interfacing
  * from other programming languages, C macros aren't much of a help anyway.
  */
-size_t BIO_ctrl_pending(BIO *bio)
+size_t __cdecl BIO_ctrl_pending(BIO *bio)
 {
     return BIO_ctrl(bio, BIO_CTRL_PENDING, 0, NULL);
 }
 
-size_t BIO_ctrl_wpending(BIO *bio)
+size_t __cdecl BIO_ctrl_wpending(BIO *bio)
 {
     return BIO_ctrl(bio, BIO_CTRL_WPENDING, 0, NULL);
 }
 
 /* put the 'bio' on the end of b's list of operators */
-BIO *BIO_push(BIO *b, BIO *bio)
+BIO * __cdecl BIO_push(BIO *b, BIO *bio)
 {
     BIO *lb;
 
@@ -597,7 +597,7 @@ BIO *BIO_push(BIO *b, BIO *bio)
 }
 
 /* Remove the first and return the rest */
-BIO *BIO_pop(BIO *b)
+BIO * __cdecl BIO_pop(BIO *b)
 {
     BIO *ret;
 
@@ -617,7 +617,7 @@ BIO *BIO_pop(BIO *b)
     return ret;
 }
 
-BIO *BIO_get_retry_BIO(BIO *bio, int *reason)
+BIO * __cdecl BIO_get_retry_BIO(BIO *bio, int *reason)
 {
     BIO *b, *last;
 
@@ -635,17 +635,17 @@ BIO *BIO_get_retry_BIO(BIO *bio, int *reason)
     return last;
 }
 
-int BIO_get_retry_reason(BIO *bio)
+int __cdecl BIO_get_retry_reason(BIO *bio)
 {
     return bio->retry_reason;
 }
 
-void BIO_set_retry_reason(BIO *bio, int reason)
+void __cdecl BIO_set_retry_reason(BIO *bio, int reason)
 {
     bio->retry_reason = reason;
 }
 
-BIO *BIO_find_type(BIO *bio, int type)
+BIO * __cdecl BIO_find_type(BIO *bio, int type)
 {
     int mt, mask;
 
@@ -667,19 +667,19 @@ BIO *BIO_find_type(BIO *bio, int type)
     return NULL;
 }
 
-BIO *BIO_next(BIO *b)
+BIO * __cdecl BIO_next(BIO *b)
 {
     if (b == NULL)
         return NULL;
     return b->next_bio;
 }
 
-void BIO_set_next(BIO *b, BIO *next)
+void __cdecl BIO_set_next(BIO *b, BIO *next)
 {
     b->next_bio = next;
 }
 
-void BIO_free_all(BIO *bio)
+void __cdecl BIO_free_all(BIO *bio)
 {
     BIO *b;
     int ref;
@@ -695,7 +695,7 @@ void BIO_free_all(BIO *bio)
     }
 }
 
-BIO *BIO_dup_chain(BIO *in)
+BIO * __cdecl BIO_dup_chain(BIO *in)
 {
     BIO *ret = NULL, *eoc = NULL, *bio, *new_bio;
 
@@ -739,30 +739,30 @@ BIO *BIO_dup_chain(BIO *in)
     return NULL;
 }
 
-void BIO_copy_next_retry(BIO *b)
+void __cdecl BIO_copy_next_retry(BIO *b)
 {
     BIO_set_flags(b, BIO_get_retry_flags(b->next_bio));
     b->retry_reason = b->next_bio->retry_reason;
 }
 
-int BIO_set_ex_data(BIO *bio, int idx, void *data)
+int __cdecl BIO_set_ex_data(BIO *bio, int idx, void *data)
 {
     return CRYPTO_set_ex_data(&(bio->ex_data), idx, data);
 }
 
-void *BIO_get_ex_data(BIO *bio, int idx)
+void * __cdecl BIO_get_ex_data(BIO *bio, int idx)
 {
     return CRYPTO_get_ex_data(&(bio->ex_data), idx);
 }
 
-uint64_t BIO_number_read(BIO *bio)
+uint64_t __cdecl BIO_number_read(BIO *bio)
 {
     if (bio)
         return bio->num_read;
     return 0;
 }
 
-uint64_t BIO_number_written(BIO *bio)
+uint64_t __cdecl BIO_number_written(BIO *bio)
 {
     if (bio)
         return bio->num_write;

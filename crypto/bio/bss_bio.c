@@ -52,7 +52,7 @@ static const BIO_METHOD methods_biop = {
     NULL                        /* no bio_callback_ctrl */
 };
 
-const BIO_METHOD *BIO_s_bio(void)
+const BIO_METHOD * __cdecl BIO_s_bio(void)
 {
     return &methods_biop;
 }
@@ -682,7 +682,7 @@ static void bio_destroy_pair(BIO *bio)
 }
 
 /* Exported convenience functions */
-int BIO_new_bio_pair(BIO **bio1_p, size_t writebuf1,
+int __cdecl BIO_new_bio_pair(BIO **bio1_p, size_t writebuf1,
                      BIO **bio2_p, size_t writebuf2)
 {
     BIO *bio1 = NULL, *bio2 = NULL;
@@ -725,17 +725,17 @@ int BIO_new_bio_pair(BIO **bio1_p, size_t writebuf1,
     return ret;
 }
 
-size_t BIO_ctrl_get_write_guarantee(BIO *bio)
+size_t __cdecl BIO_ctrl_get_write_guarantee(BIO *bio)
 {
     return BIO_ctrl(bio, BIO_C_GET_WRITE_GUARANTEE, 0, NULL);
 }
 
-size_t BIO_ctrl_get_read_request(BIO *bio)
+size_t __cdecl BIO_ctrl_get_read_request(BIO *bio)
 {
     return BIO_ctrl(bio, BIO_C_GET_READ_REQUEST, 0, NULL);
 }
 
-int BIO_ctrl_reset_read_request(BIO *bio)
+int __cdecl BIO_ctrl_reset_read_request(BIO *bio)
 {
     return (BIO_ctrl(bio, BIO_C_RESET_READ_REQUEST, 0, NULL) != 0);
 }
@@ -745,7 +745,7 @@ int BIO_ctrl_reset_read_request(BIO *bio)
  * (conceivably some other BIOs could allow non-copying reads and writes
  * too.)
  */
-int BIO_nread0(BIO *bio, char **buf)
+int __cdecl BIO_nread0(BIO *bio, char **buf)
 {
     long ret;
 
@@ -761,7 +761,7 @@ int BIO_nread0(BIO *bio, char **buf)
         return (int)ret;
 }
 
-int BIO_nread(BIO *bio, char **buf, int num)
+int __cdecl BIO_nread(BIO *bio, char **buf, int num)
 {
     int ret;
 
@@ -776,7 +776,7 @@ int BIO_nread(BIO *bio, char **buf, int num)
     return ret;
 }
 
-int BIO_nwrite0(BIO *bio, char **buf)
+int __cdecl BIO_nwrite0(BIO *bio, char **buf)
 {
     long ret;
 
@@ -792,7 +792,7 @@ int BIO_nwrite0(BIO *bio, char **buf)
         return (int)ret;
 }
 
-int BIO_nwrite(BIO *bio, char **buf, int num)
+int __cdecl BIO_nwrite(BIO *bio, char **buf, int num)
 {
     int ret;
 

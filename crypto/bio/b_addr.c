@@ -35,7 +35,7 @@ static CRYPTO_ONCE bio_lookup_init = CRYPTO_ONCE_STATIC_INIT;
  *
  */
 
-BIO_ADDR *BIO_ADDR_new(void)
+BIO_ADDR * __cdecl BIO_ADDR_new(void)
 {
     BIO_ADDR *ret = OPENSSL_zalloc(sizeof(*ret));
 
@@ -48,12 +48,12 @@ BIO_ADDR *BIO_ADDR_new(void)
     return ret;
 }
 
-void BIO_ADDR_free(BIO_ADDR *ap)
+void __cdecl BIO_ADDR_free(BIO_ADDR *ap)
 {
     OPENSSL_free(ap);
 }
 
-void BIO_ADDR_clear(BIO_ADDR *ap)
+void __cdecl BIO_ADDR_clear(BIO_ADDR *ap)
 {
     memset(ap, 0, sizeof(*ap));
     ap->sa.sa_family = AF_UNSPEC;
@@ -85,7 +85,7 @@ int BIO_ADDR_make(BIO_ADDR *ap, const struct sockaddr *sa)
     return 0;
 }
 
-int BIO_ADDR_rawmake(BIO_ADDR *ap, int family,
+int __cdecl BIO_ADDR_rawmake(BIO_ADDR *ap, int family,
                      const void *where, size_t wherelen,
                      unsigned short port)
 {
@@ -123,12 +123,12 @@ int BIO_ADDR_rawmake(BIO_ADDR *ap, int family,
     return 0;
 }
 
-int BIO_ADDR_family(const BIO_ADDR *ap)
+int __cdecl BIO_ADDR_family(const BIO_ADDR *ap)
 {
     return ap->sa.sa_family;
 }
 
-int BIO_ADDR_rawaddress(const BIO_ADDR *ap, void *p, size_t *l)
+int __cdecl BIO_ADDR_rawaddress(const BIO_ADDR *ap, void *p, size_t *l)
 {
     size_t len = 0;
     const void *addrptr = NULL;
@@ -162,7 +162,7 @@ int BIO_ADDR_rawaddress(const BIO_ADDR *ap, void *p, size_t *l)
     return 1;
 }
 
-unsigned short BIO_ADDR_rawport(const BIO_ADDR *ap)
+unsigned short __cdecl BIO_ADDR_rawport(const BIO_ADDR *ap)
 {
     if (ap->sa.sa_family == AF_INET)
         return ap->s_in.sin_port;
@@ -261,7 +261,7 @@ static int addr_strings(const BIO_ADDR *ap, int numeric,
     return 1;
 }
 
-char *BIO_ADDR_hostname_string(const BIO_ADDR *ap, int numeric)
+char * __cdecl BIO_ADDR_hostname_string(const BIO_ADDR *ap, int numeric)
 {
     char *hostname = NULL;
 
@@ -271,7 +271,7 @@ char *BIO_ADDR_hostname_string(const BIO_ADDR *ap, int numeric)
     return NULL;
 }
 
-char *BIO_ADDR_service_string(const BIO_ADDR *ap, int numeric)
+char * __cdecl BIO_ADDR_service_string(const BIO_ADDR *ap, int numeric)
 {
     char *service = NULL;
 
@@ -281,7 +281,7 @@ char *BIO_ADDR_service_string(const BIO_ADDR *ap, int numeric)
     return NULL;
 }
 
-char *BIO_ADDR_path_string(const BIO_ADDR *ap)
+char * __cdecl BIO_ADDR_path_string(const BIO_ADDR *ap)
 {
 #ifdef AF_UNIX
     if (ap->sa.sa_family == AF_UNIX)
@@ -338,28 +338,28 @@ socklen_t BIO_ADDR_sockaddr_size(const BIO_ADDR *ap)
  *
  */
 
-const BIO_ADDRINFO *BIO_ADDRINFO_next(const BIO_ADDRINFO *bai)
+const BIO_ADDRINFO * __cdecl BIO_ADDRINFO_next(const BIO_ADDRINFO *bai)
 {
     if (bai != NULL)
         return bai->bai_next;
     return NULL;
 }
 
-int BIO_ADDRINFO_family(const BIO_ADDRINFO *bai)
+int __cdecl BIO_ADDRINFO_family(const BIO_ADDRINFO *bai)
 {
     if (bai != NULL)
         return bai->bai_family;
     return 0;
 }
 
-int BIO_ADDRINFO_socktype(const BIO_ADDRINFO *bai)
+int __cdecl BIO_ADDRINFO_socktype(const BIO_ADDRINFO *bai)
 {
     if (bai != NULL)
         return bai->bai_socktype;
     return 0;
 }
 
-int BIO_ADDRINFO_protocol(const BIO_ADDRINFO *bai)
+int __cdecl BIO_ADDRINFO_protocol(const BIO_ADDRINFO *bai)
 {
     if (bai != NULL) {
         if (bai->bai_protocol != 0)
@@ -404,14 +404,14 @@ const struct sockaddr *BIO_ADDRINFO_sockaddr(const BIO_ADDRINFO *bai)
     return NULL;
 }
 
-const BIO_ADDR *BIO_ADDRINFO_address(const BIO_ADDRINFO *bai)
+const BIO_ADDR * __cdecl BIO_ADDRINFO_address(const BIO_ADDRINFO *bai)
 {
     if (bai != NULL)
         return (BIO_ADDR *)bai->bai_addr;
     return NULL;
 }
 
-void BIO_ADDRINFO_free(BIO_ADDRINFO *bai)
+void __cdecl BIO_ADDRINFO_free(BIO_ADDRINFO *bai)
 {
     if (bai == NULL)
         return;
@@ -464,7 +464,7 @@ void BIO_ADDRINFO_free(BIO_ADDRINFO *bai)
  * service              => *host untouched, *service = "service"
  *
  */
-int BIO_parse_hostserv(const char *hostserv, char **host, char **service,
+int __cdecl BIO_parse_hostserv(const char *hostserv, char **host, char **service,
                        enum BIO_hostserv_priorities hostserv_prio)
 {
     const char *h = NULL; size_t hl = 0;
@@ -609,7 +609,7 @@ DEFINE_RUN_ONCE_STATIC(do_bio_lookup_init)
     return bio_lookup_lock != NULL;
 }
 
-int BIO_lookup(const char *host, const char *service,
+int __cdecl BIO_lookup(const char *host, const char *service,
                enum BIO_lookup_type lookup_type,
                int family, int socktype, BIO_ADDRINFO **res)
 {
@@ -638,7 +638,7 @@ int BIO_lookup(const char *host, const char *service,
  *
  * The return value is 1 on success or 0 in case of error.
  */
-int BIO_lookup_ex(const char *host, const char *service, int lookup_type,
+int __cdecl BIO_lookup_ex(const char *host, const char *service, int lookup_type,
                   int family, int socktype, int protocol, BIO_ADDRINFO **res)
 {
     int ret = 0;                 /* Assume failure */

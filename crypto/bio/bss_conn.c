@@ -242,7 +242,7 @@ void BIO_CONNECT_free(BIO_CONNECT *a)
     OPENSSL_free(a);
 }
 
-const BIO_METHOD *BIO_s_connect(void)
+const BIO_METHOD * __cdecl BIO_s_connect(void)
 {
     return &methods_connectp;
 }
@@ -524,7 +524,7 @@ static int conn_puts(BIO *bp, const char *str)
     return ret;
 }
 
-BIO *BIO_new_connect(const char *str)
+BIO * __cdecl BIO_new_connect(const char *str)
 {
     BIO *ret;
 

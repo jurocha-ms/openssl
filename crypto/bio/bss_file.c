@@ -56,7 +56,7 @@ static const BIO_METHOD methods_filep = {
     NULL,                      /* file_callback_ctrl */
 };
 
-BIO *BIO_new_file(const char *filename, const char *mode)
+BIO * __cdecl BIO_new_file(const char *filename, const char *mode)
 {
     BIO  *ret;
     FILE *file = openssl_fopen(filename, mode);
@@ -89,7 +89,7 @@ BIO *BIO_new_file(const char *filename, const char *mode)
     return ret;
 }
 
-BIO *BIO_new_fp(FILE *stream, int close_flag)
+BIO * __cdecl BIO_new_fp(FILE *stream, int close_flag)
 {
     BIO *ret;
 
@@ -102,7 +102,7 @@ BIO *BIO_new_fp(FILE *stream, int close_flag)
     return ret;
 }
 
-const BIO_METHOD *BIO_s_file(void)
+const BIO_METHOD * __cdecl BIO_s_file(void)
 {
     return &methods_filep;
 }
@@ -409,12 +409,12 @@ static const BIO_METHOD methods_filep = {
     NULL,                      /* file_callback_ctrl */
 };
 
-const BIO_METHOD *BIO_s_file(void)
+const BIO_METHOD * __cdecl BIO_s_file(void)
 {
     return &methods_filep;
 }
 
-BIO *BIO_new_file(const char *filename, const char *mode)
+BIO * __cdecl BIO_new_file(const char *filename, const char *mode)
 {
     return NULL;
 }

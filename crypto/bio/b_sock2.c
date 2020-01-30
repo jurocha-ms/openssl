@@ -37,7 +37,7 @@
  * Returns the file descriptor on success or INVALID_SOCKET on failure.  On
  * failure errno is set, and a status is added to the OpenSSL error stack.
  */
-int BIO_socket(int domain, int socktype, int protocol, int options)
+int __cdecl BIO_socket(int domain, int socktype, int protocol, int options)
 {
     int sock = -1;
 
@@ -74,7 +74,7 @@ int BIO_socket(int domain, int socktype, int protocol, int options)
  * Returns 1 on success or 0 on failure.  On failure errno is set
  * and an error status is added to the OpenSSL error stack.
  */
-int BIO_connect(int sock, const BIO_ADDR *addr, int options)
+int __cdecl BIO_connect(int sock, const BIO_ADDR *addr, int options)
 {
     const int on = 1;
 
@@ -131,7 +131,7 @@ int BIO_connect(int sock, const BIO_ADDR *addr, int options)
  * you set to BIO_SOCK_REUSEADDR option it will try to reuse the port anyway.
  * It's recommended that you use this.
  */
-int BIO_bind(int sock, const BIO_ADDR *addr, int options)
+int __cdecl BIO_bind(int sock, const BIO_ADDR *addr, int options)
 {
 # ifndef OPENSSL_SYS_WINDOWS
     int on = 1;
@@ -203,7 +203,7 @@ int BIO_bind(int sock, const BIO_ADDR *addr, int options)
  * you set to BIO_SOCK_REUSEADDR option it will try to reuse the port anyway.
  * It's recommended that you use this.
  */
-int BIO_listen(int sock, const BIO_ADDR *addr, int options)
+int __cdecl BIO_listen(int sock, const BIO_ADDR *addr, int options)
 {
     int on = 1;
     int socktype;
@@ -278,7 +278,7 @@ int BIO_listen(int sock, const BIO_ADDR *addr, int options)
  * @options: BIO socket options, applied on the accepted socket.
  *
  */
-int BIO_accept_ex(int accept_sock, BIO_ADDR *addr_, int options)
+int __cdecl BIO_accept_ex(int accept_sock, BIO_ADDR *addr_, int options)
 {
     socklen_t len;
     int accepted_sock;
@@ -308,7 +308,7 @@ int BIO_accept_ex(int accept_sock, BIO_ADDR *addr_, int options)
  * BIO_closesocket - Close a socket
  * @sock: the socket to close
  */
-int BIO_closesocket(int sock)
+int __cdecl BIO_closesocket(int sock)
 {
     if (closesocket(sock) < 0)
         return 0;

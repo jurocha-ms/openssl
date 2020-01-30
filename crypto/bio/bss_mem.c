@@ -73,17 +73,17 @@ typedef struct bio_buf_mem_st {
  * should_retry is not set
  */
 
-const BIO_METHOD *BIO_s_mem(void)
+const BIO_METHOD * __cdecl BIO_s_mem(void)
 {
     return &mem_method;
 }
 
-const BIO_METHOD *BIO_s_secmem(void)
+const BIO_METHOD * __cdecl BIO_s_secmem(void)
 {
     return(&secmem_method);
 }
 
-BIO *BIO_new_mem_buf(const void *buf, int len)
+BIO * __cdecl BIO_new_mem_buf(const void *buf, int len)
 {
     BIO *ret;
     BUF_MEM *b;

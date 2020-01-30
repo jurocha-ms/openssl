@@ -33,7 +33,7 @@ int init_client(int *sock, const char *host, const char *port,
                 int family, int type, int protocol);
 int should_retry(int i);
 
-long bio_dump_callback(BIO *bio, int cmd, const char *argp,
+long __cdecl bio_dump_callback(BIO *bio, int cmd, const char *argp,
                        int argi, long argl, long ret);
 
 void apps_ssl_info_callback(const SSL *s, int where, int ret);

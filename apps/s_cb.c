@@ -429,7 +429,7 @@ int ssl_print_tmp_key(BIO *out, SSL *s)
     return 1;
 }
 
-long bio_dump_callback(BIO *bio, int cmd, const char *argp,
+long __cdecl bio_dump_callback(BIO *bio, int cmd, const char *argp,
                        int argi, long argl, long ret)
 {
     BIO *out;
