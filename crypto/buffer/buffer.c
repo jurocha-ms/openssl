@@ -18,7 +18,7 @@
  */
 #define LIMIT_BEFORE_EXPANSION 0x5ffffffc
 
-BUF_MEM *BUF_MEM_new_ex(unsigned long flags)
+BUF_MEM * __cdecl BUF_MEM_new_ex(unsigned long flags)
 {
     BUF_MEM *ret;
 
@@ -28,7 +28,7 @@ BUF_MEM *BUF_MEM_new_ex(unsigned long flags)
     return ret;
 }
 
-BUF_MEM *BUF_MEM_new(void)
+BUF_MEM * __cdecl BUF_MEM_new(void)
 {
     BUF_MEM *ret;
 
@@ -40,7 +40,7 @@ BUF_MEM *BUF_MEM_new(void)
     return ret;
 }
 
-void BUF_MEM_free(BUF_MEM *a)
+void __cdecl BUF_MEM_free(BUF_MEM *a)
 {
     if (a == NULL)
         return;
@@ -70,7 +70,7 @@ static char *sec_alloc_realloc(BUF_MEM *str, size_t len)
     return ret;
 }
 
-size_t BUF_MEM_grow(BUF_MEM *str, size_t len)
+size_t __cdecl BUF_MEM_grow(BUF_MEM *str, size_t len)
 {
     char *ret;
     size_t n;
@@ -107,7 +107,7 @@ size_t BUF_MEM_grow(BUF_MEM *str, size_t len)
     return len;
 }
 
-size_t BUF_MEM_grow_clean(BUF_MEM *str, size_t len)
+size_t __cdecl BUF_MEM_grow_clean(BUF_MEM *str, size_t len)
 {
     char *ret;
     size_t n;
@@ -145,7 +145,7 @@ size_t BUF_MEM_grow_clean(BUF_MEM *str, size_t len)
     return len;
 }
 
-void BUF_reverse(unsigned char *out, const unsigned char *in, size_t size)
+void __cdecl BUF_reverse(unsigned char *out, const unsigned char *in, size_t size)
 {
     size_t i;
     if (in) {

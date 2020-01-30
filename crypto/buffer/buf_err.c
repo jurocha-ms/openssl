@@ -26,7 +26,7 @@ static const ERR_STRING_DATA BUF_str_reasons[] = {
 
 #endif
 
-int ERR_load_BUF_strings(void)
+int __cdecl ERR_load_BUF_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_func_error_string(BUF_str_functs[0].error) == NULL) {

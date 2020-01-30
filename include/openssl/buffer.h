@@ -44,12 +44,12 @@ struct buf_mem_st {
 
 # define BUF_MEM_FLAG_SECURE  0x01
 
-BUF_MEM *BUF_MEM_new(void);
-BUF_MEM *BUF_MEM_new_ex(unsigned long flags);
-void BUF_MEM_free(BUF_MEM *a);
-size_t BUF_MEM_grow(BUF_MEM *str, size_t len);
-size_t BUF_MEM_grow_clean(BUF_MEM *str, size_t len);
-void BUF_reverse(unsigned char *out, const unsigned char *in, size_t siz);
+BUF_MEM * __cdecl BUF_MEM_new(void);
+BUF_MEM * __cdecl BUF_MEM_new_ex(unsigned long flags);
+void __cdecl BUF_MEM_free(BUF_MEM *a);
+size_t __cdecl BUF_MEM_grow(BUF_MEM *str, size_t len);
+size_t __cdecl BUF_MEM_grow_clean(BUF_MEM *str, size_t len);
+void __cdecl BUF_reverse(unsigned char *out, const unsigned char *in, size_t siz);
 
 
 # ifdef  __cplusplus
