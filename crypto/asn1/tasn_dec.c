@@ -116,7 +116,7 @@ ASN1_VALUE * __cdecl ASN1_item_d2i(ASN1_VALUE **pval,
     return NULL;
 }
 
-int ASN1_item_ex_d2i(ASN1_VALUE **pval, const unsigned char **in, long len,
+int __cdecl ASN1_item_ex_d2i(ASN1_VALUE **pval, const unsigned char **in, long len,
                      const ASN1_ITEM *it,
                      int tag, int aclass, char opt, ASN1_TLC *ctx)
 {

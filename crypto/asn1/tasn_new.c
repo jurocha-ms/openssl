@@ -34,7 +34,7 @@ ASN1_VALUE * __cdecl ASN1_item_new(const ASN1_ITEM *it)
 
 /* Allocate an ASN1 structure */
 
-int ASN1_item_ex_new(ASN1_VALUE **pval, const ASN1_ITEM *it)
+int __cdecl ASN1_item_ex_new(ASN1_VALUE **pval, const ASN1_ITEM *it)
 {
     return asn1_item_embed_new(pval, it, 0);
 }

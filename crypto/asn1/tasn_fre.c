@@ -20,7 +20,7 @@ void __cdecl ASN1_item_free(ASN1_VALUE *val, const ASN1_ITEM *it)
     asn1_item_embed_free(&val, it, 0);
 }
 
-void ASN1_item_ex_free(ASN1_VALUE **pval, const ASN1_ITEM *it)
+void __cdecl ASN1_item_ex_free(ASN1_VALUE **pval, const ASN1_ITEM *it)
 {
     asn1_item_embed_free(pval, it, 0);
 }

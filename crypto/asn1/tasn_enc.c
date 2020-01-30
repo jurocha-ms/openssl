@@ -79,7 +79,7 @@ static int asn1_item_flags_i2d(ASN1_VALUE *val, unsigned char **out,
  * performs the normal item handling: it can be used in external types.
  */
 
-int ASN1_item_ex_i2d(ASN1_VALUE **pval, unsigned char **out,
+int __cdecl ASN1_item_ex_i2d(ASN1_VALUE **pval, unsigned char **out,
                      const ASN1_ITEM *it, int tag, int aclass)
 {
     const ASN1_TEMPLATE *tt = NULL;
