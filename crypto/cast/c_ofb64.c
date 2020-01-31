@@ -15,7 +15,7 @@
  * The extra state information to record how much of the 64bit block we have
  * used is contained in *num;
  */
-void CAST_ofb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl CAST_ofb64_encrypt(const unsigned char *in, unsigned char *out,
                         long length, const CAST_KEY *schedule,
                         unsigned char *ivec, int *num)
 {

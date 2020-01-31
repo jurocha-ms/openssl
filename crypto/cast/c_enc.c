@@ -10,7 +10,7 @@
 #include <openssl/cast.h>
 #include "cast_lcl.h"
 
-void CAST_encrypt(CAST_LONG *data, const CAST_KEY *key)
+void __cdecl CAST_encrypt(CAST_LONG *data, const CAST_KEY *key)
 {
     CAST_LONG l, r, t;
     const CAST_LONG *k;
@@ -42,7 +42,7 @@ void CAST_encrypt(CAST_LONG *data, const CAST_KEY *key)
     data[0] = r & 0xffffffffL;
 }
 
-void CAST_decrypt(CAST_LONG *data, const CAST_KEY *key)
+void __cdecl CAST_decrypt(CAST_LONG *data, const CAST_KEY *key)
 {
     CAST_LONG l, r, t;
     const CAST_LONG *k;
@@ -74,7 +74,7 @@ void CAST_decrypt(CAST_LONG *data, const CAST_KEY *key)
     data[0] = r & 0xffffffffL;
 }
 
-void CAST_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl CAST_cbc_encrypt(const unsigned char *in, unsigned char *out,
                       long length, const CAST_KEY *ks, unsigned char *iv,
                       int enc)
 {
