@@ -50,7 +50,7 @@ static CMS_SignedData *cms_signed_data_init(CMS_ContentInfo *cms)
 
 /* Just initialise SignedData e.g. for certs only structure */
 
-int CMS_SignedData_init(CMS_ContentInfo *cms)
+int __cdecl CMS_SignedData_init(CMS_ContentInfo *cms)
 {
     if (cms_signed_data_init(cms))
         return 1;
@@ -238,7 +238,7 @@ static int cms_sd_asn1_ctrl(CMS_SignerInfo *si, int cmd)
     return 1;
 }
 
-CMS_SignerInfo *CMS_add1_signer(CMS_ContentInfo *cms,
+CMS_SignerInfo * __cdecl CMS_add1_signer(CMS_ContentInfo *cms,
                                 X509 *signer, EVP_PKEY *pk, const EVP_MD *md,
                                 unsigned int flags)
 {
@@ -422,17 +422,17 @@ static int cms_add1_signingTime(CMS_SignerInfo *si, ASN1_TIME *t)
 
 }
 
-EVP_PKEY_CTX *CMS_SignerInfo_get0_pkey_ctx(CMS_SignerInfo *si)
+EVP_PKEY_CTX * __cdecl CMS_SignerInfo_get0_pkey_ctx(CMS_SignerInfo *si)
 {
     return si->pctx;
 }
 
-EVP_MD_CTX *CMS_SignerInfo_get0_md_ctx(CMS_SignerInfo *si)
+EVP_MD_CTX * __cdecl CMS_SignerInfo_get0_md_ctx(CMS_SignerInfo *si)
 {
     return si->mctx;
 }
 
-STACK_OF(CMS_SignerInfo) *CMS_get0_SignerInfos(CMS_ContentInfo *cms)
+STACK_OF(CMS_SignerInfo) * __cdecl CMS_get0_SignerInfos(CMS_ContentInfo *cms)
 {
     CMS_SignedData *sd;
     sd = cms_get0_signed(cms);
@@ -441,7 +441,7 @@ STACK_OF(CMS_SignerInfo) *CMS_get0_SignerInfos(CMS_ContentInfo *cms)
     return sd->signerInfos;
 }
 
-STACK_OF(X509) *CMS_get0_signers(CMS_ContentInfo *cms)
+STACK_OF(X509) * __cdecl CMS_get0_signers(CMS_ContentInfo *cms)
 {
     STACK_OF(X509) *signers = NULL;
     STACK_OF(CMS_SignerInfo) *sinfos;
@@ -465,7 +465,7 @@ STACK_OF(X509) *CMS_get0_signers(CMS_ContentInfo *cms)
     return signers;
 }
 
-void CMS_SignerInfo_set1_signer_cert(CMS_SignerInfo *si, X509 *signer)
+void __cdecl CMS_SignerInfo_set1_signer_cert(CMS_SignerInfo *si, X509 *signer)
 {
     if (signer) {
         X509_up_ref(signer);
@@ -476,19 +476,19 @@ void CMS_SignerInfo_set1_signer_cert(CMS_SignerInfo *si, X509 *signer)
     si->signer = signer;
 }
 
-int CMS_SignerInfo_get0_signer_id(CMS_SignerInfo *si,
+int __cdecl CMS_SignerInfo_get0_signer_id(CMS_SignerInfo *si,
                                   ASN1_OCTET_STRING **keyid,
                                   X509_NAME **issuer, ASN1_INTEGER **sno)
 {
     return cms_SignerIdentifier_get0_signer_id(si->sid, keyid, issuer, sno);
 }
 
-int CMS_SignerInfo_cert_cmp(CMS_SignerInfo *si, X509 *cert)
+int __cdecl CMS_SignerInfo_cert_cmp(CMS_SignerInfo *si, X509 *cert)
 {
     return cms_SignerIdentifier_cert_cmp(si->sid, cert);
 }
 
-int CMS_set1_signers_certs(CMS_ContentInfo *cms, STACK_OF(X509) *scerts,
+int __cdecl CMS_set1_signers_certs(CMS_ContentInfo *cms, STACK_OF(X509) *scerts,
                            unsigned int flags)
 {
     CMS_SignedData *sd;
@@ -534,7 +534,7 @@ int CMS_set1_signers_certs(CMS_ContentInfo *cms, STACK_OF(X509) *scerts,
     return ret;
 }
 
-void CMS_SignerInfo_get0_algs(CMS_SignerInfo *si, EVP_PKEY **pk,
+void __cdecl CMS_SignerInfo_get0_algs(CMS_SignerInfo *si, EVP_PKEY **pk,
                               X509 **signer, X509_ALGOR **pdig,
                               X509_ALGOR **psig)
 {
@@ -548,7 +548,7 @@ void CMS_SignerInfo_get0_algs(CMS_SignerInfo *si, EVP_PKEY **pk,
         *psig = si->signatureAlgorithm;
 }
 
-ASN1_OCTET_STRING *CMS_SignerInfo_get0_signature(CMS_SignerInfo *si)
+ASN1_OCTET_STRING * __cdecl CMS_SignerInfo_get0_signature(CMS_SignerInfo *si)
 {
     return si->signature;
 }
@@ -653,7 +653,7 @@ int cms_SignedData_final(CMS_ContentInfo *cms, BIO *chain)
     return 1;
 }
 
-int CMS_SignerInfo_sign(CMS_SignerInfo *si)
+int __cdecl CMS_SignerInfo_sign(CMS_SignerInfo *si)
 {
     EVP_MD_CTX *mctx = si->mctx;
     EVP_PKEY_CTX *pctx = NULL;
@@ -722,7 +722,7 @@ int CMS_SignerInfo_sign(CMS_SignerInfo *si)
     return 0;
 }
 
-int CMS_SignerInfo_verify(CMS_SignerInfo *si)
+int __cdecl CMS_SignerInfo_verify(CMS_SignerInfo *si)
 {
     EVP_MD_CTX *mctx = NULL;
     unsigned char *abuf = NULL;
@@ -800,7 +800,7 @@ BIO *cms_SignedData_init_bio(CMS_ContentInfo *cms)
     return NULL;
 }
 
-int CMS_SignerInfo_verify_content(CMS_SignerInfo *si, BIO *chain)
+int __cdecl CMS_SignerInfo_verify_content(CMS_SignerInfo *si, BIO *chain)
 {
     ASN1_OCTET_STRING *os = NULL;
     EVP_MD_CTX *mctx = EVP_MD_CTX_new();
@@ -877,7 +877,7 @@ int CMS_SignerInfo_verify_content(CMS_SignerInfo *si, BIO *chain)
 
 }
 
-int CMS_add_smimecap(CMS_SignerInfo *si, STACK_OF(X509_ALGOR) *algs)
+int __cdecl CMS_add_smimecap(CMS_SignerInfo *si, STACK_OF(X509_ALGOR) *algs)
 {
     unsigned char *smder = NULL;
     int smderlen, r;
@@ -890,7 +890,7 @@ int CMS_add_smimecap(CMS_SignerInfo *si, STACK_OF(X509_ALGOR) *algs)
     return r;
 }
 
-int CMS_add_simple_smimecap(STACK_OF(X509_ALGOR) **algs,
+int __cdecl CMS_add_simple_smimecap(STACK_OF(X509_ALGOR) **algs,
                             int algnid, int keysize)
 {
     X509_ALGOR *alg;
@@ -933,7 +933,7 @@ static int cms_add_digest_smcap(STACK_OF(X509_ALGOR) **sk, int nid, int arg)
     return 1;
 }
 
-int CMS_add_standard_smimecap(STACK_OF(X509_ALGOR) **smcap)
+int __cdecl CMS_add_standard_smimecap(STACK_OF(X509_ALGOR) **smcap)
 {
     if (!cms_add_cipher_smcap(smcap, NID_aes_256_cbc, -1)
         || !cms_add_digest_smcap(smcap, NID_id_GostR3411_2012_256, -1)

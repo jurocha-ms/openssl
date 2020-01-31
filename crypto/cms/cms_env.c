@@ -78,7 +78,7 @@ int cms_env_asn1_ctrl(CMS_RecipientInfo *ri, int cmd)
     return 1;
 }
 
-STACK_OF(CMS_RecipientInfo) *CMS_get0_RecipientInfos(CMS_ContentInfo *cms)
+STACK_OF(CMS_RecipientInfo) * __cdecl CMS_get0_RecipientInfos(CMS_ContentInfo *cms)
 {
     CMS_EnvelopedData *env;
     env = cms_get0_enveloped(cms);
@@ -87,12 +87,12 @@ STACK_OF(CMS_RecipientInfo) *CMS_get0_RecipientInfos(CMS_ContentInfo *cms)
     return env->recipientInfos;
 }
 
-int CMS_RecipientInfo_type(CMS_RecipientInfo *ri)
+int __cdecl CMS_RecipientInfo_type(CMS_RecipientInfo *ri)
 {
     return ri->type;
 }
 
-EVP_PKEY_CTX *CMS_RecipientInfo_get0_pkey_ctx(CMS_RecipientInfo *ri)
+EVP_PKEY_CTX * __cdecl CMS_RecipientInfo_get0_pkey_ctx(CMS_RecipientInfo *ri)
 {
     if (ri->type == CMS_RECIPINFO_TRANS)
         return ri->d.ktri->pctx;
@@ -101,7 +101,7 @@ EVP_PKEY_CTX *CMS_RecipientInfo_get0_pkey_ctx(CMS_RecipientInfo *ri)
     return NULL;
 }
 
-CMS_ContentInfo *CMS_EnvelopedData_create(const EVP_CIPHER *cipher)
+CMS_ContentInfo *__cdecl CMS_EnvelopedData_create(const EVP_CIPHER *cipher)
 {
     CMS_ContentInfo *cms;
     CMS_EnvelopedData *env;
@@ -175,7 +175,7 @@ static int cms_RecipientInfo_ktri_init(CMS_RecipientInfo *ri, X509 *recip,
  * Add a recipient certificate using appropriate type of RecipientInfo
  */
 
-CMS_RecipientInfo *CMS_add1_recipient_cert(CMS_ContentInfo *cms,
+CMS_RecipientInfo * __cdecl CMS_add1_recipient_cert(CMS_ContentInfo *cms,
                                            X509 *recip, unsigned int flags)
 {
     CMS_RecipientInfo *ri = NULL;
@@ -228,7 +228,7 @@ CMS_RecipientInfo *CMS_add1_recipient_cert(CMS_ContentInfo *cms,
 
 }
 
-int CMS_RecipientInfo_ktri_get0_algs(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_ktri_get0_algs(CMS_RecipientInfo *ri,
                                      EVP_PKEY **pk, X509 **recip,
                                      X509_ALGOR **palg)
 {
@@ -250,7 +250,7 @@ int CMS_RecipientInfo_ktri_get0_algs(CMS_RecipientInfo *ri,
     return 1;
 }
 
-int CMS_RecipientInfo_ktri_get0_signer_id(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_ktri_get0_signer_id(CMS_RecipientInfo *ri,
                                           ASN1_OCTET_STRING **keyid,
                                           X509_NAME **issuer,
                                           ASN1_INTEGER **sno)
@@ -266,7 +266,7 @@ int CMS_RecipientInfo_ktri_get0_signer_id(CMS_RecipientInfo *ri,
     return cms_SignerIdentifier_get0_signer_id(ktri->rid, keyid, issuer, sno);
 }
 
-int CMS_RecipientInfo_ktri_cert_cmp(CMS_RecipientInfo *ri, X509 *cert)
+int __cdecl CMS_RecipientInfo_ktri_cert_cmp(CMS_RecipientInfo *ri, X509 *cert)
 {
     if (ri->type != CMS_RECIPINFO_TRANS) {
         CMSerr(CMS_F_CMS_RECIPIENTINFO_KTRI_CERT_CMP,
@@ -276,7 +276,7 @@ int CMS_RecipientInfo_ktri_cert_cmp(CMS_RecipientInfo *ri, X509 *cert)
     return cms_SignerIdentifier_cert_cmp(ri->d.ktri->rid, cert);
 }
 
-int CMS_RecipientInfo_set0_pkey(CMS_RecipientInfo *ri, EVP_PKEY *pkey)
+int __cdecl CMS_RecipientInfo_set0_pkey(CMS_RecipientInfo *ri, EVP_PKEY *pkey)
 {
     if (ri->type != CMS_RECIPINFO_TRANS) {
         CMSerr(CMS_F_CMS_RECIPIENTINFO_SET0_PKEY, CMS_R_NOT_KEY_TRANSPORT);
@@ -439,7 +439,7 @@ static int cms_RecipientInfo_ktri_decrypt(CMS_ContentInfo *cms,
 
 /* Key Encrypted Key (KEK) RecipientInfo routines */
 
-int CMS_RecipientInfo_kekri_id_cmp(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_kekri_id_cmp(CMS_RecipientInfo *ri,
                                    const unsigned char *id, size_t idlen)
 {
     ASN1_OCTET_STRING tmp_os;
@@ -475,7 +475,7 @@ static size_t aes_wrap_keylen(int nid)
     }
 }
 
-CMS_RecipientInfo *CMS_add0_recipient_key(CMS_ContentInfo *cms, int nid,
+CMS_RecipientInfo * __cdecl CMS_add0_recipient_key(CMS_ContentInfo *cms, int nid,
                                           unsigned char *key, size_t keylen,
                                           unsigned char *id, size_t idlen,
                                           ASN1_GENERALIZEDTIME *date,
@@ -575,7 +575,7 @@ CMS_RecipientInfo *CMS_add0_recipient_key(CMS_ContentInfo *cms, int nid,
 
 }
 
-int CMS_RecipientInfo_kekri_get0_id(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_kekri_get0_id(CMS_RecipientInfo *ri,
                                     X509_ALGOR **palg,
                                     ASN1_OCTET_STRING **pid,
                                     ASN1_GENERALIZEDTIME **pdate,
@@ -609,7 +609,7 @@ int CMS_RecipientInfo_kekri_get0_id(CMS_RecipientInfo *ri,
     return 1;
 }
 
-int CMS_RecipientInfo_set0_key(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_set0_key(CMS_RecipientInfo *ri,
                                unsigned char *key, size_t keylen)
 {
     CMS_KEKRecipientInfo *kekri;
@@ -752,7 +752,7 @@ static int cms_RecipientInfo_kekri_decrypt(CMS_ContentInfo *cms,
 
 }
 
-int CMS_RecipientInfo_decrypt(CMS_ContentInfo *cms, CMS_RecipientInfo *ri)
+int __cdecl CMS_RecipientInfo_decrypt(CMS_ContentInfo *cms, CMS_RecipientInfo *ri)
 {
     switch (ri->type) {
     case CMS_RECIPINFO_TRANS:
@@ -771,7 +771,7 @@ int CMS_RecipientInfo_decrypt(CMS_ContentInfo *cms, CMS_RecipientInfo *ri)
     }
 }
 
-int CMS_RecipientInfo_encrypt(CMS_ContentInfo *cms, CMS_RecipientInfo *ri)
+int __cdecl CMS_RecipientInfo_encrypt(CMS_ContentInfo *cms, CMS_RecipientInfo *ri)
 {
     switch (ri->type) {
     case CMS_RECIPINFO_TRANS:

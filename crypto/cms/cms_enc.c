@@ -180,7 +180,7 @@ int cms_EncryptedContent_init(CMS_EncryptedContentInfo *ec,
     return 1;
 }
 
-int CMS_EncryptedData_set1_key(CMS_ContentInfo *cms, const EVP_CIPHER *ciph,
+int __cdecl CMS_EncryptedData_set1_key(CMS_ContentInfo *cms, const EVP_CIPHER *ciph,
                                const unsigned char *key, size_t keylen)
 {
     CMS_EncryptedContentInfo *ec;

@@ -19,7 +19,7 @@
 IMPLEMENT_ASN1_FUNCTIONS(CMS_ContentInfo)
 IMPLEMENT_ASN1_PRINT_FUNCTION(CMS_ContentInfo)
 
-const ASN1_OBJECT *CMS_get0_type(const CMS_ContentInfo *cms)
+const ASN1_OBJECT * __cdecl CMS_get0_type(const CMS_ContentInfo *cms)
 {
     return cms->contentType;
 }
@@ -53,7 +53,7 @@ BIO *cms_content_bio(CMS_ContentInfo *cms)
     return BIO_new_mem_buf((*pos)->data, (*pos)->length);
 }
 
-BIO *CMS_dataInit(CMS_ContentInfo *cms, BIO *icont)
+BIO * __cdecl CMS_dataInit(CMS_ContentInfo *cms, BIO *icont)
 {
     BIO *cmsbio, *cont;
     if (icont)
@@ -104,7 +104,7 @@ BIO *CMS_dataInit(CMS_ContentInfo *cms, BIO *icont)
 
 }
 
-int CMS_dataFinal(CMS_ContentInfo *cms, BIO *cmsbio)
+int __cdecl CMS_dataFinal(CMS_ContentInfo *cms, BIO *cmsbio)
 {
     ASN1_OCTET_STRING **pos = CMS_get0_content(cms);
     if (!pos)
@@ -153,7 +153,7 @@ int CMS_dataFinal(CMS_ContentInfo *cms, BIO *cmsbio)
  * or set later.
  */
 
-ASN1_OCTET_STRING **CMS_get0_content(CMS_ContentInfo *cms)
+ASN1_OCTET_STRING ** __cdecl CMS_get0_content(CMS_ContentInfo *cms)
 {
     switch (OBJ_obj2nid(cms->contentType)) {
 
@@ -221,7 +221,7 @@ static ASN1_OBJECT **cms_get0_econtent_type(CMS_ContentInfo *cms)
     }
 }
 
-const ASN1_OBJECT *CMS_get0_eContentType(CMS_ContentInfo *cms)
+const ASN1_OBJECT * __cdecl CMS_get0_eContentType(CMS_ContentInfo *cms)
 {
     ASN1_OBJECT **petype;
     petype = cms_get0_econtent_type(cms);
@@ -230,7 +230,7 @@ const ASN1_OBJECT *CMS_get0_eContentType(CMS_ContentInfo *cms)
     return NULL;
 }
 
-int CMS_set1_eContentType(CMS_ContentInfo *cms, const ASN1_OBJECT *oid)
+int __cdecl CMS_set1_eContentType(CMS_ContentInfo *cms, const ASN1_OBJECT *oid)
 {
     ASN1_OBJECT **petype, *etype;
     petype = cms_get0_econtent_type(cms);
@@ -246,7 +246,7 @@ int CMS_set1_eContentType(CMS_ContentInfo *cms, const ASN1_OBJECT *oid)
     return 1;
 }
 
-int CMS_is_detached(CMS_ContentInfo *cms)
+int __cdecl CMS_is_detached(CMS_ContentInfo *cms)
 {
     ASN1_OCTET_STRING **pos;
     pos = CMS_get0_content(cms);
@@ -257,7 +257,7 @@ int CMS_is_detached(CMS_ContentInfo *cms)
     return 1;
 }
 
-int CMS_set_detached(CMS_ContentInfo *cms, int detached)
+int __cdecl CMS_set_detached(CMS_ContentInfo *cms, int detached)
 {
     ASN1_OCTET_STRING **pos;
     pos = CMS_get0_content(cms);
@@ -357,7 +357,7 @@ static STACK_OF(CMS_CertificateChoices)
     }
 }
 
-CMS_CertificateChoices *CMS_add0_CertificateChoices(CMS_ContentInfo *cms)
+CMS_CertificateChoices * __cdecl CMS_add0_CertificateChoices(CMS_ContentInfo *cms)
 {
     STACK_OF(CMS_CertificateChoices) **pcerts;
     CMS_CertificateChoices *cch;
@@ -378,7 +378,7 @@ CMS_CertificateChoices *CMS_add0_CertificateChoices(CMS_ContentInfo *cms)
     return cch;
 }
 
-int CMS_add0_cert(CMS_ContentInfo *cms, X509 *cert)
+int __cdecl CMS_add0_cert(CMS_ContentInfo *cms, X509 *cert)
 {
     CMS_CertificateChoices *cch;
     STACK_OF(CMS_CertificateChoices) **pcerts;
@@ -404,7 +404,7 @@ int CMS_add0_cert(CMS_ContentInfo *cms, X509 *cert)
     return 1;
 }
 
-int CMS_add1_cert(CMS_ContentInfo *cms, X509 *cert)
+int __cdecl CMS_add1_cert(CMS_ContentInfo *cms, X509 *cert)
 {
     int r;
     r = CMS_add0_cert(cms, cert);
@@ -434,7 +434,7 @@ static STACK_OF(CMS_RevocationInfoChoice)
     }
 }
 
-CMS_RevocationInfoChoice *CMS_add0_RevocationInfoChoice(CMS_ContentInfo *cms)
+CMS_RevocationInfoChoice * __cdecl CMS_add0_RevocationInfoChoice(CMS_ContentInfo *cms)
 {
     STACK_OF(CMS_RevocationInfoChoice) **pcrls;
     CMS_RevocationInfoChoice *rch;
@@ -455,7 +455,7 @@ CMS_RevocationInfoChoice *CMS_add0_RevocationInfoChoice(CMS_ContentInfo *cms)
     return rch;
 }
 
-int CMS_add0_crl(CMS_ContentInfo *cms, X509_CRL *crl)
+int __cdecl CMS_add0_crl(CMS_ContentInfo *cms, X509_CRL *crl)
 {
     CMS_RevocationInfoChoice *rch;
     rch = CMS_add0_RevocationInfoChoice(cms);
@@ -466,7 +466,7 @@ int CMS_add0_crl(CMS_ContentInfo *cms, X509_CRL *crl)
     return 1;
 }
 
-int CMS_add1_crl(CMS_ContentInfo *cms, X509_CRL *crl)
+int __cdecl CMS_add1_crl(CMS_ContentInfo *cms, X509_CRL *crl)
 {
     int r;
     r = CMS_add0_crl(cms, crl);
@@ -475,7 +475,7 @@ int CMS_add1_crl(CMS_ContentInfo *cms, X509_CRL *crl)
     return r;
 }
 
-STACK_OF(X509) *CMS_get1_certs(CMS_ContentInfo *cms)
+STACK_OF(X509) * __cdecl CMS_get1_certs(CMS_ContentInfo *cms)
 {
     STACK_OF(X509) *certs = NULL;
     CMS_CertificateChoices *cch;
@@ -503,7 +503,7 @@ STACK_OF(X509) *CMS_get1_certs(CMS_ContentInfo *cms)
 
 }
 
-STACK_OF(X509_CRL) *CMS_get1_crls(CMS_ContentInfo *cms)
+STACK_OF(X509_CRL) * __cdecl CMS_get1_crls(CMS_ContentInfo *cms)
 {
     STACK_OF(X509_CRL) *crls = NULL;
     STACK_OF(CMS_RevocationInfoChoice) **pcrls;

@@ -18,7 +18,7 @@
 #include "cms_lcl.h"
 #include "internal/asn1_int.h"
 
-int CMS_RecipientInfo_set0_password(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_set0_password(CMS_RecipientInfo *ri,
                                     unsigned char *pass, ossl_ssize_t passlen)
 {
     CMS_PasswordRecipientInfo *pwri;
@@ -35,7 +35,7 @@ int CMS_RecipientInfo_set0_password(CMS_RecipientInfo *ri,
     return 1;
 }
 
-CMS_RecipientInfo *CMS_add0_recipient_password(CMS_ContentInfo *cms,
+CMS_RecipientInfo * __cdecl CMS_add0_recipient_password(CMS_ContentInfo *cms,
                                                int iter, int wrap_nid,
                                                int pbe_nid,
                                                unsigned char *pass,

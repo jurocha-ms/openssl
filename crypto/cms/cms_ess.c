@@ -20,7 +20,7 @@ IMPLEMENT_ASN1_FUNCTIONS(CMS_ReceiptRequest)
 
 /* ESS services: for now just Signed Receipt related */
 
-int CMS_get1_ReceiptRequest(CMS_SignerInfo *si, CMS_ReceiptRequest **prr)
+int __cdecl CMS_get1_ReceiptRequest(CMS_SignerInfo *si, CMS_ReceiptRequest **prr)
 {
     ASN1_STRING *str;
     CMS_ReceiptRequest *rr = NULL;
@@ -43,7 +43,7 @@ int CMS_get1_ReceiptRequest(CMS_SignerInfo *si, CMS_ReceiptRequest **prr)
     return 1;
 }
 
-CMS_ReceiptRequest *CMS_ReceiptRequest_create0(unsigned char *id, int idlen,
+CMS_ReceiptRequest * __cdecl CMS_ReceiptRequest_create0(unsigned char *id, int idlen,
                                                int allorfirst,
                                                STACK_OF(GENERAL_NAMES)
                                                *receiptList, STACK_OF(GENERAL_NAMES)
@@ -85,7 +85,7 @@ CMS_ReceiptRequest *CMS_ReceiptRequest_create0(unsigned char *id, int idlen,
 
 }
 
-int CMS_add1_ReceiptRequest(CMS_SignerInfo *si, CMS_ReceiptRequest *rr)
+int __cdecl CMS_add1_ReceiptRequest(CMS_SignerInfo *si, CMS_ReceiptRequest *rr)
 {
     unsigned char *rrder = NULL;
     int rrderlen, r = 0;
@@ -110,7 +110,7 @@ int CMS_add1_ReceiptRequest(CMS_SignerInfo *si, CMS_ReceiptRequest *rr)
 
 }
 
-void CMS_ReceiptRequest_get0_values(CMS_ReceiptRequest *rr,
+void __cdecl CMS_ReceiptRequest_get0_values(CMS_ReceiptRequest *rr,
                                     ASN1_STRING **pcid,
                                     int *pallorfirst,
                                     STACK_OF(GENERAL_NAMES) **plist,

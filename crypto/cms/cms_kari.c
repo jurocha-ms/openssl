@@ -19,7 +19,7 @@
 
 /* Key Agreement Recipient Info (KARI) routines */
 
-int CMS_RecipientInfo_kari_get0_alg(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_kari_get0_alg(CMS_RecipientInfo *ri,
                                     X509_ALGOR **palg,
                                     ASN1_OCTET_STRING **pukm)
 {
@@ -38,7 +38,7 @@ int CMS_RecipientInfo_kari_get0_alg(CMS_RecipientInfo *ri,
 /* Retrieve recipient encrypted keys from a kari */
 
 STACK_OF(CMS_RecipientEncryptedKey)
-*CMS_RecipientInfo_kari_get0_reks(CMS_RecipientInfo *ri)
+* __cdecl CMS_RecipientInfo_kari_get0_reks(CMS_RecipientInfo *ri)
 {
     if (ri->type != CMS_RECIPINFO_AGREE) {
         CMSerr(CMS_F_CMS_RECIPIENTINFO_KARI_GET0_REKS,
@@ -48,7 +48,7 @@ STACK_OF(CMS_RecipientEncryptedKey)
     return ri->d.kari->recipientEncryptedKeys;
 }
 
-int CMS_RecipientInfo_kari_get0_orig_id(CMS_RecipientInfo *ri,
+int __cdecl CMS_RecipientInfo_kari_get0_orig_id(CMS_RecipientInfo *ri,
                                         X509_ALGOR **pubalg,
                                         ASN1_BIT_STRING **pubkey,
                                         ASN1_OCTET_STRING **keyid,
@@ -90,7 +90,7 @@ int CMS_RecipientInfo_kari_get0_orig_id(CMS_RecipientInfo *ri,
     return 1;
 }
 
-int CMS_RecipientInfo_kari_orig_id_cmp(CMS_RecipientInfo *ri, X509 *cert)
+int __cdecl CMS_RecipientInfo_kari_orig_id_cmp(CMS_RecipientInfo *ri, X509 *cert)
 {
     CMS_OriginatorIdentifierOrKey *oik;
     if (ri->type != CMS_RECIPINFO_AGREE) {
@@ -106,7 +106,7 @@ int CMS_RecipientInfo_kari_orig_id_cmp(CMS_RecipientInfo *ri, X509 *cert)
     return -1;
 }
 
-int CMS_RecipientEncryptedKey_get0_id(CMS_RecipientEncryptedKey *rek,
+int __cdecl CMS_RecipientEncryptedKey_get0_id(CMS_RecipientEncryptedKey *rek,
                                       ASN1_OCTET_STRING **keyid,
                                       ASN1_GENERALIZEDTIME **tm,
                                       CMS_OtherKeyAttribute **other,
@@ -140,7 +140,7 @@ int CMS_RecipientEncryptedKey_get0_id(CMS_RecipientEncryptedKey *rek,
     return 1;
 }
 
-int CMS_RecipientEncryptedKey_cert_cmp(CMS_RecipientEncryptedKey *rek,
+int __cdecl CMS_RecipientEncryptedKey_cert_cmp(CMS_RecipientEncryptedKey *rek,
                                        X509 *cert)
 {
     CMS_KeyAgreeRecipientIdentifier *rid = rek->rid;
@@ -152,7 +152,7 @@ int CMS_RecipientEncryptedKey_cert_cmp(CMS_RecipientEncryptedKey *rek,
         return -1;
 }
 
-int CMS_RecipientInfo_kari_set0_pkey(CMS_RecipientInfo *ri, EVP_PKEY *pk)
+int __cdecl CMS_RecipientInfo_kari_set0_pkey(CMS_RecipientInfo *ri, EVP_PKEY *pk)
 {
     EVP_PKEY_CTX *pctx;
     CMS_KeyAgreeRecipientInfo *kari = ri->d.kari;
@@ -171,7 +171,7 @@ int CMS_RecipientInfo_kari_set0_pkey(CMS_RecipientInfo *ri, EVP_PKEY *pk)
     return 0;
 }
 
-EVP_CIPHER_CTX *CMS_RecipientInfo_kari_get0_ctx(CMS_RecipientInfo *ri)
+EVP_CIPHER_CTX * __cdecl CMS_RecipientInfo_kari_get0_ctx(CMS_RecipientInfo *ri)
 {
     if (ri->type == CMS_RECIPINFO_AGREE)
         return ri->d.kari->ctx;
@@ -225,7 +225,7 @@ static int cms_kek_cipher(unsigned char **pout, size_t *poutlen,
     return rv;
 }
 
-int CMS_RecipientInfo_kari_decrypt(CMS_ContentInfo *cms,
+int __cdecl CMS_RecipientInfo_kari_decrypt(CMS_ContentInfo *cms,
                                    CMS_RecipientInfo *ri,
                                    CMS_RecipientEncryptedKey *rek)
 {
