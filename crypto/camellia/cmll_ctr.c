@@ -10,7 +10,7 @@
 #include <openssl/camellia.h>
 #include <openssl/modes.h>
 
-void Camellia_ctr128_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl Camellia_ctr128_encrypt(const unsigned char *in, unsigned char *out,
                              size_t length, const CAMELLIA_KEY *key,
                              unsigned char ivec[CAMELLIA_BLOCK_SIZE],
                              unsigned char ecount_buf[CAMELLIA_BLOCK_SIZE],

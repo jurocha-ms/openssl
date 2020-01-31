@@ -10,7 +10,7 @@
 #include <openssl/camellia.h>
 #include <openssl/modes.h>
 
-void Camellia_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl Camellia_cbc_encrypt(const unsigned char *in, unsigned char *out,
                           size_t len, const CAMELLIA_KEY *key,
                           unsigned char *ivec, const int enc)
 {

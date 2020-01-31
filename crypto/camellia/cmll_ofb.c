@@ -15,7 +15,7 @@
  * The extra state information to record how much of the 128bit block we have
  * used is contained in *num;
  */
-void Camellia_ofb128_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl Camellia_ofb128_encrypt(const unsigned char *in, unsigned char *out,
                              size_t length, const CAMELLIA_KEY *key,
                              unsigned char *ivec, int *num)
 {
