@@ -43,7 +43,7 @@ static void make_kn(unsigned char *k1, const unsigned char *l, int bl)
     k1[i] = (c << 1) ^ ((0 - carry) & (bl == 16 ? 0x87 : 0x1b));
 }
 
-CMAC_CTX *CMAC_CTX_new(void)
+CMAC_CTX * __cdecl CMAC_CTX_new(void)
 {
     CMAC_CTX *ctx;
 
@@ -60,7 +60,7 @@ CMAC_CTX *CMAC_CTX_new(void)
     return ctx;
 }
 
-void CMAC_CTX_cleanup(CMAC_CTX *ctx)
+void __cdecl CMAC_CTX_cleanup(CMAC_CTX *ctx)
 {
     EVP_CIPHER_CTX_reset(ctx->cctx);
     OPENSSL_cleanse(ctx->tbl, EVP_MAX_BLOCK_LENGTH);
@@ -70,12 +70,12 @@ void CMAC_CTX_cleanup(CMAC_CTX *ctx)
     ctx->nlast_block = -1;
 }
 
-EVP_CIPHER_CTX *CMAC_CTX_get0_cipher_ctx(CMAC_CTX *ctx)
+EVP_CIPHER_CTX * __cdecl CMAC_CTX_get0_cipher_ctx(CMAC_CTX *ctx)
 {
     return ctx->cctx;
 }
 
-void CMAC_CTX_free(CMAC_CTX *ctx)
+void __cdecl CMAC_CTX_free(CMAC_CTX *ctx)
 {
     if (!ctx)
         return;
@@ -84,7 +84,7 @@ void CMAC_CTX_free(CMAC_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-int CMAC_CTX_copy(CMAC_CTX *out, const CMAC_CTX *in)
+int __cdecl CMAC_CTX_copy(CMAC_CTX *out, const CMAC_CTX *in)
 {
     int bl;
     if (in->nlast_block == -1)
@@ -100,7 +100,7 @@ int CMAC_CTX_copy(CMAC_CTX *out, const CMAC_CTX *in)
     return 1;
 }
 
-int CMAC_Init(CMAC_CTX *ctx, const void *key, size_t keylen,
+int __cdecl CMAC_Init(CMAC_CTX *ctx, const void *key, size_t keylen,
               const EVP_CIPHER *cipher, ENGINE *impl)
 {
     static const unsigned char zero_iv[EVP_MAX_BLOCK_LENGTH] = { 0 };
@@ -143,7 +143,7 @@ int CMAC_Init(CMAC_CTX *ctx, const void *key, size_t keylen,
     return 1;
 }
 
-int CMAC_Update(CMAC_CTX *ctx, const void *in, size_t dlen)
+int __cdecl CMAC_Update(CMAC_CTX *ctx, const void *in, size_t dlen)
 {
     const unsigned char *data = in;
     size_t bl;
@@ -183,7 +183,7 @@ int CMAC_Update(CMAC_CTX *ctx, const void *in, size_t dlen)
 
 }
 
-int CMAC_Final(CMAC_CTX *ctx, unsigned char *out, size_t *poutlen)
+int __cdecl CMAC_Final(CMAC_CTX *ctx, unsigned char *out, size_t *poutlen)
 {
     int i, bl, lb;
     if (ctx->nlast_block == -1)
@@ -211,7 +211,7 @@ int CMAC_Final(CMAC_CTX *ctx, unsigned char *out, size_t *poutlen)
     return 1;
 }
 
-int CMAC_resume(CMAC_CTX *ctx)
+int __cdecl CMAC_resume(CMAC_CTX *ctx)
 {
     if (ctx->nlast_block == -1)
         return 0;
