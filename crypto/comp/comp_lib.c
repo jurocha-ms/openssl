@@ -15,7 +15,7 @@
 #include <openssl/err.h>
 #include "comp_lcl.h"
 
-COMP_CTX *COMP_CTX_new(COMP_METHOD *meth)
+COMP_CTX * __cdecl COMP_CTX_new(COMP_METHOD *meth)
 {
     COMP_CTX *ret;
 
@@ -31,22 +31,22 @@ COMP_CTX *COMP_CTX_new(COMP_METHOD *meth)
     return ret;
 }
 
-const COMP_METHOD *COMP_CTX_get_method(const COMP_CTX *ctx)
+const COMP_METHOD * __cdecl COMP_CTX_get_method(const COMP_CTX *ctx)
 {
     return ctx->meth;
 }
 
-int COMP_get_type(const COMP_METHOD *meth)
+int __cdecl COMP_get_type(const COMP_METHOD *meth)
 {
     return meth->type;
 }
 
-const char *COMP_get_name(const COMP_METHOD *meth)
+const char * __cdecl COMP_get_name(const COMP_METHOD *meth)
 {
     return meth->name;
 }
 
-void COMP_CTX_free(COMP_CTX *ctx)
+void __cdecl COMP_CTX_free(COMP_CTX *ctx)
 {
     if (ctx == NULL)
         return;
@@ -56,7 +56,7 @@ void COMP_CTX_free(COMP_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-int COMP_compress_block(COMP_CTX *ctx, unsigned char *out, int olen,
+int __cdecl COMP_compress_block(COMP_CTX *ctx, unsigned char *out, int olen,
                         unsigned char *in, int ilen)
 {
     int ret;
@@ -71,7 +71,7 @@ int COMP_compress_block(COMP_CTX *ctx, unsigned char *out, int olen,
     return ret;
 }
 
-int COMP_expand_block(COMP_CTX *ctx, unsigned char *out, int olen,
+int __cdecl COMP_expand_block(COMP_CTX *ctx, unsigned char *out, int olen,
                       unsigned char *in, int ilen)
 {
     int ret;
@@ -87,7 +87,7 @@ int COMP_expand_block(COMP_CTX *ctx, unsigned char *out, int olen,
     return ret;
 }
 
-int COMP_CTX_get_type(const COMP_CTX* comp)
+int __cdecl COMP_CTX_get_type(const COMP_CTX* comp)
 {
     return comp->meth ? comp->meth->type : NID_undef;
 }

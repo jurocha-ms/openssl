@@ -17,7 +17,7 @@
 #include "internal/bio.h"
 #include "comp_lcl.h"
 
-COMP_METHOD *COMP_zlib(void);
+COMP_METHOD * __cdecl COMP_zlib(void);
 
 static COMP_METHOD zlib_method_nozlib = {
     NID_undef,
@@ -206,7 +206,7 @@ static int zlib_stateful_expand_block(COMP_CTX *ctx, unsigned char *out,
 
 #endif
 
-COMP_METHOD *COMP_zlib(void)
+COMP_METHOD * __cdecl COMP_zlib(void)
 {
     COMP_METHOD *meth = &zlib_method_nozlib;
 
@@ -310,7 +310,7 @@ static const BIO_METHOD bio_meth_zlib = {
     bio_zlib_callback_ctrl
 };
 
-const BIO_METHOD *BIO_f_zlib(void)
+const BIO_METHOD * __cdecl BIO_f_zlib(void)
 {
     return &bio_meth_zlib;
 }
