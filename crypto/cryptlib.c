@@ -184,13 +184,13 @@ void OPENSSL_cpuid_setup(void)
 # if defined(_WIN32_WINNT) && _WIN32_WINNT>=0x0333
 #  ifdef OPENSSL_SYS_WIN_CORE
 
-int OPENSSL_isservice(void)
+int __cdecl OPENSSL_isservice(void)
 {
     /* OneCore API cannot interact with GUI */
     return 1;
 }
 #  else
-int OPENSSL_isservice(void)
+int __cdecl OPENSSL_isservice(void)
 {
     HWINSTA h;
     DWORD len;
@@ -252,7 +252,7 @@ int OPENSSL_isservice(void)
 }
 #  endif
 # else
-int OPENSSL_isservice(void)
+int __cdecl OPENSSL_isservice(void)
 {
     return 0;
 }
@@ -407,13 +407,13 @@ void OPENSSL_showfatal(const char *fmta, ...)
 #endif
 }
 
-int OPENSSL_isservice(void)
+int __cdecl OPENSSL_isservice(void)
 {
     return 0;
 }
 #endif
 
-void OPENSSL_die(const char *message, const char *file, int line)
+void __cdecl OPENSSL_die(const char *message, const char *file, int line)
 {
     OPENSSL_showfatal("%s:%d: OpenSSL internal error: %s\n",
                       file, line, message);
@@ -440,7 +440,7 @@ void OPENSSL_die(const char *message, const char *file, int line)
  * There are also assembler versions of this function.
  */
 # undef CRYPTO_memcmp
-int CRYPTO_memcmp(const void * in_a, const void * in_b, size_t len)
+int __cdecl CRYPTO_memcmp(const void * in_a, const void * in_b, size_t len)
 {
     size_t i;
     const volatile unsigned char *a = in_a;

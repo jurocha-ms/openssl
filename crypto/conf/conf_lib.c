@@ -352,7 +352,7 @@ int __cdecl NCONF_dump_bio(const CONF *conf, BIO *out)
  * These routines call the C malloc/free, to avoid intermixing with
  * OpenSSL function pointers before the library is initialized.
  */
-OPENSSL_INIT_SETTINGS *OPENSSL_INIT_new(void)
+OPENSSL_INIT_SETTINGS * __cdecl OPENSSL_INIT_new(void)
 {
     OPENSSL_INIT_SETTINGS *ret = malloc(sizeof(*ret));
 
@@ -365,7 +365,7 @@ OPENSSL_INIT_SETTINGS *OPENSSL_INIT_new(void)
 
 
 #ifndef OPENSSL_NO_STDIO
-int OPENSSL_INIT_set_config_filename(OPENSSL_INIT_SETTINGS *settings,
+int __cdecl OPENSSL_INIT_set_config_filename(OPENSSL_INIT_SETTINGS *settings,
                                      const char *filename)
 {
     char *newfilename = NULL;
@@ -382,13 +382,13 @@ int OPENSSL_INIT_set_config_filename(OPENSSL_INIT_SETTINGS *settings,
     return 1;
 }
 
-void OPENSSL_INIT_set_config_file_flags(OPENSSL_INIT_SETTINGS *settings,
+void __cdecl OPENSSL_INIT_set_config_file_flags(OPENSSL_INIT_SETTINGS *settings,
                                         unsigned long flags)
 {
     settings->flags = flags;
 }
 
-int OPENSSL_INIT_set_config_appname(OPENSSL_INIT_SETTINGS *settings,
+int __cdecl OPENSSL_INIT_set_config_appname(OPENSSL_INIT_SETTINGS *settings,
                                     const char *appname)
 {
     char *newappname = NULL;
@@ -406,7 +406,7 @@ int OPENSSL_INIT_set_config_appname(OPENSSL_INIT_SETTINGS *settings,
 }
 #endif
 
-void OPENSSL_INIT_free(OPENSSL_INIT_SETTINGS *settings)
+void __cdecl OPENSSL_INIT_free(OPENSSL_INIT_SETTINGS *settings)
 {
     free(settings->filename);
     free(settings->appname);

@@ -11,12 +11,12 @@
 
 #include "buildinf.h"
 
-unsigned long OpenSSL_version_num(void)
+unsigned long __cdecl OpenSSL_version_num(void)
 {
     return OPENSSL_VERSION_NUMBER;
 }
 
-const char *OpenSSL_version(int t)
+const char * __cdecl OpenSSL_version(int t)
 {
     switch (t) {
     case OPENSSL_VERSION:

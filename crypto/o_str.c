@@ -24,7 +24,7 @@ int OPENSSL_memcmp(const void *v1, const void *v2, size_t n)
     return ret;
 }
 
-char *CRYPTO_strdup(const char *str, const char* file, int line)
+char * __cdecl CRYPTO_strdup(const char *str, const char* file, int line)
 {
     char *ret;
 
@@ -36,7 +36,7 @@ char *CRYPTO_strdup(const char *str, const char* file, int line)
     return ret;
 }
 
-char *CRYPTO_strndup(const char *str, size_t s, const char* file, int line)
+char * __cdecl CRYPTO_strndup(const char *str, size_t s, const char* file, int line)
 {
     size_t maxlen;
     char *ret;
@@ -54,7 +54,7 @@ char *CRYPTO_strndup(const char *str, size_t s, const char* file, int line)
     return ret;
 }
 
-void *CRYPTO_memdup(const void *data, size_t siz, const char* file, int line)
+void * __cdecl CRYPTO_memdup(const void *data, size_t siz, const char* file, int line)
 {
     void *ret;
 
@@ -69,7 +69,7 @@ void *CRYPTO_memdup(const void *data, size_t siz, const char* file, int line)
     return memcpy(ret, data, siz);
 }
 
-size_t OPENSSL_strnlen(const char *str, size_t maxlen)
+size_t __cdecl OPENSSL_strnlen(const char *str, size_t maxlen)
 {
     const char *p;
 
@@ -78,7 +78,7 @@ size_t OPENSSL_strnlen(const char *str, size_t maxlen)
     return p - str;
 }
 
-size_t OPENSSL_strlcpy(char *dst, const char *src, size_t size)
+size_t __cdecl OPENSSL_strlcpy(char *dst, const char *src, size_t size)
 {
     size_t l = 0;
     for (; size > 1 && *src; size--) {
@@ -90,7 +90,7 @@ size_t OPENSSL_strlcpy(char *dst, const char *src, size_t size)
     return l + strlen(src);
 }
 
-size_t OPENSSL_strlcat(char *dst, const char *src, size_t size)
+size_t __cdecl OPENSSL_strlcat(char *dst, const char *src, size_t size)
 {
     size_t l = 0;
     for (; size > 0 && *dst; size--, dst++)
@@ -98,7 +98,7 @@ size_t OPENSSL_strlcat(char *dst, const char *src, size_t size)
     return l + OPENSSL_strlcpy(dst, src, size);
 }
 
-int OPENSSL_hexchar2int(unsigned char c)
+int __cdecl OPENSSL_hexchar2int(unsigned char c)
 {
 #ifdef CHARSET_EBCDIC
     c = os_toebcdic[c];
@@ -144,7 +144,7 @@ int OPENSSL_hexchar2int(unsigned char c)
 /*
  * Give a string of hex digits convert to a buffer
  */
-unsigned char *OPENSSL_hexstr2buf(const char *str, long *len)
+unsigned char * __cdecl OPENSSL_hexstr2buf(const char *str, long *len)
 {
     unsigned char *hexbuf, *q;
     unsigned char ch, cl;
@@ -188,7 +188,7 @@ unsigned char *OPENSSL_hexstr2buf(const char *str, long *len)
  * hex representation @@@ (Contents of buffer are always kept in ASCII, also
  * on EBCDIC machines)
  */
-char *OPENSSL_buf2hexstr(const unsigned char *buffer, long len)
+char * __cdecl OPENSSL_buf2hexstr(const unsigned char *buffer, long len)
 {
     static const char hexdig[] = "0123456789ABCDEF";
     char *tmp, *q;

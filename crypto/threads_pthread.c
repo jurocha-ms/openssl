@@ -21,7 +21,7 @@
 #  define USE_RWLOCK
 # endif
 
-CRYPTO_RWLOCK *CRYPTO_THREAD_lock_new(void)
+CRYPTO_RWLOCK * __cdecl CRYPTO_THREAD_lock_new(void)
 {
 # ifdef USE_RWLOCK
     CRYPTO_RWLOCK *lock;
@@ -59,7 +59,7 @@ CRYPTO_RWLOCK *CRYPTO_THREAD_lock_new(void)
     return lock;
 }
 
-int CRYPTO_THREAD_read_lock(CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_THREAD_read_lock(CRYPTO_RWLOCK *lock)
 {
 # ifdef USE_RWLOCK
     if (pthread_rwlock_rdlock(lock) != 0)
@@ -72,7 +72,7 @@ int CRYPTO_THREAD_read_lock(CRYPTO_RWLOCK *lock)
     return 1;
 }
 
-int CRYPTO_THREAD_write_lock(CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_THREAD_write_lock(CRYPTO_RWLOCK *lock)
 {
 # ifdef USE_RWLOCK
     if (pthread_rwlock_wrlock(lock) != 0)
@@ -85,7 +85,7 @@ int CRYPTO_THREAD_write_lock(CRYPTO_RWLOCK *lock)
     return 1;
 }
 
-int CRYPTO_THREAD_unlock(CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_THREAD_unlock(CRYPTO_RWLOCK *lock)
 {
 # ifdef USE_RWLOCK
     if (pthread_rwlock_unlock(lock) != 0)
@@ -98,7 +98,7 @@ int CRYPTO_THREAD_unlock(CRYPTO_RWLOCK *lock)
     return 1;
 }
 
-void CRYPTO_THREAD_lock_free(CRYPTO_RWLOCK *lock)
+void __cdecl CRYPTO_THREAD_lock_free(CRYPTO_RWLOCK *lock)
 {
     if (lock == NULL)
         return;
@@ -160,7 +160,7 @@ int CRYPTO_THREAD_compare_id(CRYPTO_THREAD_ID a, CRYPTO_THREAD_ID b)
     return pthread_equal(a, b);
 }
 
-int CRYPTO_atomic_add(int *val, int amount, int *ret, CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_atomic_add(int *val, int amount, int *ret, CRYPTO_RWLOCK *lock)
 {
 # if defined(__GNUC__) && defined(__ATOMIC_ACQ_REL)
     if (__atomic_is_lock_free(sizeof(*val), val)) {

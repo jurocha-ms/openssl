@@ -837,15 +837,15 @@ int __cdecl OPENSSL_atexit(void (*handler)(void))
  *      http://man7.org/linux/man-pages/man7/signal-safety.7.html
  */
 
-void OPENSSL_fork_prepare(void)
+void __cdecl OPENSSL_fork_prepare(void)
 {
 }
 
-void OPENSSL_fork_parent(void)
+void __cdecl OPENSSL_fork_parent(void)
 {
 }
 
-void OPENSSL_fork_child(void)
+void __cdecl OPENSSL_fork_child(void)
 {
 }
 #endif

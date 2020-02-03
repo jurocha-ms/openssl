@@ -17,7 +17,7 @@
 #  include <unistd.h>
 # endif
 
-CRYPTO_RWLOCK *CRYPTO_THREAD_lock_new(void)
+CRYPTO_RWLOCK * __cdecl CRYPTO_THREAD_lock_new(void)
 {
     CRYPTO_RWLOCK *lock;
 
@@ -31,28 +31,28 @@ CRYPTO_RWLOCK *CRYPTO_THREAD_lock_new(void)
     return lock;
 }
 
-int CRYPTO_THREAD_read_lock(CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_THREAD_read_lock(CRYPTO_RWLOCK *lock)
 {
     if (!ossl_assert(*(unsigned int *)lock == 1))
         return 0;
     return 1;
 }
 
-int CRYPTO_THREAD_write_lock(CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_THREAD_write_lock(CRYPTO_RWLOCK *lock)
 {
     if (!ossl_assert(*(unsigned int *)lock == 1))
         return 0;
     return 1;
 }
 
-int CRYPTO_THREAD_unlock(CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_THREAD_unlock(CRYPTO_RWLOCK *lock)
 {
     if (!ossl_assert(*(unsigned int *)lock == 1))
         return 0;
     return 1;
 }
 
-void CRYPTO_THREAD_lock_free(CRYPTO_RWLOCK *lock) {
+void __cdecl CRYPTO_THREAD_lock_free(CRYPTO_RWLOCK *lock) {
     if (lock == NULL)
         return;
 
@@ -77,7 +77,7 @@ int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void))
 
 static void *thread_local_storage[OPENSSL_CRYPTO_THREAD_LOCAL_KEY_MAX];
 
-int CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *))
+int __cdecl CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *))
 {
     static unsigned int thread_local_key = 0;
 
@@ -91,7 +91,7 @@ int CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *))
     return 1;
 }
 
-void *CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key)
+void * __cdecl CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key)
 {
     if (*key >= OPENSSL_CRYPTO_THREAD_LOCAL_KEY_MAX)
         return NULL;
@@ -99,7 +99,7 @@ void *CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key)
     return thread_local_storage[*key];
 }
 
-int CRYPTO_THREAD_set_local(CRYPTO_THREAD_LOCAL *key, void *val)
+int __cdecl CRYPTO_THREAD_set_local(CRYPTO_THREAD_LOCAL *key, void *val)
 {
     if (*key >= OPENSSL_CRYPTO_THREAD_LOCAL_KEY_MAX)
         return 0;
@@ -109,23 +109,23 @@ int CRYPTO_THREAD_set_local(CRYPTO_THREAD_LOCAL *key, void *val)
     return 1;
 }
 
-int CRYPTO_THREAD_cleanup_local(CRYPTO_THREAD_LOCAL *key)
+int __cdecl CRYPTO_THREAD_cleanup_local(CRYPTO_THREAD_LOCAL *key)
 {
     *key = OPENSSL_CRYPTO_THREAD_LOCAL_KEY_MAX + 1;
     return 1;
 }
 
-CRYPTO_THREAD_ID CRYPTO_THREAD_get_current_id(void)
+CRYPTO_THREAD_ID __cdecl CRYPTO_THREAD_get_current_id(void)
 {
     return 0;
 }
 
-int CRYPTO_THREAD_compare_id(CRYPTO_THREAD_ID a, CRYPTO_THREAD_ID b)
+int __cdecl CRYPTO_THREAD_compare_id(CRYPTO_THREAD_ID a, CRYPTO_THREAD_ID b)
 {
     return (a == b);
 }
 
-int CRYPTO_atomic_add(int *val, int amount, int *ret, CRYPTO_RWLOCK *lock)
+int __cdecl CRYPTO_atomic_add(int *val, int amount, int *ret, CRYPTO_RWLOCK *lock)
 {
     *val += amount;
     *ret  = *val;

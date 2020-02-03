@@ -117,7 +117,7 @@ static void app_info_free(APP_INFO *inf)
 }
 #endif
 
-int CRYPTO_mem_ctrl(int mode)
+int __cdecl CRYPTO_mem_ctrl(int mode)
 {
 #ifdef OPENSSL_NO_CRYPTO_MDEBUG
     return mode - mode;
@@ -266,7 +266,7 @@ static int pop_info(void)
     return 0;
 }
 
-int CRYPTO_mem_debug_push(const char *info, const char *file, int line)
+int __cdecl CRYPTO_mem_debug_push(const char *info, const char *file, int line)
 {
     APP_INFO *ami, *amim;
     int ret = 0;
@@ -298,7 +298,7 @@ int CRYPTO_mem_debug_push(const char *info, const char *file, int line)
     return ret;
 }
 
-int CRYPTO_mem_debug_pop(void)
+int __cdecl CRYPTO_mem_debug_pop(void)
 {
     int ret = 0;
 
@@ -312,7 +312,7 @@ int CRYPTO_mem_debug_pop(void)
 
 static unsigned long break_order_num = 0;
 
-void CRYPTO_mem_debug_malloc(void *addr, size_t num, int before_p,
+void __cdecl CRYPTO_mem_debug_malloc(void *addr, size_t num, int before_p,
                              const char *file, int line)
 {
     MEM *m, *mm;
@@ -379,7 +379,7 @@ void CRYPTO_mem_debug_malloc(void *addr, size_t num, int before_p,
     return;
 }
 
-void CRYPTO_mem_debug_free(void *addr, int before_p,
+void __cdecl CRYPTO_mem_debug_free(void *addr, int before_p,
         const char *file, int line)
 {
     MEM m, *mp;
@@ -407,7 +407,7 @@ void CRYPTO_mem_debug_free(void *addr, int before_p,
     }
 }
 
-void CRYPTO_mem_debug_realloc(void *addr1, void *addr2, size_t num,
+void __cdecl CRYPTO_mem_debug_realloc(void *addr1, void *addr2, size_t num,
                               int before_p, const char *file, int line)
 {
     MEM m, *mp;
@@ -566,7 +566,7 @@ static void print_leak(const MEM *m, MEM_LEAK *l)
 
 IMPLEMENT_LHASH_DOALL_ARG_CONST(MEM, MEM_LEAK);
 
-int CRYPTO_mem_leaks_cb(int (*cb) (const char *str, size_t len, void *u),
+int __cdecl CRYPTO_mem_leaks_cb(int (*cb) (const char *str, size_t len, void *u),
                         void *u)
 {
     MEM_LEAK ml;
@@ -633,7 +633,7 @@ static int print_bio(const char *str, size_t len, void *b)
     return BIO_write((BIO *)b, str, len);
 }
 
-int CRYPTO_mem_leaks(BIO *b)
+int __cdecl CRYPTO_mem_leaks(BIO *b)
 {
     /*
      * OPENSSL_cleanup() will free the ex_data locks so we can't have any
@@ -645,7 +645,7 @@ int CRYPTO_mem_leaks(BIO *b)
 }
 
 # ifndef OPENSSL_NO_STDIO
-int CRYPTO_mem_leaks_fp(FILE *fp)
+int __cdecl CRYPTO_mem_leaks_fp(FILE *fp)
 {
     BIO *b;
     int ret;

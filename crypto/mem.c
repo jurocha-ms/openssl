@@ -57,7 +57,7 @@ static int call_malloc_debug = 0;
 # define FAILTEST() /* empty */
 #endif
 
-int CRYPTO_set_mem_functions(
+int __cdecl CRYPTO_set_mem_functions(
         void *(__cdecl *m)(size_t, const char *, int),
         void *(__cdecl *r)(void *, size_t, const char *, int),
         void (__cdecl *f)(void *, const char *, int))
@@ -73,7 +73,7 @@ int CRYPTO_set_mem_functions(
     return 1;
 }
 
-int CRYPTO_set_mem_debug(int flag)
+int __cdecl CRYPTO_set_mem_debug(int flag)
 {
     if (!allow_customize)
         return 0;
@@ -81,7 +81,7 @@ int CRYPTO_set_mem_debug(int flag)
     return 1;
 }
 
-void CRYPTO_get_mem_functions(
+void __cdecl CRYPTO_get_mem_functions(
         void *(__cdecl **m)(size_t, const char *, int),
         void *(__cdecl **r)(void *, size_t, const char *, int),
         void (__cdecl **f)(void *, const char *, int))
@@ -95,7 +95,7 @@ void CRYPTO_get_mem_functions(
 }
 
 #ifndef OPENSSL_NO_CRYPTO_MDEBUG
-void CRYPTO_get_alloc_counts(int *mcount, int *rcount, int *fcount)
+void __cdecl CRYPTO_get_alloc_counts(int *mcount, int *rcount, int *fcount)
 {
     if (mcount != NULL)
         *mcount = tsan_load(&malloc_count);
@@ -225,7 +225,7 @@ void * __cdecl CRYPTO_malloc(size_t num, const char *file, int line)
     return ret;
 }
 
-void *CRYPTO_zalloc(size_t num, const char *file, int line)
+void * __cdecl CRYPTO_zalloc(size_t num, const char *file, int line)
 {
     void *ret = CRYPTO_malloc(num, file, line);
 
@@ -265,7 +265,7 @@ void * __cdecl CRYPTO_realloc(void *str, size_t num, const char *file, int line)
 
 }
 
-void *CRYPTO_clear_realloc(void *str, size_t old_len, size_t num,
+void * __cdecl CRYPTO_clear_realloc(void *str, size_t old_len, size_t num,
                            const char *file, int line)
 {
     void *ret = NULL;
@@ -313,7 +313,7 @@ void __cdecl CRYPTO_free(void *str, const char *file, int line)
 #endif
 }
 
-void CRYPTO_clear_free(void *str, size_t num, const char *file, int line)
+void __cdecl CRYPTO_clear_free(void *str, size_t num, const char *file, int line)
 {
     if (str == NULL)
         return;

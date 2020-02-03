@@ -127,7 +127,7 @@ static int dummy_dup(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
     return 1;
 }
 
-int CRYPTO_free_ex_index(int class_index, int idx)
+int __cdecl CRYPTO_free_ex_index(int class_index, int idx)
 {
     EX_CALLBACKS *ip = get_and_lock(class_index);
     EX_CALLBACK *a;
@@ -152,7 +152,7 @@ err:
 /*
  * Register a new index.
  */
-int CRYPTO_get_ex_new_index(int class_index, long argl, void *argp,
+int __cdecl CRYPTO_get_ex_new_index(int class_index, long argl, void *argp,
                             CRYPTO_EX_new *new_func, CRYPTO_EX_dup *dup_func,
                             CRYPTO_EX_free *free_func)
 {
@@ -205,7 +205,7 @@ int CRYPTO_get_ex_new_index(int class_index, long argl, void *argp,
  * in the lock, then using them outside the lock. Note this only applies
  * to the global "ex_data" state (ie. class definitions), not 'ad' itself.
  */
-int CRYPTO_new_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad)
+int __cdecl CRYPTO_new_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad)
 {
     int mx, i;
     void *ptr;
@@ -250,7 +250,7 @@ int CRYPTO_new_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad)
  * Duplicate a CRYPTO_EX_DATA variable - including calling dup() callbacks
  * for each index in the class used by this variable
  */
-int CRYPTO_dup_ex_data(int class_index, CRYPTO_EX_DATA *to,
+int __cdecl CRYPTO_dup_ex_data(int class_index, CRYPTO_EX_DATA *to,
                        const CRYPTO_EX_DATA *from)
 {
     int mx, j, i;
@@ -317,7 +317,7 @@ int CRYPTO_dup_ex_data(int class_index, CRYPTO_EX_DATA *to,
  * Cleanup a CRYPTO_EX_DATA variable - including calling free() callbacks for
  * each index in the class used by this variable
  */
-void CRYPTO_free_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad)
+void __cdecl CRYPTO_free_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad)
 {
     int mx, i;
     EX_CALLBACKS *ip;
@@ -366,7 +366,7 @@ void CRYPTO_free_ex_data(int class_index, void *obj, CRYPTO_EX_DATA *ad)
  * For a given CRYPTO_EX_DATA variable, set the value corresponding to a
  * particular index in the class used by this variable
  */
-int CRYPTO_set_ex_data(CRYPTO_EX_DATA *ad, int idx, void *val)
+int __cdecl CRYPTO_set_ex_data(CRYPTO_EX_DATA *ad, int idx, void *val)
 {
     int i;
 
@@ -391,7 +391,7 @@ int CRYPTO_set_ex_data(CRYPTO_EX_DATA *ad, int idx, void *val)
  * For a given CRYPTO_EX_DATA_ variable, get the value corresponding to a
  * particular index in the class used by this variable
  */
-void *CRYPTO_get_ex_data(const CRYPTO_EX_DATA *ad, int idx)
+void * __cdecl CRYPTO_get_ex_data(const CRYPTO_EX_DATA *ad, int idx)
 {
     if (ad->sk == NULL || idx >= sk_void_num(ad->sk))
         return NULL;

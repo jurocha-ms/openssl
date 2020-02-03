@@ -65,7 +65,7 @@ static size_t sh_actual_size(char *ptr);
 static int sh_allocated(const char *ptr);
 #endif
 
-int CRYPTO_secure_malloc_init(size_t size, int minsize)
+int __cdecl CRYPTO_secure_malloc_init(size_t size, int minsize)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     int ret = 0;
@@ -88,7 +88,7 @@ int CRYPTO_secure_malloc_init(size_t size, int minsize)
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-int CRYPTO_secure_malloc_done(void)
+int __cdecl CRYPTO_secure_malloc_done(void)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     if (secure_mem_used == 0) {
@@ -102,7 +102,7 @@ int CRYPTO_secure_malloc_done(void)
     return 0;
 }
 
-int CRYPTO_secure_malloc_initialized(void)
+int __cdecl CRYPTO_secure_malloc_initialized(void)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     return secure_mem_initialized;
@@ -111,7 +111,7 @@ int CRYPTO_secure_malloc_initialized(void)
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-void *CRYPTO_secure_malloc(size_t num, const char *file, int line)
+void * __cdecl CRYPTO_secure_malloc(size_t num, const char *file, int line)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     void *ret;
@@ -131,7 +131,7 @@ void *CRYPTO_secure_malloc(size_t num, const char *file, int line)
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-void *CRYPTO_secure_zalloc(size_t num, const char *file, int line)
+void * __cdecl CRYPTO_secure_zalloc(size_t num, const char *file, int line)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     if (secure_mem_initialized)
@@ -141,7 +141,7 @@ void *CRYPTO_secure_zalloc(size_t num, const char *file, int line)
     return CRYPTO_zalloc(num, file, line);
 }
 
-void CRYPTO_secure_free(void *ptr, const char *file, int line)
+void __cdecl CRYPTO_secure_free(void *ptr, const char *file, int line)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     size_t actual_size;
@@ -163,7 +163,7 @@ void CRYPTO_secure_free(void *ptr, const char *file, int line)
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-void CRYPTO_secure_clear_free(void *ptr, size_t num,
+void __cdecl CRYPTO_secure_clear_free(void *ptr, size_t num,
                               const char *file, int line)
 {
 #ifdef OPENSSL_SECURE_MEMORY
@@ -190,7 +190,7 @@ void CRYPTO_secure_clear_free(void *ptr, size_t num,
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-int CRYPTO_secure_allocated(const void *ptr)
+int __cdecl CRYPTO_secure_allocated(const void *ptr)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     int ret;
@@ -206,7 +206,7 @@ int CRYPTO_secure_allocated(const void *ptr)
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-size_t CRYPTO_secure_used(void)
+size_t __cdecl CRYPTO_secure_used(void)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     return secure_mem_used;
@@ -215,7 +215,7 @@ size_t CRYPTO_secure_used(void)
 #endif /* OPENSSL_SECURE_MEMORY */
 }
 
-size_t CRYPTO_secure_actual_size(void *ptr)
+size_t __cdecl CRYPTO_secure_actual_size(void *ptr)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     size_t actual_size;

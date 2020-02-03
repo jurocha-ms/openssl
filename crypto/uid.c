@@ -12,7 +12,7 @@
 
 #if defined(OPENSSL_SYS_WIN32) || defined(OPENSSL_SYS_VXWORKS) || defined(OPENSSL_SYS_UEFI)
 
-int OPENSSL_issetugid(void)
+int __cdecl OPENSSL_issetugid(void)
 {
     return 0;
 }
@@ -21,7 +21,7 @@ int OPENSSL_issetugid(void)
 
 # include OPENSSL_UNISTD
 
-int OPENSSL_issetugid(void)
+int __cdecl OPENSSL_issetugid(void)
 {
     return issetugid();
 }
@@ -38,7 +38,7 @@ int OPENSSL_issetugid(void)
 #  endif
 # endif
 
-int OPENSSL_issetugid(void)
+int __cdecl OPENSSL_issetugid(void)
 {
 # ifdef OSSL_IMPLEMENT_GETAUXVAL
     return getauxval(AT_SECURE) != 0;
