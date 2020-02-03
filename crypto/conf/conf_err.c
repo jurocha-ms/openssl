@@ -83,7 +83,7 @@ static const ERR_STRING_DATA CONF_str_reasons[] = {
 
 #endif
 
-int ERR_load_CONF_strings(void)
+int __cdecl ERR_load_CONF_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_func_error_string(CONF_str_functs[0].error) == NULL) {

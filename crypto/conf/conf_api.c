@@ -20,7 +20,7 @@ static void value_free_hash(const CONF_VALUE *a, LHASH_OF(CONF_VALUE) *conf);
 static void value_free_stack_doall(CONF_VALUE *a);
 
 /* Up until OpenSSL 0.9.5a, this was get_section */
-CONF_VALUE *_CONF_get_section(const CONF *conf, const char *section)
+CONF_VALUE * __cdecl _CONF_get_section(const CONF *conf, const char *section)
 {
     CONF_VALUE *v, vv;
 
@@ -33,7 +33,7 @@ CONF_VALUE *_CONF_get_section(const CONF *conf, const char *section)
 }
 
 /* Up until OpenSSL 0.9.5a, this was CONF_get_section */
-STACK_OF(CONF_VALUE) *_CONF_get_section_values(const CONF *conf,
+STACK_OF(CONF_VALUE) * __cdecl _CONF_get_section_values(const CONF *conf,
                                                const char *section)
 {
     CONF_VALUE *v;
@@ -45,7 +45,7 @@ STACK_OF(CONF_VALUE) *_CONF_get_section_values(const CONF *conf,
         return NULL;
 }
 
-int _CONF_add_string(CONF *conf, CONF_VALUE *section, CONF_VALUE *value)
+int __cdecl _CONF_add_string(CONF *conf, CONF_VALUE *section, CONF_VALUE *value)
 {
     CONF_VALUE *v = NULL;
     STACK_OF(CONF_VALUE) *ts;
@@ -67,7 +67,7 @@ int _CONF_add_string(CONF *conf, CONF_VALUE *section, CONF_VALUE *value)
     return 1;
 }
 
-char *_CONF_get_string(const CONF *conf, const char *section,
+char * __cdecl _CONF_get_string(const CONF *conf, const char *section,
                        const char *name)
 {
     CONF_VALUE *v, vv;
@@ -123,7 +123,7 @@ static int __cdecl conf_value_cmp(const CONF_VALUE *a, const CONF_VALUE *b)
         return ((a->name == NULL) ? -1 : 1);
 }
 
-int _CONF_new_data(CONF *conf)
+int __cdecl _CONF_new_data(CONF *conf)
 {
     if (conf == NULL) {
         return 0;
@@ -140,7 +140,7 @@ typedef LHASH_OF(CONF_VALUE) LH_CONF_VALUE;
 
 IMPLEMENT_LHASH_DOALL_ARG_CONST(CONF_VALUE, LH_CONF_VALUE);
 
-void _CONF_free_data(CONF *conf)
+void __cdecl _CONF_free_data(CONF *conf)
 {
     if (conf == NULL || conf->data == NULL)
         return;
@@ -186,7 +186,7 @@ static void value_free_stack_doall(CONF_VALUE *a)
 }
 
 /* Up until OpenSSL 0.9.5a, this was new_section */
-CONF_VALUE *_CONF_new_section(CONF *conf, const char *section)
+CONF_VALUE * __cdecl _CONF_new_section(CONF *conf, const char *section)
 {
     STACK_OF(CONF_VALUE) *sk = NULL;
     int i;

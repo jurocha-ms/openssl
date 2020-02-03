@@ -22,7 +22,7 @@ static CONF_METHOD *default_CONF_method = NULL;
 
 /* Init a 'CONF' structure from an old LHASH */
 
-void CONF_set_nconf(CONF *conf, LHASH_OF(CONF_VALUE) *hash)
+void __cdecl CONF_set_nconf(CONF *conf, LHASH_OF(CONF_VALUE) *hash)
 {
     if (default_CONF_method == NULL)
         default_CONF_method = NCONF_default();
@@ -36,13 +36,13 @@ void CONF_set_nconf(CONF *conf, LHASH_OF(CONF_VALUE) *hash)
  * terms of the new CONF interface.
  */
 
-int CONF_set_default_method(CONF_METHOD *meth)
+int __cdecl CONF_set_default_method(CONF_METHOD *meth)
 {
     default_CONF_method = meth;
     return 1;
 }
 
-LHASH_OF(CONF_VALUE) *CONF_load(LHASH_OF(CONF_VALUE) *conf, const char *file,
+LHASH_OF(CONF_VALUE) * __cdecl CONF_load(LHASH_OF(CONF_VALUE) *conf, const char *file,
                                 long *eline)
 {
     LHASH_OF(CONF_VALUE) *ltmp;
@@ -65,7 +65,7 @@ LHASH_OF(CONF_VALUE) *CONF_load(LHASH_OF(CONF_VALUE) *conf, const char *file,
 }
 
 #ifndef OPENSSL_NO_STDIO
-LHASH_OF(CONF_VALUE) *CONF_load_fp(LHASH_OF(CONF_VALUE) *conf, FILE *fp,
+LHASH_OF(CONF_VALUE) * __cdecl CONF_load_fp(LHASH_OF(CONF_VALUE) *conf, FILE *fp,
                                    long *eline)
 {
     BIO *btmp;
@@ -80,7 +80,7 @@ LHASH_OF(CONF_VALUE) *CONF_load_fp(LHASH_OF(CONF_VALUE) *conf, FILE *fp,
 }
 #endif
 
-LHASH_OF(CONF_VALUE) *CONF_load_bio(LHASH_OF(CONF_VALUE) *conf, BIO *bp,
+LHASH_OF(CONF_VALUE) * __cdecl CONF_load_bio(LHASH_OF(CONF_VALUE) *conf, BIO *bp,
                                     long *eline)
 {
     CONF ctmp;
@@ -94,7 +94,7 @@ LHASH_OF(CONF_VALUE) *CONF_load_bio(LHASH_OF(CONF_VALUE) *conf, BIO *bp,
     return NULL;
 }
 
-STACK_OF(CONF_VALUE) *CONF_get_section(LHASH_OF(CONF_VALUE) *conf,
+STACK_OF(CONF_VALUE) * __cdecl CONF_get_section(LHASH_OF(CONF_VALUE) *conf,
                                        const char *section)
 {
     if (conf == NULL) {
@@ -106,7 +106,7 @@ STACK_OF(CONF_VALUE) *CONF_get_section(LHASH_OF(CONF_VALUE) *conf,
     }
 }
 
-char *CONF_get_string(LHASH_OF(CONF_VALUE) *conf, const char *group,
+char * __cdecl CONF_get_string(LHASH_OF(CONF_VALUE) *conf, const char *group,
                       const char *name)
 {
     if (conf == NULL) {
@@ -118,7 +118,7 @@ char *CONF_get_string(LHASH_OF(CONF_VALUE) *conf, const char *group,
     }
 }
 
-long CONF_get_number(LHASH_OF(CONF_VALUE) *conf, const char *group,
+long __cdecl CONF_get_number(LHASH_OF(CONF_VALUE) *conf, const char *group,
                      const char *name)
 {
     int status;
@@ -136,7 +136,7 @@ long CONF_get_number(LHASH_OF(CONF_VALUE) *conf, const char *group,
     return status == 0 ? 0L : result;
 }
 
-void CONF_free(LHASH_OF(CONF_VALUE) *conf)
+void __cdecl CONF_free(LHASH_OF(CONF_VALUE) *conf)
 {
     CONF ctmp;
     CONF_set_nconf(&ctmp, conf);
@@ -144,7 +144,7 @@ void CONF_free(LHASH_OF(CONF_VALUE) *conf)
 }
 
 #ifndef OPENSSL_NO_STDIO
-int CONF_dump_fp(LHASH_OF(CONF_VALUE) *conf, FILE *out)
+int __cdecl CONF_dump_fp(LHASH_OF(CONF_VALUE) *conf, FILE *out)
 {
     BIO *btmp;
     int ret;
@@ -159,7 +159,7 @@ int CONF_dump_fp(LHASH_OF(CONF_VALUE) *conf, FILE *out)
 }
 #endif
 
-int CONF_dump_bio(LHASH_OF(CONF_VALUE) *conf, BIO *out)
+int __cdecl CONF_dump_bio(LHASH_OF(CONF_VALUE) *conf, BIO *out)
 {
     CONF ctmp;
     CONF_set_nconf(&ctmp, conf);
@@ -174,7 +174,7 @@ int CONF_dump_bio(LHASH_OF(CONF_VALUE) *conf, BIO *out)
  * the "CONF classic" functions, for consistency.
  */
 
-CONF *NCONF_new(CONF_METHOD *meth)
+CONF * __cdecl NCONF_new(CONF_METHOD *meth)
 {
     CONF *ret;
 
@@ -190,21 +190,21 @@ CONF *NCONF_new(CONF_METHOD *meth)
     return ret;
 }
 
-void NCONF_free(CONF *conf)
+void __cdecl NCONF_free(CONF *conf)
 {
     if (conf == NULL)
         return;
     conf->meth->destroy(conf);
 }
 
-void NCONF_free_data(CONF *conf)
+void __cdecl NCONF_free_data(CONF *conf)
 {
     if (conf == NULL)
         return;
     conf->meth->destroy_data(conf);
 }
 
-int NCONF_load(CONF *conf, const char *file, long *eline)
+int __cdecl NCONF_load(CONF *conf, const char *file, long *eline)
 {
     if (conf == NULL) {
         CONFerr(CONF_F_NCONF_LOAD, CONF_R_NO_CONF);
@@ -215,7 +215,7 @@ int NCONF_load(CONF *conf, const char *file, long *eline)
 }
 
 #ifndef OPENSSL_NO_STDIO
-int NCONF_load_fp(CONF *conf, FILE *fp, long *eline)
+int __cdecl NCONF_load_fp(CONF *conf, FILE *fp, long *eline)
 {
     BIO *btmp;
     int ret;
@@ -229,7 +229,7 @@ int NCONF_load_fp(CONF *conf, FILE *fp, long *eline)
 }
 #endif
 
-int NCONF_load_bio(CONF *conf, BIO *bp, long *eline)
+int __cdecl NCONF_load_bio(CONF *conf, BIO *bp, long *eline)
 {
     if (conf == NULL) {
         CONFerr(CONF_F_NCONF_LOAD_BIO, CONF_R_NO_CONF);
@@ -239,7 +239,7 @@ int NCONF_load_bio(CONF *conf, BIO *bp, long *eline)
     return conf->meth->load_bio(conf, bp, eline);
 }
 
-STACK_OF(CONF_VALUE) *NCONF_get_section(const CONF *conf, const char *section)
+STACK_OF(CONF_VALUE) * __cdecl NCONF_get_section(const CONF *conf, const char *section)
 {
     if (conf == NULL) {
         CONFerr(CONF_F_NCONF_GET_SECTION, CONF_R_NO_CONF);
@@ -254,7 +254,7 @@ STACK_OF(CONF_VALUE) *NCONF_get_section(const CONF *conf, const char *section)
     return _CONF_get_section_values(conf, section);
 }
 
-char *NCONF_get_string(const CONF *conf, const char *group, const char *name)
+char * __cdecl NCONF_get_string(const CONF *conf, const char *group, const char *name)
 {
     char *s = _CONF_get_string(conf, group, name);
 
@@ -285,7 +285,7 @@ static int default_to_int(const CONF *conf, char c)
     return (int)(c - '0');
 }
 
-int NCONF_get_number_e(const CONF *conf, const char *group, const char *name,
+int __cdecl NCONF_get_number_e(const CONF *conf, const char *group, const char *name,
                        long *result)
 {
     char *str;
@@ -324,7 +324,7 @@ int NCONF_get_number_e(const CONF *conf, const char *group, const char *name,
 }
 
 #ifndef OPENSSL_NO_STDIO
-int NCONF_dump_fp(const CONF *conf, FILE *out)
+int __cdecl NCONF_dump_fp(const CONF *conf, FILE *out)
 {
     BIO *btmp;
     int ret;
@@ -338,7 +338,7 @@ int NCONF_dump_fp(const CONF *conf, FILE *out)
 }
 #endif
 
-int NCONF_dump_bio(const CONF *conf, BIO *out)
+int __cdecl NCONF_dump_bio(const CONF *conf, BIO *out)
 {
     if (conf == NULL) {
         CONFerr(CONF_F_NCONF_DUMP_BIO, CONF_R_NO_CONF);
