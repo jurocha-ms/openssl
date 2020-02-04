@@ -95,7 +95,7 @@ static int dh_sharedinfo_encode(unsigned char **pder, unsigned char **pctr,
     return derlen;
 }
 
-int DH_KDF_X9_42(unsigned char *out, size_t outlen,
+int __cdecl DH_KDF_X9_42(unsigned char *out, size_t outlen,
                  const unsigned char *Z, size_t Zlen,
                  ASN1_OBJECT *key_oid,
                  const unsigned char *ukm, size_t ukmlen, const EVP_MD *md)

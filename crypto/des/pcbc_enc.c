@@ -9,7 +9,7 @@
 
 #include "des_locl.h"
 
-void DES_pcbc_encrypt(const unsigned char *input, unsigned char *output,
+void __cdecl DES_pcbc_encrypt(const unsigned char *input, unsigned char *output,
                       long length, DES_key_schedule *schedule,
                       DES_cblock *ivec, int enc)
 {

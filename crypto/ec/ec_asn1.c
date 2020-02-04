@@ -905,7 +905,7 @@ EC_GROUP *EC_GROUP_new_from_ecpkparameters(const ECPKPARAMETERS *params)
 
 /* EC_GROUP <-> DER encoding of ECPKPARAMETERS */
 
-EC_GROUP *d2i_ECPKParameters(EC_GROUP **a, const unsigned char **in, long len)
+EC_GROUP * __cdecl d2i_ECPKParameters(EC_GROUP **a, const unsigned char **in, long len)
 {
     EC_GROUP *group = NULL;
     ECPKPARAMETERS *params = NULL;
@@ -952,7 +952,7 @@ int __cdecl i2d_ECPKParameters(const EC_GROUP *a, unsigned char **out)
 
 /* some EC_KEY functions */
 
-EC_KEY *d2i_ECPrivateKey(EC_KEY **a, const unsigned char **in, long len)
+EC_KEY * __cdecl d2i_ECPrivateKey(EC_KEY **a, const unsigned char **in, long len)
 {
     EC_KEY *ret = NULL;
     EC_PRIVATEKEY *priv_key = NULL;
@@ -1209,7 +1209,7 @@ DECLARE_ASN1_FUNCTIONS_const(ECDSA_SIG)
 DECLARE_ASN1_ENCODE_FUNCTIONS_const(ECDSA_SIG, ECDSA_SIG)
 IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname(ECDSA_SIG, ECDSA_SIG, ECDSA_SIG)
 
-ECDSA_SIG *ECDSA_SIG_new(void)
+ECDSA_SIG * __cdecl ECDSA_SIG_new(void)
 {
     ECDSA_SIG *sig = OPENSSL_zalloc(sizeof(*sig));
     if (sig == NULL)

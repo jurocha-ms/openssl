@@ -50,7 +50,7 @@ static const unsigned char odd_parity[256] = {
     254
 };
 
-void DES_set_odd_parity(DES_cblock *key)
+void __cdecl DES_set_odd_parity(DES_cblock *key)
 {
     unsigned int i;
 
@@ -58,7 +58,7 @@ void DES_set_odd_parity(DES_cblock *key)
         (*key)[i] = odd_parity[(*key)[i]];
 }
 
-int DES_check_key_parity(const_DES_cblock *key)
+int __cdecl DES_check_key_parity(const_DES_cblock *key)
 {
     unsigned int i;
 
@@ -99,7 +99,7 @@ static const DES_cblock weak_keys[NUM_WEAK_KEY] = {
     {0xFE, 0xE0, 0xFE, 0xE0, 0xFE, 0xF1, 0xFE, 0xF1}
 };
 
-int DES_is_weak_key(const_DES_cblock *key)
+int __cdecl DES_is_weak_key(const_DES_cblock *key)
 {
     int i;
 
@@ -275,7 +275,7 @@ static const DES_LONG des_skb[8][64] = {
      }
 };
 
-int DES_set_key(const_DES_cblock *key, DES_key_schedule *schedule)
+int __cdecl DES_set_key(const_DES_cblock *key, DES_key_schedule *schedule)
 {
     if (DES_check_key) {
         return DES_set_key_checked(key, schedule);
@@ -290,7 +290,7 @@ int DES_set_key(const_DES_cblock *key, DES_key_schedule *schedule)
  * return -1 if key parity error,
  * return -2 if illegal weak key.
  */
-int DES_set_key_checked(const_DES_cblock *key, DES_key_schedule *schedule)
+int __cdecl DES_set_key_checked(const_DES_cblock *key, DES_key_schedule *schedule)
 {
     if (!DES_check_key_parity(key))
         return -1;
@@ -300,7 +300,7 @@ int DES_set_key_checked(const_DES_cblock *key, DES_key_schedule *schedule)
     return 0;
 }
 
-void DES_set_key_unchecked(const_DES_cblock *key, DES_key_schedule *schedule)
+void __cdecl DES_set_key_unchecked(const_DES_cblock *key, DES_key_schedule *schedule)
 {
     static const int shifts2[16] =
         { 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 };
@@ -366,7 +366,7 @@ void DES_set_key_unchecked(const_DES_cblock *key, DES_key_schedule *schedule)
     }
 }
 
-int DES_key_sched(const_DES_cblock *key, DES_key_schedule *schedule)
+int __cdecl DES_key_sched(const_DES_cblock *key, DES_key_schedule *schedule)
 {
     return DES_set_key(key, schedule);
 }

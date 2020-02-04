@@ -1036,7 +1036,7 @@ struct ec_key_st *EVP_PKEY_get0_EC_KEY(EVP_PKEY *pkey);
 struct ec_key_st *EVP_PKEY_get1_EC_KEY(EVP_PKEY *pkey);
 # endif
 
-EVP_PKEY *EVP_PKEY_new(void);
+EVP_PKEY * __cdecl EVP_PKEY_new(void);
 int EVP_PKEY_up_ref(EVP_PKEY *pkey);
 void EVP_PKEY_free(EVP_PKEY *pkey);
 
@@ -1046,7 +1046,7 @@ int i2d_PublicKey(EVP_PKEY *a, unsigned char **pp);
 
 EVP_PKEY *d2i_PrivateKey(int type, EVP_PKEY **a, const unsigned char **pp,
                          long length);
-EVP_PKEY *d2i_AutoPrivateKey(EVP_PKEY **a, const unsigned char **pp,
+EVP_PKEY * __cdecl d2i_AutoPrivateKey(EVP_PKEY **a, const unsigned char **pp,
                              long length);
 int __cdecl i2d_PrivateKey(EVP_PKEY *a, unsigned char **pp);
 

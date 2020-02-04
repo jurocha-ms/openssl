@@ -20,7 +20,7 @@
  * p is odd
  * 1 < g < p - 1
  */
-int DH_check_params_ex(const DH *dh)
+int __cdecl DH_check_params_ex(const DH *dh)
 {
     int errflags = 0;
 
@@ -35,7 +35,7 @@ int DH_check_params_ex(const DH *dh)
     return errflags == 0;
 }
 
-int DH_check_params(const DH *dh, int *ret)
+int __cdecl DH_check_params(const DH *dh, int *ret)
 {
     int ok = 0;
     BIGNUM *tmp = NULL;
@@ -70,7 +70,7 @@ int DH_check_params(const DH *dh, int *ret)
  * Check that p is a safe prime and
  * g is a suitable generator.
  */
-int DH_check_ex(const DH *dh)
+int __cdecl DH_check_ex(const DH *dh)
 {
     int errflags = 0;
 
@@ -95,7 +95,7 @@ int DH_check_ex(const DH *dh)
     return errflags == 0;
 }
 
-int DH_check(const DH *dh, int *ret)
+int __cdecl DH_check(const DH *dh, int *ret)
 {
     int ok = 0, r;
     BN_CTX *ctx = NULL;
@@ -160,7 +160,7 @@ int DH_check(const DH *dh, int *ret)
     return ok;
 }
 
-int DH_check_pub_key_ex(const DH *dh, const BIGNUM *pub_key)
+int __cdecl DH_check_pub_key_ex(const DH *dh, const BIGNUM *pub_key)
 {
     int errflags = 0;
 
@@ -177,7 +177,7 @@ int DH_check_pub_key_ex(const DH *dh, const BIGNUM *pub_key)
     return errflags == 0;
 }
 
-int DH_check_pub_key(const DH *dh, const BIGNUM *pub_key, int *ret)
+int __cdecl DH_check_pub_key(const DH *dh, const BIGNUM *pub_key, int *ret)
 {
     int ok = 0;
     BIGNUM *tmp = NULL;

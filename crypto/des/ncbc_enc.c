@@ -16,10 +16,10 @@
 #include "des_locl.h"
 
 #ifdef CBC_ENC_C__DONT_UPDATE_IV
-void DES_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
+void __cdecl DES_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
                      DES_key_schedule *_schedule, DES_cblock *ivec, int enc)
 #else
-void DES_ncbc_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl DES_ncbc_encrypt(const unsigned char *in, unsigned char *out,
                       long length, DES_key_schedule *_schedule,
                       DES_cblock *ivec, int enc)
 #endif

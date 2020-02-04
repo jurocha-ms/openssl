@@ -10,7 +10,7 @@
 #include <openssl/crypto.h>
 #include "des_locl.h"
 
-void DES_string_to_key(const char *str, DES_cblock *key)
+void __cdecl DES_string_to_key(const char *str, DES_cblock *key)
 {
     DES_key_schedule ks;
     int i, length;
@@ -37,7 +37,7 @@ void DES_string_to_key(const char *str, DES_cblock *key)
     DES_set_odd_parity(key);
 }
 
-void DES_string_to_2keys(const char *str, DES_cblock *key1, DES_cblock *key2)
+void __cdecl DES_string_to_2keys(const char *str, DES_cblock *key1, DES_cblock *key2)
 {
     DES_key_schedule ks;
     int i, length;

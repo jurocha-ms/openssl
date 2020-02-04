@@ -790,7 +790,7 @@ int EC_GROUP_get_pentanomial_basis(const EC_GROUP *, unsigned int *k1,
 # define OPENSSL_EC_EXPLICIT_CURVE  0x000
 # define OPENSSL_EC_NAMED_CURVE     0x001
 
-EC_GROUP *d2i_ECPKParameters(EC_GROUP **, const unsigned char **in, long len);
+EC_GROUP * __cdecl d2i_ECPKParameters(EC_GROUP **, const unsigned char **in, long len);
 int __cdecl i2d_ECPKParameters(const EC_GROUP *, unsigned char **out);
 
 # define d2i_ECPKParameters_bio(bp,x) ASN1_d2i_bio_of(EC_GROUP,NULL,d2i_ECPKParameters,bp,x)
@@ -821,7 +821,7 @@ int ECPKParameters_print_fp(FILE *fp, const EC_GROUP *x, int off);
 /** Creates a new EC_KEY object.
  *  \return EC_KEY object or NULL if an error occurred.
  */
-EC_KEY *EC_KEY_new(void);
+EC_KEY * __cdecl EC_KEY_new(void);
 
 int EC_KEY_get_flags(const EC_KEY *key);
 
@@ -1014,7 +1014,7 @@ size_t EC_KEY_priv2buf(const EC_KEY *eckey, unsigned char **pbuf);
  *  \param  len  length of the DER encoded private key
  *  \return the decoded private key or NULL if an error occurred.
  */
-EC_KEY *d2i_ECPrivateKey(EC_KEY **key, const unsigned char **in, long len);
+EC_KEY * __cdecl d2i_ECPrivateKey(EC_KEY **key, const unsigned char **in, long len);
 
 /** Encodes a private key object and stores the result in a buffer.
  *  \param  key  the EC_KEY object to encode
@@ -1127,7 +1127,7 @@ typedef struct ECDSA_SIG_st ECDSA_SIG;
 /** Allocates and initialize a ECDSA_SIG structure
  *  \return pointer to a ECDSA_SIG structure or NULL if an error occurred
  */
-ECDSA_SIG *ECDSA_SIG_new(void);
+ECDSA_SIG * __cdecl ECDSA_SIG_new(void);
 
 /** frees a ECDSA_SIG structure
  *  \param  sig  pointer to the ECDSA_SIG structure
@@ -1150,7 +1150,7 @@ int __cdecl i2d_ECDSA_SIG(const ECDSA_SIG *sig, unsigned char **pp);
  *  \param  len  length of the buffer
  *  \return pointer to the decoded ECDSA_SIG structure (or NULL)
  */
-ECDSA_SIG *d2i_ECDSA_SIG(ECDSA_SIG **sig, const unsigned char **pp, long len);
+ECDSA_SIG * __cdecl d2i_ECDSA_SIG(ECDSA_SIG **sig, const unsigned char **pp, long len);
 
 /** Accessor for r and s fields of ECDSA_SIG
  *  \param  sig  pointer to ECDSA_SIG structure

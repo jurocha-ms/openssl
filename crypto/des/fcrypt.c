@@ -55,7 +55,7 @@ static unsigned const char cov_2char[64] = {
     0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A
 };
 
-char *DES_crypt(const char *buf, const char *salt)
+char * __cdecl DES_crypt(const char *buf, const char *salt)
 {
     static char buff[14];
 
@@ -88,7 +88,7 @@ char *DES_crypt(const char *buf, const char *salt)
 #endif
 }
 
-char *DES_fcrypt(const char *buf, const char *salt, char *ret)
+char * __cdecl DES_fcrypt(const char *buf, const char *salt, char *ret)
 {
     unsigned int i, j, x, y;
     DES_LONG Eswap0, Eswap1;

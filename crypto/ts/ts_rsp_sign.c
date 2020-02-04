@@ -117,7 +117,7 @@ static int def_extension_cb(struct TS_resp_ctx *ctx, X509_EXTENSION *ext,
 
 /* TS_RESP_CTX management functions. */
 
-TS_RESP_CTX *TS_RESP_CTX_new(void)
+TS_RESP_CTX * __cdecl TS_RESP_CTX_new(void)
 {
     TS_RESP_CTX *ctx;
 
@@ -135,7 +135,7 @@ TS_RESP_CTX *TS_RESP_CTX_new(void)
     return ctx;
 }
 
-void TS_RESP_CTX_free(TS_RESP_CTX *ctx)
+void __cdecl TS_RESP_CTX_free(TS_RESP_CTX *ctx)
 {
     if (!ctx)
         return;
@@ -152,7 +152,7 @@ void TS_RESP_CTX_free(TS_RESP_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-int TS_RESP_CTX_set_signer_cert(TS_RESP_CTX *ctx, X509 *signer)
+int __cdecl TS_RESP_CTX_set_signer_cert(TS_RESP_CTX *ctx, X509 *signer)
 {
     if (X509_check_purpose(signer, X509_PURPOSE_TIMESTAMP_SIGN, 0) != 1) {
         TSerr(TS_F_TS_RESP_CTX_SET_SIGNER_CERT,
@@ -165,7 +165,7 @@ int TS_RESP_CTX_set_signer_cert(TS_RESP_CTX *ctx, X509 *signer)
     return 1;
 }
 
-int TS_RESP_CTX_set_signer_key(TS_RESP_CTX *ctx, EVP_PKEY *key)
+int __cdecl TS_RESP_CTX_set_signer_key(TS_RESP_CTX *ctx, EVP_PKEY *key)
 {
     EVP_PKEY_free(ctx->signer_key);
     ctx->signer_key = key;
@@ -174,13 +174,13 @@ int TS_RESP_CTX_set_signer_key(TS_RESP_CTX *ctx, EVP_PKEY *key)
     return 1;
 }
 
-int TS_RESP_CTX_set_signer_digest(TS_RESP_CTX *ctx, const EVP_MD *md)
+int __cdecl TS_RESP_CTX_set_signer_digest(TS_RESP_CTX *ctx, const EVP_MD *md)
 {
     ctx->signer_md = md;
     return 1;
 }
 
-int TS_RESP_CTX_set_def_policy(TS_RESP_CTX *ctx, const ASN1_OBJECT *def_policy)
+int __cdecl TS_RESP_CTX_set_def_policy(TS_RESP_CTX *ctx, const ASN1_OBJECT *def_policy)
 {
     ASN1_OBJECT_free(ctx->default_policy);
     if ((ctx->default_policy = OBJ_dup(def_policy)) == NULL)
@@ -191,7 +191,7 @@ int TS_RESP_CTX_set_def_policy(TS_RESP_CTX *ctx, const ASN1_OBJECT *def_policy)
     return 0;
 }
 
-int TS_RESP_CTX_set_certs(TS_RESP_CTX *ctx, STACK_OF(X509) *certs)
+int __cdecl TS_RESP_CTX_set_certs(TS_RESP_CTX *ctx, STACK_OF(X509) *certs)
 {
 
     sk_X509_pop_free(ctx->certs, X509_free);
@@ -206,7 +206,7 @@ int TS_RESP_CTX_set_certs(TS_RESP_CTX *ctx, STACK_OF(X509) *certs)
     return 1;
 }
 
-int TS_RESP_CTX_add_policy(TS_RESP_CTX *ctx, const ASN1_OBJECT *policy)
+int __cdecl TS_RESP_CTX_add_policy(TS_RESP_CTX *ctx, const ASN1_OBJECT *policy)
 {
     ASN1_OBJECT *copy = NULL;
 
@@ -225,7 +225,7 @@ int TS_RESP_CTX_add_policy(TS_RESP_CTX *ctx, const ASN1_OBJECT *policy)
     return 0;
 }
 
-int TS_RESP_CTX_add_md(TS_RESP_CTX *ctx, const EVP_MD *md)
+int __cdecl TS_RESP_CTX_add_md(TS_RESP_CTX *ctx, const EVP_MD *md)
 {
     if (ctx->mds == NULL
         && (ctx->mds = sk_EVP_MD_new_null()) == NULL)
@@ -247,7 +247,7 @@ int TS_RESP_CTX_add_md(TS_RESP_CTX *ctx, const EVP_MD *md)
         ASN1_INTEGER_free(ctx->micros);         \
         ctx->micros = NULL;
 
-int TS_RESP_CTX_set_accuracy(TS_RESP_CTX *ctx,
+int __cdecl TS_RESP_CTX_set_accuracy(TS_RESP_CTX *ctx,
                              int secs, int millis, int micros)
 {
 
@@ -272,31 +272,31 @@ int TS_RESP_CTX_set_accuracy(TS_RESP_CTX *ctx,
     return 0;
 }
 
-void TS_RESP_CTX_add_flags(TS_RESP_CTX *ctx, int flags)
+void __cdecl TS_RESP_CTX_add_flags(TS_RESP_CTX *ctx, int flags)
 {
     ctx->flags |= flags;
 }
 
-void TS_RESP_CTX_set_serial_cb(TS_RESP_CTX *ctx, TS_serial_cb cb, void *data)
+void __cdecl TS_RESP_CTX_set_serial_cb(TS_RESP_CTX *ctx, TS_serial_cb cb, void *data)
 {
     ctx->serial_cb = cb;
     ctx->serial_cb_data = data;
 }
 
-void TS_RESP_CTX_set_time_cb(TS_RESP_CTX *ctx, TS_time_cb cb, void *data)
+void __cdecl TS_RESP_CTX_set_time_cb(TS_RESP_CTX *ctx, TS_time_cb cb, void *data)
 {
     ctx->time_cb = cb;
     ctx->time_cb_data = data;
 }
 
-void TS_RESP_CTX_set_extension_cb(TS_RESP_CTX *ctx,
+void __cdecl TS_RESP_CTX_set_extension_cb(TS_RESP_CTX *ctx,
                                   TS_extension_cb cb, void *data)
 {
     ctx->extension_cb = cb;
     ctx->extension_cb_data = data;
 }
 
-int TS_RESP_CTX_set_status_info(TS_RESP_CTX *ctx,
+int __cdecl TS_RESP_CTX_set_status_info(TS_RESP_CTX *ctx,
                                 int status, const char *text)
 {
     TS_STATUS_INFO *si = NULL;
@@ -329,7 +329,7 @@ int TS_RESP_CTX_set_status_info(TS_RESP_CTX *ctx,
     return ret;
 }
 
-int TS_RESP_CTX_set_status_info_cond(TS_RESP_CTX *ctx,
+int __cdecl TS_RESP_CTX_set_status_info_cond(TS_RESP_CTX *ctx,
                                      int status, const char *text)
 {
     int ret = 1;
@@ -341,7 +341,7 @@ int TS_RESP_CTX_set_status_info_cond(TS_RESP_CTX *ctx,
     return ret;
 }
 
-int TS_RESP_CTX_add_failure_info(TS_RESP_CTX *ctx, int failure)
+int __cdecl TS_RESP_CTX_add_failure_info(TS_RESP_CTX *ctx, int failure)
 {
     TS_STATUS_INFO *si = ctx->response->status_info;
     if (si->failure_info == NULL
@@ -355,17 +355,17 @@ int TS_RESP_CTX_add_failure_info(TS_RESP_CTX *ctx, int failure)
     return 0;
 }
 
-TS_REQ *TS_RESP_CTX_get_request(TS_RESP_CTX *ctx)
+TS_REQ * __cdecl TS_RESP_CTX_get_request(TS_RESP_CTX *ctx)
 {
     return ctx->request;
 }
 
-TS_TST_INFO *TS_RESP_CTX_get_tst_info(TS_RESP_CTX *ctx)
+TS_TST_INFO * __cdecl TS_RESP_CTX_get_tst_info(TS_RESP_CTX *ctx)
 {
     return ctx->tst_info;
 }
 
-int TS_RESP_CTX_set_clock_precision_digits(TS_RESP_CTX *ctx,
+int __cdecl TS_RESP_CTX_set_clock_precision_digits(TS_RESP_CTX *ctx,
                                            unsigned precision)
 {
     if (precision > TS_MAX_CLOCK_PRECISION_DIGITS)
@@ -375,7 +375,7 @@ int TS_RESP_CTX_set_clock_precision_digits(TS_RESP_CTX *ctx,
 }
 
 /* Main entry method of the response generation. */
-TS_RESP *TS_RESP_create_response(TS_RESP_CTX *ctx, BIO *req_bio)
+TS_RESP * __cdecl TS_RESP_create_response(TS_RESP_CTX *ctx, BIO *req_bio)
 {
     ASN1_OBJECT *policy;
     TS_RESP *response;
@@ -1050,7 +1050,7 @@ static ASN1_GENERALIZEDTIME *TS_RESP_set_genTime_with_precision(
     return NULL;
 }
 
-int TS_RESP_CTX_set_ess_cert_id_digest(TS_RESP_CTX *ctx, const EVP_MD *md)
+int __cdecl TS_RESP_CTX_set_ess_cert_id_digest(TS_RESP_CTX *ctx, const EVP_MD *md)
 {
     ctx->ess_cert_id_digest = md;
     return 1;

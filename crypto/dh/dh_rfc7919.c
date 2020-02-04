@@ -25,7 +25,7 @@ static DH *dh_param_init(const BIGNUM *p, int32_t nbits)
     return dh;
 }
 
-DH *DH_new_by_nid(int nid)
+DH * __cdecl DH_new_by_nid(int nid)
 {
     switch (nid) {
     case NID_ffdhe2048:
@@ -44,7 +44,7 @@ DH *DH_new_by_nid(int nid)
     }
 }
 
-int DH_get_nid(const DH *dh)
+int __cdecl DH_get_nid(const DH *dh)
 {
     int nid;
 

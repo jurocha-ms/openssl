@@ -11,7 +11,7 @@
 
 /* RSA's DESX */
 
-void DES_xcbc_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl DES_xcbc_encrypt(const unsigned char *in, unsigned char *out,
                       long length, DES_key_schedule *schedule,
                       DES_cblock *ivec, const_DES_cblock *inw,
                       const_DES_cblock *outw, int enc)

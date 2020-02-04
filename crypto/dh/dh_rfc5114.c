@@ -20,7 +20,7 @@
  */
 
 #define make_dh(x) \
-DH *DH_get_##x(void) \
+DH * __cdecl DH_get_##x(void) \
 { \
     DH *dh = DH_new(); \
 \

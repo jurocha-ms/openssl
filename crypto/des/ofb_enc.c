@@ -15,7 +15,7 @@
  * retrieved from the first byte and half the second.  The second 12 bits
  * will come from the 3rd and half the 4th byte.
  */
-void DES_ofb_encrypt(const unsigned char *in, unsigned char *out, int numbits,
+void __cdecl DES_ofb_encrypt(const unsigned char *in, unsigned char *out, int numbits,
                      long length, DES_key_schedule *schedule,
                      DES_cblock *ivec)
 {

@@ -47,7 +47,7 @@ static void timestamp_print(uint64_t timestamp, BIO *out)
     ASN1_GENERALIZEDTIME_free(gen);
 }
 
-const char *SCT_validation_status_string(const SCT *sct)
+const char * __cdecl SCT_validation_status_string(const SCT *sct)
 {
 
     switch (SCT_get_validation_status(sct)) {
@@ -67,7 +67,7 @@ const char *SCT_validation_status_string(const SCT *sct)
     return "unknown status";
 }
 
-void SCT_print(const SCT *sct, BIO *out, int indent,
+void __cdecl SCT_print(const SCT *sct, BIO *out, int indent,
                const CTLOG_STORE *log_store)
 {
     const CTLOG *log = NULL;
@@ -111,7 +111,7 @@ void SCT_print(const SCT *sct, BIO *out, int indent,
     BIO_hex_string(out, indent + 16, 16, sct->sig, sct->sig_len);
 }
 
-void SCT_LIST_print(const STACK_OF(SCT) *sct_list, BIO *out, int indent,
+void __cdecl SCT_LIST_print(const STACK_OF(SCT) *sct_list, BIO *out, int indent,
                     const char *separator, const CTLOG_STORE *log_store)
 {
     int sct_count = sk_SCT_num(sct_list);

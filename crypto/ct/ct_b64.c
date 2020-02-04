@@ -60,7 +60,7 @@ err:
     return -1;
 }
 
-SCT *SCT_new_from_base64(unsigned char version, const char *logid_base64,
+SCT * __cdecl SCT_new_from_base64(unsigned char version, const char *logid_base64,
                          ct_log_entry_type_t entry_type, uint64_t timestamp,
                          const char *extensions_base64,
                          const char *signature_base64)
@@ -132,7 +132,7 @@ SCT *SCT_new_from_base64(unsigned char version, const char *logid_base64,
  * 0 on decoding failure, or invalid parameter if any
  * -1 on internal (malloc) failure
  */
-int CTLOG_new_from_base64(CTLOG **ct_log, const char *pkey_base64, const char *name)
+int __cdecl CTLOG_new_from_base64(CTLOG **ct_log, const char *pkey_base64, const char *name)
 {
     unsigned char *pkey_der = NULL;
     int pkey_der_len;

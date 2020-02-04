@@ -15,7 +15,7 @@
 #include <openssl/ts.h>
 #include "ts_lcl.h"
 
-int TS_REQ_print_bio(BIO *bio, TS_REQ *a)
+int __cdecl TS_REQ_print_bio(BIO *bio, TS_REQ *a)
 {
     int v;
     ASN1_OBJECT *policy_id;

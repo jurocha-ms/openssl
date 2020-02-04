@@ -22,7 +22,7 @@
 #  ifdef  __cplusplus
 extern "C"
 #  endif
-int ERR_load_CT_strings(void);
+int __cdecl ERR_load_CT_strings(void);
 
 /*
  * CT function codes.

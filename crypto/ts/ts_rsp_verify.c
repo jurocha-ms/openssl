@@ -87,7 +87,7 @@ static struct {
  *      - Verify the signature value.
  *      - Returns the signer certificate in 'signer', if 'signer' is not NULL.
  */
-int TS_RESP_verify_signature(PKCS7 *token, STACK_OF(X509) *certs,
+int __cdecl TS_RESP_verify_signature(PKCS7 *token, STACK_OF(X509) *certs,
                              X509_STORE *store, X509 **signer_out)
 {
     STACK_OF(PKCS7_SIGNER_INFO) *sinfos = NULL;
@@ -365,7 +365,7 @@ static int ts_issuer_serial_cmp(ESS_ISSUER_SERIAL *is, X509 *cert)
  *      - Gives an error message if the TS_TST_INFO is not present.
  *      - Calls _TS_RESP_verify_token to verify the token content.
  */
-int TS_RESP_verify_response(TS_VERIFY_CTX *ctx, TS_RESP *response)
+int __cdecl TS_RESP_verify_response(TS_VERIFY_CTX *ctx, TS_RESP *response)
 {
     PKCS7 *token = response->token;
     TS_TST_INFO *tst_info = response->tst_info;
@@ -385,7 +385,7 @@ int TS_RESP_verify_response(TS_VERIFY_CTX *ctx, TS_RESP *response)
  * Tries to extract a TS_TST_INFO structure from the PKCS7 token and
  * calls the internal int_TS_RESP_verify_token function for verifying it.
  */
-int TS_RESP_verify_token(TS_VERIFY_CTX *ctx, PKCS7 *token)
+int __cdecl TS_RESP_verify_token(TS_VERIFY_CTX *ctx, PKCS7 *token)
 {
     TS_TST_INFO *tst_info = PKCS7_to_TS_TST_INFO(token);
     int ret = 0;

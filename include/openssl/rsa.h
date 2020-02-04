@@ -195,7 +195,7 @@ extern "C" {
 # define RSA_set_app_data(s,arg)         RSA_set_ex_data(s,0,arg)
 # define RSA_get_app_data(s)             RSA_get_ex_data(s,0)
 
-RSA *RSA_new(void);
+RSA * __cdecl RSA_new(void);
 RSA *RSA_new_method(ENGINE *engine);
 int RSA_bits(const RSA *rsa);
 int RSA_size(const RSA *rsa);

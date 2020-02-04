@@ -112,25 +112,25 @@ DECLARE_ASN1_ITEM(DHparams)
 # define i2d_DHxparams_bio(bp,x) \
     ASN1_i2d_bio_of_const(DH, i2d_DHxparams, bp, x)
 
-DH *DHparams_dup(DH *);
+DH * __cdecl DHparams_dup(DH *);
 
-const DH_METHOD *DH_OpenSSL(void);
+const DH_METHOD * __cdecl DH_OpenSSL(void);
 
-void DH_set_default_method(const DH_METHOD *meth);
-const DH_METHOD *DH_get_default_method(void);
-int DH_set_method(DH *dh, const DH_METHOD *meth);
-DH *DH_new_method(ENGINE *engine);
+void __cdecl DH_set_default_method(const DH_METHOD *meth);
+const DH_METHOD * __cdecl DH_get_default_method(void);
+int __cdecl DH_set_method(DH *dh, const DH_METHOD *meth);
+DH * __cdecl DH_new_method(ENGINE *engine);
 
-DH *DH_new(void);
-void DH_free(DH *dh);
-int DH_up_ref(DH *dh);
-int DH_bits(const DH *dh);
-int DH_size(const DH *dh);
-int DH_security_bits(const DH *dh);
+DH * __cdecl DH_new(void);
+void __cdecl DH_free(DH *dh);
+int __cdecl DH_up_ref(DH *dh);
+int __cdecl DH_bits(const DH *dh);
+int __cdecl DH_size(const DH *dh);
+int __cdecl DH_security_bits(const DH *dh);
 #define DH_get_ex_new_index(l, p, newf, dupf, freef) \
     CRYPTO_get_ex_new_index(CRYPTO_EX_INDEX_DH, l, p, newf, dupf, freef)
-int DH_set_ex_data(DH *d, int idx, void *arg);
-void *DH_get_ex_data(DH *d, int idx);
+int __cdecl DH_set_ex_data(DH *d, int idx, void *arg);
+void * __cdecl DH_get_ex_data(DH *d, int idx);
 
 /* Deprecated version */
 DEPRECATEDIN_0_9_8(DH *DH_generate_parameters(int prime_len, int generator,
@@ -139,90 +139,90 @@ DEPRECATEDIN_0_9_8(DH *DH_generate_parameters(int prime_len, int generator,
                                               void *cb_arg))
 
 /* New version */
-int DH_generate_parameters_ex(DH *dh, int prime_len, int generator,
+int __cdecl DH_generate_parameters_ex(DH *dh, int prime_len, int generator,
                               BN_GENCB *cb);
 
-int DH_check_params_ex(const DH *dh);
-int DH_check_ex(const DH *dh);
-int DH_check_pub_key_ex(const DH *dh, const BIGNUM *pub_key);
-int DH_check_params(const DH *dh, int *ret);
-int DH_check(const DH *dh, int *codes);
-int DH_check_pub_key(const DH *dh, const BIGNUM *pub_key, int *codes);
-int DH_generate_key(DH *dh);
-int DH_compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh);
-int DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh);
-DH *d2i_DHparams(DH **a, const unsigned char **pp, long length);
+int __cdecl DH_check_params_ex(const DH *dh);
+int __cdecl DH_check_ex(const DH *dh);
+int __cdecl DH_check_pub_key_ex(const DH *dh, const BIGNUM *pub_key);
+int __cdecl DH_check_params(const DH *dh, int *ret);
+int __cdecl DH_check(const DH *dh, int *codes);
+int __cdecl DH_check_pub_key(const DH *dh, const BIGNUM *pub_key, int *codes);
+int __cdecl DH_generate_key(DH *dh);
+int __cdecl DH_compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh);
+int __cdecl DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh);
+DH * __cdecl d2i_DHparams(DH **a, const unsigned char **pp, long length);
 int __cdecl i2d_DHparams(const DH *a, unsigned char **pp);
-DH *d2i_DHxparams(DH **a, const unsigned char **pp, long length);
+DH * __cdecl d2i_DHxparams(DH **a, const unsigned char **pp, long length);
 int __cdecl i2d_DHxparams(const DH *a, unsigned char **pp);
 # ifndef OPENSSL_NO_STDIO
-int DHparams_print_fp(FILE *fp, const DH *x);
+int __cdecl DHparams_print_fp(FILE *fp, const DH *x);
 # endif
-int DHparams_print(BIO *bp, const DH *x);
+int __cdecl DHparams_print(BIO *bp, const DH *x);
 
 /* RFC 5114 parameters */
-DH *DH_get_1024_160(void);
-DH *DH_get_2048_224(void);
-DH *DH_get_2048_256(void);
+DH * __cdecl DH_get_1024_160(void);
+DH * __cdecl DH_get_2048_224(void);
+DH * __cdecl DH_get_2048_256(void);
 
 /* Named parameters, currently RFC7919 */
-DH *DH_new_by_nid(int nid);
-int DH_get_nid(const DH *dh);
+DH * __cdecl DH_new_by_nid(int nid);
+int __cdecl DH_get_nid(const DH *dh);
 
 # ifndef OPENSSL_NO_CMS
 /* RFC2631 KDF */
-int DH_KDF_X9_42(unsigned char *out, size_t outlen,
+int __cdecl DH_KDF_X9_42(unsigned char *out, size_t outlen,
                  const unsigned char *Z, size_t Zlen,
                  ASN1_OBJECT *key_oid,
                  const unsigned char *ukm, size_t ukmlen, const EVP_MD *md);
 # endif
 
-void DH_get0_pqg(const DH *dh,
+void __cdecl DH_get0_pqg(const DH *dh,
                  const BIGNUM **p, const BIGNUM **q, const BIGNUM **g);
-int DH_set0_pqg(DH *dh, BIGNUM *p, BIGNUM *q, BIGNUM *g);
-void DH_get0_key(const DH *dh,
+int __cdecl DH_set0_pqg(DH *dh, BIGNUM *p, BIGNUM *q, BIGNUM *g);
+void __cdecl DH_get0_key(const DH *dh,
                  const BIGNUM **pub_key, const BIGNUM **priv_key);
-int DH_set0_key(DH *dh, BIGNUM *pub_key, BIGNUM *priv_key);
-const BIGNUM *DH_get0_p(const DH *dh);
-const BIGNUM *DH_get0_q(const DH *dh);
-const BIGNUM *DH_get0_g(const DH *dh);
-const BIGNUM *DH_get0_priv_key(const DH *dh);
-const BIGNUM *DH_get0_pub_key(const DH *dh);
-void DH_clear_flags(DH *dh, int flags);
-int DH_test_flags(const DH *dh, int flags);
-void DH_set_flags(DH *dh, int flags);
-ENGINE *DH_get0_engine(DH *d);
-long DH_get_length(const DH *dh);
-int DH_set_length(DH *dh, long length);
+int __cdecl DH_set0_key(DH *dh, BIGNUM *pub_key, BIGNUM *priv_key);
+const BIGNUM * __cdecl DH_get0_p(const DH *dh);
+const BIGNUM * __cdecl DH_get0_q(const DH *dh);
+const BIGNUM * __cdecl DH_get0_g(const DH *dh);
+const BIGNUM * __cdecl DH_get0_priv_key(const DH *dh);
+const BIGNUM * __cdecl DH_get0_pub_key(const DH *dh);
+void __cdecl DH_clear_flags(DH *dh, int flags);
+int __cdecl DH_test_flags(const DH *dh, int flags);
+void __cdecl DH_set_flags(DH *dh, int flags);
+ENGINE * __cdecl DH_get0_engine(DH *d);
+long __cdecl DH_get_length(const DH *dh);
+int __cdecl DH_set_length(DH *dh, long length);
 
-DH_METHOD *DH_meth_new(const char *name, int flags);
-void DH_meth_free(DH_METHOD *dhm);
-DH_METHOD *DH_meth_dup(const DH_METHOD *dhm);
-const char *DH_meth_get0_name(const DH_METHOD *dhm);
-int DH_meth_set1_name(DH_METHOD *dhm, const char *name);
-int DH_meth_get_flags(const DH_METHOD *dhm);
-int DH_meth_set_flags(DH_METHOD *dhm, int flags);
-void *DH_meth_get0_app_data(const DH_METHOD *dhm);
-int DH_meth_set0_app_data(DH_METHOD *dhm, void *app_data);
-int (*DH_meth_get_generate_key(const DH_METHOD *dhm)) (DH *);
-int DH_meth_set_generate_key(DH_METHOD *dhm, int (*generate_key) (DH *));
-int (*DH_meth_get_compute_key(const DH_METHOD *dhm))
+DH_METHOD * __cdecl DH_meth_new(const char *name, int flags);
+void __cdecl DH_meth_free(DH_METHOD *dhm);
+DH_METHOD * __cdecl DH_meth_dup(const DH_METHOD *dhm);
+const char * __cdecl DH_meth_get0_name(const DH_METHOD *dhm);
+int __cdecl DH_meth_set1_name(DH_METHOD *dhm, const char *name);
+int __cdecl DH_meth_get_flags(const DH_METHOD *dhm);
+int __cdecl DH_meth_set_flags(DH_METHOD *dhm, int flags);
+void * __cdecl DH_meth_get0_app_data(const DH_METHOD *dhm);
+int __cdecl DH_meth_set0_app_data(DH_METHOD *dhm, void *app_data);
+int (* __cdecl DH_meth_get_generate_key(const DH_METHOD *dhm)) (DH *);
+int __cdecl DH_meth_set_generate_key(DH_METHOD *dhm, int (*generate_key) (DH *));
+int (* __cdecl DH_meth_get_compute_key(const DH_METHOD *dhm))
         (unsigned char *key, const BIGNUM *pub_key, DH *dh);
-int DH_meth_set_compute_key(DH_METHOD *dhm,
+int __cdecl DH_meth_set_compute_key(DH_METHOD *dhm,
         int (*compute_key) (unsigned char *key, const BIGNUM *pub_key, DH *dh));
-int (*DH_meth_get_bn_mod_exp(const DH_METHOD *dhm))
+int (* __cdecl DH_meth_get_bn_mod_exp(const DH_METHOD *dhm))
     (const DH *, BIGNUM *, const BIGNUM *, const BIGNUM *, const BIGNUM *,
      BN_CTX *, BN_MONT_CTX *);
-int DH_meth_set_bn_mod_exp(DH_METHOD *dhm,
+int __cdecl DH_meth_set_bn_mod_exp(DH_METHOD *dhm,
     int (*bn_mod_exp) (const DH *, BIGNUM *, const BIGNUM *, const BIGNUM *,
                        const BIGNUM *, BN_CTX *, BN_MONT_CTX *));
-int (*DH_meth_get_init(const DH_METHOD *dhm))(DH *);
-int DH_meth_set_init(DH_METHOD *dhm, int (*init)(DH *));
-int (*DH_meth_get_finish(const DH_METHOD *dhm)) (DH *);
-int DH_meth_set_finish(DH_METHOD *dhm, int (*finish) (DH *));
-int (*DH_meth_get_generate_params(const DH_METHOD *dhm))
+int (* __cdecl DH_meth_get_init(const DH_METHOD *dhm))(DH *);
+int __cdecl DH_meth_set_init(DH_METHOD *dhm, int (*init)(DH *));
+int (* __cdecl DH_meth_get_finish(const DH_METHOD *dhm)) (DH *);
+int __cdecl DH_meth_set_finish(DH_METHOD *dhm, int (*finish) (DH *));
+int (* __cdecl DH_meth_get_generate_params(const DH_METHOD *dhm))
         (DH *, int, int, BN_GENCB *);
-int DH_meth_set_generate_params(DH_METHOD *dhm,
+int __cdecl DH_meth_set_generate_params(DH_METHOD *dhm,
         int (*generate_params) (DH *, int, int, BN_GENCB *));
 
 

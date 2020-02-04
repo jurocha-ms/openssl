@@ -89,7 +89,7 @@ static const ERR_STRING_DATA DH_str_reasons[] = {
 
 #endif
 
-int ERR_load_DH_strings(void)
+int __cdecl ERR_load_DH_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_func_error_string(DH_str_functs[0].error) == NULL) {

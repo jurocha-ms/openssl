@@ -1648,7 +1648,7 @@ __owur int SSL_SESSION_set1_id(SSL_SESSION *s, const unsigned char *sid,
                                unsigned int sid_len);
 __owur int SSL_SESSION_is_resumable(const SSL_SESSION *s);
 
-__owur SSL_SESSION *SSL_SESSION_new(void);
+__owur SSL_SESSION * __cdecl SSL_SESSION_new(void);
 __owur SSL_SESSION *SSL_SESSION_dup(SSL_SESSION *src);
 const unsigned char *SSL_SESSION_get_id(const SSL_SESSION *s,
                                         unsigned int *len);
@@ -1671,7 +1671,7 @@ __owur int SSL_set_generate_session_id(SSL *s, GEN_SESSION_CB cb);
 __owur int SSL_has_matching_session_id(const SSL *s,
                                        const unsigned char *id,
                                        unsigned int id_len);
-SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
+SSL_SESSION * __cdecl d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
                              long length);
 
 # ifdef HEADER_X509_H

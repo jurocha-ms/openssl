@@ -16,7 +16,7 @@
 #include <openssl/engine.h>
 #include <openssl/dh.h>
 
-DSA *DSA_new(void)
+DSA * __cdecl DSA_new(void)
 {
     return DSA_new_method(NULL);
 }

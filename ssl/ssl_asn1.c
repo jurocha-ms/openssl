@@ -236,7 +236,7 @@ static int ssl_session_memcpy(unsigned char *dst, size_t *pdstlen,
     return 1;
 }
 
-SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
+SSL_SESSION * __cdecl d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
                              long length)
 {
     long id;

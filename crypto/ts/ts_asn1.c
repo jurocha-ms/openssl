@@ -19,24 +19,24 @@ ASN1_SEQUENCE(TS_MSG_IMPRINT) = {
 
 IMPLEMENT_ASN1_FUNCTIONS_const(TS_MSG_IMPRINT)
 IMPLEMENT_ASN1_DUP_FUNCTION(TS_MSG_IMPRINT)
-TS_MSG_IMPRINT *d2i_TS_MSG_IMPRINT_bio(BIO *bp, TS_MSG_IMPRINT **a)
+TS_MSG_IMPRINT * __cdecl d2i_TS_MSG_IMPRINT_bio(BIO *bp, TS_MSG_IMPRINT **a)
 {
     return ASN1_d2i_bio_of(TS_MSG_IMPRINT, TS_MSG_IMPRINT_new,
                            d2i_TS_MSG_IMPRINT, bp, a);
 }
 
-int i2d_TS_MSG_IMPRINT_bio(BIO *bp, TS_MSG_IMPRINT *a)
+int __cdecl i2d_TS_MSG_IMPRINT_bio(BIO *bp, TS_MSG_IMPRINT *a)
 {
     return ASN1_i2d_bio_of_const(TS_MSG_IMPRINT, i2d_TS_MSG_IMPRINT, bp, a);
 }
 #ifndef OPENSSL_NO_STDIO
-TS_MSG_IMPRINT *d2i_TS_MSG_IMPRINT_fp(FILE *fp, TS_MSG_IMPRINT **a)
+TS_MSG_IMPRINT * __cdecl d2i_TS_MSG_IMPRINT_fp(FILE *fp, TS_MSG_IMPRINT **a)
 {
     return ASN1_d2i_fp_of(TS_MSG_IMPRINT, TS_MSG_IMPRINT_new,
                           d2i_TS_MSG_IMPRINT, fp, a);
 }
 
-int i2d_TS_MSG_IMPRINT_fp(FILE *fp, TS_MSG_IMPRINT *a)
+int __cdecl i2d_TS_MSG_IMPRINT_fp(FILE *fp, TS_MSG_IMPRINT *a)
 {
     return ASN1_i2d_fp_of_const(TS_MSG_IMPRINT, i2d_TS_MSG_IMPRINT, fp, a);
 }
@@ -53,22 +53,22 @@ ASN1_SEQUENCE(TS_REQ) = {
 
 IMPLEMENT_ASN1_FUNCTIONS_const(TS_REQ)
 IMPLEMENT_ASN1_DUP_FUNCTION(TS_REQ)
-TS_REQ *d2i_TS_REQ_bio(BIO *bp, TS_REQ **a)
+TS_REQ * __cdecl d2i_TS_REQ_bio(BIO *bp, TS_REQ **a)
 {
     return ASN1_d2i_bio_of(TS_REQ, TS_REQ_new, d2i_TS_REQ, bp, a);
 }
 
-int i2d_TS_REQ_bio(BIO *bp, TS_REQ *a)
+int __cdecl i2d_TS_REQ_bio(BIO *bp, TS_REQ *a)
 {
     return ASN1_i2d_bio_of_const(TS_REQ, i2d_TS_REQ, bp, a);
 }
 #ifndef OPENSSL_NO_STDIO
-TS_REQ *d2i_TS_REQ_fp(FILE *fp, TS_REQ **a)
+TS_REQ * __cdecl d2i_TS_REQ_fp(FILE *fp, TS_REQ **a)
 {
     return ASN1_d2i_fp_of(TS_REQ, TS_REQ_new, d2i_TS_REQ, fp, a);
 }
 
-int i2d_TS_REQ_fp(FILE *fp, TS_REQ *a)
+int __cdecl i2d_TS_REQ_fp(FILE *fp, TS_REQ *a)
 {
     return ASN1_i2d_fp_of_const(TS_REQ, i2d_TS_REQ, fp, a);
 }
@@ -98,24 +98,24 @@ ASN1_SEQUENCE(TS_TST_INFO) = {
 
 IMPLEMENT_ASN1_FUNCTIONS_const(TS_TST_INFO)
 IMPLEMENT_ASN1_DUP_FUNCTION(TS_TST_INFO)
-TS_TST_INFO *d2i_TS_TST_INFO_bio(BIO *bp, TS_TST_INFO **a)
+TS_TST_INFO * __cdecl d2i_TS_TST_INFO_bio(BIO *bp, TS_TST_INFO **a)
 {
     return ASN1_d2i_bio_of(TS_TST_INFO, TS_TST_INFO_new, d2i_TS_TST_INFO, bp,
                            a);
 }
 
-int i2d_TS_TST_INFO_bio(BIO *bp, TS_TST_INFO *a)
+int __cdecl i2d_TS_TST_INFO_bio(BIO *bp, TS_TST_INFO *a)
 {
     return ASN1_i2d_bio_of_const(TS_TST_INFO, i2d_TS_TST_INFO, bp, a);
 }
 #ifndef OPENSSL_NO_STDIO
-TS_TST_INFO *d2i_TS_TST_INFO_fp(FILE *fp, TS_TST_INFO **a)
+TS_TST_INFO * __cdecl d2i_TS_TST_INFO_fp(FILE *fp, TS_TST_INFO **a)
 {
     return ASN1_d2i_fp_of(TS_TST_INFO, TS_TST_INFO_new, d2i_TS_TST_INFO, fp,
                           a);
 }
 
-int i2d_TS_TST_INFO_fp(FILE *fp, TS_TST_INFO *a)
+int __cdecl i2d_TS_TST_INFO_fp(FILE *fp, TS_TST_INFO *a)
 {
     return ASN1_i2d_fp_of_const(TS_TST_INFO, i2d_TS_TST_INFO, fp, a);
 }
@@ -180,22 +180,22 @@ IMPLEMENT_ASN1_FUNCTIONS_const(TS_RESP)
 
 IMPLEMENT_ASN1_DUP_FUNCTION(TS_RESP)
 
-TS_RESP *d2i_TS_RESP_bio(BIO *bp, TS_RESP **a)
+TS_RESP * __cdecl d2i_TS_RESP_bio(BIO *bp, TS_RESP **a)
 {
     return ASN1_d2i_bio_of(TS_RESP, TS_RESP_new, d2i_TS_RESP, bp, a);
 }
 
-int i2d_TS_RESP_bio(BIO *bp, TS_RESP *a)
+int __cdecl i2d_TS_RESP_bio(BIO *bp, TS_RESP *a)
 {
     return ASN1_i2d_bio_of_const(TS_RESP, i2d_TS_RESP, bp, a);
 }
 #ifndef OPENSSL_NO_STDIO
-TS_RESP *d2i_TS_RESP_fp(FILE *fp, TS_RESP **a)
+TS_RESP * __cdecl d2i_TS_RESP_fp(FILE *fp, TS_RESP **a)
 {
     return ASN1_d2i_fp_of(TS_RESP, TS_RESP_new, d2i_TS_RESP, fp, a);
 }
 
-int i2d_TS_RESP_fp(FILE *fp, TS_RESP *a)
+int __cdecl i2d_TS_RESP_fp(FILE *fp, TS_RESP *a)
 {
     return ASN1_i2d_fp_of_const(TS_RESP, i2d_TS_RESP, fp, a);
 }
@@ -243,7 +243,7 @@ IMPLEMENT_ASN1_FUNCTIONS_const(ESS_SIGNING_CERT_V2)
 IMPLEMENT_ASN1_DUP_FUNCTION(ESS_SIGNING_CERT_V2)
 
 /* Getting encapsulated TS_TST_INFO object from PKCS7. */
-TS_TST_INFO *PKCS7_to_TS_TST_INFO(PKCS7 *token)
+TS_TST_INFO * __cdecl PKCS7_to_TS_TST_INFO(PKCS7 *token)
 {
     PKCS7_SIGNED *pkcs7_signed;
     PKCS7 *enveloped;

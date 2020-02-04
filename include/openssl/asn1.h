@@ -228,24 +228,24 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
         DECLARE_ASN1_ENCODE_FUNCTIONS(type, itname, name)
 
 # define DECLARE_ASN1_ENCODE_FUNCTIONS(type, itname, name) \
-        type *d2i_##name(type **a, const unsigned char **in, long len); \
+        type * __cdecl d2i_##name(type **a, const unsigned char **in, long len); \
         int __cdecl i2d_##name(type *a, unsigned char **out); \
         DECLARE_ASN1_ITEM(itname)
 
 # define DECLARE_ASN1_ENCODE_FUNCTIONS_const(type, name) \
-        type *d2i_##name(type **a, const unsigned char **in, long len); \
+        type * __cdecl d2i_##name(type **a, const unsigned char **in, long len); \
         int __cdecl i2d_##name(const type *a, unsigned char **out); \
         DECLARE_ASN1_ITEM(name)
 
 # define DECLARE_ASN1_NDEF_FUNCTION(name) \
-        int i2d_##name##_NDEF(name *a, unsigned char **out);
+        int __cdecl i2d_##name##_NDEF(name *a, unsigned char **out);
 
 # define DECLARE_ASN1_FUNCTIONS_const(name) \
         DECLARE_ASN1_ALLOC_FUNCTIONS(name) \
         DECLARE_ASN1_ENCODE_FUNCTIONS_const(name, name)
 
 # define DECLARE_ASN1_ALLOC_FUNCTIONS_name(type, name) \
-        type *name##_new(void); \
+        type * __cdecl name##_new(void); \
         void __cdecl name##_free(type *a);
 
 # define DECLARE_ASN1_PRINT_FUNCTION(stname) \
@@ -255,7 +255,7 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
         int fname##_print_ctx(BIO *out, stname *x, int indent, \
                                          const ASN1_PCTX *pctx);
 
-# define D2I_OF(type) type *(*)(type **,const unsigned char **,long)
+# define D2I_OF(type) type *(__cdecl *)(type **,const unsigned char **,long)
 # define I2D_OF(type) int (__cdecl *)(type *,unsigned char **)
 # define I2D_OF_const(type) int (__cdecl *)(const type *,unsigned char **)
 
@@ -264,13 +264,13 @@ typedef struct ASN1_VALUE_st ASN1_VALUE;
 # define CHECKED_I2D_OF(type, i2d) \
     ((i2d_of_void*) (1 ? i2d : ((I2D_OF(type))0)))
 # define CHECKED_NEW_OF(type, xnew) \
-    ((void *(*)(void)) (1 ? xnew : ((type *(*)(void))0)))
+    ((void *(__cdecl *)(void)) (1 ? xnew : ((type *(__cdecl *)(void))0)))
 # define CHECKED_PTR_OF(type, p) \
     ((void*) (1 ? p : (type*)0))
 # define CHECKED_PPTR_OF(type, p) \
     ((void**) (1 ? p : (type**)0))
 
-# define TYPEDEF_D2I_OF(type) typedef type *d2i_of_##type(type **,const unsigned char **,long)
+# define TYPEDEF_D2I_OF(type) typedef type * __cdecl d2i_of_##type(type **,const unsigned char **,long)
 # define TYPEDEF_I2D_OF(type) typedef int __cdecl i2d_of_##type(type *,unsigned char **)
 # define TYPEDEF_D2I2D_OF(type) TYPEDEF_D2I_OF(type); TYPEDEF_I2D_OF(type)
 
@@ -706,10 +706,10 @@ void * __cdecl ASN1_item_dup(const ASN1_ITEM *it, void *x);
                 ASN1_item_free(CHECKED_PTR_OF(type, x), ASN1_ITEM_rptr(type))
 
 # ifndef OPENSSL_NO_STDIO
-void * __cdecl ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x);
+void * __cdecl ASN1_d2i_fp(void *(__cdecl *xnew) (void), d2i_of_void *d2i, FILE *in, void **x);
 
 #  define ASN1_d2i_fp_of(type,xnew,d2i,in,x) \
-    ((type*)ASN1_d2i_fp(CHECKED_NEW_OF(type, xnew), \
+    ((type *)ASN1_d2i_fp(CHECKED_NEW_OF(type, xnew), \
                         CHECKED_D2I_OF(type, d2i), \
                         in, \
                         CHECKED_PPTR_OF(type, x)))
@@ -733,10 +733,10 @@ int __cdecl ASN1_STRING_print_ex_fp(FILE *fp, const ASN1_STRING *str, unsigned l
 
 int __cdecl ASN1_STRING_to_UTF8(unsigned char **out, const ASN1_STRING *in);
 
-void * __cdecl ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x);
+void * __cdecl ASN1_d2i_bio(void * (__cdecl *xnew) (void), d2i_of_void *d2i, BIO *in, void **x);
 
 #  define ASN1_d2i_bio_of(type,xnew,d2i,in,x) \
-    ((type*)ASN1_d2i_bio( CHECKED_NEW_OF(type, xnew), \
+    ((type*) ASN1_d2i_bio( CHECKED_NEW_OF(type, xnew), \
                           CHECKED_D2I_OF(type, d2i), \
                           in, \
                           CHECKED_PPTR_OF(type, x)))

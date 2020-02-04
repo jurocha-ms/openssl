@@ -89,7 +89,7 @@ err:
     return ret;
 }
 
-CTLOG_STORE *CTLOG_STORE_new(void)
+CTLOG_STORE * __cdecl CTLOG_STORE_new(void)
 {
     CTLOG_STORE *ret = OPENSSL_zalloc(sizeof(*ret));
 
@@ -108,7 +108,7 @@ err:
     return NULL;
 }
 
-void CTLOG_STORE_free(CTLOG_STORE *store)
+void __cdecl CTLOG_STORE_free(CTLOG_STORE *store)
 {
     if (store != NULL) {
         sk_CTLOG_pop_free(store->logs, CTLOG_free);
@@ -135,7 +135,7 @@ static int ctlog_new_from_conf(CTLOG **ct_log, const CONF *conf, const char *sec
     return CTLOG_new_from_base64(ct_log, pkey_base64, description);
 }
 
-int CTLOG_STORE_load_default_file(CTLOG_STORE *store)
+int __cdecl CTLOG_STORE_load_default_file(CTLOG_STORE *store)
 {
     const char *fpath = ossl_safe_getenv(CTLOG_FILE_EVP);
 
@@ -192,7 +192,7 @@ mem_err:
     return -1;
 }
 
-int CTLOG_STORE_load_file(CTLOG_STORE *store, const char *file)
+int __cdecl CTLOG_STORE_load_file(CTLOG_STORE *store, const char *file)
 {
     int ret = 0;
     char *enabled_logs;
@@ -234,7 +234,7 @@ end:
  * Takes ownership of the public key.
  * Copies the name.
  */
-CTLOG *CTLOG_new(EVP_PKEY *public_key, const char *name)
+CTLOG * __cdecl CTLOG_new(EVP_PKEY *public_key, const char *name)
 {
     CTLOG *ret = OPENSSL_zalloc(sizeof(*ret));
 
@@ -269,19 +269,19 @@ void __cdecl CTLOG_free(CTLOG *log)
     }
 }
 
-const char *CTLOG_get0_name(const CTLOG *log)
+const char * __cdecl CTLOG_get0_name(const CTLOG *log)
 {
     return log->name;
 }
 
-void CTLOG_get0_log_id(const CTLOG *log, const uint8_t **log_id,
+void __cdecl CTLOG_get0_log_id(const CTLOG *log, const uint8_t **log_id,
                        size_t *log_id_len)
 {
     *log_id = log->log_id;
     *log_id_len = CT_V1_HASHLEN;
 }
 
-EVP_PKEY *CTLOG_get0_public_key(const CTLOG *log)
+EVP_PKEY * __cdecl CTLOG_get0_public_key(const CTLOG *log)
 {
     return log->public_key;
 }
@@ -290,7 +290,7 @@ EVP_PKEY *CTLOG_get0_public_key(const CTLOG *log)
  * Given a log ID, finds the matching log.
  * Returns NULL if no match found.
  */
-const CTLOG *CTLOG_STORE_get0_log_by_id(const CTLOG_STORE *store,
+const CTLOG * __cdecl CTLOG_STORE_get0_log_by_id(const CTLOG_STORE *store,
                                         const uint8_t *log_id,
                                         size_t log_id_len)
 {

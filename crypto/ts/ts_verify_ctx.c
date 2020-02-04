@@ -12,7 +12,7 @@
 #include <openssl/ts.h>
 #include "ts_lcl.h"
 
-TS_VERIFY_CTX *TS_VERIFY_CTX_new(void)
+TS_VERIFY_CTX * __cdecl TS_VERIFY_CTX_new(void)
 {
     TS_VERIFY_CTX *ctx = OPENSSL_zalloc(sizeof(*ctx));
 
@@ -21,13 +21,13 @@ TS_VERIFY_CTX *TS_VERIFY_CTX_new(void)
     return ctx;
 }
 
-void TS_VERIFY_CTX_init(TS_VERIFY_CTX *ctx)
+void __cdecl TS_VERIFY_CTX_init(TS_VERIFY_CTX *ctx)
 {
     OPENSSL_assert(ctx != NULL);
     memset(ctx, 0, sizeof(*ctx));
 }
 
-void TS_VERIFY_CTX_free(TS_VERIFY_CTX *ctx)
+void __cdecl TS_VERIFY_CTX_free(TS_VERIFY_CTX *ctx)
 {
     if (!ctx)
         return;
@@ -36,38 +36,38 @@ void TS_VERIFY_CTX_free(TS_VERIFY_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-int TS_VERIFY_CTX_add_flags(TS_VERIFY_CTX *ctx, int f)
+int __cdecl TS_VERIFY_CTX_add_flags(TS_VERIFY_CTX *ctx, int f)
 {
     ctx->flags |= f;
     return ctx->flags;
 }
 
-int TS_VERIFY_CTX_set_flags(TS_VERIFY_CTX *ctx, int f)
+int __cdecl TS_VERIFY_CTX_set_flags(TS_VERIFY_CTX *ctx, int f)
 {
     ctx->flags = f;
     return ctx->flags;
 }
 
-BIO *TS_VERIFY_CTX_set_data(TS_VERIFY_CTX *ctx, BIO *b)
+BIO * __cdecl TS_VERIFY_CTX_set_data(TS_VERIFY_CTX *ctx, BIO *b)
 {
     ctx->data = b;
     return ctx->data;
 }
 
-X509_STORE *TS_VERIFY_CTX_set_store(TS_VERIFY_CTX *ctx, X509_STORE *s)
+X509_STORE * __cdecl TS_VERIFY_CTX_set_store(TS_VERIFY_CTX *ctx, X509_STORE *s)
 {
     ctx->store = s;
     return ctx->store;
 }
 
-STACK_OF(X509) *TS_VERIFY_CTS_set_certs(TS_VERIFY_CTX *ctx,
+STACK_OF(X509) * __cdecl TS_VERIFY_CTS_set_certs(TS_VERIFY_CTX *ctx,
                                         STACK_OF(X509) *certs)
 {
     ctx->certs = certs;
     return ctx->certs;
 }
 
-unsigned char *TS_VERIFY_CTX_set_imprint(TS_VERIFY_CTX *ctx,
+unsigned char * __cdecl TS_VERIFY_CTX_set_imprint(TS_VERIFY_CTX *ctx,
                                          unsigned char *hexstr, long len)
 {
     ctx->imprint = hexstr;
@@ -75,7 +75,7 @@ unsigned char *TS_VERIFY_CTX_set_imprint(TS_VERIFY_CTX *ctx,
     return ctx->imprint;
 }
 
-void TS_VERIFY_CTX_cleanup(TS_VERIFY_CTX *ctx)
+void __cdecl TS_VERIFY_CTX_cleanup(TS_VERIFY_CTX *ctx)
 {
     if (!ctx)
         return;
@@ -97,7 +97,7 @@ void TS_VERIFY_CTX_cleanup(TS_VERIFY_CTX *ctx)
     TS_VERIFY_CTX_init(ctx);
 }
 
-TS_VERIFY_CTX *TS_REQ_to_TS_VERIFY_CTX(TS_REQ *req, TS_VERIFY_CTX *ctx)
+TS_VERIFY_CTX * __cdecl TS_REQ_to_TS_VERIFY_CTX(TS_REQ *req, TS_VERIFY_CTX *ctx)
 {
     TS_VERIFY_CTX *ret = ctx;
     ASN1_OBJECT *policy;

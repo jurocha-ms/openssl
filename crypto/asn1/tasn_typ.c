@@ -16,7 +16,7 @@
 #define IMPLEMENT_ASN1_STRING_FUNCTIONS(sname) \
     IMPLEMENT_ASN1_TYPE(sname) \
     IMPLEMENT_ASN1_ENCODE_FUNCTIONS_fname(sname, sname, sname) \
-sname *sname##_new(void) \
+sname * __cdecl sname##_new(void) \
 { \
     return ASN1_STRING_type_new(V_##sname); \
 } \

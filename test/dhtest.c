@@ -484,7 +484,7 @@ static const unsigned char dhtest_rfc5114_2048_224_bad_y[] = {
 };
 
 typedef struct {
-    DH *(*get_param) (void);
+    DH *(__cdecl *get_param) (void);
     const unsigned char *xA;
     size_t xA_len;
     const unsigned char *yA;

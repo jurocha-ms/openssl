@@ -25,7 +25,7 @@
  */
 static const time_t SCT_CLOCK_DRIFT_TOLERANCE = 300;
 
-CT_POLICY_EVAL_CTX *CT_POLICY_EVAL_CTX_new(void)
+CT_POLICY_EVAL_CTX * __cdecl CT_POLICY_EVAL_CTX_new(void)
 {
     CT_POLICY_EVAL_CTX *ctx = OPENSSL_zalloc(sizeof(CT_POLICY_EVAL_CTX));
 
@@ -41,7 +41,7 @@ CT_POLICY_EVAL_CTX *CT_POLICY_EVAL_CTX_new(void)
     return ctx;
 }
 
-void CT_POLICY_EVAL_CTX_free(CT_POLICY_EVAL_CTX *ctx)
+void __cdecl CT_POLICY_EVAL_CTX_free(CT_POLICY_EVAL_CTX *ctx)
 {
     if (ctx == NULL)
         return;
@@ -50,7 +50,7 @@ void CT_POLICY_EVAL_CTX_free(CT_POLICY_EVAL_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-int CT_POLICY_EVAL_CTX_set1_cert(CT_POLICY_EVAL_CTX *ctx, X509 *cert)
+int __cdecl CT_POLICY_EVAL_CTX_set1_cert(CT_POLICY_EVAL_CTX *ctx, X509 *cert)
 {
     if (!X509_up_ref(cert))
         return 0;
@@ -58,7 +58,7 @@ int CT_POLICY_EVAL_CTX_set1_cert(CT_POLICY_EVAL_CTX *ctx, X509 *cert)
     return 1;
 }
 
-int CT_POLICY_EVAL_CTX_set1_issuer(CT_POLICY_EVAL_CTX *ctx, X509 *issuer)
+int __cdecl CT_POLICY_EVAL_CTX_set1_issuer(CT_POLICY_EVAL_CTX *ctx, X509 *issuer)
 {
     if (!X509_up_ref(issuer))
         return 0;
@@ -66,33 +66,33 @@ int CT_POLICY_EVAL_CTX_set1_issuer(CT_POLICY_EVAL_CTX *ctx, X509 *issuer)
     return 1;
 }
 
-void CT_POLICY_EVAL_CTX_set_shared_CTLOG_STORE(CT_POLICY_EVAL_CTX *ctx,
+void __cdecl CT_POLICY_EVAL_CTX_set_shared_CTLOG_STORE(CT_POLICY_EVAL_CTX *ctx,
                                                CTLOG_STORE *log_store)
 {
     ctx->log_store = log_store;
 }
 
-void CT_POLICY_EVAL_CTX_set_time(CT_POLICY_EVAL_CTX *ctx, uint64_t time_in_ms)
+void __cdecl CT_POLICY_EVAL_CTX_set_time(CT_POLICY_EVAL_CTX *ctx, uint64_t time_in_ms)
 {
     ctx->epoch_time_in_ms = time_in_ms;
 }
 
-X509* CT_POLICY_EVAL_CTX_get0_cert(const CT_POLICY_EVAL_CTX *ctx)
+X509* __cdecl CT_POLICY_EVAL_CTX_get0_cert(const CT_POLICY_EVAL_CTX *ctx)
 {
     return ctx->cert;
 }
 
-X509* CT_POLICY_EVAL_CTX_get0_issuer(const CT_POLICY_EVAL_CTX *ctx)
+X509* __cdecl CT_POLICY_EVAL_CTX_get0_issuer(const CT_POLICY_EVAL_CTX *ctx)
 {
     return ctx->issuer;
 }
 
-const CTLOG_STORE *CT_POLICY_EVAL_CTX_get0_log_store(const CT_POLICY_EVAL_CTX *ctx)
+const CTLOG_STORE * __cdecl CT_POLICY_EVAL_CTX_get0_log_store(const CT_POLICY_EVAL_CTX *ctx)
 {
     return ctx->log_store;
 }
 
-uint64_t CT_POLICY_EVAL_CTX_get_time(const CT_POLICY_EVAL_CTX *ctx)
+uint64_t __cdecl CT_POLICY_EVAL_CTX_get_time(const CT_POLICY_EVAL_CTX *ctx)
 {
     return ctx->epoch_time_in_ms;
 }

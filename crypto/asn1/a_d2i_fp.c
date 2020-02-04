@@ -18,7 +18,7 @@
 #ifndef NO_OLD_ASN1
 # ifndef OPENSSL_NO_STDIO
 
-void * __cdecl ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, void **x)
+void * __cdecl ASN1_d2i_fp(void *(__cdecl *xnew) (void), d2i_of_void *d2i, FILE *in, void **x)
 {
     BIO *b;
     void *ret;
@@ -34,7 +34,7 @@ void * __cdecl ASN1_d2i_fp(void *(*xnew) (void), d2i_of_void *d2i, FILE *in, voi
 }
 # endif
 
-void * __cdecl ASN1_d2i_bio(void *(*xnew) (void), d2i_of_void *d2i, BIO *in, void **x)
+void * __cdecl ASN1_d2i_bio(void * (__cdecl *xnew) (void), d2i_of_void *d2i, BIO *in, void **x)
 {
     BUF_MEM *b = NULL;
     const unsigned char *p;

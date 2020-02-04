@@ -20,17 +20,17 @@ static int dh_bn_mod_exp(const DH *dh, BIGNUM *r,
 static int dh_init(DH *dh);
 static int dh_finish(DH *dh);
 
-int DH_generate_key(DH *dh)
+int __cdecl DH_generate_key(DH *dh)
 {
     return dh->meth->generate_key(dh);
 }
 
-int DH_compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh)
+int __cdecl DH_compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh)
 {
     return dh->meth->compute_key(key, pub_key, dh);
 }
 
-int DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh)
+int __cdecl DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh)
 {
     int rv, pad;
     rv = dh->meth->compute_key(key, pub_key, dh);
@@ -58,17 +58,17 @@ static DH_METHOD dh_ossl = {
 
 static const DH_METHOD *default_DH_method = &dh_ossl;
 
-const DH_METHOD *DH_OpenSSL(void)
+const DH_METHOD * __cdecl DH_OpenSSL(void)
 {
     return &dh_ossl;
 }
 
-void DH_set_default_method(const DH_METHOD *meth)
+void __cdecl DH_set_default_method(const DH_METHOD *meth)
 {
     default_DH_method = meth;
 }
 
-const DH_METHOD *DH_get_default_method(void)
+const DH_METHOD * __cdecl DH_get_default_method(void)
 {
     return default_DH_method;
 }

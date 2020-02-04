@@ -25,7 +25,7 @@ static int ts_status_map_print(BIO *bio, const struct status_map_st *a,
 static int ts_ACCURACY_print_bio(BIO *bio, const TS_ACCURACY *accuracy);
 
 
-int TS_RESP_print_bio(BIO *bio, TS_RESP *a)
+int __cdecl TS_RESP_print_bio(BIO *bio, TS_RESP *a)
 {
     BIO_printf(bio, "Status info:\n");
     TS_STATUS_INFO_print_bio(bio, a->status_info);
@@ -39,7 +39,7 @@ int TS_RESP_print_bio(BIO *bio, TS_RESP *a)
     return 1;
 }
 
-int TS_STATUS_INFO_print_bio(BIO *bio, TS_STATUS_INFO *a)
+int __cdecl TS_STATUS_INFO_print_bio(BIO *bio, TS_STATUS_INFO *a)
 {
     static const char *status_map[] = {
         "Granted.",
@@ -115,7 +115,7 @@ static int ts_status_map_print(BIO *bio, const struct status_map_st *a,
     return lines;
 }
 
-int TS_TST_INFO_print_bio(BIO *bio, TS_TST_INFO *a)
+int __cdecl TS_TST_INFO_print_bio(BIO *bio, TS_TST_INFO *a)
 {
     int v;
 

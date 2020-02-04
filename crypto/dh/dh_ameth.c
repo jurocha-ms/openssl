@@ -418,7 +418,7 @@ static int int_dh_param_copy(DH *to, const DH *from, int is_x942)
     return 1;
 }
 
-DH *DHparams_dup(DH *dh)
+DH * __cdecl DHparams_dup(DH *dh)
 {
     DH *ret;
     ret = DH_new();
@@ -477,7 +477,7 @@ static int dh_private_print(BIO *bp, const EVP_PKEY *pkey, int indent,
     return do_dh_print(bp, pkey->pkey.dh, indent, 2);
 }
 
-int DHparams_print(BIO *bp, const DH *x)
+int __cdecl DHparams_print(BIO *bp, const DH *x)
 {
     return do_dh_print(bp, x, 4, 0);
 }

@@ -76,7 +76,7 @@ EVP_PKEY *d2i_PrivateKey(int type, EVP_PKEY **a, const unsigned char **pp,
  * type
  */
 
-EVP_PKEY *d2i_AutoPrivateKey(EVP_PKEY **a, const unsigned char **pp,
+EVP_PKEY * __cdecl d2i_AutoPrivateKey(EVP_PKEY **a, const unsigned char **pp,
                              long length)
 {
     STACK_OF(ASN1_TYPE) *inkey;

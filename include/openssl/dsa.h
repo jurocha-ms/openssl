@@ -75,7 +75,7 @@ DSA *DSAparams_dup(DSA *x);
 DSA_SIG *DSA_SIG_new(void);
 void DSA_SIG_free(DSA_SIG *a);
 int __cdecl i2d_DSA_SIG(const DSA_SIG *a, unsigned char **pp);
-DSA_SIG *d2i_DSA_SIG(DSA_SIG **v, const unsigned char **pp, long length);
+DSA_SIG * __cdecl d2i_DSA_SIG(DSA_SIG **v, const unsigned char **pp, long length);
 void DSA_SIG_get0(const DSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps);
 int DSA_SIG_set0(DSA_SIG *sig, BIGNUM *r, BIGNUM *s);
 
@@ -90,7 +90,7 @@ const DSA_METHOD *DSA_get_default_method(void);
 int DSA_set_method(DSA *dsa, const DSA_METHOD *);
 const DSA_METHOD *DSA_get_method(DSA *d);
 
-DSA *DSA_new(void);
+DSA * __cdecl DSA_new(void);
 DSA *DSA_new_method(ENGINE *engine);
 void DSA_free(DSA *r);
 /* "up" the DSA object's reference count */
@@ -109,9 +109,9 @@ int DSA_verify(int type, const unsigned char *dgst, int dgst_len,
 int DSA_set_ex_data(DSA *d, int idx, void *arg);
 void *DSA_get_ex_data(DSA *d, int idx);
 
-DSA *d2i_DSAPublicKey(DSA **a, const unsigned char **pp, long length);
-DSA *d2i_DSAPrivateKey(DSA **a, const unsigned char **pp, long length);
-DSA *d2i_DSAparams(DSA **a, const unsigned char **pp, long length);
+DSA * __cdecl d2i_DSAPublicKey(DSA **a, const unsigned char **pp, long length);
+DSA * __cdecl d2i_DSAPrivateKey(DSA **a, const unsigned char **pp, long length);
+DSA * __cdecl d2i_DSAparams(DSA **a, const unsigned char **pp, long length);
 
 /* Deprecated version */
 DEPRECATEDIN_0_9_8(DSA *DSA_generate_parameters(int bits,

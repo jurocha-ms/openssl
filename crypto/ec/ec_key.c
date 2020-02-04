@@ -15,7 +15,7 @@
 #include <openssl/err.h>
 #include <openssl/engine.h>
 
-EC_KEY *EC_KEY_new(void)
+EC_KEY * __cdecl EC_KEY_new(void)
 {
     return EC_KEY_new_method(NULL);
 }

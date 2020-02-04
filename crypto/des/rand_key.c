@@ -10,7 +10,7 @@
 #include <openssl/des.h>
 #include <openssl/rand.h>
 
-int DES_random_key(DES_cblock *ret)
+int __cdecl DES_random_key(DES_cblock *ret)
 {
     do {
         if (RAND_priv_bytes((unsigned char *)ret, sizeof(DES_cblock)) != 1)

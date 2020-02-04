@@ -100,7 +100,7 @@ static STACK_OF(X509) *load_chain(BIO *fp, int nelem)
     long len;
     char *errtype = 0;                /* if error: cert or pkey? */
     STACK_OF(X509) *chain;
-    typedef X509 *(*d2i_X509_t)(X509 **, const unsigned char **, long);
+    typedef X509 *(__cdecl * d2i_X509_t)(X509 **, const unsigned char **, long);
 
     if (!TEST_ptr(chain = sk_X509_new_null()))
         goto err;

@@ -20,7 +20,7 @@
 static int dh_builtin_genparams(DH *ret, int prime_len, int generator,
                                 BN_GENCB *cb);
 
-int DH_generate_parameters_ex(DH *ret, int prime_len, int generator,
+int __cdecl DH_generate_parameters_ex(DH *ret, int prime_len, int generator,
                               BN_GENCB *cb)
 {
     if (ret->meth->generate_params)

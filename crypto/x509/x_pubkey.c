@@ -179,7 +179,7 @@ EVP_PKEY *X509_PUBKEY_get(X509_PUBKEY *key)
  * decode as X509_PUBKEY
  */
 
-EVP_PKEY *d2i_PUBKEY(EVP_PKEY **a, const unsigned char **pp, long length)
+EVP_PKEY * __cdecl d2i_PUBKEY(EVP_PKEY **a, const unsigned char **pp, long length)
 {
     X509_PUBKEY *xpk;
     EVP_PKEY *pktmp;
@@ -217,7 +217,7 @@ int __cdecl i2d_PUBKEY(EVP_PKEY *a, unsigned char **pp)
  * The following are equivalents but which return RSA and DSA keys
  */
 #ifndef OPENSSL_NO_RSA
-RSA *d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length)
+RSA * __cdecl d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length)
 {
     EVP_PKEY *pkey;
     RSA *key;
@@ -257,7 +257,7 @@ int __cdecl i2d_RSA_PUBKEY(RSA *a, unsigned char **pp)
 #endif
 
 #ifndef OPENSSL_NO_DSA
-DSA *d2i_DSA_PUBKEY(DSA **a, const unsigned char **pp, long length)
+DSA * __cdecl d2i_DSA_PUBKEY(DSA **a, const unsigned char **pp, long length)
 {
     EVP_PKEY *pkey;
     DSA *key;
@@ -297,7 +297,7 @@ int __cdecl i2d_DSA_PUBKEY(DSA *a, unsigned char **pp)
 #endif
 
 #ifndef OPENSSL_NO_EC
-EC_KEY *d2i_EC_PUBKEY(EC_KEY **a, const unsigned char **pp, long length)
+EC_KEY * __cdecl d2i_EC_PUBKEY(EC_KEY **a, const unsigned char **pp, long length)
 {
     EVP_PKEY *pkey;
     EC_KEY *key;

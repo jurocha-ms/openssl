@@ -13,7 +13,7 @@
 #include <openssl/dh.h>
 
 #ifndef OPENSSL_NO_STDIO
-int DHparams_print_fp(FILE *fp, const DH *x)
+int __cdecl DHparams_print_fp(FILE *fp, const DH *x)
 {
     BIO *b;
     int ret;

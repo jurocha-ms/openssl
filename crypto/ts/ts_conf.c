@@ -41,7 +41,7 @@
 
 /* Function definitions for certificate and key loading. */
 
-X509 *TS_CONF_load_cert(const char *file)
+X509 * __cdecl TS_CONF_load_cert(const char *file)
 {
     BIO *cert = NULL;
     X509 *x = NULL;
@@ -56,7 +56,7 @@ X509 *TS_CONF_load_cert(const char *file)
     return x;
 }
 
-STACK_OF(X509) *TS_CONF_load_certs(const char *file)
+STACK_OF(X509) * __cdecl TS_CONF_load_certs(const char *file)
 {
     BIO *certs = NULL;
     STACK_OF(X509) *othercerts = NULL;
@@ -84,7 +84,7 @@ STACK_OF(X509) *TS_CONF_load_certs(const char *file)
     return othercerts;
 }
 
-EVP_PKEY *TS_CONF_load_key(const char *file, const char *pass)
+EVP_PKEY * __cdecl TS_CONF_load_key(const char *file, const char *pass)
 {
     BIO *key = NULL;
     EVP_PKEY *pkey = NULL;
@@ -113,7 +113,7 @@ static void ts_CONF_invalid(const char *name, const char *tag)
     ERR_add_error_data(3, name, "::", tag);
 }
 
-const char *TS_CONF_get_tsa_section(CONF *conf, const char *section)
+const char * __cdecl TS_CONF_get_tsa_section(CONF *conf, const char *section)
 {
     if (!section) {
         section = NCONF_get_string(conf, BASE_SECTION, ENV_DEFAULT_TSA);
@@ -123,7 +123,7 @@ const char *TS_CONF_get_tsa_section(CONF *conf, const char *section)
     return section;
 }
 
-int TS_CONF_set_serial(CONF *conf, const char *section, TS_serial_cb cb,
+int __cdecl TS_CONF_set_serial(CONF *conf, const char *section, TS_serial_cb cb,
                        TS_RESP_CTX *ctx)
 {
     int ret = 0;
@@ -141,7 +141,7 @@ int TS_CONF_set_serial(CONF *conf, const char *section, TS_serial_cb cb,
 
 #ifndef OPENSSL_NO_ENGINE
 
-int TS_CONF_set_crypto_device(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_crypto_device(CONF *conf, const char *section,
                               const char *device)
 {
     int ret = 0;
@@ -158,7 +158,7 @@ int TS_CONF_set_crypto_device(CONF *conf, const char *section,
     return ret;
 }
 
-int TS_CONF_set_default_engine(const char *name)
+int __cdecl TS_CONF_set_default_engine(const char *name)
 {
     ENGINE *e = NULL;
     int ret = 0;
@@ -185,7 +185,7 @@ int TS_CONF_set_default_engine(const char *name)
 
 #endif
 
-int TS_CONF_set_signer_cert(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_signer_cert(CONF *conf, const char *section,
                             const char *cert, TS_RESP_CTX *ctx)
 {
     int ret = 0;
@@ -209,7 +209,7 @@ int TS_CONF_set_signer_cert(CONF *conf, const char *section,
     return ret;
 }
 
-int TS_CONF_set_certs(CONF *conf, const char *section, const char *certs,
+int __cdecl TS_CONF_set_certs(CONF *conf, const char *section, const char *certs,
                       TS_RESP_CTX *ctx)
 {
     int ret = 0;
@@ -231,7 +231,7 @@ int TS_CONF_set_certs(CONF *conf, const char *section, const char *certs,
     return ret;
 }
 
-int TS_CONF_set_signer_key(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_signer_key(CONF *conf, const char *section,
                            const char *key, const char *pass,
                            TS_RESP_CTX *ctx)
 {
@@ -254,7 +254,7 @@ int TS_CONF_set_signer_key(CONF *conf, const char *section,
     return ret;
 }
 
-int TS_CONF_set_signer_digest(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_signer_digest(CONF *conf, const char *section,
                               const char *md, TS_RESP_CTX *ctx)
 {
     int ret = 0;
@@ -278,7 +278,7 @@ int TS_CONF_set_signer_digest(CONF *conf, const char *section,
     return ret;
 }
 
-int TS_CONF_set_def_policy(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_def_policy(CONF *conf, const char *section,
                            const char *policy, TS_RESP_CTX *ctx)
 {
     int ret = 0;
@@ -302,7 +302,7 @@ int TS_CONF_set_def_policy(CONF *conf, const char *section,
     return ret;
 }
 
-int TS_CONF_set_policies(CONF *conf, const char *section, TS_RESP_CTX *ctx)
+int __cdecl TS_CONF_set_policies(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
     int ret = 0;
     int i;
@@ -334,7 +334,7 @@ int TS_CONF_set_policies(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     return ret;
 }
 
-int TS_CONF_set_digests(CONF *conf, const char *section, TS_RESP_CTX *ctx)
+int __cdecl TS_CONF_set_digests(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
     int ret = 0;
     int i;
@@ -372,7 +372,7 @@ int TS_CONF_set_digests(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     return ret;
 }
 
-int TS_CONF_set_accuracy(CONF *conf, const char *section, TS_RESP_CTX *ctx)
+int __cdecl TS_CONF_set_accuracy(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
     int ret = 0;
     int i;
@@ -409,7 +409,7 @@ int TS_CONF_set_accuracy(CONF *conf, const char *section, TS_RESP_CTX *ctx)
     return ret;
 }
 
-int TS_CONF_set_clock_precision_digits(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_clock_precision_digits(CONF *conf, const char *section,
                                        TS_RESP_CTX *ctx)
 {
     int ret = 0;
@@ -451,24 +451,24 @@ static int ts_CONF_add_flag(CONF *conf, const char *section,
     return 1;
 }
 
-int TS_CONF_set_ordering(CONF *conf, const char *section, TS_RESP_CTX *ctx)
+int __cdecl TS_CONF_set_ordering(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
     return ts_CONF_add_flag(conf, section, ENV_ORDERING, TS_ORDERING, ctx);
 }
 
-int TS_CONF_set_tsa_name(CONF *conf, const char *section, TS_RESP_CTX *ctx)
+int __cdecl TS_CONF_set_tsa_name(CONF *conf, const char *section, TS_RESP_CTX *ctx)
 {
     return ts_CONF_add_flag(conf, section, ENV_TSA_NAME, TS_TSA_NAME, ctx);
 }
 
-int TS_CONF_set_ess_cert_id_chain(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_ess_cert_id_chain(CONF *conf, const char *section,
                                   TS_RESP_CTX *ctx)
 {
     return ts_CONF_add_flag(conf, section, ENV_ESS_CERT_ID_CHAIN,
                             TS_ESS_CERT_ID_CHAIN, ctx);
 }
 
-int TS_CONF_set_ess_cert_id_digest(CONF *conf, const char *section,
+int __cdecl TS_CONF_set_ess_cert_id_digest(CONF *conf, const char *section,
                                    TS_RESP_CTX *ctx)
 {
     int ret = 0;

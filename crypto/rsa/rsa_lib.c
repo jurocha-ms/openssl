@@ -17,7 +17,7 @@
 #include "internal/evp_int.h"
 #include "rsa_locl.h"
 
-RSA *RSA_new(void)
+RSA * __cdecl RSA_new(void)
 {
     return RSA_new_method(NULL);
 }

@@ -137,7 +137,7 @@ int EVP_PKEY_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
     return -2;
 }
 
-EVP_PKEY *EVP_PKEY_new(void)
+EVP_PKEY * __cdecl EVP_PKEY_new(void)
 {
     EVP_PKEY *ret = OPENSSL_zalloc(sizeof(*ret));
 

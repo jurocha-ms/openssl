@@ -401,19 +401,19 @@ RSA *d2i_RSAPrivateKey_fp(FILE *fp, RSA **rsa);
 int i2d_RSAPrivateKey_fp(FILE *fp, RSA *rsa);
 RSA *d2i_RSAPublicKey_fp(FILE *fp, RSA **rsa);
 int i2d_RSAPublicKey_fp(FILE *fp, RSA *rsa);
-RSA *d2i_RSA_PUBKEY_fp(FILE *fp, RSA **rsa);
+RSA * __cdecl d2i_RSA_PUBKEY_fp(FILE *fp, RSA **rsa);
 int i2d_RSA_PUBKEY_fp(FILE *fp, RSA *rsa);
 #  endif
 #  ifndef OPENSSL_NO_DSA
-DSA *d2i_DSA_PUBKEY_fp(FILE *fp, DSA **dsa);
+DSA * __cdecl d2i_DSA_PUBKEY_fp(FILE *fp, DSA **dsa);
 int i2d_DSA_PUBKEY_fp(FILE *fp, DSA *dsa);
-DSA *d2i_DSAPrivateKey_fp(FILE *fp, DSA **dsa);
+DSA * __cdecl d2i_DSAPrivateKey_fp(FILE *fp, DSA **dsa);
 int i2d_DSAPrivateKey_fp(FILE *fp, DSA *dsa);
 #  endif
 #  ifndef OPENSSL_NO_EC
-EC_KEY *d2i_EC_PUBKEY_fp(FILE *fp, EC_KEY **eckey);
+EC_KEY * __cdecl d2i_EC_PUBKEY_fp(FILE *fp, EC_KEY **eckey);
 int i2d_EC_PUBKEY_fp(FILE *fp, EC_KEY *eckey);
-EC_KEY *d2i_ECPrivateKey_fp(FILE *fp, EC_KEY **eckey);
+EC_KEY * __cdecl d2i_ECPrivateKey_fp(FILE *fp, EC_KEY **eckey);
 int i2d_ECPrivateKey_fp(FILE *fp, EC_KEY *eckey);
 #  endif
 X509_SIG *d2i_PKCS8_fp(FILE *fp, X509_SIG **p8);
@@ -423,9 +423,9 @@ PKCS8_PRIV_KEY_INFO *d2i_PKCS8_PRIV_KEY_INFO_fp(FILE *fp,
 int i2d_PKCS8_PRIV_KEY_INFO_fp(FILE *fp, PKCS8_PRIV_KEY_INFO *p8inf);
 int i2d_PKCS8PrivateKeyInfo_fp(FILE *fp, EVP_PKEY *key);
 int i2d_PrivateKey_fp(FILE *fp, EVP_PKEY *pkey);
-EVP_PKEY *d2i_PrivateKey_fp(FILE *fp, EVP_PKEY **a);
+EVP_PKEY * __cdecl d2i_PrivateKey_fp(FILE *fp, EVP_PKEY **a);
 int i2d_PUBKEY_fp(FILE *fp, EVP_PKEY *pkey);
-EVP_PKEY *d2i_PUBKEY_fp(FILE *fp, EVP_PKEY **a);
+EVP_PKEY * __cdecl d2i_PUBKEY_fp(FILE *fp, EVP_PKEY **a);
 # endif
 
 X509 *d2i_X509_bio(BIO *bp, X509 **x509);
@@ -439,19 +439,19 @@ RSA *d2i_RSAPrivateKey_bio(BIO *bp, RSA **rsa);
 int i2d_RSAPrivateKey_bio(BIO *bp, RSA *rsa);
 RSA *d2i_RSAPublicKey_bio(BIO *bp, RSA **rsa);
 int i2d_RSAPublicKey_bio(BIO *bp, RSA *rsa);
-RSA *d2i_RSA_PUBKEY_bio(BIO *bp, RSA **rsa);
+RSA * __cdecl d2i_RSA_PUBKEY_bio(BIO *bp, RSA **rsa);
 int i2d_RSA_PUBKEY_bio(BIO *bp, RSA *rsa);
 #  endif
 #  ifndef OPENSSL_NO_DSA
-DSA *d2i_DSA_PUBKEY_bio(BIO *bp, DSA **dsa);
+DSA * __cdecl d2i_DSA_PUBKEY_bio(BIO *bp, DSA **dsa);
 int i2d_DSA_PUBKEY_bio(BIO *bp, DSA *dsa);
-DSA *d2i_DSAPrivateKey_bio(BIO *bp, DSA **dsa);
+DSA * __cdecl d2i_DSAPrivateKey_bio(BIO *bp, DSA **dsa);
 int i2d_DSAPrivateKey_bio(BIO *bp, DSA *dsa);
 #  endif
 #  ifndef OPENSSL_NO_EC
-EC_KEY *d2i_EC_PUBKEY_bio(BIO *bp, EC_KEY **eckey);
+EC_KEY * __cdecl d2i_EC_PUBKEY_bio(BIO *bp, EC_KEY **eckey);
 int i2d_EC_PUBKEY_bio(BIO *bp, EC_KEY *eckey);
-EC_KEY *d2i_ECPrivateKey_bio(BIO *bp, EC_KEY **eckey);
+EC_KEY * __cdecl d2i_ECPrivateKey_bio(BIO *bp, EC_KEY **eckey);
 int i2d_ECPrivateKey_bio(BIO *bp, EC_KEY *eckey);
 #  endif
 X509_SIG *d2i_PKCS8_bio(BIO *bp, X509_SIG **p8);
@@ -461,17 +461,17 @@ PKCS8_PRIV_KEY_INFO *d2i_PKCS8_PRIV_KEY_INFO_bio(BIO *bp,
 int i2d_PKCS8_PRIV_KEY_INFO_bio(BIO *bp, PKCS8_PRIV_KEY_INFO *p8inf);
 int i2d_PKCS8PrivateKeyInfo_bio(BIO *bp, EVP_PKEY *key);
 int i2d_PrivateKey_bio(BIO *bp, EVP_PKEY *pkey);
-EVP_PKEY *d2i_PrivateKey_bio(BIO *bp, EVP_PKEY **a);
+EVP_PKEY * __cdecl d2i_PrivateKey_bio(BIO *bp, EVP_PKEY **a);
 int i2d_PUBKEY_bio(BIO *bp, EVP_PKEY *pkey);
-EVP_PKEY *d2i_PUBKEY_bio(BIO *bp, EVP_PKEY **a);
+EVP_PKEY * __cdecl d2i_PUBKEY_bio(BIO *bp, EVP_PKEY **a);
 
-X509 *X509_dup(X509 *x509);
-X509_ATTRIBUTE *X509_ATTRIBUTE_dup(X509_ATTRIBUTE *xa);
-X509_EXTENSION *X509_EXTENSION_dup(X509_EXTENSION *ex);
-X509_CRL *X509_CRL_dup(X509_CRL *crl);
-X509_REVOKED *X509_REVOKED_dup(X509_REVOKED *rev);
-X509_REQ *X509_REQ_dup(X509_REQ *req);
-X509_ALGOR *X509_ALGOR_dup(X509_ALGOR *xn);
+X509 * __cdecl X509_dup(X509 *x509);
+X509_ATTRIBUTE * __cdecl X509_ATTRIBUTE_dup(X509_ATTRIBUTE *xa);
+X509_EXTENSION * __cdecl X509_EXTENSION_dup(X509_EXTENSION *ex);
+X509_CRL * __cdecl X509_CRL_dup(X509_CRL *crl);
+X509_REVOKED * __cdecl X509_REVOKED_dup(X509_REVOKED *rev);
+X509_REQ * __cdecl X509_REQ_dup(X509_REQ *req);
+X509_ALGOR * __cdecl X509_ALGOR_dup(X509_ALGOR *xn);
 int X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype,
                     void *pval);
 void X509_ALGOR_get0(const ASN1_OBJECT **paobj, int *pptype,
@@ -479,8 +479,8 @@ void X509_ALGOR_get0(const ASN1_OBJECT **paobj, int *pptype,
 void X509_ALGOR_set_md(X509_ALGOR *alg, const EVP_MD *md);
 int X509_ALGOR_cmp(const X509_ALGOR *a, const X509_ALGOR *b);
 
-X509_NAME *X509_NAME_dup(X509_NAME *xn);
-X509_NAME_ENTRY *X509_NAME_ENTRY_dup(X509_NAME_ENTRY *ne);
+X509_NAME * __cdecl X509_NAME_dup(X509_NAME *xn);
+X509_NAME_ENTRY * __cdecl X509_NAME_ENTRY_dup(X509_NAME_ENTRY *ne);
 
 int X509_cmp_time(const ASN1_TIME *s, time_t *t);
 int X509_cmp_current_time(const ASN1_TIME *s);
@@ -511,18 +511,18 @@ EVP_PKEY *X509_PUBKEY_get(X509_PUBKEY *key);
 int X509_get_pubkey_parameters(EVP_PKEY *pkey, STACK_OF(X509) *chain);
 long X509_get_pathlen(X509 *x);
 int __cdecl i2d_PUBKEY(EVP_PKEY *a, unsigned char **pp);
-EVP_PKEY *d2i_PUBKEY(EVP_PKEY **a, const unsigned char **pp, long length);
+EVP_PKEY * __cdecl d2i_PUBKEY(EVP_PKEY **a, const unsigned char **pp, long length);
 # ifndef OPENSSL_NO_RSA
 int __cdecl i2d_RSA_PUBKEY(RSA *a, unsigned char **pp);
-RSA *d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length);
+RSA * __cdecl d2i_RSA_PUBKEY(RSA **a, const unsigned char **pp, long length);
 # endif
 # ifndef OPENSSL_NO_DSA
 int __cdecl i2d_DSA_PUBKEY(DSA *a, unsigned char **pp);
-DSA *d2i_DSA_PUBKEY(DSA **a, const unsigned char **pp, long length);
+DSA * __cdecl d2i_DSA_PUBKEY(DSA **a, const unsigned char **pp, long length);
 # endif
 # ifndef OPENSSL_NO_EC
 int __cdecl i2d_EC_PUBKEY(EC_KEY *a, unsigned char **pp);
-EC_KEY *d2i_EC_PUBKEY(EC_KEY **a, const unsigned char **pp, long length);
+EC_KEY * __cdecl d2i_EC_PUBKEY(EC_KEY **a, const unsigned char **pp, long length);
 # endif
 
 DECLARE_ASN1_FUNCTIONS(X509_SIG)
@@ -556,7 +556,7 @@ DECLARE_ASN1_FUNCTIONS(X509_CERT_AUX)
 int X509_set_ex_data(X509 *r, int idx, void *arg);
 void *X509_get_ex_data(X509 *r, int idx);
 int __cdecl i2d_X509_AUX(X509 *a, unsigned char **pp);
-X509 *d2i_X509_AUX(X509 **a, const unsigned char **pp, long length);
+X509 * __cdecl d2i_X509_AUX(X509 **a, const unsigned char **pp, long length);
 
 int i2d_re_X509_tbs(X509 *x, unsigned char **pp);
 
