@@ -17,7 +17,7 @@
 
 /* functions for EC_GROUP objects */
 
-EC_GROUP *EC_GROUP_new(const EC_METHOD *meth)
+EC_GROUP * __cdecl EC_GROUP_new(const EC_METHOD *meth)
 {
     EC_GROUP *ret;
 
@@ -91,7 +91,7 @@ void EC_pre_comp_free(EC_GROUP *group)
     group->pre_comp.ec = NULL;
 }
 
-void EC_GROUP_free(EC_GROUP *group)
+void __cdecl EC_GROUP_free(EC_GROUP *group)
 {
     if (!group)
         return;
@@ -108,7 +108,7 @@ void EC_GROUP_free(EC_GROUP *group)
     OPENSSL_free(group);
 }
 
-void EC_GROUP_clear_free(EC_GROUP *group)
+void __cdecl EC_GROUP_clear_free(EC_GROUP *group)
 {
     if (!group)
         return;
@@ -127,7 +127,7 @@ void EC_GROUP_clear_free(EC_GROUP *group)
     OPENSSL_clear_free(group, sizeof(*group));
 }
 
-int EC_GROUP_copy(EC_GROUP *dest, const EC_GROUP *src)
+int __cdecl EC_GROUP_copy(EC_GROUP *dest, const EC_GROUP *src)
 {
     if (dest->meth->group_copy == 0) {
         ECerr(EC_F_EC_GROUP_COPY, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
@@ -230,7 +230,7 @@ int EC_GROUP_copy(EC_GROUP *dest, const EC_GROUP *src)
     return dest->meth->group_copy(dest, src);
 }
 
-EC_GROUP *EC_GROUP_dup(const EC_GROUP *a)
+EC_GROUP * __cdecl EC_GROUP_dup(const EC_GROUP *a)
 {
     EC_GROUP *t = NULL;
     int ok = 0;
@@ -253,12 +253,12 @@ EC_GROUP *EC_GROUP_dup(const EC_GROUP *a)
         return t;
 }
 
-const EC_METHOD *EC_GROUP_method_of(const EC_GROUP *group)
+const EC_METHOD * __cdecl EC_GROUP_method_of(const EC_GROUP *group)
 {
     return group->meth;
 }
 
-int EC_METHOD_get_field_type(const EC_METHOD *meth)
+int __cdecl EC_METHOD_get_field_type(const EC_METHOD *meth)
 {
     return meth->field_type;
 }
@@ -326,7 +326,7 @@ static int ec_guess_cofactor(EC_GROUP *group) {
     return ret;
 }
 
-int EC_GROUP_set_generator(EC_GROUP *group, const EC_POINT *generator,
+int __cdecl EC_GROUP_set_generator(EC_GROUP *group, const EC_POINT *generator,
                            const BIGNUM *order, const BIGNUM *cofactor)
 {
     if (generator == NULL) {
@@ -396,17 +396,17 @@ int EC_GROUP_set_generator(EC_GROUP *group, const EC_POINT *generator,
     return 1;
 }
 
-const EC_POINT *EC_GROUP_get0_generator(const EC_GROUP *group)
+const EC_POINT * __cdecl EC_GROUP_get0_generator(const EC_GROUP *group)
 {
     return group->generator;
 }
 
-BN_MONT_CTX *EC_GROUP_get_mont_data(const EC_GROUP *group)
+BN_MONT_CTX * __cdecl EC_GROUP_get_mont_data(const EC_GROUP *group)
 {
     return group->mont_data;
 }
 
-int EC_GROUP_get_order(const EC_GROUP *group, BIGNUM *order, BN_CTX *ctx)
+int __cdecl EC_GROUP_get_order(const EC_GROUP *group, BIGNUM *order, BN_CTX *ctx)
 {
     if (group->order == NULL)
         return 0;
@@ -416,17 +416,17 @@ int EC_GROUP_get_order(const EC_GROUP *group, BIGNUM *order, BN_CTX *ctx)
     return !BN_is_zero(order);
 }
 
-const BIGNUM *EC_GROUP_get0_order(const EC_GROUP *group)
+const BIGNUM * __cdecl EC_GROUP_get0_order(const EC_GROUP *group)
 {
     return group->order;
 }
 
-int EC_GROUP_order_bits(const EC_GROUP *group)
+int __cdecl EC_GROUP_order_bits(const EC_GROUP *group)
 {
     return group->meth->group_order_bits(group);
 }
 
-int EC_GROUP_get_cofactor(const EC_GROUP *group, BIGNUM *cofactor,
+int __cdecl EC_GROUP_get_cofactor(const EC_GROUP *group, BIGNUM *cofactor,
                           BN_CTX *ctx)
 {
 
@@ -438,44 +438,44 @@ int EC_GROUP_get_cofactor(const EC_GROUP *group, BIGNUM *cofactor,
     return !BN_is_zero(group->cofactor);
 }
 
-const BIGNUM *EC_GROUP_get0_cofactor(const EC_GROUP *group)
+const BIGNUM * __cdecl EC_GROUP_get0_cofactor(const EC_GROUP *group)
 {
     return group->cofactor;
 }
 
-void EC_GROUP_set_curve_name(EC_GROUP *group, int nid)
+void __cdecl EC_GROUP_set_curve_name(EC_GROUP *group, int nid)
 {
     group->curve_name = nid;
 }
 
-int EC_GROUP_get_curve_name(const EC_GROUP *group)
+int __cdecl EC_GROUP_get_curve_name(const EC_GROUP *group)
 {
     return group->curve_name;
 }
 
-void EC_GROUP_set_asn1_flag(EC_GROUP *group, int flag)
+void __cdecl EC_GROUP_set_asn1_flag(EC_GROUP *group, int flag)
 {
     group->asn1_flag = flag;
 }
 
-int EC_GROUP_get_asn1_flag(const EC_GROUP *group)
+int __cdecl EC_GROUP_get_asn1_flag(const EC_GROUP *group)
 {
     return group->asn1_flag;
 }
 
-void EC_GROUP_set_point_conversion_form(EC_GROUP *group,
+void __cdecl EC_GROUP_set_point_conversion_form(EC_GROUP *group,
                                         point_conversion_form_t form)
 {
     group->asn1_form = form;
 }
 
-point_conversion_form_t EC_GROUP_get_point_conversion_form(const EC_GROUP
+point_conversion_form_t __cdecl EC_GROUP_get_point_conversion_form(const EC_GROUP
                                                            *group)
 {
     return group->asn1_form;
 }
 
-size_t EC_GROUP_set_seed(EC_GROUP *group, const unsigned char *p, size_t len)
+size_t __cdecl EC_GROUP_set_seed(EC_GROUP *group, const unsigned char *p, size_t len)
 {
     OPENSSL_free(group->seed);
     group->seed = NULL;
@@ -494,17 +494,17 @@ size_t EC_GROUP_set_seed(EC_GROUP *group, const unsigned char *p, size_t len)
     return len;
 }
 
-unsigned char *EC_GROUP_get0_seed(const EC_GROUP *group)
+unsigned char * __cdecl EC_GROUP_get0_seed(const EC_GROUP *group)
 {
     return group->seed;
 }
 
-size_t EC_GROUP_get_seed_len(const EC_GROUP *group)
+size_t __cdecl EC_GROUP_get_seed_len(const EC_GROUP *group)
 {
     return group->seed_len;
 }
 
-int EC_GROUP_set_curve(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
+int __cdecl EC_GROUP_set_curve(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
                        const BIGNUM *b, BN_CTX *ctx)
 {
     if (group->meth->group_set_curve == 0) {
@@ -514,7 +514,7 @@ int EC_GROUP_set_curve(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
     return group->meth->group_set_curve(group, p, a, b, ctx);
 }
 
-int EC_GROUP_get_curve(const EC_GROUP *group, BIGNUM *p, BIGNUM *a, BIGNUM *b,
+int __cdecl EC_GROUP_get_curve(const EC_GROUP *group, BIGNUM *p, BIGNUM *a, BIGNUM *b,
                        BN_CTX *ctx)
 {
     if (group->meth->group_get_curve == NULL) {
@@ -525,26 +525,26 @@ int EC_GROUP_get_curve(const EC_GROUP *group, BIGNUM *p, BIGNUM *a, BIGNUM *b,
 }
 
 #if OPENSSL_API_COMPAT < 0x10200000L
-int EC_GROUP_set_curve_GFp(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
+int __cdecl EC_GROUP_set_curve_GFp(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
                            const BIGNUM *b, BN_CTX *ctx)
 {
     return EC_GROUP_set_curve(group, p, a, b, ctx);
 }
 
-int EC_GROUP_get_curve_GFp(const EC_GROUP *group, BIGNUM *p, BIGNUM *a,
+int __cdecl EC_GROUP_get_curve_GFp(const EC_GROUP *group, BIGNUM *p, BIGNUM *a,
                            BIGNUM *b, BN_CTX *ctx)
 {
     return EC_GROUP_get_curve(group, p, a, b, ctx);
 }
 
 # ifndef OPENSSL_NO_EC2M
-int EC_GROUP_set_curve_GF2m(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
+int __cdecl EC_GROUP_set_curve_GF2m(EC_GROUP *group, const BIGNUM *p, const BIGNUM *a,
                             const BIGNUM *b, BN_CTX *ctx)
 {
     return EC_GROUP_set_curve(group, p, a, b, ctx);
 }
 
-int EC_GROUP_get_curve_GF2m(const EC_GROUP *group, BIGNUM *p, BIGNUM *a,
+int __cdecl EC_GROUP_get_curve_GF2m(const EC_GROUP *group, BIGNUM *p, BIGNUM *a,
                             BIGNUM *b, BN_CTX *ctx)
 {
     return EC_GROUP_get_curve(group, p, a, b, ctx);
@@ -552,7 +552,7 @@ int EC_GROUP_get_curve_GF2m(const EC_GROUP *group, BIGNUM *p, BIGNUM *a,
 # endif
 #endif
 
-int EC_GROUP_get_degree(const EC_GROUP *group)
+int __cdecl EC_GROUP_get_degree(const EC_GROUP *group)
 {
     if (group->meth->group_get_degree == 0) {
         ECerr(EC_F_EC_GROUP_GET_DEGREE, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
@@ -561,7 +561,7 @@ int EC_GROUP_get_degree(const EC_GROUP *group)
     return group->meth->group_get_degree(group);
 }
 
-int EC_GROUP_check_discriminant(const EC_GROUP *group, BN_CTX *ctx)
+int __cdecl EC_GROUP_check_discriminant(const EC_GROUP *group, BN_CTX *ctx)
 {
     if (group->meth->group_check_discriminant == 0) {
         ECerr(EC_F_EC_GROUP_CHECK_DISCRIMINANT,
@@ -571,7 +571,7 @@ int EC_GROUP_check_discriminant(const EC_GROUP *group, BN_CTX *ctx)
     return group->meth->group_check_discriminant(group, ctx);
 }
 
-int EC_GROUP_cmp(const EC_GROUP *a, const EC_GROUP *b, BN_CTX *ctx)
+int __cdecl EC_GROUP_cmp(const EC_GROUP *a, const EC_GROUP *b, BN_CTX *ctx)
 {
     int r = 0;
     BIGNUM *a1, *a2, *a3, *b1, *b2, *b3;
@@ -646,7 +646,7 @@ int EC_GROUP_cmp(const EC_GROUP *a, const EC_GROUP *b, BN_CTX *ctx)
 
 /* functions for EC_POINT objects */
 
-EC_POINT *EC_POINT_new(const EC_GROUP *group)
+EC_POINT * __cdecl EC_POINT_new(const EC_GROUP *group)
 {
     EC_POINT *ret;
 
@@ -676,7 +676,7 @@ EC_POINT *EC_POINT_new(const EC_GROUP *group)
     return ret;
 }
 
-void EC_POINT_free(EC_POINT *point)
+void __cdecl EC_POINT_free(EC_POINT *point)
 {
     if (!point)
         return;
@@ -686,7 +686,7 @@ void EC_POINT_free(EC_POINT *point)
     OPENSSL_free(point);
 }
 
-void EC_POINT_clear_free(EC_POINT *point)
+void __cdecl EC_POINT_clear_free(EC_POINT *point)
 {
     if (!point)
         return;
@@ -698,7 +698,7 @@ void EC_POINT_clear_free(EC_POINT *point)
     OPENSSL_clear_free(point, sizeof(*point));
 }
 
-int EC_POINT_copy(EC_POINT *dest, const EC_POINT *src)
+int __cdecl EC_POINT_copy(EC_POINT *dest, const EC_POINT *src)
 {
     if (dest->meth->point_copy == 0) {
         ECerr(EC_F_EC_POINT_COPY, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
@@ -716,7 +716,7 @@ int EC_POINT_copy(EC_POINT *dest, const EC_POINT *src)
     return dest->meth->point_copy(dest, src);
 }
 
-EC_POINT *EC_POINT_dup(const EC_POINT *a, const EC_GROUP *group)
+EC_POINT * __cdecl EC_POINT_dup(const EC_POINT *a, const EC_GROUP *group)
 {
     EC_POINT *t;
     int r;
@@ -735,12 +735,12 @@ EC_POINT *EC_POINT_dup(const EC_POINT *a, const EC_GROUP *group)
     return t;
 }
 
-const EC_METHOD *EC_POINT_method_of(const EC_POINT *point)
+const EC_METHOD * __cdecl EC_POINT_method_of(const EC_POINT *point)
 {
     return point->meth;
 }
 
-int EC_POINT_set_to_infinity(const EC_GROUP *group, EC_POINT *point)
+int __cdecl EC_POINT_set_to_infinity(const EC_GROUP *group, EC_POINT *point)
 {
     if (group->meth->point_set_to_infinity == 0) {
         ECerr(EC_F_EC_POINT_SET_TO_INFINITY,
@@ -754,7 +754,7 @@ int EC_POINT_set_to_infinity(const EC_GROUP *group, EC_POINT *point)
     return group->meth->point_set_to_infinity(group, point);
 }
 
-int EC_POINT_set_Jprojective_coordinates_GFp(const EC_GROUP *group,
+int __cdecl EC_POINT_set_Jprojective_coordinates_GFp(const EC_GROUP *group,
                                              EC_POINT *point, const BIGNUM *x,
                                              const BIGNUM *y, const BIGNUM *z,
                                              BN_CTX *ctx)
@@ -773,7 +773,7 @@ int EC_POINT_set_Jprojective_coordinates_GFp(const EC_GROUP *group,
                                                               y, z, ctx);
 }
 
-int EC_POINT_get_Jprojective_coordinates_GFp(const EC_GROUP *group,
+int __cdecl EC_POINT_get_Jprojective_coordinates_GFp(const EC_GROUP *group,
                                              const EC_POINT *point, BIGNUM *x,
                                              BIGNUM *y, BIGNUM *z,
                                              BN_CTX *ctx)
@@ -792,7 +792,7 @@ int EC_POINT_get_Jprojective_coordinates_GFp(const EC_GROUP *group,
                                                               y, z, ctx);
 }
 
-int EC_POINT_set_affine_coordinates(const EC_GROUP *group, EC_POINT *point,
+int __cdecl EC_POINT_set_affine_coordinates(const EC_GROUP *group, EC_POINT *point,
                                     const BIGNUM *x, const BIGNUM *y,
                                     BN_CTX *ctx)
 {
@@ -816,7 +816,7 @@ int EC_POINT_set_affine_coordinates(const EC_GROUP *group, EC_POINT *point,
 }
 
 #if OPENSSL_API_COMPAT < 0x10200000L
-int EC_POINT_set_affine_coordinates_GFp(const EC_GROUP *group,
+int __cdecl EC_POINT_set_affine_coordinates_GFp(const EC_GROUP *group,
                                         EC_POINT *point, const BIGNUM *x,
                                         const BIGNUM *y, BN_CTX *ctx)
 {
@@ -824,7 +824,7 @@ int EC_POINT_set_affine_coordinates_GFp(const EC_GROUP *group,
 }
 
 # ifndef OPENSSL_NO_EC2M
-int EC_POINT_set_affine_coordinates_GF2m(const EC_GROUP *group,
+int __cdecl EC_POINT_set_affine_coordinates_GF2m(const EC_GROUP *group,
                                          EC_POINT *point, const BIGNUM *x,
                                          const BIGNUM *y, BN_CTX *ctx)
 {
@@ -833,7 +833,7 @@ int EC_POINT_set_affine_coordinates_GF2m(const EC_GROUP *group,
 # endif
 #endif
 
-int EC_POINT_get_affine_coordinates(const EC_GROUP *group,
+int __cdecl EC_POINT_get_affine_coordinates(const EC_GROUP *group,
                                     const EC_POINT *point, BIGNUM *x, BIGNUM *y,
                                     BN_CTX *ctx)
 {
@@ -854,7 +854,7 @@ int EC_POINT_get_affine_coordinates(const EC_GROUP *group,
 }
 
 #if OPENSSL_API_COMPAT < 0x10200000L
-int EC_POINT_get_affine_coordinates_GFp(const EC_GROUP *group,
+int __cdecl EC_POINT_get_affine_coordinates_GFp(const EC_GROUP *group,
                                         const EC_POINT *point, BIGNUM *x,
                                         BIGNUM *y, BN_CTX *ctx)
 {
@@ -862,7 +862,7 @@ int EC_POINT_get_affine_coordinates_GFp(const EC_GROUP *group,
 }
 
 # ifndef OPENSSL_NO_EC2M
-int EC_POINT_get_affine_coordinates_GF2m(const EC_GROUP *group,
+int __cdecl EC_POINT_get_affine_coordinates_GF2m(const EC_GROUP *group,
                                          const EC_POINT *point, BIGNUM *x,
                                          BIGNUM *y, BN_CTX *ctx)
 {
@@ -871,7 +871,7 @@ int EC_POINT_get_affine_coordinates_GF2m(const EC_GROUP *group,
 # endif
 #endif
 
-int EC_POINT_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a,
+int __cdecl EC_POINT_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a,
                  const EC_POINT *b, BN_CTX *ctx)
 {
     if (group->meth->add == 0) {
@@ -886,7 +886,7 @@ int EC_POINT_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a,
     return group->meth->add(group, r, a, b, ctx);
 }
 
-int EC_POINT_dbl(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a,
+int __cdecl EC_POINT_dbl(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a,
                  BN_CTX *ctx)
 {
     if (group->meth->dbl == 0) {
@@ -900,7 +900,7 @@ int EC_POINT_dbl(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a,
     return group->meth->dbl(group, r, a, ctx);
 }
 
-int EC_POINT_invert(const EC_GROUP *group, EC_POINT *a, BN_CTX *ctx)
+int __cdecl EC_POINT_invert(const EC_GROUP *group, EC_POINT *a, BN_CTX *ctx)
 {
     if (group->meth->invert == 0) {
         ECerr(EC_F_EC_POINT_INVERT, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
@@ -913,7 +913,7 @@ int EC_POINT_invert(const EC_GROUP *group, EC_POINT *a, BN_CTX *ctx)
     return group->meth->invert(group, a, ctx);
 }
 
-int EC_POINT_is_at_infinity(const EC_GROUP *group, const EC_POINT *point)
+int __cdecl EC_POINT_is_at_infinity(const EC_GROUP *group, const EC_POINT *point)
 {
     if (group->meth->is_at_infinity == 0) {
         ECerr(EC_F_EC_POINT_IS_AT_INFINITY,
@@ -934,7 +934,7 @@ int EC_POINT_is_at_infinity(const EC_GROUP *group, const EC_POINT *point)
  *  0: The point is not on the curve
  * -1: An error occurred
  */
-int EC_POINT_is_on_curve(const EC_GROUP *group, const EC_POINT *point,
+int __cdecl EC_POINT_is_on_curve(const EC_GROUP *group, const EC_POINT *point,
                          BN_CTX *ctx)
 {
     if (group->meth->is_on_curve == 0) {
@@ -948,7 +948,7 @@ int EC_POINT_is_on_curve(const EC_GROUP *group, const EC_POINT *point,
     return group->meth->is_on_curve(group, point, ctx);
 }
 
-int EC_POINT_cmp(const EC_GROUP *group, const EC_POINT *a, const EC_POINT *b,
+int __cdecl EC_POINT_cmp(const EC_GROUP *group, const EC_POINT *a, const EC_POINT *b,
                  BN_CTX *ctx)
 {
     if (group->meth->point_cmp == 0) {
@@ -962,7 +962,7 @@ int EC_POINT_cmp(const EC_GROUP *group, const EC_POINT *a, const EC_POINT *b,
     return group->meth->point_cmp(group, a, b, ctx);
 }
 
-int EC_POINT_make_affine(const EC_GROUP *group, EC_POINT *point, BN_CTX *ctx)
+int __cdecl EC_POINT_make_affine(const EC_GROUP *group, EC_POINT *point, BN_CTX *ctx)
 {
     if (group->meth->make_affine == 0) {
         ECerr(EC_F_EC_POINT_MAKE_AFFINE, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
@@ -975,7 +975,7 @@ int EC_POINT_make_affine(const EC_GROUP *group, EC_POINT *point, BN_CTX *ctx)
     return group->meth->make_affine(group, point, ctx);
 }
 
-int EC_POINTs_make_affine(const EC_GROUP *group, size_t num,
+int __cdecl EC_POINTs_make_affine(const EC_GROUP *group, size_t num,
                           EC_POINT *points[], BN_CTX *ctx)
 {
     size_t i;
@@ -999,7 +999,7 @@ int EC_POINTs_make_affine(const EC_GROUP *group, size_t num,
  * methods.
  */
 
-int EC_POINTs_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *scalar,
+int __cdecl EC_POINTs_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *scalar,
                   size_t num, const EC_POINT *points[],
                   const BIGNUM *scalars[], BN_CTX *ctx)
 {
@@ -1037,7 +1037,7 @@ int EC_POINTs_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *scalar,
     return ret;
 }
 
-int EC_POINT_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *g_scalar,
+int __cdecl EC_POINT_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *g_scalar,
                  const EC_POINT *point, const BIGNUM *p_scalar, BN_CTX *ctx)
 {
     /* just a convenient interface to EC_POINTs_mul() */
@@ -1053,7 +1053,7 @@ int EC_POINT_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *g_scalar,
                           && p_scalar != NULL), points, scalars, ctx);
 }
 
-int EC_GROUP_precompute_mult(EC_GROUP *group, BN_CTX *ctx)
+int __cdecl EC_GROUP_precompute_mult(EC_GROUP *group, BN_CTX *ctx)
 {
     if (group->meth->mul == 0)
         /* use default */
@@ -1065,7 +1065,7 @@ int EC_GROUP_precompute_mult(EC_GROUP *group, BN_CTX *ctx)
         return 1;               /* nothing to do, so report success */
 }
 
-int EC_GROUP_have_precompute_mult(const EC_GROUP *group)
+int __cdecl EC_GROUP_have_precompute_mult(const EC_GROUP *group)
 {
     if (group->meth->mul == 0)
         /* use default */
@@ -1111,12 +1111,12 @@ static int ec_precompute_mont_data(EC_GROUP *group)
     return ret;
 }
 
-int EC_KEY_set_ex_data(EC_KEY *key, int idx, void *arg)
+int __cdecl EC_KEY_set_ex_data(EC_KEY *key, int idx, void *arg)
 {
     return CRYPTO_set_ex_data(&key->ex_data, idx, arg);
 }
 
-void *EC_KEY_get_ex_data(const EC_KEY *key, int idx)
+void * __cdecl EC_KEY_get_ex_data(const EC_KEY *key, int idx)
 {
     return CRYPTO_get_ex_data(&key->ex_data, idx);
 }

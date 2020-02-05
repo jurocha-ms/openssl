@@ -11,7 +11,7 @@
 #include <openssl/err.h>
 #include "ec_lcl.h"
 
-BIGNUM *EC_POINT_point2bn(const EC_GROUP *group,
+BIGNUM * __cdecl EC_POINT_point2bn(const EC_GROUP *group,
                           const EC_POINT *point,
                           point_conversion_form_t form,
                           BIGNUM *ret, BN_CTX *ctx)
@@ -31,7 +31,7 @@ BIGNUM *EC_POINT_point2bn(const EC_GROUP *group,
     return ret;
 }
 
-EC_POINT *EC_POINT_bn2point(const EC_GROUP *group,
+EC_POINT * __cdecl EC_POINT_bn2point(const EC_GROUP *group,
                             const BIGNUM *bn, EC_POINT *point, BN_CTX *ctx)
 {
     size_t buf_len = 0;
@@ -72,7 +72,7 @@ EC_POINT *EC_POINT_bn2point(const EC_GROUP *group,
 static const char *HEX_DIGITS = "0123456789ABCDEF";
 
 /* the return value must be freed (using OPENSSL_free()) */
-char *EC_POINT_point2hex(const EC_GROUP *group,
+char * __cdecl EC_POINT_point2hex(const EC_GROUP *group,
                          const EC_POINT *point,
                          point_conversion_form_t form, BN_CTX *ctx)
 {
@@ -104,7 +104,7 @@ char *EC_POINT_point2hex(const EC_GROUP *group,
     return ret;
 }
 
-EC_POINT *EC_POINT_hex2point(const EC_GROUP *group,
+EC_POINT * __cdecl EC_POINT_hex2point(const EC_GROUP *group,
                              const char *buf, EC_POINT *point, BN_CTX *ctx)
 {
     EC_POINT *ret = NULL;

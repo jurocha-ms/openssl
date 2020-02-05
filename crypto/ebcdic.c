@@ -334,7 +334,7 @@ const unsigned char os_toebcdic[256] = {
  * memcpy(3).
  */
 
-void *ebcdic2ascii(void *dest, const void *srce, size_t count)
+void * __cdecl ebcdic2ascii(void *dest, const void *srce, size_t count)
 {
     unsigned char *udest = dest;
     const unsigned char *usrce = srce;
@@ -346,7 +346,7 @@ void *ebcdic2ascii(void *dest, const void *srce, size_t count)
     return dest;
 }
 
-void *ascii2ebcdic(void *dest, const void *srce, size_t count)
+void * __cdecl ascii2ebcdic(void *dest, const void *srce, size_t count)
 {
     unsigned char *udest = dest;
     const unsigned char *usrce = srce;

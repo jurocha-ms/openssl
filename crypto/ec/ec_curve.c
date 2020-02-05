@@ -3114,7 +3114,7 @@ static EC_GROUP *ec_group_new_from_data(const ec_list_element curve)
     return group;
 }
 
-EC_GROUP *EC_GROUP_new_by_curve_name(int nid)
+EC_GROUP * __cdecl EC_GROUP_new_by_curve_name(int nid)
 {
     size_t i;
     EC_GROUP *ret = NULL;
@@ -3136,7 +3136,7 @@ EC_GROUP *EC_GROUP_new_by_curve_name(int nid)
     return ret;
 }
 
-size_t EC_get_builtin_curves(EC_builtin_curve *r, size_t nitems)
+size_t __cdecl EC_get_builtin_curves(EC_builtin_curve *r, size_t nitems)
 {
     size_t i, min;
 
@@ -3178,7 +3178,7 @@ static EC_NIST_NAME nist_curves[] = {
     {"P-521", NID_secp521r1}
 };
 
-const char *EC_curve_nid2nist(int nid)
+const char * __cdecl EC_curve_nid2nist(int nid)
 {
     size_t i;
     for (i = 0; i < OSSL_NELEM(nist_curves); i++) {
@@ -3188,7 +3188,7 @@ const char *EC_curve_nid2nist(int nid)
     return NULL;
 }
 
-int EC_curve_nist2nid(const char *name)
+int __cdecl EC_curve_nist2nid(const char *name)
 {
     size_t i;
     for (i = 0; i < OSSL_NELEM(nist_curves); i++) {

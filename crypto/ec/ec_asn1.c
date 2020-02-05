@@ -14,7 +14,7 @@
 #include <openssl/objects.h>
 #include "internal/nelem.h"
 
-int EC_GROUP_get_basis_type(const EC_GROUP *group)
+int __cdecl EC_GROUP_get_basis_type(const EC_GROUP *group)
 {
     int i;
 
@@ -39,7 +39,7 @@ int EC_GROUP_get_basis_type(const EC_GROUP *group)
 }
 
 #ifndef OPENSSL_NO_EC2M
-int EC_GROUP_get_trinomial_basis(const EC_GROUP *group, unsigned int *k)
+int __cdecl EC_GROUP_get_trinomial_basis(const EC_GROUP *group, unsigned int *k)
 {
     if (group == NULL)
         return 0;
@@ -59,7 +59,7 @@ int EC_GROUP_get_trinomial_basis(const EC_GROUP *group, unsigned int *k)
     return 1;
 }
 
-int EC_GROUP_get_pentanomial_basis(const EC_GROUP *group, unsigned int *k1,
+int __cdecl EC_GROUP_get_pentanomial_basis(const EC_GROUP *group, unsigned int *k1,
                                    unsigned int *k2, unsigned int *k3)
 {
     if (group == NULL)
@@ -437,7 +437,7 @@ static int ec_asn1_group2curve(const EC_GROUP *group, X9_62_CURVE *curve)
     return ok;
 }
 
-ECPARAMETERS *EC_GROUP_get_ecparameters(const EC_GROUP *group,
+ECPARAMETERS * __cdecl EC_GROUP_get_ecparameters(const EC_GROUP *group,
                                                ECPARAMETERS *params)
 {
     size_t len = 0;
@@ -520,7 +520,7 @@ ECPARAMETERS *EC_GROUP_get_ecparameters(const EC_GROUP *group,
     return NULL;
 }
 
-ECPKPARAMETERS *EC_GROUP_get_ecpkparameters(const EC_GROUP *group,
+ECPKPARAMETERS * __cdecl EC_GROUP_get_ecpkparameters(const EC_GROUP *group,
                                             ECPKPARAMETERS *params)
 {
     int ok = 1, tmp;
@@ -565,7 +565,7 @@ ECPKPARAMETERS *EC_GROUP_get_ecpkparameters(const EC_GROUP *group,
     return ret;
 }
 
-EC_GROUP *EC_GROUP_new_from_ecparameters(const ECPARAMETERS *params)
+EC_GROUP * __cdecl EC_GROUP_new_from_ecparameters(const ECPARAMETERS *params)
 {
     int ok = 0, tmp;
     EC_GROUP *ret = NULL, *dup = NULL;
@@ -867,7 +867,7 @@ EC_GROUP *EC_GROUP_new_from_ecparameters(const ECPARAMETERS *params)
     return ret;
 }
 
-EC_GROUP *EC_GROUP_new_from_ecpkparameters(const ECPKPARAMETERS *params)
+EC_GROUP * __cdecl EC_GROUP_new_from_ecpkparameters(const ECPKPARAMETERS *params)
 {
     EC_GROUP *ret = NULL;
     int tmp = 0;
@@ -1103,7 +1103,7 @@ int __cdecl i2d_ECPrivateKey(EC_KEY *a, unsigned char **out)
     return (ok ? ret : 0);
 }
 
-int i2d_ECParameters(EC_KEY *a, unsigned char **out)
+int __cdecl i2d_ECParameters(EC_KEY *a, unsigned char **out)
 {
     if (a == NULL) {
         ECerr(EC_F_I2D_ECPARAMETERS, ERR_R_PASSED_NULL_PARAMETER);
@@ -1112,7 +1112,7 @@ int i2d_ECParameters(EC_KEY *a, unsigned char **out)
     return i2d_ECPKParameters(a->group, out);
 }
 
-EC_KEY *d2i_ECParameters(EC_KEY **a, const unsigned char **in, long len)
+EC_KEY * __cdecl d2i_ECParameters(EC_KEY **a, const unsigned char **in, long len)
 {
     EC_KEY *ret;
 
@@ -1142,7 +1142,7 @@ EC_KEY *d2i_ECParameters(EC_KEY **a, const unsigned char **in, long len)
     return ret;
 }
 
-EC_KEY *o2i_ECPublicKey(EC_KEY **a, const unsigned char **in, long len)
+EC_KEY * __cdecl o2i_ECPublicKey(EC_KEY **a, const unsigned char **in, long len)
 {
     EC_KEY *ret = NULL;
 
@@ -1162,7 +1162,7 @@ EC_KEY *o2i_ECPublicKey(EC_KEY **a, const unsigned char **in, long len)
     return ret;
 }
 
-int i2o_ECPublicKey(const EC_KEY *a, unsigned char **out)
+int __cdecl i2o_ECPublicKey(const EC_KEY *a, unsigned char **out)
 {
     size_t buf_len = 0;
     int new_buffer = 0;
@@ -1226,7 +1226,7 @@ void __cdecl ECDSA_SIG_free(ECDSA_SIG *sig)
     OPENSSL_free(sig);
 }
 
-void ECDSA_SIG_get0(const ECDSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps)
+void __cdecl ECDSA_SIG_get0(const ECDSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps)
 {
     if (pr != NULL)
         *pr = sig->r;
@@ -1234,17 +1234,17 @@ void ECDSA_SIG_get0(const ECDSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps)
         *ps = sig->s;
 }
 
-const BIGNUM *ECDSA_SIG_get0_r(const ECDSA_SIG *sig)
+const BIGNUM * __cdecl ECDSA_SIG_get0_r(const ECDSA_SIG *sig)
 {
     return sig->r;
 }
 
-const BIGNUM *ECDSA_SIG_get0_s(const ECDSA_SIG *sig)
+const BIGNUM * __cdecl ECDSA_SIG_get0_s(const ECDSA_SIG *sig)
 {
     return sig->s;
 }
 
-int ECDSA_SIG_set0(ECDSA_SIG *sig, BIGNUM *r, BIGNUM *s)
+int __cdecl ECDSA_SIG_set0(ECDSA_SIG *sig, BIGNUM *r, BIGNUM *s)
 {
     if (r == NULL || s == NULL)
         return 0;
@@ -1255,7 +1255,7 @@ int ECDSA_SIG_set0(ECDSA_SIG *sig, BIGNUM *r, BIGNUM *s)
     return 1;
 }
 
-int ECDSA_size(const EC_KEY *r)
+int __cdecl ECDSA_size(const EC_KEY *r)
 {
     int ret, i;
     ASN1_INTEGER bs;

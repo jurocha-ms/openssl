@@ -15,7 +15,7 @@
 #include <openssl/bn.h>
 
 #ifndef OPENSSL_NO_STDIO
-int ECPKParameters_print_fp(FILE *fp, const EC_GROUP *x, int off)
+int __cdecl ECPKParameters_print_fp(FILE *fp, const EC_GROUP *x, int off)
 {
     BIO *b;
     int ret;
@@ -30,7 +30,7 @@ int ECPKParameters_print_fp(FILE *fp, const EC_GROUP *x, int off)
     return ret;
 }
 
-int EC_KEY_print_fp(FILE *fp, const EC_KEY *x, int off)
+int __cdecl EC_KEY_print_fp(FILE *fp, const EC_KEY *x, int off)
 {
     BIO *b;
     int ret;
@@ -45,7 +45,7 @@ int EC_KEY_print_fp(FILE *fp, const EC_KEY *x, int off)
     return ret;
 }
 
-int ECParameters_print_fp(FILE *fp, const EC_KEY *x)
+int __cdecl ECParameters_print_fp(FILE *fp, const EC_KEY *x)
 {
     BIO *b;
     int ret;
@@ -64,7 +64,7 @@ int ECParameters_print_fp(FILE *fp, const EC_KEY *x)
 static int print_bin(BIO *fp, const char *str, const unsigned char *num,
                      size_t len, int off);
 
-int ECPKParameters_print(BIO *bp, const EC_GROUP *x, int off)
+int __cdecl ECPKParameters_print(BIO *bp, const EC_GROUP *x, int off)
 {
     int ret = 0, reason = ERR_R_BIO_LIB;
     BN_CTX *ctx = NULL;

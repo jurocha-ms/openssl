@@ -616,7 +616,7 @@ const EVP_PKEY_ASN1_METHOD sm2_asn1_meth = {
 };
 #endif
 
-int EC_KEY_print(BIO *bp, const EC_KEY *x, int off)
+int __cdecl EC_KEY_print(BIO *bp, const EC_KEY *x, int off)
 {
     int private = EC_KEY_get0_private_key(x) != NULL;
 
@@ -624,7 +624,7 @@ int EC_KEY_print(BIO *bp, const EC_KEY *x, int off)
                 private ? EC_KEY_PRINT_PRIVATE : EC_KEY_PRINT_PUBLIC);
 }
 
-int ECParameters_print(BIO *bp, const EC_KEY *x)
+int __cdecl ECParameters_print(BIO *bp, const EC_KEY *x)
 {
     return do_EC_KEY_print(bp, x, 4, EC_KEY_PRINT_PARAM);
 }

@@ -10,7 +10,7 @@
 #include "ec_lcl.h"
 #include <openssl/err.h>
 
-int EC_GROUP_check(const EC_GROUP *group, BN_CTX *ctx)
+int __cdecl EC_GROUP_check(const EC_GROUP *group, BN_CTX *ctx)
 {
     int ret = 0;
     const BIGNUM *order;

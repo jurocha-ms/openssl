@@ -15,7 +15,7 @@
 
 #include "ec_lcl.h"
 
-int EC_POINT_set_compressed_coordinates(const EC_GROUP *group, EC_POINT *point,
+int __cdecl EC_POINT_set_compressed_coordinates(const EC_GROUP *group, EC_POINT *point,
                                         const BIGNUM *x, int y_bit, BN_CTX *ctx)
 {
     if (group->meth->point_set_compressed_coordinates == NULL
@@ -50,7 +50,7 @@ int EC_POINT_set_compressed_coordinates(const EC_GROUP *group, EC_POINT *point,
 }
 
 #if OPENSSL_API_COMPAT < 0x10200000L
-int EC_POINT_set_compressed_coordinates_GFp(const EC_GROUP *group,
+int __cdecl EC_POINT_set_compressed_coordinates_GFp(const EC_GROUP *group,
                                             EC_POINT *point, const BIGNUM *x,
                                             int y_bit, BN_CTX *ctx)
 {
@@ -58,7 +58,7 @@ int EC_POINT_set_compressed_coordinates_GFp(const EC_GROUP *group,
 }
 
 # ifndef OPENSSL_NO_EC2M
-int EC_POINT_set_compressed_coordinates_GF2m(const EC_GROUP *group,
+int __cdecl EC_POINT_set_compressed_coordinates_GF2m(const EC_GROUP *group,
                                              EC_POINT *point, const BIGNUM *x,
                                              int y_bit, BN_CTX *ctx)
 {
@@ -67,7 +67,7 @@ int EC_POINT_set_compressed_coordinates_GF2m(const EC_GROUP *group,
 # endif
 #endif
 
-size_t EC_POINT_point2oct(const EC_GROUP *group, const EC_POINT *point,
+size_t __cdecl EC_POINT_point2oct(const EC_GROUP *group, const EC_POINT *point,
                           point_conversion_form_t form, unsigned char *buf,
                           size_t len, BN_CTX *ctx)
 {
@@ -98,7 +98,7 @@ size_t EC_POINT_point2oct(const EC_GROUP *group, const EC_POINT *point,
     return group->meth->point2oct(group, point, form, buf, len, ctx);
 }
 
-int EC_POINT_oct2point(const EC_GROUP *group, EC_POINT *point,
+int __cdecl EC_POINT_oct2point(const EC_GROUP *group, EC_POINT *point,
                        const unsigned char *buf, size_t len, BN_CTX *ctx)
 {
     if (group->meth->oct2point == 0
@@ -126,7 +126,7 @@ int EC_POINT_oct2point(const EC_GROUP *group, EC_POINT *point,
     return group->meth->oct2point(group, point, buf, len, ctx);
 }
 
-size_t EC_POINT_point2buf(const EC_GROUP *group, const EC_POINT *point,
+size_t __cdecl EC_POINT_point2buf(const EC_GROUP *group, const EC_POINT *point,
                           point_conversion_form_t form,
                           unsigned char **pbuf, BN_CTX *ctx)
 {

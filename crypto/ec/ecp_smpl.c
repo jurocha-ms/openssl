@@ -13,7 +13,7 @@
 
 #include "ec_lcl.h"
 
-const EC_METHOD *EC_GFp_simple_method(void)
+const EC_METHOD * __cdecl EC_GFp_simple_method(void)
 {
     static const EC_METHOD ret = {
         EC_FLAGS_DEFAULT_OCT,

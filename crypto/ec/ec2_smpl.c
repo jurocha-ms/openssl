@@ -903,7 +903,7 @@ static int ec_GF2m_simple_field_inv(const EC_GROUP *group, BIGNUM *r,
     return ret;
 }
 
-const EC_METHOD *EC_GF2m_simple_method(void)
+const EC_METHOD * __cdecl EC_GF2m_simple_method(void)
 {
     static const EC_METHOD ret = {
         EC_FLAGS_DEFAULT_OCT,

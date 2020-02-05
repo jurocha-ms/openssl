@@ -382,7 +382,7 @@ static const ERR_STRING_DATA EC_str_reasons[] = {
 
 #endif
 
-int ERR_load_EC_strings(void)
+int __cdecl ERR_load_EC_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_func_error_string(EC_str_functs[0].error) == NULL) {
