@@ -217,20 +217,20 @@ typedef struct ERR_string_data_st {
 
 DEFINE_LHASH_OF(ERR_STRING_DATA);
 
-void ERR_put_error(int lib, int func, int reason, const char *file, int line);
-void ERR_set_error_data(char *data, int flags);
+void __cdecl ERR_put_error(int lib, int func, int reason, const char *file, int line);
+void __cdecl ERR_set_error_data(char *data, int flags);
 
-unsigned long ERR_get_error(void);
-unsigned long ERR_get_error_line(const char **file, int *line);
-unsigned long ERR_get_error_line_data(const char **file, int *line,
+unsigned long __cdecl ERR_get_error(void);
+unsigned long __cdecl ERR_get_error_line(const char **file, int *line);
+unsigned long __cdecl ERR_get_error_line_data(const char **file, int *line,
                                       const char **data, int *flags);
-unsigned long ERR_peek_error(void);
-unsigned long ERR_peek_error_line(const char **file, int *line);
-unsigned long ERR_peek_error_line_data(const char **file, int *line,
+unsigned long __cdecl ERR_peek_error(void);
+unsigned long __cdecl ERR_peek_error_line(const char **file, int *line);
+unsigned long __cdecl ERR_peek_error_line_data(const char **file, int *line,
                                        const char **data, int *flags);
-unsigned long ERR_peek_last_error(void);
-unsigned long ERR_peek_last_error_line(const char **file, int *line);
-unsigned long ERR_peek_last_error_line_data(const char **file, int *line,
+unsigned long __cdecl ERR_peek_last_error(void);
+unsigned long __cdecl ERR_peek_last_error_line(const char **file, int *line);
+unsigned long __cdecl ERR_peek_last_error_line_data(const char **file, int *line,
                                             const char **data, int *flags);
 void __cdecl ERR_clear_error(void);
 char *__cdecl ERR_error_string(unsigned long e, char *buf);
@@ -261,11 +261,11 @@ DEPRECATEDIN_1_1_0(void ERR_remove_thread_state(void *))
 DEPRECATEDIN_1_0_0(void ERR_remove_state(unsigned long pid))
 ERR_STATE * __cdecl ERR_get_state(void);
 
-int ERR_get_next_error_library(void);
+int __cdecl ERR_get_next_error_library(void);
 
-int ERR_set_mark(void);
-int ERR_pop_to_mark(void);
-int ERR_clear_last_mark(void);
+int __cdecl ERR_set_mark(void);
+int __cdecl ERR_pop_to_mark(void);
+int __cdecl ERR_clear_last_mark(void);
 
 #ifdef  __cplusplus
 }

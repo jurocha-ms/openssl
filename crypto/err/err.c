@@ -400,7 +400,7 @@ void __cdecl err_free_strings_int(void)
 
 /********************************************************/
 
-void ERR_put_error(int lib, int func, int reason, const char *file, int line)
+void __cdecl ERR_put_error(int lib, int func, int reason, const char *file, int line)
 {
     ERR_STATE *es;
 
@@ -452,49 +452,49 @@ void __cdecl ERR_clear_error(void)
     es->top = es->bottom = 0;
 }
 
-unsigned long ERR_get_error(void)
+unsigned long __cdecl ERR_get_error(void)
 {
     return get_error_values(1, 0, NULL, NULL, NULL, NULL);
 }
 
-unsigned long ERR_get_error_line(const char **file, int *line)
+unsigned long __cdecl ERR_get_error_line(const char **file, int *line)
 {
     return get_error_values(1, 0, file, line, NULL, NULL);
 }
 
-unsigned long ERR_get_error_line_data(const char **file, int *line,
+unsigned long __cdecl ERR_get_error_line_data(const char **file, int *line,
                                       const char **data, int *flags)
 {
     return get_error_values(1, 0, file, line, data, flags);
 }
 
-unsigned long ERR_peek_error(void)
+unsigned long __cdecl ERR_peek_error(void)
 {
     return get_error_values(0, 0, NULL, NULL, NULL, NULL);
 }
 
-unsigned long ERR_peek_error_line(const char **file, int *line)
+unsigned long __cdecl ERR_peek_error_line(const char **file, int *line)
 {
     return get_error_values(0, 0, file, line, NULL, NULL);
 }
 
-unsigned long ERR_peek_error_line_data(const char **file, int *line,
+unsigned long __cdecl ERR_peek_error_line_data(const char **file, int *line,
                                        const char **data, int *flags)
 {
     return get_error_values(0, 0, file, line, data, flags);
 }
 
-unsigned long ERR_peek_last_error(void)
+unsigned long __cdecl ERR_peek_last_error(void)
 {
     return get_error_values(0, 1, NULL, NULL, NULL, NULL);
 }
 
-unsigned long ERR_peek_last_error_line(const char **file, int *line)
+unsigned long __cdecl ERR_peek_last_error_line(const char **file, int *line)
 {
     return get_error_values(0, 1, file, line, NULL, NULL);
 }
 
-unsigned long ERR_peek_last_error_line_data(const char **file, int *line,
+unsigned long __cdecl ERR_peek_last_error_line_data(const char **file, int *line,
                                             const char **data, int *flags)
 {
     return get_error_values(0, 1, file, line, data, flags);
@@ -795,7 +795,7 @@ void err_unshelve_state(void* state)
         CRYPTO_THREAD_set_local(&err_thread_local, (ERR_STATE*)state);
 }
 
-int ERR_get_next_error_library(void)
+int __cdecl ERR_get_next_error_library(void)
 {
     int ret;
 
@@ -826,7 +826,7 @@ static int err_set_error_data_int(char *data, int flags)
     return 1;
 }
 
-void ERR_set_error_data(char *data, int flags)
+void __cdecl ERR_set_error_data(char *data, int flags)
 {
     /*
      * This function is void so we cannot propagate the error return. Since it
@@ -876,7 +876,7 @@ void __cdecl ERR_add_error_vdata(int num, va_list args)
         OPENSSL_free(str);
 }
 
-int ERR_set_mark(void)
+int __cdecl ERR_set_mark(void)
 {
     ERR_STATE *es;
 
@@ -890,7 +890,7 @@ int ERR_set_mark(void)
     return 1;
 }
 
-int ERR_pop_to_mark(void)
+int __cdecl ERR_pop_to_mark(void)
 {
     ERR_STATE *es;
 
@@ -910,7 +910,7 @@ int ERR_pop_to_mark(void)
     return 1;
 }
 
-int ERR_clear_last_mark(void)
+int __cdecl ERR_clear_last_mark(void)
 {
     ERR_STATE *es;
     int top;

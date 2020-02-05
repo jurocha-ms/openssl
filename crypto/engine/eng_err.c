@@ -142,7 +142,7 @@ static const ERR_STRING_DATA ENGINE_str_reasons[] = {
 
 #endif
 
-int ERR_load_ENGINE_strings(void)
+int __cdecl ERR_load_ENGINE_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_func_error_string(ENGINE_str_functs[0].error) == NULL) {
