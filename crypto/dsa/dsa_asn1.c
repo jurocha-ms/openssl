@@ -21,7 +21,7 @@ ASN1_SEQUENCE(DSA_SIG) = {
 
 IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname(DSA_SIG, DSA_SIG, DSA_SIG)
 
-DSA_SIG *DSA_SIG_new(void)
+DSA_SIG * __cdecl DSA_SIG_new(void)
 {
     DSA_SIG *sig = OPENSSL_zalloc(sizeof(*sig));
     if (sig == NULL)
@@ -29,7 +29,7 @@ DSA_SIG *DSA_SIG_new(void)
     return sig;
 }
 
-void DSA_SIG_free(DSA_SIG *sig)
+void __cdecl DSA_SIG_free(DSA_SIG *sig)
 {
     if (sig == NULL)
         return;
@@ -38,7 +38,7 @@ void DSA_SIG_free(DSA_SIG *sig)
     OPENSSL_free(sig);
 }
 
-void DSA_SIG_get0(const DSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps)
+void __cdecl DSA_SIG_get0(const DSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps)
 {
     if (pr != NULL)
         *pr = sig->r;
@@ -46,7 +46,7 @@ void DSA_SIG_get0(const DSA_SIG *sig, const BIGNUM **pr, const BIGNUM **ps)
         *ps = sig->s;
 }
 
-int DSA_SIG_set0(DSA_SIG *sig, BIGNUM *r, BIGNUM *s)
+int __cdecl DSA_SIG_set0(DSA_SIG *sig, BIGNUM *r, BIGNUM *s)
 {
     if (r == NULL || s == NULL)
         return 0;
@@ -102,12 +102,12 @@ ASN1_SEQUENCE_cb(DSAPublicKey, dsa_cb) = {
 
 IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname(DSA, DSAPublicKey, DSAPublicKey)
 
-DSA *DSAparams_dup(DSA *dsa)
+DSA * __cdecl DSAparams_dup(DSA *dsa)
 {
     return ASN1_item_dup(ASN1_ITEM_rptr(DSAparams), dsa);
 }
 
-int DSA_sign(int type, const unsigned char *dgst, int dlen,
+int __cdecl DSA_sign(int type, const unsigned char *dgst, int dlen,
              unsigned char *sig, unsigned int *siglen, DSA *dsa)
 {
     DSA_SIG *s;
@@ -129,7 +129,7 @@ int DSA_sign(int type, const unsigned char *dgst, int dlen,
  *      0: incorrect signature
  *     -1: error
  */
-int DSA_verify(int type, const unsigned char *dgst, int dgst_len,
+int __cdecl DSA_verify(int type, const unsigned char *dgst, int dgst_len,
                const unsigned char *sigbuf, int siglen, DSA *dsa)
 {
     DSA_SIG *s;

@@ -15,7 +15,7 @@
 #include "dsa_locl.h"
 #include <openssl/asn1.h>
 
-static DSA_SIG *dsa_do_sign(const unsigned char *dgst, int dlen, DSA *dsa);
+static DSA_SIG * __cdecl dsa_do_sign(const unsigned char *dgst, int dlen, DSA *dsa);
 static int dsa_sign_setup_no_digest(DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
                                     BIGNUM **rp);
 static int dsa_sign_setup(DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
@@ -44,22 +44,22 @@ static DSA_METHOD openssl_dsa_meth = {
 
 static const DSA_METHOD *default_DSA_method = &openssl_dsa_meth;
 
-void DSA_set_default_method(const DSA_METHOD *meth)
+void __cdecl DSA_set_default_method(const DSA_METHOD *meth)
 {
     default_DSA_method = meth;
 }
 
-const DSA_METHOD *DSA_get_default_method(void)
+const DSA_METHOD * __cdecl DSA_get_default_method(void)
 {
     return default_DSA_method;
 }
 
-const DSA_METHOD *DSA_OpenSSL(void)
+const DSA_METHOD * __cdecl DSA_OpenSSL(void)
 {
     return &openssl_dsa_meth;
 }
 
-static DSA_SIG *dsa_do_sign(const unsigned char *dgst, int dlen, DSA *dsa)
+static DSA_SIG * __cdecl dsa_do_sign(const unsigned char *dgst, int dlen, DSA *dsa)
 {
     BIGNUM *kinv = NULL;
     BIGNUM *m, *blind, *blindm, *tmp;

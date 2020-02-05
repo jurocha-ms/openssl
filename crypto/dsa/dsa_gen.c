@@ -23,7 +23,7 @@
 #include <openssl/sha.h>
 #include "dsa_locl.h"
 
-int DSA_generate_parameters_ex(DSA *ret, int bits,
+int __cdecl DSA_generate_parameters_ex(DSA *ret, int bits,
                                const unsigned char *seed_in, int seed_len,
                                int *counter_ret, unsigned long *h_ret,
                                BN_GENCB *cb)

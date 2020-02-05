@@ -40,7 +40,7 @@ struct DSA_SIG_st {
 
 struct dsa_method {
     char *name;
-    DSA_SIG *(*dsa_do_sign) (const unsigned char *dgst, int dlen, DSA *dsa);
+    DSA_SIG *(__cdecl *dsa_do_sign) (const unsigned char *dgst, int dlen, DSA *dsa);
     int (*dsa_sign_setup) (DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
                            BIGNUM **rp);
     int (*dsa_do_verify) (const unsigned char *dgst, int dgst_len,

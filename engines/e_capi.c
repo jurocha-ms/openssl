@@ -132,7 +132,7 @@ static int __cdecl capi_rsa_priv_dec(int flen, const unsigned char *from,
 static int __cdecl capi_rsa_free(RSA *rsa);
 
 # ifndef OPENSSL_NO_DSA
-static DSA_SIG *capi_dsa_do_sign(const unsigned char *digest, int dlen,
+static DSA_SIG * __cdecl capi_dsa_do_sign(const unsigned char *digest, int dlen,
                                  DSA *dsa);
 static int capi_dsa_free(DSA *dsa);
 # endif
@@ -989,7 +989,7 @@ static int __cdecl capi_rsa_free(RSA *rsa)
 # ifndef OPENSSL_NO_DSA
 /* CryptoAPI DSA operations */
 
-static DSA_SIG *capi_dsa_do_sign(const unsigned char *digest, int dlen,
+static DSA_SIG * __cdecl capi_dsa_do_sign(const unsigned char *digest, int dlen,
                                  DSA *dsa)
 {
     HCRYPTHASH hash;
