@@ -11,20 +11,20 @@
 
 /* Basic get/set stuff */
 
-int ENGINE_set_load_privkey_function(ENGINE *e,
+int __cdecl ENGINE_set_load_privkey_function(ENGINE *e,
                                      ENGINE_LOAD_KEY_PTR loadpriv_f)
 {
     e->load_privkey = loadpriv_f;
     return 1;
 }
 
-int ENGINE_set_load_pubkey_function(ENGINE *e, ENGINE_LOAD_KEY_PTR loadpub_f)
+int __cdecl ENGINE_set_load_pubkey_function(ENGINE *e, ENGINE_LOAD_KEY_PTR loadpub_f)
 {
     e->load_pubkey = loadpub_f;
     return 1;
 }
 
-int ENGINE_set_load_ssl_client_cert_function(ENGINE *e,
+int __cdecl ENGINE_set_load_ssl_client_cert_function(ENGINE *e,
                                              ENGINE_SSL_CLIENT_CERT_PTR
                                              loadssl_f)
 {
@@ -32,17 +32,17 @@ int ENGINE_set_load_ssl_client_cert_function(ENGINE *e,
     return 1;
 }
 
-ENGINE_LOAD_KEY_PTR ENGINE_get_load_privkey_function(const ENGINE *e)
+ENGINE_LOAD_KEY_PTR __cdecl ENGINE_get_load_privkey_function(const ENGINE *e)
 {
     return e->load_privkey;
 }
 
-ENGINE_LOAD_KEY_PTR ENGINE_get_load_pubkey_function(const ENGINE *e)
+ENGINE_LOAD_KEY_PTR __cdecl ENGINE_get_load_pubkey_function(const ENGINE *e)
 {
     return e->load_pubkey;
 }
 
-ENGINE_SSL_CLIENT_CERT_PTR ENGINE_get_ssl_client_cert_function(const ENGINE
+ENGINE_SSL_CLIENT_CERT_PTR __cdecl ENGINE_get_ssl_client_cert_function(const ENGINE
                                                                *e)
 {
     return e->load_ssl_client_cert;
@@ -50,7 +50,7 @@ ENGINE_SSL_CLIENT_CERT_PTR ENGINE_get_ssl_client_cert_function(const ENGINE
 
 /* API functions to load public/private keys */
 
-EVP_PKEY *ENGINE_load_private_key(ENGINE *e, const char *key_id,
+EVP_PKEY * __cdecl ENGINE_load_private_key(ENGINE *e, const char *key_id,
                                   UI_METHOD *ui_method, void *callback_data)
 {
     EVP_PKEY *pkey;
@@ -81,7 +81,7 @@ EVP_PKEY *ENGINE_load_private_key(ENGINE *e, const char *key_id,
     return pkey;
 }
 
-EVP_PKEY *ENGINE_load_public_key(ENGINE *e, const char *key_id,
+EVP_PKEY * __cdecl ENGINE_load_public_key(ENGINE *e, const char *key_id,
                                  UI_METHOD *ui_method, void *callback_data)
 {
     EVP_PKEY *pkey;
@@ -111,7 +111,7 @@ EVP_PKEY *ENGINE_load_public_key(ENGINE *e, const char *key_id,
     return pkey;
 }
 
-int ENGINE_load_ssl_client_cert(ENGINE *e, SSL *s,
+int __cdecl ENGINE_load_ssl_client_cert(ENGINE *e, SSL *s,
                                 STACK_OF(X509_NAME) *ca_dn, X509 **pcert,
                                 EVP_PKEY **ppkey, STACK_OF(X509) **pother,
                                 UI_METHOD *ui_method, void *callback_data)

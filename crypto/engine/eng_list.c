@@ -127,7 +127,7 @@ static int engine_list_remove(ENGINE *e)
 }
 
 /* Get the first/last "ENGINE" type available. */
-ENGINE *ENGINE_get_first(void)
+ENGINE * __cdecl ENGINE_get_first(void)
 {
     ENGINE *ret;
 
@@ -146,7 +146,7 @@ ENGINE *ENGINE_get_first(void)
     return ret;
 }
 
-ENGINE *ENGINE_get_last(void)
+ENGINE * __cdecl ENGINE_get_last(void)
 {
     ENGINE *ret;
 
@@ -166,7 +166,7 @@ ENGINE *ENGINE_get_last(void)
 }
 
 /* Iterate to the next/previous "ENGINE" type (NULL = end of the list). */
-ENGINE *ENGINE_get_next(ENGINE *e)
+ENGINE * __cdecl ENGINE_get_next(ENGINE *e)
 {
     ENGINE *ret = NULL;
     if (e == NULL) {
@@ -186,7 +186,7 @@ ENGINE *ENGINE_get_next(ENGINE *e)
     return ret;
 }
 
-ENGINE *ENGINE_get_prev(ENGINE *e)
+ENGINE * __cdecl ENGINE_get_prev(ENGINE *e)
 {
     ENGINE *ret = NULL;
     if (e == NULL) {
@@ -207,7 +207,7 @@ ENGINE *ENGINE_get_prev(ENGINE *e)
 }
 
 /* Add another "ENGINE" type into the list. */
-int ENGINE_add(ENGINE *e)
+int __cdecl ENGINE_add(ENGINE *e)
 {
     int to_return = 1;
     if (e == NULL) {
@@ -228,7 +228,7 @@ int ENGINE_add(ENGINE *e)
 }
 
 /* Remove an existing "ENGINE" type from the array. */
-int ENGINE_remove(ENGINE *e)
+int __cdecl ENGINE_remove(ENGINE *e)
 {
     int to_return = 1;
     if (e == NULL) {
@@ -274,7 +274,7 @@ static void engine_cpy(ENGINE *dest, const ENGINE *src)
     dest->flags = src->flags;
 }
 
-ENGINE *ENGINE_by_id(const char *id)
+ENGINE * __cdecl ENGINE_by_id(const char *id)
 {
     ENGINE *iterator;
     char *load_dir = NULL;
@@ -337,7 +337,7 @@ ENGINE *ENGINE_by_id(const char *id)
     /* EEK! Experimental code ends */
 }
 
-int ENGINE_up_ref(ENGINE *e)
+int __cdecl ENGINE_up_ref(ENGINE *e)
 {
     int i;
     if (e == NULL) {

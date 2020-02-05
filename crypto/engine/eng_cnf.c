@@ -185,7 +185,7 @@ static void int_engine_module_finish(CONF_IMODULE *md)
     initialized_engines = NULL;
 }
 
-void ENGINE_add_conf_module(void)
+void __cdecl ENGINE_add_conf_module(void)
 {
     CONF_module_add("engines",
                     int_engine_module_init, int_engine_module_finish);

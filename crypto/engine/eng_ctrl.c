@@ -122,7 +122,7 @@ static int int_ctrl_helper(ENGINE *e, int cmd, long i, void *p,
     return -1;
 }
 
-int ENGINE_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
+int __cdecl ENGINE_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
 {
     int ctrl_exists, ref_exists;
     if (e == NULL) {
@@ -174,7 +174,7 @@ int ENGINE_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
     return e->ctrl(e, cmd, i, p, f);
 }
 
-int ENGINE_cmd_is_executable(ENGINE *e, int cmd)
+int __cdecl ENGINE_cmd_is_executable(ENGINE *e, int cmd)
 {
     int flags;
     if ((flags =
@@ -190,7 +190,7 @@ int ENGINE_cmd_is_executable(ENGINE *e, int cmd)
     return 1;
 }
 
-int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
+int __cdecl ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
                     long i, void *p, void (*f) (void), int cmd_optional)
 {
     int num;
@@ -226,7 +226,7 @@ int ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
     return 0;
 }
 
-int ENGINE_ctrl_cmd_string(ENGINE *e, const char *cmd_name, const char *arg,
+int __cdecl ENGINE_ctrl_cmd_string(ENGINE *e, const char *cmd_name, const char *arg,
                            int cmd_optional)
 {
     int num, flags;

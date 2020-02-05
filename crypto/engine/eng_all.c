@@ -10,7 +10,7 @@
 #include "internal/cryptlib.h"
 #include "eng_int.h"
 
-void ENGINE_load_builtin_engines(void)
+void __cdecl ENGINE_load_builtin_engines(void)
 {
     /* Some ENGINEs need this */
     OPENSSL_cpuid_setup();

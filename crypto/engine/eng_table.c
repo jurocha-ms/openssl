@@ -40,12 +40,12 @@ typedef struct st_engine_pile_doall {
 static unsigned int table_flags = 0;
 
 /* API function manipulating 'table_flags' */
-unsigned int ENGINE_get_table_flags(void)
+unsigned int __cdecl ENGINE_get_table_flags(void)
 {
     return table_flags;
 }
 
-void ENGINE_set_table_flags(unsigned int flags)
+void __cdecl ENGINE_set_table_flags(unsigned int flags)
 {
     table_flags = flags;
 }

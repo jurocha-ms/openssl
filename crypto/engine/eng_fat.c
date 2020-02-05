@@ -11,7 +11,7 @@
 #include "eng_int.h"
 #include <openssl/conf.h>
 
-int ENGINE_set_default(ENGINE *e, unsigned int flags)
+int __cdecl ENGINE_set_default(ENGINE *e, unsigned int flags)
 {
     if ((flags & ENGINE_METHOD_CIPHERS) && !ENGINE_set_default_ciphers(e))
         return 0;
@@ -78,7 +78,7 @@ static int int_def_cb(const char *alg, int len, void *arg)
     return 1;
 }
 
-int ENGINE_set_default_string(ENGINE *e, const char *def_list)
+int __cdecl ENGINE_set_default_string(ENGINE *e, const char *def_list)
 {
     unsigned int flags = 0;
     if (!CONF_parse_list(def_list, ',', 1, int_def_cb, &flags)) {
@@ -90,7 +90,7 @@ int ENGINE_set_default_string(ENGINE *e, const char *def_list)
     return ENGINE_set_default(e, flags);
 }
 
-int ENGINE_register_complete(ENGINE *e)
+int __cdecl ENGINE_register_complete(ENGINE *e)
 {
     ENGINE_register_ciphers(e);
     ENGINE_register_digests(e);
@@ -112,7 +112,7 @@ int ENGINE_register_complete(ENGINE *e)
     return 1;
 }
 
-int ENGINE_register_all_complete(void)
+int __cdecl ENGINE_register_all_complete(void)
 {
     ENGINE *e;
 

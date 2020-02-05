@@ -12,7 +12,7 @@
 
 static ENGINE_TABLE *pkey_meth_table = NULL;
 
-void ENGINE_unregister_pkey_meths(ENGINE *e)
+void __cdecl ENGINE_unregister_pkey_meths(ENGINE *e)
 {
     engine_table_unregister(&pkey_meth_table, e);
 }
@@ -22,7 +22,7 @@ static void engine_unregister_all_pkey_meths(void)
     engine_table_cleanup(&pkey_meth_table);
 }
 
-int ENGINE_register_pkey_meths(ENGINE *e)
+int __cdecl ENGINE_register_pkey_meths(ENGINE *e)
 {
     if (e->pkey_meths) {
         const int *nids;
@@ -35,7 +35,7 @@ int ENGINE_register_pkey_meths(ENGINE *e)
     return 1;
 }
 
-void ENGINE_register_all_pkey_meths(void)
+void __cdecl ENGINE_register_all_pkey_meths(void)
 {
     ENGINE *e;
 
@@ -43,7 +43,7 @@ void ENGINE_register_all_pkey_meths(void)
         ENGINE_register_pkey_meths(e);
 }
 
-int ENGINE_set_default_pkey_meths(ENGINE *e)
+int __cdecl ENGINE_set_default_pkey_meths(ENGINE *e)
 {
     if (e->pkey_meths) {
         const int *nids;
@@ -61,13 +61,13 @@ int ENGINE_set_default_pkey_meths(ENGINE *e)
  * table (ie. try to get a functional reference from the tabled structural
  * references) for a given pkey_meth 'nid'
  */
-ENGINE *ENGINE_get_pkey_meth_engine(int nid)
+ENGINE * __cdecl ENGINE_get_pkey_meth_engine(int nid)
 {
     return engine_table_select(&pkey_meth_table, nid);
 }
 
 /* Obtains a pkey_meth implementation from an ENGINE functional reference */
-const EVP_PKEY_METHOD *ENGINE_get_pkey_meth(ENGINE *e, int nid)
+const EVP_PKEY_METHOD * __cdecl ENGINE_get_pkey_meth(ENGINE *e, int nid)
 {
     EVP_PKEY_METHOD *ret;
     ENGINE_PKEY_METHS_PTR fn = ENGINE_get_pkey_meths(e);
@@ -80,13 +80,13 @@ const EVP_PKEY_METHOD *ENGINE_get_pkey_meth(ENGINE *e, int nid)
 }
 
 /* Gets the pkey_meth callback from an ENGINE structure */
-ENGINE_PKEY_METHS_PTR ENGINE_get_pkey_meths(const ENGINE *e)
+ENGINE_PKEY_METHS_PTR __cdecl ENGINE_get_pkey_meths(const ENGINE *e)
 {
     return e->pkey_meths;
 }
 
 /* Sets the pkey_meth callback in an ENGINE structure */
-int ENGINE_set_pkey_meths(ENGINE *e, ENGINE_PKEY_METHS_PTR f)
+int __cdecl ENGINE_set_pkey_meths(ENGINE *e, ENGINE_PKEY_METHS_PTR f)
 {
     e->pkey_meths = f;
     return 1;

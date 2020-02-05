@@ -26,7 +26,7 @@ DEFINE_RUN_ONCE(do_engine_lock_init)
     return global_engine_lock != NULL;
 }
 
-ENGINE *ENGINE_new(void)
+ENGINE * __cdecl ENGINE_new(void)
 {
     ENGINE *ret;
 
@@ -97,7 +97,7 @@ int engine_free_util(ENGINE *e, int not_locked)
     return 1;
 }
 
-int ENGINE_free(ENGINE *e)
+int __cdecl ENGINE_free(ENGINE *e)
 {
     return engine_free_util(e, 1);
 }
@@ -175,12 +175,12 @@ void engine_cleanup_int(void)
 
 /* Now the "ex_data" support */
 
-int ENGINE_set_ex_data(ENGINE *e, int idx, void *arg)
+int __cdecl ENGINE_set_ex_data(ENGINE *e, int idx, void *arg)
 {
     return CRYPTO_set_ex_data(&e->ex_data, idx, arg);
 }
 
-void *ENGINE_get_ex_data(const ENGINE *e, int idx)
+void * __cdecl ENGINE_get_ex_data(const ENGINE *e, int idx)
 {
     return CRYPTO_get_ex_data(&e->ex_data, idx);
 }
@@ -190,7 +190,7 @@ void *ENGINE_get_ex_data(const ENGINE *e, int idx)
  * ENGINE structure itself.
  */
 
-int ENGINE_set_id(ENGINE *e, const char *id)
+int __cdecl ENGINE_set_id(ENGINE *e, const char *id)
 {
     if (id == NULL) {
         ENGINEerr(ENGINE_F_ENGINE_SET_ID, ERR_R_PASSED_NULL_PARAMETER);
@@ -200,7 +200,7 @@ int ENGINE_set_id(ENGINE *e, const char *id)
     return 1;
 }
 
-int ENGINE_set_name(ENGINE *e, const char *name)
+int __cdecl ENGINE_set_name(ENGINE *e, const char *name)
 {
     if (name == NULL) {
         ENGINEerr(ENGINE_F_ENGINE_SET_NAME, ERR_R_PASSED_NULL_PARAMETER);
@@ -210,78 +210,78 @@ int ENGINE_set_name(ENGINE *e, const char *name)
     return 1;
 }
 
-int ENGINE_set_destroy_function(ENGINE *e, ENGINE_GEN_INT_FUNC_PTR destroy_f)
+int __cdecl ENGINE_set_destroy_function(ENGINE *e, ENGINE_GEN_INT_FUNC_PTR destroy_f)
 {
     e->destroy = destroy_f;
     return 1;
 }
 
-int ENGINE_set_init_function(ENGINE *e, ENGINE_GEN_INT_FUNC_PTR init_f)
+int __cdecl ENGINE_set_init_function(ENGINE *e, ENGINE_GEN_INT_FUNC_PTR init_f)
 {
     e->init = init_f;
     return 1;
 }
 
-int ENGINE_set_finish_function(ENGINE *e, ENGINE_GEN_INT_FUNC_PTR finish_f)
+int __cdecl ENGINE_set_finish_function(ENGINE *e, ENGINE_GEN_INT_FUNC_PTR finish_f)
 {
     e->finish = finish_f;
     return 1;
 }
 
-int ENGINE_set_ctrl_function(ENGINE *e, ENGINE_CTRL_FUNC_PTR ctrl_f)
+int __cdecl ENGINE_set_ctrl_function(ENGINE *e, ENGINE_CTRL_FUNC_PTR ctrl_f)
 {
     e->ctrl = ctrl_f;
     return 1;
 }
 
-int ENGINE_set_flags(ENGINE *e, int flags)
+int __cdecl ENGINE_set_flags(ENGINE *e, int flags)
 {
     e->flags = flags;
     return 1;
 }
 
-int ENGINE_set_cmd_defns(ENGINE *e, const ENGINE_CMD_DEFN *defns)
+int __cdecl ENGINE_set_cmd_defns(ENGINE *e, const ENGINE_CMD_DEFN *defns)
 {
     e->cmd_defns = defns;
     return 1;
 }
 
-const char *ENGINE_get_id(const ENGINE *e)
+const char * __cdecl ENGINE_get_id(const ENGINE *e)
 {
     return e->id;
 }
 
-const char *ENGINE_get_name(const ENGINE *e)
+const char * __cdecl ENGINE_get_name(const ENGINE *e)
 {
     return e->name;
 }
 
-ENGINE_GEN_INT_FUNC_PTR ENGINE_get_destroy_function(const ENGINE *e)
+ENGINE_GEN_INT_FUNC_PTR __cdecl ENGINE_get_destroy_function(const ENGINE *e)
 {
     return e->destroy;
 }
 
-ENGINE_GEN_INT_FUNC_PTR ENGINE_get_init_function(const ENGINE *e)
+ENGINE_GEN_INT_FUNC_PTR __cdecl ENGINE_get_init_function(const ENGINE *e)
 {
     return e->init;
 }
 
-ENGINE_GEN_INT_FUNC_PTR ENGINE_get_finish_function(const ENGINE *e)
+ENGINE_GEN_INT_FUNC_PTR __cdecl ENGINE_get_finish_function(const ENGINE *e)
 {
     return e->finish;
 }
 
-ENGINE_CTRL_FUNC_PTR ENGINE_get_ctrl_function(const ENGINE *e)
+ENGINE_CTRL_FUNC_PTR __cdecl ENGINE_get_ctrl_function(const ENGINE *e)
 {
     return e->ctrl;
 }
 
-int ENGINE_get_flags(const ENGINE *e)
+int __cdecl ENGINE_get_flags(const ENGINE *e)
 {
     return e->flags;
 }
 
-const ENGINE_CMD_DEFN *ENGINE_get_cmd_defns(const ENGINE *e)
+const ENGINE_CMD_DEFN * __cdecl ENGINE_get_cmd_defns(const ENGINE *e)
 {
     return e->cmd_defns;
 }
@@ -293,7 +293,7 @@ const ENGINE_CMD_DEFN *ENGINE_get_cmd_defns(const ENGINE *e)
 
 static int internal_static_hack = 0;
 
-void *ENGINE_get_static_state(void)
+void * __cdecl ENGINE_get_static_state(void)
 {
     return &internal_static_hack;
 }

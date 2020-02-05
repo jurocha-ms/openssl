@@ -74,7 +74,7 @@ int engine_unlocked_finish(ENGINE *e, int unlock_for_handlers)
 }
 
 /* The API (locked) version of "init" */
-int ENGINE_init(ENGINE *e)
+int __cdecl ENGINE_init(ENGINE *e)
 {
     int ret;
     if (e == NULL) {
@@ -92,7 +92,7 @@ int ENGINE_init(ENGINE *e)
 }
 
 /* The API (locked) version of "finish" */
-int ENGINE_finish(ENGINE *e)
+int __cdecl ENGINE_finish(ENGINE *e)
 {
     int to_return = 1;
 

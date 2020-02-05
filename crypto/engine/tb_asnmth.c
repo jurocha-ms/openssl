@@ -22,7 +22,7 @@
 
 static ENGINE_TABLE *pkey_asn1_meth_table = NULL;
 
-void ENGINE_unregister_pkey_asn1_meths(ENGINE *e)
+void __cdecl ENGINE_unregister_pkey_asn1_meths(ENGINE *e)
 {
     engine_table_unregister(&pkey_asn1_meth_table, e);
 }
@@ -32,7 +32,7 @@ static void engine_unregister_all_pkey_asn1_meths(void)
     engine_table_cleanup(&pkey_asn1_meth_table);
 }
 
-int ENGINE_register_pkey_asn1_meths(ENGINE *e)
+int __cdecl ENGINE_register_pkey_asn1_meths(ENGINE *e)
 {
     if (e->pkey_asn1_meths) {
         const int *nids;
@@ -45,7 +45,7 @@ int ENGINE_register_pkey_asn1_meths(ENGINE *e)
     return 1;
 }
 
-void ENGINE_register_all_pkey_asn1_meths(void)
+void __cdecl ENGINE_register_all_pkey_asn1_meths(void)
 {
     ENGINE *e;
 
@@ -53,7 +53,7 @@ void ENGINE_register_all_pkey_asn1_meths(void)
         ENGINE_register_pkey_asn1_meths(e);
 }
 
-int ENGINE_set_default_pkey_asn1_meths(ENGINE *e)
+int __cdecl ENGINE_set_default_pkey_asn1_meths(ENGINE *e)
 {
     if (e->pkey_asn1_meths) {
         const int *nids;
@@ -71,7 +71,7 @@ int ENGINE_set_default_pkey_asn1_meths(ENGINE *e)
  * table (ie. try to get a functional reference from the tabled structural
  * references) for a given pkey_asn1_meth 'nid'
  */
-ENGINE *ENGINE_get_pkey_asn1_meth_engine(int nid)
+ENGINE * __cdecl ENGINE_get_pkey_asn1_meth_engine(int nid)
 {
     return engine_table_select(&pkey_asn1_meth_table, nid);
 }
@@ -80,7 +80,7 @@ ENGINE *ENGINE_get_pkey_asn1_meth_engine(int nid)
  * Obtains a pkey_asn1_meth implementation from an ENGINE functional
  * reference
  */
-const EVP_PKEY_ASN1_METHOD *ENGINE_get_pkey_asn1_meth(ENGINE *e, int nid)
+const EVP_PKEY_ASN1_METHOD * __cdecl ENGINE_get_pkey_asn1_meth(ENGINE *e, int nid)
 {
     EVP_PKEY_ASN1_METHOD *ret;
     ENGINE_PKEY_ASN1_METHS_PTR fn = ENGINE_get_pkey_asn1_meths(e);
@@ -93,13 +93,13 @@ const EVP_PKEY_ASN1_METHOD *ENGINE_get_pkey_asn1_meth(ENGINE *e, int nid)
 }
 
 /* Gets the pkey_asn1_meth callback from an ENGINE structure */
-ENGINE_PKEY_ASN1_METHS_PTR ENGINE_get_pkey_asn1_meths(const ENGINE *e)
+ENGINE_PKEY_ASN1_METHS_PTR __cdecl ENGINE_get_pkey_asn1_meths(const ENGINE *e)
 {
     return e->pkey_asn1_meths;
 }
 
 /* Sets the pkey_asn1_meth callback in an ENGINE structure */
-int ENGINE_set_pkey_asn1_meths(ENGINE *e, ENGINE_PKEY_ASN1_METHS_PTR f)
+int __cdecl ENGINE_set_pkey_asn1_meths(ENGINE *e, ENGINE_PKEY_ASN1_METHS_PTR f)
 {
     e->pkey_asn1_meths = f;
     return 1;
@@ -133,7 +133,7 @@ void engine_pkey_asn1_meths_free(ENGINE *e)
  * for speed critical operations.
  */
 
-const EVP_PKEY_ASN1_METHOD *ENGINE_get_pkey_asn1_meth_str(ENGINE *e,
+const EVP_PKEY_ASN1_METHOD * __cdecl ENGINE_get_pkey_asn1_meth_str(ENGINE *e,
                                                           const char *str,
                                                           int len)
 {
@@ -181,7 +181,7 @@ static void look_str_cb(int nid, STACK_OF(ENGINE) *sk, ENGINE *def, void *arg)
     }
 }
 
-const EVP_PKEY_ASN1_METHOD *ENGINE_pkey_asn1_find_str(ENGINE **pe,
+const EVP_PKEY_ASN1_METHOD * __cdecl ENGINE_pkey_asn1_find_str(ENGINE **pe,
                                                       const char *str,
                                                       int len)
 {
