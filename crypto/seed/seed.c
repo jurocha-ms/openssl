@@ -437,7 +437,7 @@ static const seed_word KC[] = {
 };
 # endif
 
-void SEED_set_key(const unsigned char rawkey[SEED_KEY_LENGTH],
+void __cdecl SEED_set_key(const unsigned char rawkey[SEED_KEY_LENGTH],
                   SEED_KEY_SCHEDULE *ks)
 {
     seed_word x1, x2, x3, x4;
@@ -496,7 +496,7 @@ void SEED_set_key(const unsigned char rawkey[SEED_KEY_LENGTH],
 # endif
 }
 
-void SEED_encrypt(const unsigned char s[SEED_BLOCK_SIZE],
+void __cdecl SEED_encrypt(const unsigned char s[SEED_BLOCK_SIZE],
                   unsigned char d[SEED_BLOCK_SIZE],
                   const SEED_KEY_SCHEDULE *ks)
 {
@@ -541,7 +541,7 @@ void SEED_encrypt(const unsigned char s[SEED_BLOCK_SIZE],
     word2char(x2, d + 12);
 }
 
-void SEED_decrypt(const unsigned char s[SEED_BLOCK_SIZE],
+void __cdecl SEED_decrypt(const unsigned char s[SEED_BLOCK_SIZE],
                   unsigned char d[SEED_BLOCK_SIZE],
                   const SEED_KEY_SCHEDULE *ks)
 {

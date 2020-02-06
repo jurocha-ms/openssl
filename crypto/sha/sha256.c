@@ -16,7 +16,7 @@
 #include <openssl/sha.h>
 #include <openssl/opensslv.h>
 
-int SHA224_Init(SHA256_CTX *c)
+int __cdecl SHA224_Init(SHA256_CTX *c)
 {
     memset(c, 0, sizeof(*c));
     c->h[0] = 0xc1059ed8UL;
@@ -46,7 +46,7 @@ int __cdecl SHA256_Init(SHA256_CTX *c)
     return 1;
 }
 
-unsigned char *SHA224(const unsigned char *d, size_t n, unsigned char *md)
+unsigned char * __cdecl SHA224(const unsigned char *d, size_t n, unsigned char *md)
 {
     SHA256_CTX c;
     static unsigned char m[SHA224_DIGEST_LENGTH];
@@ -74,12 +74,12 @@ unsigned char * __cdecl SHA256(const unsigned char *d, size_t n, unsigned char *
     return md;
 }
 
-int SHA224_Update(SHA256_CTX *c, const void *data, size_t len)
+int __cdecl SHA224_Update(SHA256_CTX *c, const void *data, size_t len)
 {
     return SHA256_Update(c, data, len);
 }
 
-int SHA224_Final(unsigned char *md, SHA256_CTX *c)
+int __cdecl SHA224_Final(unsigned char *md, SHA256_CTX *c)
 {
     return SHA256_Final(md, c);
 }
