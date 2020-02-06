@@ -11,12 +11,12 @@
 #include <openssl/err.h>
 #include "rsa_locl.h"
 
-int RSA_check_key(const RSA *key)
+int __cdecl RSA_check_key(const RSA *key)
 {
     return RSA_check_key_ex(key, NULL);
 }
 
-int RSA_check_key_ex(const RSA *key, BN_GENCB *cb)
+int __cdecl RSA_check_key_ex(const RSA *key, BN_GENCB *cb)
 {
     BIGNUM *i, *j, *k, *l, *m;
     BN_CTX *ctx;

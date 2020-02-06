@@ -14,7 +14,7 @@
 #include <openssl/rand.h>
 #include "internal/constant_time_locl.h"
 
-int RSA_padding_add_SSLv23(unsigned char *to, int tlen,
+int __cdecl RSA_padding_add_SSLv23(unsigned char *to, int tlen,
                            const unsigned char *from, int flen)
 {
     int i, j;
@@ -58,7 +58,7 @@ int RSA_padding_add_SSLv23(unsigned char *to, int tlen,
  * if nul delimiter is not preceded by 8 consecutive 0x03 bytes. It also
  * preserves error code reporting for backward compatibility.
  */
-int RSA_padding_check_SSLv23(unsigned char *to, int tlen,
+int __cdecl RSA_padding_check_SSLv23(unsigned char *to, int tlen,
                              const unsigned char *from, int flen, int num)
 {
     int i;

@@ -29,7 +29,7 @@ static int rsa_builtin_keygen(RSA *rsa, int bits, int primes, BIGNUM *e_value,
  * that wasn't previously linking object code related to key-generation won't
  * have to now just because key-generation is part of RSA_METHOD.
  */
-int RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e_value, BN_GENCB *cb)
+int __cdecl RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e_value, BN_GENCB *cb)
 {
     if (rsa->meth->rsa_keygen != NULL)
         return rsa->meth->rsa_keygen(rsa, bits, e_value, cb);
@@ -38,7 +38,7 @@ int RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e_value, BN_GENCB *cb)
                                         e_value, cb);
 }
 
-int RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes,
+int __cdecl RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes,
                                  BIGNUM *e_value, BN_GENCB *cb)
 {
     /* multi-prime is only supported with the builtin key generation */

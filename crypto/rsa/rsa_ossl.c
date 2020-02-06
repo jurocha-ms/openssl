@@ -45,22 +45,22 @@ static RSA_METHOD rsa_pkcs1_ossl_meth = {
 
 static const RSA_METHOD *default_RSA_meth = &rsa_pkcs1_ossl_meth;
 
-void RSA_set_default_method(const RSA_METHOD *meth)
+void __cdecl RSA_set_default_method(const RSA_METHOD *meth)
 {
     default_RSA_meth = meth;
 }
 
-const RSA_METHOD *RSA_get_default_method(void)
+const RSA_METHOD * __cdecl RSA_get_default_method(void)
 {
     return default_RSA_meth;
 }
 
-const RSA_METHOD *RSA_PKCS1_OpenSSL(void)
+const RSA_METHOD * __cdecl RSA_PKCS1_OpenSSL(void)
 {
     return &rsa_pkcs1_ossl_meth;
 }
 
-const RSA_METHOD *RSA_null_method(void)
+const RSA_METHOD * __cdecl RSA_null_method(void)
 {
     return NULL;
 }

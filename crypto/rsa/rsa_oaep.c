@@ -30,7 +30,7 @@
 #include <openssl/sha.h>
 #include "rsa_locl.h"
 
-int RSA_padding_add_PKCS1_OAEP(unsigned char *to, int tlen,
+int __cdecl RSA_padding_add_PKCS1_OAEP(unsigned char *to, int tlen,
                                const unsigned char *from, int flen,
                                const unsigned char *param, int plen)
 {
@@ -38,7 +38,7 @@ int RSA_padding_add_PKCS1_OAEP(unsigned char *to, int tlen,
                                            param, plen, NULL, NULL);
 }
 
-int RSA_padding_add_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
+int __cdecl RSA_padding_add_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
                                     const unsigned char *from, int flen,
                                     const unsigned char *param, int plen,
                                     const EVP_MD *md, const EVP_MD *mgf1md)
@@ -105,7 +105,7 @@ int RSA_padding_add_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
     return rv;
 }
 
-int RSA_padding_check_PKCS1_OAEP(unsigned char *to, int tlen,
+int __cdecl RSA_padding_check_PKCS1_OAEP(unsigned char *to, int tlen,
                                  const unsigned char *from, int flen, int num,
                                  const unsigned char *param, int plen)
 {
@@ -113,7 +113,7 @@ int RSA_padding_check_PKCS1_OAEP(unsigned char *to, int tlen,
                                              param, plen, NULL, NULL);
 }
 
-int RSA_padding_check_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
+int __cdecl RSA_padding_check_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
                                       const unsigned char *from, int flen,
                                       int num, const unsigned char *param,
                                       int plen, const EVP_MD *md,
@@ -270,7 +270,7 @@ int RSA_padding_check_PKCS1_OAEP_mgf1(unsigned char *to, int tlen,
     return constant_time_select_int(good, mlen, -1);
 }
 
-int PKCS1_MGF1(unsigned char *mask, long len,
+int __cdecl PKCS1_MGF1(unsigned char *mask, long len,
                const unsigned char *seed, long seedlen, const EVP_MD *dgst)
 {
     long i, outlen = 0;

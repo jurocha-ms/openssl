@@ -22,14 +22,14 @@ static const unsigned char zeroes[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 # pragma optimize("g", off)
 #endif
 
-int RSA_verify_PKCS1_PSS(RSA *rsa, const unsigned char *mHash,
+int __cdecl RSA_verify_PKCS1_PSS(RSA *rsa, const unsigned char *mHash,
                          const EVP_MD *Hash, const unsigned char *EM,
                          int sLen)
 {
     return RSA_verify_PKCS1_PSS_mgf1(rsa, mHash, Hash, NULL, EM, sLen);
 }
 
-int RSA_verify_PKCS1_PSS_mgf1(RSA *rsa, const unsigned char *mHash,
+int __cdecl RSA_verify_PKCS1_PSS_mgf1(RSA *rsa, const unsigned char *mHash,
                               const EVP_MD *Hash, const EVP_MD *mgf1Hash,
                               const unsigned char *EM, int sLen)
 {
@@ -135,14 +135,14 @@ int RSA_verify_PKCS1_PSS_mgf1(RSA *rsa, const unsigned char *mHash,
 
 }
 
-int RSA_padding_add_PKCS1_PSS(RSA *rsa, unsigned char *EM,
+int __cdecl RSA_padding_add_PKCS1_PSS(RSA *rsa, unsigned char *EM,
                               const unsigned char *mHash,
                               const EVP_MD *Hash, int sLen)
 {
     return RSA_padding_add_PKCS1_PSS_mgf1(rsa, EM, mHash, Hash, NULL, sLen);
 }
 
-int RSA_padding_add_PKCS1_PSS_mgf1(RSA *rsa, unsigned char *EM,
+int __cdecl RSA_padding_add_PKCS1_PSS_mgf1(RSA *rsa, unsigned char *EM,
                                    const unsigned char *mHash,
                                    const EVP_MD *Hash, const EVP_MD *mgf1Hash,
                                    int sLen)

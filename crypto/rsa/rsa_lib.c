@@ -22,12 +22,12 @@ RSA * __cdecl RSA_new(void)
     return RSA_new_method(NULL);
 }
 
-const RSA_METHOD *RSA_get_method(const RSA *rsa)
+const RSA_METHOD * __cdecl RSA_get_method(const RSA *rsa)
 {
     return rsa->meth;
 }
 
-int RSA_set_method(RSA *rsa, const RSA_METHOD *meth)
+int __cdecl RSA_set_method(RSA *rsa, const RSA_METHOD *meth)
 {
     /*
      * NB: The caller is specifically setting a method, so it's not up to us
@@ -47,7 +47,7 @@ int RSA_set_method(RSA *rsa, const RSA_METHOD *meth)
     return 1;
 }
 
-RSA *RSA_new_method(ENGINE *engine)
+RSA * __cdecl RSA_new_method(ENGINE *engine)
 {
     RSA *ret = OPENSSL_zalloc(sizeof(*ret));
 
@@ -102,7 +102,7 @@ RSA *RSA_new_method(ENGINE *engine)
     return NULL;
 }
 
-void RSA_free(RSA *r)
+void __cdecl RSA_free(RSA *r)
 {
     int i;
 
@@ -141,7 +141,7 @@ void RSA_free(RSA *r)
     OPENSSL_free(r);
 }
 
-int RSA_up_ref(RSA *r)
+int __cdecl RSA_up_ref(RSA *r)
 {
     int i;
 
@@ -153,17 +153,17 @@ int RSA_up_ref(RSA *r)
     return i > 1 ? 1 : 0;
 }
 
-int RSA_set_ex_data(RSA *r, int idx, void *arg)
+int __cdecl RSA_set_ex_data(RSA *r, int idx, void *arg)
 {
     return CRYPTO_set_ex_data(&r->ex_data, idx, arg);
 }
 
-void *RSA_get_ex_data(const RSA *r, int idx)
+void * __cdecl RSA_get_ex_data(const RSA *r, int idx)
 {
     return CRYPTO_get_ex_data(&r->ex_data, idx);
 }
 
-int RSA_security_bits(const RSA *rsa)
+int __cdecl RSA_security_bits(const RSA *rsa)
 {
     int bits = BN_num_bits(rsa->n);
 
@@ -177,7 +177,7 @@ int RSA_security_bits(const RSA *rsa)
     return BN_security_bits(bits, -1);
 }
 
-int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d)
+int __cdecl RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d)
 {
     /* If the fields n and e in r are NULL, the corresponding input
      * parameters MUST be non-NULL for n and e.  d may be
@@ -204,7 +204,7 @@ int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d)
     return 1;
 }
 
-int RSA_set0_factors(RSA *r, BIGNUM *p, BIGNUM *q)
+int __cdecl RSA_set0_factors(RSA *r, BIGNUM *p, BIGNUM *q)
 {
     /* If the fields p and q in r are NULL, the corresponding input
      * parameters MUST be non-NULL.
@@ -227,7 +227,7 @@ int RSA_set0_factors(RSA *r, BIGNUM *p, BIGNUM *q)
     return 1;
 }
 
-int RSA_set0_crt_params(RSA *r, BIGNUM *dmp1, BIGNUM *dmq1, BIGNUM *iqmp)
+int __cdecl RSA_set0_crt_params(RSA *r, BIGNUM *dmp1, BIGNUM *dmq1, BIGNUM *iqmp)
 {
     /* If the fields dmp1, dmq1 and iqmp in r are NULL, the corresponding input
      * parameters MUST be non-NULL.
@@ -260,7 +260,7 @@ int RSA_set0_crt_params(RSA *r, BIGNUM *dmp1, BIGNUM *dmq1, BIGNUM *iqmp)
  * Is it better to export RSA_PRIME_INFO structure
  * and related functions to let user pass a triplet?
  */
-int RSA_set0_multi_prime_params(RSA *r, BIGNUM *primes[], BIGNUM *exps[],
+int __cdecl RSA_set0_multi_prime_params(RSA *r, BIGNUM *primes[], BIGNUM *exps[],
                                 BIGNUM *coeffs[], int pnum)
 {
     STACK_OF(RSA_PRIME_INFO) *prime_infos, *old = NULL;
@@ -324,7 +324,7 @@ int RSA_set0_multi_prime_params(RSA *r, BIGNUM *primes[], BIGNUM *exps[],
     return 0;
 }
 
-void RSA_get0_key(const RSA *r,
+void __cdecl RSA_get0_key(const RSA *r,
                   const BIGNUM **n, const BIGNUM **e, const BIGNUM **d)
 {
     if (n != NULL)
@@ -335,7 +335,7 @@ void RSA_get0_key(const RSA *r,
         *d = r->d;
 }
 
-void RSA_get0_factors(const RSA *r, const BIGNUM **p, const BIGNUM **q)
+void __cdecl RSA_get0_factors(const RSA *r, const BIGNUM **p, const BIGNUM **q)
 {
     if (p != NULL)
         *p = r->p;
@@ -343,7 +343,7 @@ void RSA_get0_factors(const RSA *r, const BIGNUM **p, const BIGNUM **q)
         *q = r->q;
 }
 
-int RSA_get_multi_prime_extra_count(const RSA *r)
+int __cdecl RSA_get_multi_prime_extra_count(const RSA *r)
 {
     int pnum;
 
@@ -353,7 +353,7 @@ int RSA_get_multi_prime_extra_count(const RSA *r)
     return pnum;
 }
 
-int RSA_get0_multi_prime_factors(const RSA *r, const BIGNUM *primes[])
+int __cdecl RSA_get0_multi_prime_factors(const RSA *r, const BIGNUM *primes[])
 {
     int pnum, i;
     RSA_PRIME_INFO *pinfo;
@@ -373,7 +373,7 @@ int RSA_get0_multi_prime_factors(const RSA *r, const BIGNUM *primes[])
     return 1;
 }
 
-void RSA_get0_crt_params(const RSA *r,
+void __cdecl RSA_get0_crt_params(const RSA *r,
                          const BIGNUM **dmp1, const BIGNUM **dmq1,
                          const BIGNUM **iqmp)
 {
@@ -385,7 +385,7 @@ void RSA_get0_crt_params(const RSA *r,
         *iqmp = r->iqmp;
 }
 
-int RSA_get0_multi_prime_crt_params(const RSA *r, const BIGNUM *exps[],
+int __cdecl RSA_get0_multi_prime_crt_params(const RSA *r, const BIGNUM *exps[],
                                     const BIGNUM *coeffs[])
 {
     int pnum;
@@ -411,73 +411,73 @@ int RSA_get0_multi_prime_crt_params(const RSA *r, const BIGNUM *exps[],
     return 1;
 }
 
-const BIGNUM *RSA_get0_n(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_n(const RSA *r)
 {
     return r->n;
 }
 
-const BIGNUM *RSA_get0_e(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_e(const RSA *r)
 {
     return r->e;
 }
 
-const BIGNUM *RSA_get0_d(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_d(const RSA *r)
 {
     return r->d;
 }
 
-const BIGNUM *RSA_get0_p(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_p(const RSA *r)
 {
     return r->p;
 }
 
-const BIGNUM *RSA_get0_q(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_q(const RSA *r)
 {
     return r->q;
 }
 
-const BIGNUM *RSA_get0_dmp1(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_dmp1(const RSA *r)
 {
     return r->dmp1;
 }
 
-const BIGNUM *RSA_get0_dmq1(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_dmq1(const RSA *r)
 {
     return r->dmq1;
 }
 
-const BIGNUM *RSA_get0_iqmp(const RSA *r)
+const BIGNUM * __cdecl RSA_get0_iqmp(const RSA *r)
 {
     return r->iqmp;
 }
 
-void RSA_clear_flags(RSA *r, int flags)
+void __cdecl RSA_clear_flags(RSA *r, int flags)
 {
     r->flags &= ~flags;
 }
 
-int RSA_test_flags(const RSA *r, int flags)
+int __cdecl RSA_test_flags(const RSA *r, int flags)
 {
     return r->flags & flags;
 }
 
-void RSA_set_flags(RSA *r, int flags)
+void __cdecl RSA_set_flags(RSA *r, int flags)
 {
     r->flags |= flags;
 }
 
-int RSA_get_version(RSA *r)
+int __cdecl RSA_get_version(RSA *r)
 {
     /* { two-prime(0), multi(1) } */
     return r->version;
 }
 
-ENGINE *RSA_get0_engine(const RSA *r)
+ENGINE * __cdecl RSA_get0_engine(const RSA *r)
 {
     return r->engine;
 }
 
-int RSA_pkey_ctx_ctrl(EVP_PKEY_CTX *ctx, int optype, int cmd, int p1, void *p2)
+int __cdecl RSA_pkey_ctx_ctrl(EVP_PKEY_CTX *ctx, int optype, int cmd, int p1, void *p2)
 {
     /* If key type not RSA or RSA-PSS return error */
     if (ctx != NULL && ctx->pmeth != NULL

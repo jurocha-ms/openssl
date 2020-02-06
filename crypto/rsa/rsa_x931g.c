@@ -16,7 +16,7 @@
 
 /* X9.31 RSA key derivation and generation */
 
-int RSA_X931_derive_ex(RSA *rsa, BIGNUM *p1, BIGNUM *p2, BIGNUM *q1,
+int __cdecl RSA_X931_derive_ex(RSA *rsa, BIGNUM *p1, BIGNUM *p2, BIGNUM *q1,
                        BIGNUM *q2, const BIGNUM *Xp1, const BIGNUM *Xp2,
                        const BIGNUM *Xp, const BIGNUM *Xq1, const BIGNUM *Xq2,
                        const BIGNUM *Xq, const BIGNUM *e, BN_GENCB *cb)
@@ -141,7 +141,7 @@ int RSA_X931_derive_ex(RSA *rsa, BIGNUM *p1, BIGNUM *p2, BIGNUM *q1,
 
 }
 
-int RSA_X931_generate_key_ex(RSA *rsa, int bits, const BIGNUM *e,
+int __cdecl RSA_X931_generate_key_ex(RSA *rsa, int bits, const BIGNUM *e,
                              BN_GENCB *cb)
 {
     int ok = 0;

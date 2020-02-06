@@ -11,7 +11,7 @@
 #include "rsa_locl.h"
 #include <openssl/err.h>
 
-RSA_METHOD *RSA_meth_new(const char *name, int flags)
+RSA_METHOD * __cdecl RSA_meth_new(const char *name, int flags)
 {
     RSA_METHOD *meth = OPENSSL_zalloc(sizeof(*meth));
 
@@ -29,7 +29,7 @@ RSA_METHOD *RSA_meth_new(const char *name, int flags)
     return NULL;
 }
 
-void RSA_meth_free(RSA_METHOD *meth)
+void __cdecl RSA_meth_free(RSA_METHOD *meth)
 {
     if (meth != NULL) {
         OPENSSL_free(meth->name);
@@ -37,7 +37,7 @@ void RSA_meth_free(RSA_METHOD *meth)
     }
 }
 
-RSA_METHOD *RSA_meth_dup(const RSA_METHOD *meth)
+RSA_METHOD * __cdecl RSA_meth_dup(const RSA_METHOD *meth)
 {
     RSA_METHOD *ret = OPENSSL_malloc(sizeof(*ret));
 
@@ -55,12 +55,12 @@ RSA_METHOD *RSA_meth_dup(const RSA_METHOD *meth)
     return NULL;
 }
 
-const char *RSA_meth_get0_name(const RSA_METHOD *meth)
+const char * __cdecl RSA_meth_get0_name(const RSA_METHOD *meth)
 {
     return meth->name;
 }
 
-int RSA_meth_set1_name(RSA_METHOD *meth, const char *name)
+int __cdecl RSA_meth_set1_name(RSA_METHOD *meth, const char *name)
 {
     char *tmpname = OPENSSL_strdup(name);
 
@@ -75,23 +75,23 @@ int RSA_meth_set1_name(RSA_METHOD *meth, const char *name)
     return 1;
 }
 
-int RSA_meth_get_flags(const RSA_METHOD *meth)
+int __cdecl RSA_meth_get_flags(const RSA_METHOD *meth)
 {
     return meth->flags;
 }
 
-int RSA_meth_set_flags(RSA_METHOD *meth, int flags)
+int __cdecl RSA_meth_set_flags(RSA_METHOD *meth, int flags)
 {
     meth->flags = flags;
     return 1;
 }
 
-void *RSA_meth_get0_app_data(const RSA_METHOD *meth)
+void * __cdecl RSA_meth_get0_app_data(const RSA_METHOD *meth)
 {
     return meth->app_data;
 }
 
-int RSA_meth_set0_app_data(RSA_METHOD *meth, void *app_data)
+int __cdecl RSA_meth_set0_app_data(RSA_METHOD *meth, void *app_data)
 {
     meth->app_data = app_data;
     return 1;
