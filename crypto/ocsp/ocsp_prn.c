@@ -46,7 +46,7 @@ static const char *do_table2string(long s, const OCSP_TBLSTR *ts, size_t len)
 
 #define table2string(s, tbl) do_table2string(s, tbl, OSSL_NELEM(tbl))
 
-const char *OCSP_response_status_str(long s)
+const char * __cdecl OCSP_response_status_str(long s)
 {
     static const OCSP_TBLSTR rstat_tbl[] = {
         {OCSP_RESPONSE_STATUS_SUCCESSFUL, "successful"},
@@ -59,7 +59,7 @@ const char *OCSP_response_status_str(long s)
     return table2string(s, rstat_tbl);
 }
 
-const char *OCSP_cert_status_str(long s)
+const char * __cdecl OCSP_cert_status_str(long s)
 {
     static const OCSP_TBLSTR cstat_tbl[] = {
         {V_OCSP_CERTSTATUS_GOOD, "good"},
@@ -69,7 +69,7 @@ const char *OCSP_cert_status_str(long s)
     return table2string(s, cstat_tbl);
 }
 
-const char *OCSP_crl_reason_str(long s)
+const char * __cdecl OCSP_crl_reason_str(long s)
 {
     static const OCSP_TBLSTR reason_tbl[] = {
         {OCSP_REVOKED_STATUS_UNSPECIFIED, "unspecified"},
@@ -84,7 +84,7 @@ const char *OCSP_crl_reason_str(long s)
     return table2string(s, reason_tbl);
 }
 
-int OCSP_REQUEST_print(BIO *bp, OCSP_REQUEST *o, unsigned long flags)
+int __cdecl OCSP_REQUEST_print(BIO *bp, OCSP_REQUEST *o, unsigned long flags)
 {
     int i;
     long l;
@@ -129,7 +129,7 @@ int OCSP_REQUEST_print(BIO *bp, OCSP_REQUEST *o, unsigned long flags)
     return 0;
 }
 
-int OCSP_RESPONSE_print(BIO *bp, OCSP_RESPONSE *o, unsigned long flags)
+int __cdecl OCSP_RESPONSE_print(BIO *bp, OCSP_RESPONSE *o, unsigned long flags)
 {
     int i, ret = 0;
     long l;

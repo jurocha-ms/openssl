@@ -27,7 +27,7 @@ static int ocsp_req_find_signer(X509 **psigner, OCSP_REQUEST *req,
 
 /* Verify a basic response message */
 
-int OCSP_basic_verify(OCSP_BASICRESP *bs, STACK_OF(X509) *certs,
+int __cdecl OCSP_basic_verify(OCSP_BASICRESP *bs, STACK_OF(X509) *certs,
                       X509_STORE *st, unsigned long flags)
 {
     X509 *signer, *x;
@@ -138,7 +138,7 @@ int OCSP_basic_verify(OCSP_BASICRESP *bs, STACK_OF(X509) *certs,
     goto end;
 }
 
-int OCSP_resp_get0_signer(OCSP_BASICRESP *bs, X509 **signer,
+int __cdecl OCSP_resp_get0_signer(OCSP_BASICRESP *bs, X509 **signer,
                           STACK_OF(X509) *extra_certs)
 {
     int ret;
@@ -336,7 +336,7 @@ static int ocsp_check_delegated(X509 *x)
  * trust value.
  */
 
-int OCSP_request_verify(OCSP_REQUEST *req, STACK_OF(X509) *certs,
+int __cdecl OCSP_request_verify(OCSP_REQUEST *req, STACK_OF(X509) *certs,
                         X509_STORE *store, unsigned long flags)
 {
     X509 *signer;

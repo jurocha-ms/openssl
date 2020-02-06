@@ -21,22 +21,22 @@
  * relevant information from the request.
  */
 
-int OCSP_request_onereq_count(OCSP_REQUEST *req)
+int __cdecl OCSP_request_onereq_count(OCSP_REQUEST *req)
 {
     return sk_OCSP_ONEREQ_num(req->tbsRequest.requestList);
 }
 
-OCSP_ONEREQ *OCSP_request_onereq_get0(OCSP_REQUEST *req, int i)
+OCSP_ONEREQ * __cdecl OCSP_request_onereq_get0(OCSP_REQUEST *req, int i)
 {
     return sk_OCSP_ONEREQ_value(req->tbsRequest.requestList, i);
 }
 
-OCSP_CERTID *OCSP_onereq_get0_id(OCSP_ONEREQ *one)
+OCSP_CERTID * __cdecl OCSP_onereq_get0_id(OCSP_ONEREQ *one)
 {
     return one->reqCert;
 }
 
-int OCSP_id_get0_info(ASN1_OCTET_STRING **piNameHash, ASN1_OBJECT **pmd,
+int __cdecl OCSP_id_get0_info(ASN1_OCTET_STRING **piNameHash, ASN1_OBJECT **pmd,
                       ASN1_OCTET_STRING **pikeyHash,
                       ASN1_INTEGER **pserial, OCSP_CERTID *cid)
 {
@@ -53,7 +53,7 @@ int OCSP_id_get0_info(ASN1_OCTET_STRING **piNameHash, ASN1_OBJECT **pmd,
     return 1;
 }
 
-int OCSP_request_is_signed(OCSP_REQUEST *req)
+int __cdecl OCSP_request_is_signed(OCSP_REQUEST *req)
 {
     if (req->optionalSignature)
         return 1;
@@ -61,7 +61,7 @@ int OCSP_request_is_signed(OCSP_REQUEST *req)
 }
 
 /* Create an OCSP response and encode an optional basic response */
-OCSP_RESPONSE *OCSP_response_create(int status, OCSP_BASICRESP *bs)
+OCSP_RESPONSE * __cdecl OCSP_response_create(int status, OCSP_BASICRESP *bs)
 {
     OCSP_RESPONSE *rsp = NULL;
 
@@ -83,7 +83,7 @@ OCSP_RESPONSE *OCSP_response_create(int status, OCSP_BASICRESP *bs)
     return NULL;
 }
 
-OCSP_SINGLERESP *OCSP_basic_add1_status(OCSP_BASICRESP *rsp,
+OCSP_SINGLERESP * __cdecl OCSP_basic_add1_status(OCSP_BASICRESP *rsp,
                                         OCSP_CERTID *cid,
                                         int status, int reason,
                                         ASN1_TIME *revtime,
@@ -156,7 +156,7 @@ OCSP_SINGLERESP *OCSP_basic_add1_status(OCSP_BASICRESP *rsp,
 
 /* Add a certificate to an OCSP request */
 
-int OCSP_basic_add1_cert(OCSP_BASICRESP *resp, X509 *cert)
+int __cdecl OCSP_basic_add1_cert(OCSP_BASICRESP *resp, X509 *cert)
 {
     if (resp->certs == NULL
         && (resp->certs = sk_X509_new_null()) == NULL)
@@ -174,7 +174,7 @@ int OCSP_basic_add1_cert(OCSP_BASICRESP *resp, X509 *cert)
  * include one or more optional certificates in the response.
  */
 
-int OCSP_basic_sign_ctx(OCSP_BASICRESP *brsp,
+int __cdecl OCSP_basic_sign_ctx(OCSP_BASICRESP *brsp,
                     X509 *signer, EVP_MD_CTX *ctx,
                     STACK_OF(X509) *certs, unsigned long flags)
 {
@@ -229,7 +229,7 @@ int OCSP_basic_sign_ctx(OCSP_BASICRESP *brsp,
     return 0;
 }
 
-int OCSP_basic_sign(OCSP_BASICRESP *brsp,
+int __cdecl OCSP_basic_sign(OCSP_BASICRESP *brsp,
                     X509 *signer, EVP_PKEY *key, const EVP_MD *dgst,
                     STACK_OF(X509) *certs, unsigned long flags)
 {
@@ -249,7 +249,7 @@ int OCSP_basic_sign(OCSP_BASICRESP *brsp,
     return i;
 }
 
-int OCSP_RESPID_set_by_name(OCSP_RESPID *respid, X509 *cert)
+int __cdecl OCSP_RESPID_set_by_name(OCSP_RESPID *respid, X509 *cert)
 {
     if (!X509_NAME_set(&respid->value.byName, X509_get_subject_name(cert)))
         return 0;
@@ -259,7 +259,7 @@ int OCSP_RESPID_set_by_name(OCSP_RESPID *respid, X509 *cert)
     return 1;
 }
 
-int OCSP_RESPID_set_by_key(OCSP_RESPID *respid, X509 *cert)
+int __cdecl OCSP_RESPID_set_by_key(OCSP_RESPID *respid, X509 *cert)
 {
     ASN1_OCTET_STRING *byKey = NULL;
     unsigned char md[SHA_DIGEST_LENGTH];
@@ -283,7 +283,7 @@ int OCSP_RESPID_set_by_key(OCSP_RESPID *respid, X509 *cert)
     return 1;
 }
 
-int OCSP_RESPID_match(OCSP_RESPID *respid, X509 *cert)
+int __cdecl OCSP_RESPID_match(OCSP_RESPID *respid, X509 *cert)
 {
     if (respid->type == V_OCSP_RESPID_KEY) {
         unsigned char md[SHA_DIGEST_LENGTH];

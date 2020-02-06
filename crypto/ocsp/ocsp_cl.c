@@ -28,7 +28,7 @@
  * useful if we want to add extensions.
  */
 
-OCSP_ONEREQ *OCSP_request_add0_id(OCSP_REQUEST *req, OCSP_CERTID *cid)
+OCSP_ONEREQ * __cdecl OCSP_request_add0_id(OCSP_REQUEST *req, OCSP_CERTID *cid)
 {
     OCSP_ONEREQ *one = NULL;
 
@@ -48,7 +48,7 @@ OCSP_ONEREQ *OCSP_request_add0_id(OCSP_REQUEST *req, OCSP_CERTID *cid)
 
 /* Set requestorName from an X509_NAME structure */
 
-int OCSP_request_set1_name(OCSP_REQUEST *req, X509_NAME *nm)
+int __cdecl OCSP_request_set1_name(OCSP_REQUEST *req, X509_NAME *nm)
 {
     GENERAL_NAME *gen;
 
@@ -67,7 +67,7 @@ int OCSP_request_set1_name(OCSP_REQUEST *req, X509_NAME *nm)
 
 /* Add a certificate to an OCSP request */
 
-int OCSP_request_add1_cert(OCSP_REQUEST *req, X509 *cert)
+int __cdecl OCSP_request_add1_cert(OCSP_REQUEST *req, X509 *cert)
 {
     OCSP_SIGNATURE *sig;
     if (req->optionalSignature == NULL)
@@ -93,7 +93,7 @@ int OCSP_request_add1_cert(OCSP_REQUEST *req, X509 *cert)
  * in the request. Behaves like PKCS7_sign().
  */
 
-int OCSP_request_sign(OCSP_REQUEST *req,
+int __cdecl OCSP_request_sign(OCSP_REQUEST *req,
                       X509 *signer,
                       EVP_PKEY *key,
                       const EVP_MD *dgst,
@@ -136,7 +136,7 @@ int OCSP_request_sign(OCSP_REQUEST *req,
 
 /* Get response status */
 
-int OCSP_response_status(OCSP_RESPONSE *resp)
+int __cdecl OCSP_response_status(OCSP_RESPONSE *resp)
 {
     return ASN1_ENUMERATED_get(resp->responseStatus);
 }
@@ -146,7 +146,7 @@ int OCSP_response_status(OCSP_RESPONSE *resp)
  * present.
  */
 
-OCSP_BASICRESP *OCSP_response_get1_basic(OCSP_RESPONSE *resp)
+OCSP_BASICRESP * __cdecl OCSP_response_get1_basic(OCSP_RESPONSE *resp)
 {
     OCSP_RESPBYTES *rb;
     rb = resp->responseBytes;
@@ -162,17 +162,17 @@ OCSP_BASICRESP *OCSP_response_get1_basic(OCSP_RESPONSE *resp)
     return ASN1_item_unpack(rb->response, ASN1_ITEM_rptr(OCSP_BASICRESP));
 }
 
-const ASN1_OCTET_STRING *OCSP_resp_get0_signature(const OCSP_BASICRESP *bs)
+const ASN1_OCTET_STRING * __cdecl OCSP_resp_get0_signature(const OCSP_BASICRESP *bs)
 {
     return bs->signature;
 }
 
-const X509_ALGOR *OCSP_resp_get0_tbs_sigalg(const OCSP_BASICRESP *bs)
+const X509_ALGOR * __cdecl OCSP_resp_get0_tbs_sigalg(const OCSP_BASICRESP *bs)
 {
     return &bs->signatureAlgorithm;
 }
 
-const OCSP_RESPDATA *OCSP_resp_get0_respdata(const OCSP_BASICRESP *bs)
+const OCSP_RESPDATA * __cdecl OCSP_resp_get0_respdata(const OCSP_BASICRESP *bs)
 {
     return &bs->tbsResponseData;
 }
@@ -181,7 +181,7 @@ const OCSP_RESPDATA *OCSP_resp_get0_respdata(const OCSP_BASICRESP *bs)
  * Return number of OCSP_SINGLERESP responses present in a basic response.
  */
 
-int OCSP_resp_count(OCSP_BASICRESP *bs)
+int __cdecl OCSP_resp_count(OCSP_BASICRESP *bs)
 {
     if (!bs)
         return -1;
@@ -190,24 +190,24 @@ int OCSP_resp_count(OCSP_BASICRESP *bs)
 
 /* Extract an OCSP_SINGLERESP response with a given index */
 
-OCSP_SINGLERESP *OCSP_resp_get0(OCSP_BASICRESP *bs, int idx)
+OCSP_SINGLERESP * __cdecl OCSP_resp_get0(OCSP_BASICRESP *bs, int idx)
 {
     if (!bs)
         return NULL;
     return sk_OCSP_SINGLERESP_value(bs->tbsResponseData.responses, idx);
 }
 
-const ASN1_GENERALIZEDTIME *OCSP_resp_get0_produced_at(const OCSP_BASICRESP* bs)
+const ASN1_GENERALIZEDTIME * __cdecl OCSP_resp_get0_produced_at(const OCSP_BASICRESP* bs)
 {
     return bs->tbsResponseData.producedAt;
 }
 
-const STACK_OF(X509) *OCSP_resp_get0_certs(const OCSP_BASICRESP *bs)
+const STACK_OF(X509) * __cdecl OCSP_resp_get0_certs(const OCSP_BASICRESP *bs)
 {
     return bs->certs;
 }
 
-int OCSP_resp_get0_id(const OCSP_BASICRESP *bs,
+int __cdecl OCSP_resp_get0_id(const OCSP_BASICRESP *bs,
                       const ASN1_OCTET_STRING **pid,
                       const X509_NAME **pname)
 {
@@ -225,7 +225,7 @@ int OCSP_resp_get0_id(const OCSP_BASICRESP *bs,
     return 1;
 }
 
-int OCSP_resp_get1_id(const OCSP_BASICRESP *bs,
+int __cdecl OCSP_resp_get1_id(const OCSP_BASICRESP *bs,
                       ASN1_OCTET_STRING **pid,
                       X509_NAME **pname)
 {
@@ -247,7 +247,7 @@ int OCSP_resp_get1_id(const OCSP_BASICRESP *bs,
 
 /* Look single response matching a given certificate ID */
 
-int OCSP_resp_find(OCSP_BASICRESP *bs, OCSP_CERTID *id, int last)
+int __cdecl OCSP_resp_find(OCSP_BASICRESP *bs, OCSP_CERTID *id, int last)
 {
     int i;
     STACK_OF(OCSP_SINGLERESP) *sresp;
@@ -273,7 +273,7 @@ int OCSP_resp_find(OCSP_BASICRESP *bs, OCSP_CERTID *id, int last)
  * revoked. Returns numerical value of status.
  */
 
-int OCSP_single_get0_status(OCSP_SINGLERESP *single, int *reason,
+int __cdecl OCSP_single_get0_status(OCSP_SINGLERESP *single, int *reason,
                             ASN1_GENERALIZEDTIME **revtime,
                             ASN1_GENERALIZEDTIME **thisupd,
                             ASN1_GENERALIZEDTIME **nextupd)
@@ -307,7 +307,7 @@ int OCSP_single_get0_status(OCSP_SINGLERESP *single, int *reason,
  * found extract status information. Return 0 is successful.
  */
 
-int OCSP_resp_find_status(OCSP_BASICRESP *bs, OCSP_CERTID *id, int *status,
+int __cdecl OCSP_resp_find_status(OCSP_BASICRESP *bs, OCSP_CERTID *id, int *status,
                           int *reason,
                           ASN1_GENERALIZEDTIME **revtime,
                           ASN1_GENERALIZEDTIME **thisupd,
@@ -335,7 +335,7 @@ int OCSP_resp_find_status(OCSP_BASICRESP *bs, OCSP_CERTID *id, int *status,
  * parameter specifies the maximum age the thisUpdate field can be.
  */
 
-int OCSP_check_validity(ASN1_GENERALIZEDTIME *thisupd,
+int __cdecl OCSP_check_validity(ASN1_GENERALIZEDTIME *thisupd,
                         ASN1_GENERALIZEDTIME *nextupd, long nsec, long maxsec)
 {
     int ret = 1;
@@ -390,7 +390,7 @@ int OCSP_check_validity(ASN1_GENERALIZEDTIME *thisupd,
     return ret;
 }
 
-const OCSP_CERTID *OCSP_SINGLERESP_get0_id(const OCSP_SINGLERESP *single)
+const OCSP_CERTID * __cdecl OCSP_SINGLERESP_get0_id(const OCSP_SINGLERESP *single)
 {
     return single->certId;
 }

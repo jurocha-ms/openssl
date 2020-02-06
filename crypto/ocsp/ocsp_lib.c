@@ -19,7 +19,7 @@
 
 /* Convert a certificate and its issuer to an OCSP_CERTID */
 
-OCSP_CERTID *OCSP_cert_to_id(const EVP_MD *dgst, const X509 *subject,
+OCSP_CERTID * __cdecl OCSP_cert_to_id(const EVP_MD *dgst, const X509 *subject,
                              const X509 *issuer)
 {
     X509_NAME *iname;
@@ -38,7 +38,7 @@ OCSP_CERTID *OCSP_cert_to_id(const EVP_MD *dgst, const X509 *subject,
     return OCSP_cert_id_new(dgst, iname, ikey, serial);
 }
 
-OCSP_CERTID *OCSP_cert_id_new(const EVP_MD *dgst,
+OCSP_CERTID * __cdecl OCSP_cert_id_new(const EVP_MD *dgst,
                               const X509_NAME *issuerName,
                               const ASN1_BIT_STRING *issuerKey,
                               const ASN1_INTEGER *serialNumber)
@@ -88,7 +88,7 @@ OCSP_CERTID *OCSP_cert_id_new(const EVP_MD *dgst,
     return NULL;
 }
 
-int OCSP_id_issuer_cmp(const OCSP_CERTID *a, const OCSP_CERTID *b)
+int __cdecl OCSP_id_issuer_cmp(const OCSP_CERTID *a, const OCSP_CERTID *b)
 {
     int ret;
     ret = OBJ_cmp(a->hashAlgorithm.algorithm, b->hashAlgorithm.algorithm);
@@ -100,7 +100,7 @@ int OCSP_id_issuer_cmp(const OCSP_CERTID *a, const OCSP_CERTID *b)
     return ASN1_OCTET_STRING_cmp(&a->issuerKeyHash, &b->issuerKeyHash);
 }
 
-int OCSP_id_cmp(const OCSP_CERTID *a, const OCSP_CERTID *b)
+int __cdecl OCSP_id_cmp(const OCSP_CERTID *a, const OCSP_CERTID *b)
 {
     int ret;
     ret = OCSP_id_issuer_cmp(a, b);
@@ -114,7 +114,7 @@ int OCSP_id_cmp(const OCSP_CERTID *a, const OCSP_CERTID *b)
  * whether it is SSL.
  */
 
-int OCSP_parse_url(const char *url, char **phost, char **pport, char **ppath,
+int __cdecl OCSP_parse_url(const char *url, char **phost, char **pport, char **ppath,
                    int *pssl)
 {
     char *p, *buf;
