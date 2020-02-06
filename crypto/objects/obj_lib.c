@@ -13,7 +13,7 @@
 #include <openssl/buffer.h>
 #include "internal/asn1_int.h"
 
-ASN1_OBJECT *OBJ_dup(const ASN1_OBJECT *o)
+ASN1_OBJECT * __cdecl OBJ_dup(const ASN1_OBJECT *o)
 {
     ASN1_OBJECT *r;
 
@@ -54,7 +54,7 @@ ASN1_OBJECT *OBJ_dup(const ASN1_OBJECT *o)
     return NULL;
 }
 
-int OBJ_cmp(const ASN1_OBJECT *a, const ASN1_OBJECT *b)
+int __cdecl OBJ_cmp(const ASN1_OBJECT *a, const ASN1_OBJECT *b)
 {
     int ret;
 

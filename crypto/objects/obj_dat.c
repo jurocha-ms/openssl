@@ -162,7 +162,7 @@ void obj_cleanup_int(void)
     added = NULL;
 }
 
-int OBJ_new_nid(int num)
+int __cdecl OBJ_new_nid(int num)
 {
     int i;
 
@@ -171,7 +171,7 @@ int OBJ_new_nid(int num)
     return i;
 }
 
-int OBJ_add_object(const ASN1_OBJECT *obj)
+int __cdecl OBJ_add_object(const ASN1_OBJECT *obj)
 {
     ASN1_OBJECT *o;
     ADDED_OBJ *ao[4] = { NULL, NULL, NULL, NULL }, *aop;
@@ -217,7 +217,7 @@ int OBJ_add_object(const ASN1_OBJECT *obj)
     return NID_undef;
 }
 
-ASN1_OBJECT *OBJ_nid2obj(int n)
+ASN1_OBJECT * __cdecl OBJ_nid2obj(int n)
 {
     ADDED_OBJ ad, *adp;
     ASN1_OBJECT ob;
@@ -244,7 +244,7 @@ ASN1_OBJECT *OBJ_nid2obj(int n)
     }
 }
 
-const char *OBJ_nid2sn(int n)
+const char * __cdecl OBJ_nid2sn(int n)
 {
     ADDED_OBJ ad, *adp;
     ASN1_OBJECT ob;
@@ -271,7 +271,7 @@ const char *OBJ_nid2sn(int n)
     }
 }
 
-const char *OBJ_nid2ln(int n)
+const char * __cdecl OBJ_nid2ln(int n)
 {
     ADDED_OBJ ad, *adp;
     ASN1_OBJECT ob;
@@ -314,7 +314,7 @@ static int __cdecl obj_cmp(const ASN1_OBJECT *const *ap, const unsigned int *bp)
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(const ASN1_OBJECT *, unsigned int, obj);
 
-int OBJ_obj2nid(const ASN1_OBJECT *a)
+int __cdecl OBJ_obj2nid(const ASN1_OBJECT *a)
 {
     const unsigned int *op;
     ADDED_OBJ ad, *adp;
@@ -347,7 +347,7 @@ int OBJ_obj2nid(const ASN1_OBJECT *a)
  * just registered ones.
  */
 
-ASN1_OBJECT *OBJ_txt2obj(const char *s, int no_name)
+ASN1_OBJECT * __cdecl OBJ_txt2obj(const char *s, int no_name)
 {
     int nid = NID_undef;
     ASN1_OBJECT *op;
@@ -393,7 +393,7 @@ ASN1_OBJECT *OBJ_txt2obj(const char *s, int no_name)
     return op;
 }
 
-int OBJ_obj2txt(char *buf, int buf_len, const ASN1_OBJECT *a, int no_name)
+int __cdecl OBJ_obj2txt(char *buf, int buf_len, const ASN1_OBJECT *a, int no_name)
 {
     int i, n = 0, len, nid, first, use_bn;
     BIGNUM *bl;
@@ -527,7 +527,7 @@ int OBJ_obj2txt(char *buf, int buf_len, const ASN1_OBJECT *a, int no_name)
     return -1;
 }
 
-int OBJ_txt2nid(const char *s)
+int __cdecl OBJ_txt2nid(const char *s)
 {
     ASN1_OBJECT *obj;
     int nid;
@@ -537,7 +537,7 @@ int OBJ_txt2nid(const char *s)
     return nid;
 }
 
-int OBJ_ln2nid(const char *s)
+int __cdecl OBJ_ln2nid(const char *s)
 {
     ASN1_OBJECT o;
     const ASN1_OBJECT *oo = &o;
@@ -558,7 +558,7 @@ int OBJ_ln2nid(const char *s)
     return nid_objs[*op].nid;
 }
 
-int OBJ_sn2nid(const char *s)
+int __cdecl OBJ_sn2nid(const char *s)
 {
     ASN1_OBJECT o;
     const ASN1_OBJECT *oo = &o;
@@ -579,13 +579,13 @@ int OBJ_sn2nid(const char *s)
     return nid_objs[*op].nid;
 }
 
-const void *OBJ_bsearch_(const void *key, const void *base, int num, int size,
+const void * __cdecl OBJ_bsearch_(const void *key, const void *base, int num, int size,
                          int (__cdecl *cmp) (const void *, const void *))
 {
     return OBJ_bsearch_ex_(key, base, num, size, cmp, 0);
 }
 
-const void *OBJ_bsearch_ex_(const void *key, const void *base_, int num,
+const void * __cdecl OBJ_bsearch_ex_(const void *key, const void *base_, int num,
                             int size,
                             int (__cdecl *cmp) (const void *, const void *),
                             int flags)
@@ -638,7 +638,7 @@ const void *OBJ_bsearch_ex_(const void *key, const void *base_, int num,
  * Parse a BIO sink to create some extra oid's objects.
  * Line format:<OID:isdigit or '.']><isspace><SN><isspace><LN>
  */
-int OBJ_create_objects(BIO *in)
+int __cdecl OBJ_create_objects(BIO *in)
 {
     char buf[512];
     int i, num = 0;
@@ -687,7 +687,7 @@ int OBJ_create_objects(BIO *in)
     }
 }
 
-int OBJ_create(const char *oid, const char *sn, const char *ln)
+int __cdecl OBJ_create(const char *oid, const char *sn, const char *ln)
 {
     ASN1_OBJECT *tmpoid = NULL;
     int ok = 0;
@@ -724,14 +724,14 @@ int OBJ_create(const char *oid, const char *sn, const char *ln)
     return ok;
 }
 
-size_t OBJ_length(const ASN1_OBJECT *obj)
+size_t __cdecl OBJ_length(const ASN1_OBJECT *obj)
 {
     if (obj == NULL)
         return 0;
     return obj->length;
 }
 
-const unsigned char *OBJ_get0_data(const ASN1_OBJECT *obj)
+const unsigned char * __cdecl OBJ_get0_data(const ASN1_OBJECT *obj)
 {
     if (obj == NULL)
         return NULL;

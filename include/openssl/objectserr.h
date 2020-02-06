@@ -18,7 +18,7 @@
 # ifdef  __cplusplus
 extern "C"
 # endif
-int ERR_load_OBJ_strings(void);
+int __cdecl ERR_load_OBJ_strings(void);
 
 /*
  * OBJ function codes.

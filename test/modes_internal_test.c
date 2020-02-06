@@ -127,18 +127,18 @@ typedef struct {
     const char *case_name;
     size_t (*last_blocks_correction)(const unsigned char *in,
                                      unsigned char *out, size_t len);
-    size_t (*encrypt_block)(const unsigned char *in,
+    size_t (__cdecl *encrypt_block)(const unsigned char *in,
                             unsigned char *out, size_t len,
                             const void *key, unsigned char ivec[16],
                             block128_f block);
-    size_t (*encrypt_stream)(const unsigned char *in, unsigned char *out,
+    size_t (__cdecl *encrypt_stream)(const unsigned char *in, unsigned char *out,
                              size_t len, const void *key,
                              unsigned char ivec[16], cbc128_f cbc);
-    size_t (*decrypt_block)(const unsigned char *in,
+    size_t (__cdecl *decrypt_block)(const unsigned char *in,
                             unsigned char *out, size_t len,
                             const void *key, unsigned char ivec[16],
                             block128_f block);
-    size_t (*decrypt_stream)(const unsigned char *in, unsigned char *out,
+    size_t (__cdecl *decrypt_stream)(const unsigned char *in, unsigned char *out,
                              size_t len, const void *key,
                              unsigned char ivec[16], cbc128_f cbc);
 } CTS128_FIXTURE;

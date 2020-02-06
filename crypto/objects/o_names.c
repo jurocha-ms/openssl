@@ -73,12 +73,12 @@ DEFINE_RUN_ONCE_STATIC(o_names_init)
     return names_lh != NULL && obj_lock != NULL;
 }
 
-int OBJ_NAME_init(void)
+int __cdecl OBJ_NAME_init(void)
 {
     return RUN_ONCE(&init, o_names_init);
 }
 
-int OBJ_NAME_new_index(unsigned long (*hash_func) (const char *),
+int __cdecl OBJ_NAME_new_index(unsigned long (*hash_func) (const char *),
                        int (__cdecl *cmp_func) (const char *, const char *),
                        void (*free_func) (const char *, int, const char *))
 {
@@ -169,7 +169,7 @@ static unsigned long obj_name_hash(const OBJ_NAME *a)
     return ret;
 }
 
-const char *OBJ_NAME_get(const char *name, int type)
+const char * __cdecl OBJ_NAME_get(const char *name, int type)
 {
     OBJ_NAME on, *ret;
     int num = 0, alias;
@@ -205,7 +205,7 @@ const char *OBJ_NAME_get(const char *name, int type)
     return value;
 }
 
-int OBJ_NAME_add(const char *name, int type, const char *data)
+int __cdecl OBJ_NAME_add(const char *name, int type, const char *data)
 {
     OBJ_NAME *onp, *ret;
     int alias, ok = 0;
@@ -258,7 +258,7 @@ unlock:
     return ok;
 }
 
-int OBJ_NAME_remove(const char *name, int type)
+int __cdecl OBJ_NAME_remove(const char *name, int type)
 {
     OBJ_NAME on, *ret;
     int ok = 0;
@@ -306,7 +306,7 @@ static void do_all_fn(const OBJ_NAME *name, OBJ_DOALL *d)
 
 IMPLEMENT_LHASH_DOALL_ARG_CONST(OBJ_NAME, OBJ_DOALL);
 
-void OBJ_NAME_do_all(int type, void (*fn) (const OBJ_NAME *, void *arg),
+void __cdecl OBJ_NAME_do_all(int type, void (*fn) (const OBJ_NAME *, void *arg),
                      void *arg)
 {
     OBJ_DOALL d;
@@ -342,7 +342,7 @@ static int __cdecl do_all_sorted_cmp(const void *n1_, const void *n2_)
     return strcmp((*n1)->name, (*n2)->name);
 }
 
-void OBJ_NAME_do_all_sorted(int type,
+void __cdecl OBJ_NAME_do_all_sorted(int type,
                             void (*fn) (const OBJ_NAME *, void *arg),
                             void *arg)
 {
@@ -382,7 +382,7 @@ static void __cdecl name_funcs_free(NAME_FUNCS *ptr)
     OPENSSL_free(ptr);
 }
 
-void OBJ_NAME_cleanup(int type)
+void __cdecl OBJ_NAME_cleanup(int type)
 {
     unsigned long down_load;
 

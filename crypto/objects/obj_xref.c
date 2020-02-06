@@ -40,7 +40,7 @@ static int __cdecl sigx_cmp(const nid_triple *const *a, const nid_triple *const 
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(const nid_triple *, const nid_triple *, sigx);
 
-int OBJ_find_sigid_algs(int signid, int *pdig_nid, int *ppkey_nid)
+int __cdecl OBJ_find_sigid_algs(int signid, int *pdig_nid, int *ppkey_nid)
 {
     nid_triple tmp;
     const nid_triple *rv = NULL;
@@ -64,7 +64,7 @@ int OBJ_find_sigid_algs(int signid, int *pdig_nid, int *ppkey_nid)
     return 1;
 }
 
-int OBJ_find_sigid_by_algs(int *psignid, int dig_nid, int pkey_nid)
+int __cdecl OBJ_find_sigid_by_algs(int *psignid, int dig_nid, int pkey_nid)
 {
     nid_triple tmp;
     const nid_triple *t = &tmp;
@@ -92,7 +92,7 @@ int OBJ_find_sigid_by_algs(int *psignid, int dig_nid, int pkey_nid)
     return 1;
 }
 
-int OBJ_add_sigid(int signid, int dig_id, int pkey_id)
+int __cdecl OBJ_add_sigid(int signid, int dig_id, int pkey_id)
 {
     nid_triple *ntr;
     if (sig_app == NULL)
@@ -130,7 +130,7 @@ static void __cdecl sid_free(nid_triple *tt)
     OPENSSL_free(tt);
 }
 
-void OBJ_sigid_free(void)
+void __cdecl OBJ_sigid_free(void)
 {
     sk_nid_triple_pop_free(sig_app, sid_free);
     sig_app = NULL;
