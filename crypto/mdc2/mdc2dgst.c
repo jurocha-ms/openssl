@@ -27,7 +27,7 @@
                         *((c)++)=(unsigned char)(((l)>>24L)&0xff))
 
 static void mdc2_body(MDC2_CTX *c, const unsigned char *in, size_t len);
-int MDC2_Init(MDC2_CTX *c)
+int __cdecl MDC2_Init(MDC2_CTX *c)
 {
     c->num = 0;
     c->pad_type = 1;
@@ -36,7 +36,7 @@ int MDC2_Init(MDC2_CTX *c)
     return 1;
 }
 
-int MDC2_Update(MDC2_CTX *c, const unsigned char *in, size_t len)
+int __cdecl MDC2_Update(MDC2_CTX *c, const unsigned char *in, size_t len)
 {
     size_t i, j;
 
@@ -107,7 +107,7 @@ static void mdc2_body(MDC2_CTX *c, const unsigned char *in, size_t len)
     }
 }
 
-int MDC2_Final(unsigned char *md, MDC2_CTX *c)
+int __cdecl MDC2_Final(unsigned char *md, MDC2_CTX *c)
 {
     unsigned int i;
     int j;

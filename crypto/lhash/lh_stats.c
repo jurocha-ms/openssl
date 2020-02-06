@@ -21,7 +21,7 @@
 #include "lhash_lcl.h"
 
 # ifndef OPENSSL_NO_STDIO
-void OPENSSL_LH_stats(const OPENSSL_LHASH *lh, FILE *fp)
+void __cdecl OPENSSL_LH_stats(const OPENSSL_LHASH *lh, FILE *fp)
 {
     BIO *bp;
 
@@ -33,7 +33,7 @@ void OPENSSL_LH_stats(const OPENSSL_LHASH *lh, FILE *fp)
     BIO_free(bp);
 }
 
-void OPENSSL_LH_node_stats(const OPENSSL_LHASH *lh, FILE *fp)
+void __cdecl OPENSSL_LH_node_stats(const OPENSSL_LHASH *lh, FILE *fp)
 {
     BIO *bp;
 
@@ -45,7 +45,7 @@ void OPENSSL_LH_node_stats(const OPENSSL_LHASH *lh, FILE *fp)
     BIO_free(bp);
 }
 
-void OPENSSL_LH_node_usage_stats(const OPENSSL_LHASH *lh, FILE *fp)
+void __cdecl OPENSSL_LH_node_usage_stats(const OPENSSL_LHASH *lh, FILE *fp)
 {
     BIO *bp;
 
@@ -59,7 +59,7 @@ void OPENSSL_LH_node_usage_stats(const OPENSSL_LHASH *lh, FILE *fp)
 
 # endif
 
-void OPENSSL_LH_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
+void __cdecl OPENSSL_LH_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
 {
     BIO_printf(out, "num_items             = %lu\n", lh->num_items);
     BIO_printf(out, "num_nodes             = %u\n",  lh->num_nodes);
@@ -79,7 +79,7 @@ void OPENSSL_LH_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
     BIO_printf(out, "num_hash_comps        = %lu\n", lh->num_hash_comps);
 }
 
-void OPENSSL_LH_node_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
+void __cdecl OPENSSL_LH_node_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
 {
     OPENSSL_LH_NODE *n;
     unsigned int i, num;
@@ -91,7 +91,7 @@ void OPENSSL_LH_node_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
     }
 }
 
-void OPENSSL_LH_node_usage_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
+void __cdecl OPENSSL_LH_node_usage_stats_bio(const OPENSSL_LHASH *lh, BIO *out)
 {
     OPENSSL_LH_NODE *n;
     unsigned long num;

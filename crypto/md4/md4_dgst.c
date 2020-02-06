@@ -20,7 +20,7 @@
 #define INIT_DATA_C (unsigned long)0x98badcfeL
 #define INIT_DATA_D (unsigned long)0x10325476L
 
-int MD4_Init(MD4_CTX *c)
+int __cdecl MD4_Init(MD4_CTX *c)
 {
     memset(c, 0, sizeof(*c));
     c->A = INIT_DATA_A;

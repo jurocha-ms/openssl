@@ -31,7 +31,7 @@ int SHA224_Init(SHA256_CTX *c)
     return 1;
 }
 
-int SHA256_Init(SHA256_CTX *c)
+int __cdecl SHA256_Init(SHA256_CTX *c)
 {
     memset(c, 0, sizeof(*c));
     c->h[0] = 0x6a09e667UL;
@@ -60,7 +60,7 @@ unsigned char *SHA224(const unsigned char *d, size_t n, unsigned char *md)
     return md;
 }
 
-unsigned char *SHA256(const unsigned char *d, size_t n, unsigned char *md)
+unsigned char * __cdecl SHA256(const unsigned char *d, size_t n, unsigned char *md)
 {
     SHA256_CTX c;
     static unsigned char m[SHA256_DIGEST_LENGTH];

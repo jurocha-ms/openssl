@@ -12,7 +12,7 @@
 #include <openssl/e_os2.h>
 #include "sm3_locl.h"
 
-int sm3_init(SM3_CTX *c)
+int __cdecl sm3_init(SM3_CTX *c)
 {
     memset(c, 0, sizeof(*c));
     c->A = SM3_A;

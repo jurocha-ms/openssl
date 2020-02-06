@@ -60,7 +60,7 @@ static const MD2_INT S[256] = {
     0xDB, 0x99, 0x8D, 0x33, 0x9F, 0x11, 0x83, 0x14,
 };
 
-const char *MD2_options(void)
+const char * __cdecl MD2_options(void)
 {
     if (sizeof(MD2_INT) == 1)
         return "md2(char)";
@@ -68,7 +68,7 @@ const char *MD2_options(void)
         return "md2(int)";
 }
 
-int MD2_Init(MD2_CTX *c)
+int __cdecl MD2_Init(MD2_CTX *c)
 {
     c->num = 0;
     memset(c->state, 0, sizeof(c->state));
@@ -77,7 +77,7 @@ int MD2_Init(MD2_CTX *c)
     return 1;
 }
 
-int MD2_Update(MD2_CTX *c, const unsigned char *data, size_t len)
+int __cdecl MD2_Update(MD2_CTX *c, const unsigned char *data, size_t len)
 {
     register UCHAR *p;
 
@@ -147,7 +147,7 @@ static void md2_block(MD2_CTX *c, const unsigned char *d)
     OPENSSL_cleanse(state, 48 * sizeof(MD2_INT));
 }
 
-int MD2_Final(unsigned char *md, MD2_CTX *c)
+int __cdecl MD2_Final(unsigned char *md, MD2_CTX *c)
 {
     int i, v;
     register UCHAR *cp;

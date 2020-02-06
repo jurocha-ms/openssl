@@ -15,7 +15,7 @@
 #include <openssl/opensslconf.h>
 #include "hmac_lcl.h"
 
-int HMAC_Init_ex(HMAC_CTX *ctx, const void *key, int len,
+int __cdecl HMAC_Init_ex(HMAC_CTX *ctx, const void *key, int len,
                  const EVP_MD *md, ENGINE *impl)
 {
     int rv = 0;
@@ -95,14 +95,14 @@ int HMAC_Init(HMAC_CTX *ctx, const void *key, int len, const EVP_MD *md)
 }
 #endif
 
-int HMAC_Update(HMAC_CTX *ctx, const unsigned char *data, size_t len)
+int __cdecl HMAC_Update(HMAC_CTX *ctx, const unsigned char *data, size_t len)
 {
     if (!ctx->md)
         return 0;
     return EVP_DigestUpdate(ctx->md_ctx, data, len);
 }
 
-int HMAC_Final(HMAC_CTX *ctx, unsigned char *md, unsigned int *len)
+int __cdecl HMAC_Final(HMAC_CTX *ctx, unsigned char *md, unsigned int *len)
 {
     unsigned int i;
     unsigned char buf[EVP_MAX_MD_SIZE];
@@ -123,14 +123,14 @@ int HMAC_Final(HMAC_CTX *ctx, unsigned char *md, unsigned int *len)
     return 0;
 }
 
-size_t HMAC_size(const HMAC_CTX *ctx)
+size_t __cdecl HMAC_size(const HMAC_CTX *ctx)
 {
     int size = EVP_MD_size((ctx)->md);
 
     return (size < 0) ? 0 : size;
 }
 
-HMAC_CTX *HMAC_CTX_new(void)
+HMAC_CTX * __cdecl HMAC_CTX_new(void)
 {
     HMAC_CTX *ctx = OPENSSL_zalloc(sizeof(HMAC_CTX));
 
@@ -153,7 +153,7 @@ static void hmac_ctx_cleanup(HMAC_CTX *ctx)
     OPENSSL_cleanse(ctx->key, sizeof(ctx->key));
 }
 
-void HMAC_CTX_free(HMAC_CTX *ctx)
+void __cdecl HMAC_CTX_free(HMAC_CTX *ctx)
 {
     if (ctx != NULL) {
         hmac_ctx_cleanup(ctx);
@@ -181,7 +181,7 @@ static int hmac_ctx_alloc_mds(HMAC_CTX *ctx)
     return 1;
 }
 
-int HMAC_CTX_reset(HMAC_CTX *ctx)
+int __cdecl HMAC_CTX_reset(HMAC_CTX *ctx)
 {
     hmac_ctx_cleanup(ctx);
     if (!hmac_ctx_alloc_mds(ctx)) {
@@ -191,7 +191,7 @@ int HMAC_CTX_reset(HMAC_CTX *ctx)
     return 1;
 }
 
-int HMAC_CTX_copy(HMAC_CTX *dctx, HMAC_CTX *sctx)
+int __cdecl HMAC_CTX_copy(HMAC_CTX *dctx, HMAC_CTX *sctx)
 {
     if (!hmac_ctx_alloc_mds(dctx))
         goto err;
@@ -210,7 +210,7 @@ int HMAC_CTX_copy(HMAC_CTX *dctx, HMAC_CTX *sctx)
     return 0;
 }
 
-unsigned char *HMAC(const EVP_MD *evp_md, const void *key, int key_len,
+unsigned char * __cdecl HMAC(const EVP_MD *evp_md, const void *key, int key_len,
                     const unsigned char *d, size_t n, unsigned char *md,
                     unsigned int *md_len)
 {
@@ -241,14 +241,14 @@ unsigned char *HMAC(const EVP_MD *evp_md, const void *key, int key_len,
     return NULL;
 }
 
-void HMAC_CTX_set_flags(HMAC_CTX *ctx, unsigned long flags)
+void __cdecl HMAC_CTX_set_flags(HMAC_CTX *ctx, unsigned long flags)
 {
     EVP_MD_CTX_set_flags(ctx->i_ctx, flags);
     EVP_MD_CTX_set_flags(ctx->o_ctx, flags);
     EVP_MD_CTX_set_flags(ctx->md_ctx, flags);
 }
 
-const EVP_MD *HMAC_CTX_get_md(const HMAC_CTX *ctx)
+const EVP_MD * __cdecl HMAC_CTX_get_md(const HMAC_CTX *ctx)
 {
     return ctx->md;
 }

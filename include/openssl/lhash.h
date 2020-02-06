@@ -69,27 +69,27 @@ typedef struct lhash_st OPENSSL_LHASH;
 
 # define LH_LOAD_MULT    256
 
-int OPENSSL_LH_error(OPENSSL_LHASH *lh);
-OPENSSL_LHASH *OPENSSL_LH_new(OPENSSL_LH_HASHFUNC h, OPENSSL_LH_COMPFUNC c);
-void OPENSSL_LH_free(OPENSSL_LHASH *lh);
+int __cdecl OPENSSL_LH_error(OPENSSL_LHASH *lh);
+OPENSSL_LHASH * __cdecl OPENSSL_LH_new(OPENSSL_LH_HASHFUNC h, OPENSSL_LH_COMPFUNC c);
+void __cdecl OPENSSL_LH_free(OPENSSL_LHASH *lh);
 void * __cdecl OPENSSL_LH_insert(OPENSSL_LHASH *lh, void *data);
-void *OPENSSL_LH_delete(OPENSSL_LHASH *lh, const void *data);
-void *OPENSSL_LH_retrieve(OPENSSL_LHASH *lh, const void *data);
-void OPENSSL_LH_doall(OPENSSL_LHASH *lh, OPENSSL_LH_DOALL_FUNC func);
-void OPENSSL_LH_doall_arg(OPENSSL_LHASH *lh, OPENSSL_LH_DOALL_FUNCARG func, void *arg);
-unsigned long OPENSSL_LH_strhash(const char *c);
-unsigned long OPENSSL_LH_num_items(const OPENSSL_LHASH *lh);
-unsigned long OPENSSL_LH_get_down_load(const OPENSSL_LHASH *lh);
-void OPENSSL_LH_set_down_load(OPENSSL_LHASH *lh, unsigned long down_load);
+void * __cdecl OPENSSL_LH_delete(OPENSSL_LHASH *lh, const void *data);
+void * __cdecl OPENSSL_LH_retrieve(OPENSSL_LHASH *lh, const void *data);
+void __cdecl OPENSSL_LH_doall(OPENSSL_LHASH *lh, OPENSSL_LH_DOALL_FUNC func);
+void __cdecl OPENSSL_LH_doall_arg(OPENSSL_LHASH *lh, OPENSSL_LH_DOALL_FUNCARG func, void *arg);
+unsigned long __cdecl OPENSSL_LH_strhash(const char *c);
+unsigned long __cdecl OPENSSL_LH_num_items(const OPENSSL_LHASH *lh);
+unsigned long __cdecl OPENSSL_LH_get_down_load(const OPENSSL_LHASH *lh);
+void __cdecl OPENSSL_LH_set_down_load(OPENSSL_LHASH *lh, unsigned long down_load);
 
 # ifndef OPENSSL_NO_STDIO
-void OPENSSL_LH_stats(const OPENSSL_LHASH *lh, FILE *fp);
-void OPENSSL_LH_node_stats(const OPENSSL_LHASH *lh, FILE *fp);
-void OPENSSL_LH_node_usage_stats(const OPENSSL_LHASH *lh, FILE *fp);
+void __cdecl OPENSSL_LH_stats(const OPENSSL_LHASH *lh, FILE *fp);
+void __cdecl OPENSSL_LH_node_stats(const OPENSSL_LHASH *lh, FILE *fp);
+void __cdecl OPENSSL_LH_node_usage_stats(const OPENSSL_LHASH *lh, FILE *fp);
 # endif
-void OPENSSL_LH_stats_bio(const OPENSSL_LHASH *lh, BIO *out);
-void OPENSSL_LH_node_stats_bio(const OPENSSL_LHASH *lh, BIO *out);
-void OPENSSL_LH_node_usage_stats_bio(const OPENSSL_LHASH *lh, BIO *out);
+void __cdecl OPENSSL_LH_stats_bio(const OPENSSL_LHASH *lh, BIO *out);
+void __cdecl OPENSSL_LH_node_stats_bio(const OPENSSL_LHASH *lh, BIO *out);
+void __cdecl OPENSSL_LH_node_usage_stats_bio(const OPENSSL_LHASH *lh, BIO *out);
 
 # if OPENSSL_API_COMPAT < 0x10100000L
 #  define _LHASH OPENSSL_LHASH

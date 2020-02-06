@@ -125,7 +125,7 @@
  * Time for some action :-)
  */
 
-int HASH_UPDATE(HASH_CTX *c, const void *data_, size_t len)
+int __cdecl HASH_UPDATE(HASH_CTX *c, const void *data_, size_t len)
 {
     const unsigned char *data = data_;
     unsigned char *p;
@@ -183,12 +183,12 @@ int HASH_UPDATE(HASH_CTX *c, const void *data_, size_t len)
     return 1;
 }
 
-void HASH_TRANSFORM(HASH_CTX *c, const unsigned char *data)
+void __cdecl HASH_TRANSFORM(HASH_CTX *c, const unsigned char *data)
 {
     HASH_BLOCK_DATA_ORDER(c, data, 1);
 }
 
-int HASH_FINAL(unsigned char *md, HASH_CTX *c)
+int __cdecl HASH_FINAL(unsigned char *md, HASH_CTX *c)
 {
     unsigned char *p = (unsigned char *)c->data;
     size_t n = c->num;

@@ -16,7 +16,7 @@
  * used is contained in *num;
  */
 
-void IDEA_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl IDEA_cfb64_encrypt(const unsigned char *in, unsigned char *out,
                         long length, IDEA_KEY_SCHEDULE *schedule,
                         unsigned char *ivec, int *num, int encrypt)
 {

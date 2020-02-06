@@ -12,7 +12,7 @@
 #include <openssl/crypto.h>
 #include <openssl/sha.h>
 
-unsigned char *SHA1(const unsigned char *d, size_t n, unsigned char *md)
+unsigned char * __cdecl SHA1(const unsigned char *d, size_t n, unsigned char *md)
 {
     SHA_CTX c;
     static unsigned char m[SHA_DIGEST_LENGTH];

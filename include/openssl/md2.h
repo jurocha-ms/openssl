@@ -30,11 +30,11 @@ typedef struct MD2state_st {
     MD2_INT state[MD2_BLOCK];
 } MD2_CTX;
 
-const char *MD2_options(void);
-int MD2_Init(MD2_CTX *c);
-int MD2_Update(MD2_CTX *c, const unsigned char *data, size_t len);
-int MD2_Final(unsigned char *md, MD2_CTX *c);
-unsigned char *MD2(const unsigned char *d, size_t n, unsigned char *md);
+const char * __cdecl MD2_options(void);
+int __cdecl MD2_Init(MD2_CTX *c);
+int __cdecl MD2_Update(MD2_CTX *c, const unsigned char *data, size_t len);
+int __cdecl MD2_Final(unsigned char *md, MD2_CTX *c);
+unsigned char * __cdecl MD2(const unsigned char *d, size_t n, unsigned char *md);
 
 # ifdef  __cplusplus
 }

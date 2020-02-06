@@ -29,21 +29,21 @@ typedef struct idea_key_st {
     IDEA_INT data[9][6];
 } IDEA_KEY_SCHEDULE;
 
-const char *IDEA_options(void);
-void IDEA_ecb_encrypt(const unsigned char *in, unsigned char *out,
+const char * __cdecl IDEA_options(void);
+void __cdecl IDEA_ecb_encrypt(const unsigned char *in, unsigned char *out,
                       IDEA_KEY_SCHEDULE *ks);
-void IDEA_set_encrypt_key(const unsigned char *key, IDEA_KEY_SCHEDULE *ks);
-void IDEA_set_decrypt_key(IDEA_KEY_SCHEDULE *ek, IDEA_KEY_SCHEDULE *dk);
-void IDEA_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl IDEA_set_encrypt_key(const unsigned char *key, IDEA_KEY_SCHEDULE *ks);
+void __cdecl IDEA_set_decrypt_key(IDEA_KEY_SCHEDULE *ek, IDEA_KEY_SCHEDULE *dk);
+void __cdecl IDEA_cbc_encrypt(const unsigned char *in, unsigned char *out,
                       long length, IDEA_KEY_SCHEDULE *ks, unsigned char *iv,
                       int enc);
-void IDEA_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl IDEA_cfb64_encrypt(const unsigned char *in, unsigned char *out,
                         long length, IDEA_KEY_SCHEDULE *ks, unsigned char *iv,
                         int *num, int enc);
-void IDEA_ofb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl IDEA_ofb64_encrypt(const unsigned char *in, unsigned char *out,
                         long length, IDEA_KEY_SCHEDULE *ks, unsigned char *iv,
                         int *num);
-void IDEA_encrypt(unsigned long *in, IDEA_KEY_SCHEDULE *ks);
+void __cdecl IDEA_encrypt(unsigned long *in, IDEA_KEY_SCHEDULE *ks);
 
 # if OPENSSL_API_COMPAT < 0x10100000L
 #  define idea_options          IDEA_options
