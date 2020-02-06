@@ -68,7 +68,7 @@ static void ctr128_inc_aligned(unsigned char *counter)
  * implementation takes NO responsibility for checking that the counter
  * doesn't overflow into the rest of the IV when incremented.
  */
-void CRYPTO_ctr128_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl CRYPTO_ctr128_encrypt(const unsigned char *in, unsigned char *out,
                            size_t len, const void *key,
                            unsigned char ivec[16],
                            unsigned char ecount_buf[16], unsigned int *num,
@@ -144,7 +144,7 @@ static void ctr96_inc(unsigned char *counter)
     } while (n);
 }
 
-void CRYPTO_ctr128_encrypt_ctr32(const unsigned char *in, unsigned char *out,
+void __cdecl CRYPTO_ctr128_encrypt_ctr32(const unsigned char *in, unsigned char *out,
                                  size_t len, const void *key,
                                  unsigned char ivec[16],
                                  unsigned char ecount_buf[16],

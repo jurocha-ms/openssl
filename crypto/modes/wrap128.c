@@ -45,7 +45,7 @@ static const unsigned char default_aiv[] = {
  *                     or if inlen > CRYPTO128_WRAP_MAX.
  *                     Output length if wrapping succeeded.
  */
-size_t CRYPTO_128_wrap(void *key, const unsigned char *iv,
+size_t __cdecl CRYPTO_128_wrap(void *key, const unsigned char *iv,
                        unsigned char *out,
                        const unsigned char *in, size_t inlen,
                        block128_f block)
@@ -147,7 +147,7 @@ static size_t crypto_128_unwrap_raw(void *key, unsigned char *iv,
  *                     or if IV doesn't match expected value.
  *                     Output length otherwise.
  */
-size_t CRYPTO_128_unwrap(void *key, const unsigned char *iv,
+size_t __cdecl CRYPTO_128_unwrap(void *key, const unsigned char *iv,
                          unsigned char *out, const unsigned char *in,
                          size_t inlen, block128_f block)
 {
@@ -180,7 +180,7 @@ size_t CRYPTO_128_unwrap(void *key, const unsigned char *iv,
  *  @return            0 if inlen is out of range [1, CRYPTO128_WRAP_MAX].
  *                     Output length if wrapping succeeded.
  */
-size_t CRYPTO_128_wrap_pad(void *key, const unsigned char *icv,
+size_t __cdecl CRYPTO_128_wrap_pad(void *key, const unsigned char *icv,
                            unsigned char *out,
                            const unsigned char *in, size_t inlen,
                            block128_f block)
@@ -248,7 +248,7 @@ size_t CRYPTO_128_wrap_pad(void *key, const unsigned char *icv,
  *                     or if IV and message length indicator doesn't match.
  *                     Output length if unwrapping succeeded and IV matches.
  */
-size_t CRYPTO_128_unwrap_pad(void *key, const unsigned char *icv,
+size_t __cdecl CRYPTO_128_unwrap_pad(void *key, const unsigned char *icv,
                              unsigned char *out,
                              const unsigned char *in, size_t inlen,
                              block128_f block)
