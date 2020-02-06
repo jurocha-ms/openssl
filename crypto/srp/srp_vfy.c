@@ -268,7 +268,7 @@ static SRP_user_pwd *srp_user_pwd_dup(SRP_user_pwd *src)
     return ret;
 }
 
-SRP_VBASE *SRP_VBASE_new(char *seed_key)
+SRP_VBASE * __cdecl SRP_VBASE_new(char *seed_key)
 {
     SRP_VBASE *vb = OPENSSL_malloc(sizeof(*vb));
 
@@ -291,7 +291,7 @@ SRP_VBASE *SRP_VBASE_new(char *seed_key)
     return vb;
 }
 
-void SRP_VBASE_free(SRP_VBASE *vb)
+void __cdecl SRP_VBASE_free(SRP_VBASE *vb)
 {
     if (!vb)
         return;
@@ -379,7 +379,7 @@ static BIGNUM *SRP_gN_place_bn(STACK_OF(SRP_gN_cache) *gN_cache, char *ch)
  * string(username):base64(v):base64(salt):int(index)
  */
 
-int SRP_VBASE_init(SRP_VBASE *vb, char *verifier_file)
+int __cdecl SRP_VBASE_init(SRP_VBASE *vb, char *verifier_file)
 {
     int error_code;
     STACK_OF(SRP_gN) *SRP_gN_tab = sk_SRP_gN_new_null();
@@ -526,7 +526,7 @@ SRP_user_pwd *SRP_VBASE_get_by_user(SRP_VBASE *vb, char *username)
  * Ownership of the returned pointer is released to the caller.
  * In other words, caller must free the result once done.
  */
-SRP_user_pwd *SRP_VBASE_get1_by_user(SRP_VBASE *vb, char *username)
+SRP_user_pwd * __cdecl SRP_VBASE_get1_by_user(SRP_VBASE *vb, char *username)
 {
     SRP_user_pwd *user;
     unsigned char digv[SHA_DIGEST_LENGTH];
@@ -578,7 +578,7 @@ SRP_user_pwd *SRP_VBASE_get1_by_user(SRP_VBASE *vb, char *username)
 /*
  * create a verifier (*salt,*verifier,g and N are in base64)
  */
-char *SRP_create_verifier(const char *user, const char *pass, char **salt,
+char * __cdecl SRP_create_verifier(const char *user, const char *pass, char **salt,
                           char **verifier, const char *N, const char *g)
 {
     int len;
@@ -676,7 +676,7 @@ char *SRP_create_verifier(const char *user, const char *pass, char **salt,
  * The caller is responsible for freeing the allocated *salt and *verifier
  * BIGNUMS.
  */
-int SRP_create_verifier_BN(const char *user, const char *pass, BIGNUM **salt,
+int __cdecl SRP_create_verifier_BN(const char *user, const char *pass, BIGNUM **salt,
                            BIGNUM **verifier, const BIGNUM *N,
                            const BIGNUM *g)
 {

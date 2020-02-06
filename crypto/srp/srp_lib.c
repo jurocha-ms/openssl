@@ -49,13 +49,13 @@ static BIGNUM *srp_Calc_k(const BIGNUM *N, const BIGNUM *g)
     return srp_Calc_xy(N, g, N);
 }
 
-BIGNUM *SRP_Calc_u(const BIGNUM *A, const BIGNUM *B, const BIGNUM *N)
+BIGNUM * __cdecl SRP_Calc_u(const BIGNUM *A, const BIGNUM *B, const BIGNUM *N)
 {
     /* k = SHA1(PAD(A) || PAD(B) ) -- tls-srp draft 8 */
     return srp_Calc_xy(A, B, N);
 }
 
-BIGNUM *SRP_Calc_server_key(const BIGNUM *A, const BIGNUM *v, const BIGNUM *u,
+BIGNUM * __cdecl SRP_Calc_server_key(const BIGNUM *A, const BIGNUM *v, const BIGNUM *u,
                             const BIGNUM *b, const BIGNUM *N)
 {
     BIGNUM *tmp = NULL, *S = NULL;
@@ -85,7 +85,7 @@ BIGNUM *SRP_Calc_server_key(const BIGNUM *A, const BIGNUM *v, const BIGNUM *u,
     return S;
 }
 
-BIGNUM *SRP_Calc_B(const BIGNUM *b, const BIGNUM *N, const BIGNUM *g,
+BIGNUM * __cdecl SRP_Calc_B(const BIGNUM *b, const BIGNUM *N, const BIGNUM *g,
                    const BIGNUM *v)
 {
     BIGNUM *kv = NULL, *gb = NULL;
@@ -117,7 +117,7 @@ BIGNUM *SRP_Calc_B(const BIGNUM *b, const BIGNUM *N, const BIGNUM *g,
     return B;
 }
 
-BIGNUM *SRP_Calc_x(const BIGNUM *s, const char *user, const char *pass)
+BIGNUM * __cdecl SRP_Calc_x(const BIGNUM *s, const char *user, const char *pass)
 {
     unsigned char dig[SHA_DIGEST_LENGTH];
     EVP_MD_CTX *ctxt;
@@ -157,7 +157,7 @@ BIGNUM *SRP_Calc_x(const BIGNUM *s, const char *user, const char *pass)
     return res;
 }
 
-BIGNUM *SRP_Calc_A(const BIGNUM *a, const BIGNUM *N, const BIGNUM *g)
+BIGNUM * __cdecl SRP_Calc_A(const BIGNUM *a, const BIGNUM *N, const BIGNUM *g)
 {
     BN_CTX *bn_ctx;
     BIGNUM *A = NULL;
@@ -173,7 +173,7 @@ BIGNUM *SRP_Calc_A(const BIGNUM *a, const BIGNUM *N, const BIGNUM *g)
     return A;
 }
 
-BIGNUM *SRP_Calc_client_key(const BIGNUM *N, const BIGNUM *B, const BIGNUM *g,
+BIGNUM * __cdecl SRP_Calc_client_key(const BIGNUM *N, const BIGNUM *B, const BIGNUM *g,
                             const BIGNUM *x, const BIGNUM *a, const BIGNUM *u)
 {
     BIGNUM *tmp = NULL, *tmp2 = NULL, *tmp3 = NULL, *k = NULL, *K = NULL;
@@ -236,7 +236,7 @@ int SRP_Verify_B_mod_N(const BIGNUM *B, const BIGNUM *N)
     return ret;
 }
 
-int SRP_Verify_A_mod_N(const BIGNUM *A, const BIGNUM *N)
+int __cdecl SRP_Verify_A_mod_N(const BIGNUM *A, const BIGNUM *N)
 {
     /* Checks if A % N == 0 */
     return SRP_Verify_B_mod_N(A, N);
@@ -258,7 +258,7 @@ static SRP_gN knowngN[] = {
  * Check if G and N are known parameters. The values have been generated
  * from the ietf-tls-srp draft version 8
  */
-char *SRP_check_known_gN_param(const BIGNUM *g, const BIGNUM *N)
+char * __cdecl SRP_check_known_gN_param(const BIGNUM *g, const BIGNUM *N)
 {
     size_t i;
     if ((g == NULL) || (N == NULL))
@@ -271,7 +271,7 @@ char *SRP_check_known_gN_param(const BIGNUM *g, const BIGNUM *N)
     return NULL;
 }
 
-SRP_gN *SRP_get_default_gN(const char *id)
+SRP_gN * __cdecl SRP_get_default_gN(const char *id)
 {
     size_t i;
 
