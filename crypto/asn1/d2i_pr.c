@@ -18,7 +18,7 @@
 #include "internal/asn1_int.h"
 #include "internal/evp_int.h"
 
-EVP_PKEY *d2i_PrivateKey(int type, EVP_PKEY **a, const unsigned char **pp,
+EVP_PKEY * __cdecl d2i_PrivateKey(int type, EVP_PKEY **a, const unsigned char **pp,
                          long length)
 {
     EVP_PKEY *ret;

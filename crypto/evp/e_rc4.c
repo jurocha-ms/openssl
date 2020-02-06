@@ -56,12 +56,12 @@ static const EVP_CIPHER r4_40_cipher = {
     NULL
 };
 
-const EVP_CIPHER *EVP_rc4(void)
+const EVP_CIPHER * __cdecl EVP_rc4(void)
 {
     return &r4_cipher;
 }
 
-const EVP_CIPHER *EVP_rc4_40(void)
+const EVP_CIPHER * __cdecl EVP_rc4_40(void)
 {
     return &r4_40_cipher;
 }

@@ -49,7 +49,7 @@ static const EVP_MD md2_md = {
     sizeof(EVP_MD *) + sizeof(MD2_CTX),
 };
 
-const EVP_MD *EVP_md2(void)
+const EVP_MD * __cdecl EVP_md2(void)
 {
     return &md2_md;
 }

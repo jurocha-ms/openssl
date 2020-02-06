@@ -14,7 +14,7 @@
 #include <openssl/x509.h>
 #include "internal/evp_int.h"
 
-int EVP_add_cipher(const EVP_CIPHER *c)
+int __cdecl EVP_add_cipher(const EVP_CIPHER *c)
 {
     int r;
 
@@ -30,7 +30,7 @@ int EVP_add_cipher(const EVP_CIPHER *c)
     return r;
 }
 
-int EVP_add_digest(const EVP_MD *md)
+int __cdecl EVP_add_digest(const EVP_MD *md)
 {
     int r;
     const char *name;
@@ -55,7 +55,7 @@ int EVP_add_digest(const EVP_MD *md)
     return r;
 }
 
-const EVP_CIPHER *EVP_get_cipherbyname(const char *name)
+const EVP_CIPHER * __cdecl EVP_get_cipherbyname(const char *name)
 {
     const EVP_CIPHER *cp;
 
@@ -66,7 +66,7 @@ const EVP_CIPHER *EVP_get_cipherbyname(const char *name)
     return cp;
 }
 
-const EVP_MD *EVP_get_digestbyname(const char *name)
+const EVP_MD * __cdecl EVP_get_digestbyname(const char *name)
 {
     const EVP_MD *cp;
 
@@ -109,7 +109,7 @@ static void do_all_cipher_fn(const OBJ_NAME *nm, void *arg)
         dc->fn((const EVP_CIPHER *)nm->data, nm->name, NULL, dc->arg);
 }
 
-void EVP_CIPHER_do_all(void (*fn) (const EVP_CIPHER *ciph,
+void __cdecl EVP_CIPHER_do_all(void (*fn) (const EVP_CIPHER *ciph,
                                    const char *from, const char *to, void *x),
                        void *arg)
 {
@@ -123,7 +123,7 @@ void EVP_CIPHER_do_all(void (*fn) (const EVP_CIPHER *ciph,
     OBJ_NAME_do_all(OBJ_NAME_TYPE_CIPHER_METH, do_all_cipher_fn, &dc);
 }
 
-void EVP_CIPHER_do_all_sorted(void (*fn) (const EVP_CIPHER *ciph,
+void __cdecl EVP_CIPHER_do_all_sorted(void (*fn) (const EVP_CIPHER *ciph,
                                           const char *from, const char *to,
                                           void *x), void *arg)
 {
@@ -152,7 +152,7 @@ static void do_all_md_fn(const OBJ_NAME *nm, void *arg)
         dc->fn((const EVP_MD *)nm->data, nm->name, NULL, dc->arg);
 }
 
-void EVP_MD_do_all(void (*fn) (const EVP_MD *md,
+void __cdecl EVP_MD_do_all(void (*fn) (const EVP_MD *md,
                                const char *from, const char *to, void *x),
                    void *arg)
 {
@@ -166,7 +166,7 @@ void EVP_MD_do_all(void (*fn) (const EVP_MD *md,
     OBJ_NAME_do_all(OBJ_NAME_TYPE_MD_METH, do_all_md_fn, &dc);
 }
 
-void EVP_MD_do_all_sorted(void (*fn) (const EVP_MD *md,
+void __cdecl EVP_MD_do_all_sorted(void (*fn) (const EVP_MD *md,
                                       const char *from, const char *to,
                                       void *x), void *arg)
 {

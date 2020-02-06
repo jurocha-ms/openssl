@@ -14,7 +14,7 @@
 #include <openssl/x509.h>
 #include "internal/evp_int.h"
 
-int EVP_SignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
+int __cdecl EVP_SignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
                   unsigned int *siglen, EVP_PKEY *pkey)
 {
     unsigned char m[EVP_MAX_MD_SIZE];

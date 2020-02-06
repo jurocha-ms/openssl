@@ -16,7 +16,7 @@
 #include "evp_locl.h"
 
 /* This call frees resources associated with the context */
-int EVP_MD_CTX_reset(EVP_MD_CTX *ctx)
+int __cdecl EVP_MD_CTX_reset(EVP_MD_CTX *ctx)
 {
     if (ctx == NULL)
         return 1;
@@ -46,24 +46,24 @@ int EVP_MD_CTX_reset(EVP_MD_CTX *ctx)
     return 1;
 }
 
-EVP_MD_CTX *EVP_MD_CTX_new(void)
+EVP_MD_CTX * __cdecl EVP_MD_CTX_new(void)
 {
     return OPENSSL_zalloc(sizeof(EVP_MD_CTX));
 }
 
-void EVP_MD_CTX_free(EVP_MD_CTX *ctx)
+void __cdecl EVP_MD_CTX_free(EVP_MD_CTX *ctx)
 {
     EVP_MD_CTX_reset(ctx);
     OPENSSL_free(ctx);
 }
 
-int EVP_DigestInit(EVP_MD_CTX *ctx, const EVP_MD *type)
+int __cdecl EVP_DigestInit(EVP_MD_CTX *ctx, const EVP_MD *type)
 {
     EVP_MD_CTX_reset(ctx);
     return EVP_DigestInit_ex(ctx, type, NULL);
 }
 
-int EVP_DigestInit_ex(EVP_MD_CTX *ctx, const EVP_MD *type, ENGINE *impl)
+int __cdecl EVP_DigestInit_ex(EVP_MD_CTX *ctx, const EVP_MD *type, ENGINE *impl)
 {
     EVP_MD_CTX_clear_flags(ctx, EVP_MD_CTX_FLAG_CLEANED);
 #ifndef OPENSSL_NO_ENGINE
@@ -148,7 +148,7 @@ int EVP_DigestInit_ex(EVP_MD_CTX *ctx, const EVP_MD *type, ENGINE *impl)
     return ctx->digest->init(ctx);
 }
 
-int EVP_DigestUpdate(EVP_MD_CTX *ctx, const void *data, size_t count)
+int __cdecl EVP_DigestUpdate(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     if (count == 0)
         return 1;
@@ -157,7 +157,7 @@ int EVP_DigestUpdate(EVP_MD_CTX *ctx, const void *data, size_t count)
 }
 
 /* The caller can assume that this removes any secret data from the context */
-int EVP_DigestFinal(EVP_MD_CTX *ctx, unsigned char *md, unsigned int *size)
+int __cdecl EVP_DigestFinal(EVP_MD_CTX *ctx, unsigned char *md, unsigned int *size)
 {
     int ret;
     ret = EVP_DigestFinal_ex(ctx, md, size);
@@ -166,7 +166,7 @@ int EVP_DigestFinal(EVP_MD_CTX *ctx, unsigned char *md, unsigned int *size)
 }
 
 /* The caller can assume that this removes any secret data from the context */
-int EVP_DigestFinal_ex(EVP_MD_CTX *ctx, unsigned char *md, unsigned int *size)
+int __cdecl EVP_DigestFinal_ex(EVP_MD_CTX *ctx, unsigned char *md, unsigned int *size)
 {
     int ret;
 
@@ -182,7 +182,7 @@ int EVP_DigestFinal_ex(EVP_MD_CTX *ctx, unsigned char *md, unsigned int *size)
     return ret;
 }
 
-int EVP_DigestFinalXOF(EVP_MD_CTX *ctx, unsigned char *md, size_t size)
+int __cdecl EVP_DigestFinalXOF(EVP_MD_CTX *ctx, unsigned char *md, size_t size)
 {
     int ret = 0;
 
@@ -203,13 +203,13 @@ int EVP_DigestFinalXOF(EVP_MD_CTX *ctx, unsigned char *md, size_t size)
     return ret;
 }
 
-int EVP_MD_CTX_copy(EVP_MD_CTX *out, const EVP_MD_CTX *in)
+int __cdecl EVP_MD_CTX_copy(EVP_MD_CTX *out, const EVP_MD_CTX *in)
 {
     EVP_MD_CTX_reset(out);
     return EVP_MD_CTX_copy_ex(out, in);
 }
 
-int EVP_MD_CTX_copy_ex(EVP_MD_CTX *out, const EVP_MD_CTX *in)
+int __cdecl EVP_MD_CTX_copy_ex(EVP_MD_CTX *out, const EVP_MD_CTX *in)
 {
     unsigned char *tmp_buf;
     if ((in == NULL) || (in->digest == NULL)) {
@@ -271,7 +271,7 @@ int EVP_MD_CTX_copy_ex(EVP_MD_CTX *out, const EVP_MD_CTX *in)
     return 1;
 }
 
-int EVP_Digest(const void *data, size_t count,
+int __cdecl EVP_Digest(const void *data, size_t count,
                unsigned char *md, unsigned int *size, const EVP_MD *type,
                ENGINE *impl)
 {
@@ -289,7 +289,7 @@ int EVP_Digest(const void *data, size_t count,
     return ret;
 }
 
-int EVP_MD_CTX_ctrl(EVP_MD_CTX *ctx, int cmd, int p1, void *p2)
+int __cdecl EVP_MD_CTX_ctrl(EVP_MD_CTX *ctx, int cmd, int p1, void *p2)
 {
     if (ctx->digest && ctx->digest->md_ctrl) {
         int ret = ctx->digest->md_ctrl(ctx, cmd, p1, p2);

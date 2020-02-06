@@ -18,7 +18,7 @@ NON_EMPTY_TRANSLATION_UNIT
 # include <openssl/x509.h>
 # include <openssl/rsa.h>
 
-int EVP_OpenInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
+int __cdecl EVP_OpenInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
                  const unsigned char *ek, int ekl, const unsigned char *iv,
                  EVP_PKEY *priv)
 {
@@ -61,7 +61,7 @@ int EVP_OpenInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
     return ret;
 }
 
-int EVP_OpenFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_OpenFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     int i;
 

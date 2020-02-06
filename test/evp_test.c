@@ -1077,7 +1077,7 @@ typedef struct pkey_data_st {
     /* Context for this operation */
     EVP_PKEY_CTX *ctx;
     /* Key operation to perform */
-    int (*keyop) (EVP_PKEY_CTX *ctx,
+    int (__cdecl *keyop) (EVP_PKEY_CTX *ctx,
                   unsigned char *sig, size_t *siglen,
                   const unsigned char *tbs, size_t tbslen);
     /* Input to MAC */
@@ -1094,8 +1094,8 @@ typedef struct pkey_data_st {
  */
 static int pkey_test_init(EVP_TEST *t, const char *name,
                           int use_public,
-                          int (*keyopinit) (EVP_PKEY_CTX *ctx),
-                          int (*keyop)(EVP_PKEY_CTX *ctx,
+                          int (__cdecl *keyopinit) (EVP_PKEY_CTX *ctx),
+                          int (__cdecl *keyop)(EVP_PKEY_CTX *ctx,
                                        unsigned char *sig, size_t *siglen,
                                        const unsigned char *tbs,
                                        size_t tbslen))

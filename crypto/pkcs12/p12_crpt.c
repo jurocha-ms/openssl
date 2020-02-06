@@ -17,7 +17,7 @@ void PKCS12_PBE_add(void)
 {
 }
 
-int PKCS12_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
+int __cdecl PKCS12_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
                         ASN1_TYPE *param, const EVP_CIPHER *cipher,
                         const EVP_MD *md, int en_de)
 {

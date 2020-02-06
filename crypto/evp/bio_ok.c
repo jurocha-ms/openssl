@@ -124,7 +124,7 @@ static const BIO_METHOD methods_ok = {
     ok_callback_ctrl,
 };
 
-const BIO_METHOD *BIO_f_reliable(void)
+const BIO_METHOD * __cdecl BIO_f_reliable(void)
 {
     return &methods_ok;
 }

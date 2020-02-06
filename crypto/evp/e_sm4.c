@@ -92,7 +92,7 @@ static const EVP_CIPHER sm4_ctr_mode = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_sm4_ctr(void)
+const EVP_CIPHER * __cdecl EVP_sm4_ctr(void)
 {
     return &sm4_ctr_mode;
 }

@@ -50,7 +50,7 @@ static int alg_module_init(CONF_IMODULE *md, const CONF *cnf)
     return 1;
 }
 
-void EVP_add_alg_module(void)
+void __cdecl EVP_add_alg_module(void)
 {
     CONF_module_add("alg_section", alg_module_init, 0);
 }

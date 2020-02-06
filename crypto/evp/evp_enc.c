@@ -18,7 +18,7 @@
 #include "internal/evp_int.h"
 #include "evp_locl.h"
 
-int EVP_CIPHER_CTX_reset(EVP_CIPHER_CTX *c)
+int __cdecl EVP_CIPHER_CTX_reset(EVP_CIPHER_CTX *c)
 {
     if (c == NULL)
         return 1;
@@ -37,18 +37,18 @@ int EVP_CIPHER_CTX_reset(EVP_CIPHER_CTX *c)
     return 1;
 }
 
-EVP_CIPHER_CTX *EVP_CIPHER_CTX_new(void)
+EVP_CIPHER_CTX * __cdecl EVP_CIPHER_CTX_new(void)
 {
     return OPENSSL_zalloc(sizeof(EVP_CIPHER_CTX));
 }
 
-void EVP_CIPHER_CTX_free(EVP_CIPHER_CTX *ctx)
+void __cdecl EVP_CIPHER_CTX_free(EVP_CIPHER_CTX *ctx)
 {
     EVP_CIPHER_CTX_reset(ctx);
     OPENSSL_free(ctx);
 }
 
-int EVP_CipherInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
+int __cdecl EVP_CipherInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                    const unsigned char *key, const unsigned char *iv, int enc)
 {
     if (cipher != NULL)
@@ -56,7 +56,7 @@ int EVP_CipherInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
     return EVP_CipherInit_ex(ctx, cipher, NULL, key, iv, enc);
 }
 
-int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
+int __cdecl EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                       ENGINE *impl, const unsigned char *key,
                       const unsigned char *iv, int enc)
 {
@@ -206,7 +206,7 @@ int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
     return 1;
 }
 
-int EVP_CipherUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
+int __cdecl EVP_CipherUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
                      const unsigned char *in, int inl)
 {
     if (ctx->encrypt)
@@ -215,7 +215,7 @@ int EVP_CipherUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
         return EVP_DecryptUpdate(ctx, out, outl, in, inl);
 }
 
-int EVP_CipherFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_CipherFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     if (ctx->encrypt)
         return EVP_EncryptFinal_ex(ctx, out, outl);
@@ -223,7 +223,7 @@ int EVP_CipherFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
         return EVP_DecryptFinal_ex(ctx, out, outl);
 }
 
-int EVP_CipherFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_CipherFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     if (ctx->encrypt)
         return EVP_EncryptFinal(ctx, out, outl);
@@ -231,26 +231,26 @@ int EVP_CipherFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
         return EVP_DecryptFinal(ctx, out, outl);
 }
 
-int EVP_EncryptInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
+int __cdecl EVP_EncryptInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                     const unsigned char *key, const unsigned char *iv)
 {
     return EVP_CipherInit(ctx, cipher, key, iv, 1);
 }
 
-int EVP_EncryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
+int __cdecl EVP_EncryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                        ENGINE *impl, const unsigned char *key,
                        const unsigned char *iv)
 {
     return EVP_CipherInit_ex(ctx, cipher, impl, key, iv, 1);
 }
 
-int EVP_DecryptInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
+int __cdecl EVP_DecryptInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                     const unsigned char *key, const unsigned char *iv)
 {
     return EVP_CipherInit(ctx, cipher, key, iv, 0);
 }
 
-int EVP_DecryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
+int __cdecl EVP_DecryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
                        ENGINE *impl, const unsigned char *key,
                        const unsigned char *iv)
 {
@@ -373,7 +373,7 @@ static int evp_EncryptDecryptUpdate(EVP_CIPHER_CTX *ctx,
 }
 
 
-int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
+int __cdecl EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
                       const unsigned char *in, int inl)
 {
     /* Prevent accidental use of decryption context when encrypting */
@@ -385,14 +385,14 @@ int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
     return evp_EncryptDecryptUpdate(ctx, out, outl, in, inl);
 }
 
-int EVP_EncryptFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_EncryptFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     int ret;
     ret = EVP_EncryptFinal_ex(ctx, out, outl);
     return ret;
 }
 
-int EVP_EncryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_EncryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     int n, ret;
     unsigned int i, b, bl;
@@ -440,7 +440,7 @@ int EVP_EncryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
     return ret;
 }
 
-int EVP_DecryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
+int __cdecl EVP_DecryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
                       const unsigned char *in, int inl)
 {
     int fix_len, cmpl = inl;
@@ -515,14 +515,14 @@ int EVP_DecryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl,
     return 1;
 }
 
-int EVP_DecryptFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_DecryptFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     int ret;
     ret = EVP_DecryptFinal_ex(ctx, out, outl);
     return ret;
 }
 
-int EVP_DecryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_DecryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     int i, n;
     unsigned int b;
@@ -585,7 +585,7 @@ int EVP_DecryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
     return 1;
 }
 
-int EVP_CIPHER_CTX_set_key_length(EVP_CIPHER_CTX *c, int keylen)
+int __cdecl EVP_CIPHER_CTX_set_key_length(EVP_CIPHER_CTX *c, int keylen)
 {
     if (c->cipher->flags & EVP_CIPH_CUSTOM_KEY_LENGTH)
         return EVP_CIPHER_CTX_ctrl(c, EVP_CTRL_SET_KEY_LENGTH, keylen, NULL);
@@ -599,7 +599,7 @@ int EVP_CIPHER_CTX_set_key_length(EVP_CIPHER_CTX *c, int keylen)
     return 0;
 }
 
-int EVP_CIPHER_CTX_set_padding(EVP_CIPHER_CTX *ctx, int pad)
+int __cdecl EVP_CIPHER_CTX_set_padding(EVP_CIPHER_CTX *ctx, int pad)
 {
     if (pad)
         ctx->flags &= ~EVP_CIPH_NO_PADDING;
@@ -608,7 +608,7 @@ int EVP_CIPHER_CTX_set_padding(EVP_CIPHER_CTX *ctx, int pad)
     return 1;
 }
 
-int EVP_CIPHER_CTX_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg, void *ptr)
+int __cdecl EVP_CIPHER_CTX_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg, void *ptr)
 {
     int ret;
 
@@ -631,7 +631,7 @@ int EVP_CIPHER_CTX_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg, void *ptr)
     return ret;
 }
 
-int EVP_CIPHER_CTX_rand_key(EVP_CIPHER_CTX *ctx, unsigned char *key)
+int __cdecl EVP_CIPHER_CTX_rand_key(EVP_CIPHER_CTX *ctx, unsigned char *key)
 {
     if (ctx->cipher->flags & EVP_CIPH_RAND_KEY)
         return EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_RAND_KEY, 0, key);
@@ -640,7 +640,7 @@ int EVP_CIPHER_CTX_rand_key(EVP_CIPHER_CTX *ctx, unsigned char *key)
     return 1;
 }
 
-int EVP_CIPHER_CTX_copy(EVP_CIPHER_CTX *out, const EVP_CIPHER_CTX *in)
+int __cdecl EVP_CIPHER_CTX_copy(EVP_CIPHER_CTX *out, const EVP_CIPHER_CTX *in)
 {
     if ((in == NULL) || (in->cipher == NULL)) {
         EVPerr(EVP_F_EVP_CIPHER_CTX_COPY, EVP_R_INPUT_NOT_INITIALIZED);

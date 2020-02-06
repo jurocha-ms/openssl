@@ -44,7 +44,7 @@ static const EVP_CIPHER d_xcbc_cipher = {
     NULL
 };
 
-const EVP_CIPHER *EVP_desx_cbc(void)
+const EVP_CIPHER * __cdecl EVP_desx_cbc(void)
 {
     return &d_xcbc_cipher;
 }

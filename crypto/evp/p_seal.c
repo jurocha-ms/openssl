@@ -15,7 +15,7 @@
 #include <openssl/objects.h>
 #include <openssl/x509.h>
 
-int EVP_SealInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
+int __cdecl EVP_SealInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
                  unsigned char **ek, int *ekl, unsigned char *iv,
                  EVP_PKEY **pubk, int npubk)
 {
@@ -55,7 +55,7 @@ err:
     return rv;
 }
 
-int EVP_SealFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
+int __cdecl EVP_SealFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl)
 {
     int i;
     i = EVP_EncryptFinal_ex(ctx, out, outl);

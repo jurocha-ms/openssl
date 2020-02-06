@@ -26,14 +26,14 @@
 
 static void EVP_PKEY_free_it(EVP_PKEY *x);
 
-int EVP_PKEY_bits(const EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_bits(const EVP_PKEY *pkey)
 {
     if (pkey && pkey->ameth && pkey->ameth->pkey_bits)
         return pkey->ameth->pkey_bits(pkey);
     return 0;
 }
 
-int EVP_PKEY_security_bits(const EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_security_bits(const EVP_PKEY *pkey)
 {
     if (pkey == NULL)
         return 0;
@@ -42,14 +42,14 @@ int EVP_PKEY_security_bits(const EVP_PKEY *pkey)
     return pkey->ameth->pkey_security_bits(pkey);
 }
 
-int EVP_PKEY_size(const EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_size(const EVP_PKEY *pkey)
 {
     if (pkey && pkey->ameth && pkey->ameth->pkey_size)
         return pkey->ameth->pkey_size(pkey);
     return 0;
 }
 
-int EVP_PKEY_save_parameters(EVP_PKEY *pkey, int mode)
+int __cdecl EVP_PKEY_save_parameters(EVP_PKEY *pkey, int mode)
 {
 #ifndef OPENSSL_NO_DSA
     if (pkey->type == EVP_PKEY_DSA) {
@@ -72,7 +72,7 @@ int EVP_PKEY_save_parameters(EVP_PKEY *pkey, int mode)
     return 0;
 }
 
-int EVP_PKEY_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
+int __cdecl EVP_PKEY_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
 {
     if (to->type == EVP_PKEY_NONE) {
         if (EVP_PKEY_set_type(to, from->type) == 0)
@@ -100,14 +100,14 @@ int EVP_PKEY_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
     return 0;
 }
 
-int EVP_PKEY_missing_parameters(const EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_missing_parameters(const EVP_PKEY *pkey)
 {
     if (pkey->ameth && pkey->ameth->param_missing)
         return pkey->ameth->param_missing(pkey);
     return 0;
 }
 
-int EVP_PKEY_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
+int __cdecl EVP_PKEY_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     if (a->type != b->type)
         return -1;
@@ -116,7 +116,7 @@ int EVP_PKEY_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
     return -2;
 }
 
-int EVP_PKEY_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
+int __cdecl EVP_PKEY_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     if (a->type != b->type)
         return -1;
@@ -158,7 +158,7 @@ EVP_PKEY * __cdecl EVP_PKEY_new(void)
     return ret;
 }
 
-int EVP_PKEY_up_ref(EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_up_ref(EVP_PKEY *pkey)
 {
     int i;
 
@@ -220,7 +220,7 @@ static int pkey_set_type(EVP_PKEY *pkey, ENGINE *e, int type, const char *str,
     return 1;
 }
 
-EVP_PKEY *EVP_PKEY_new_raw_private_key(int type, ENGINE *e,
+EVP_PKEY * __cdecl EVP_PKEY_new_raw_private_key(int type, ENGINE *e,
                                        const unsigned char *priv,
                                        size_t len)
 {
@@ -250,7 +250,7 @@ EVP_PKEY *EVP_PKEY_new_raw_private_key(int type, ENGINE *e,
     return NULL;
 }
 
-EVP_PKEY *EVP_PKEY_new_raw_public_key(int type, ENGINE *e,
+EVP_PKEY * __cdecl EVP_PKEY_new_raw_public_key(int type, ENGINE *e,
                                       const unsigned char *pub,
                                       size_t len)
 {
@@ -280,7 +280,7 @@ EVP_PKEY *EVP_PKEY_new_raw_public_key(int type, ENGINE *e,
     return NULL;
 }
 
-int EVP_PKEY_get_raw_private_key(const EVP_PKEY *pkey, unsigned char *priv,
+int __cdecl EVP_PKEY_get_raw_private_key(const EVP_PKEY *pkey, unsigned char *priv,
                                  size_t *len)
 {
      if (pkey->ameth->get_priv_key == NULL) {
@@ -297,7 +297,7 @@ int EVP_PKEY_get_raw_private_key(const EVP_PKEY *pkey, unsigned char *priv,
     return 1;
 }
 
-int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
+int __cdecl EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
                                 size_t *len)
 {
      if (pkey->ameth->get_pub_key == NULL) {
@@ -314,7 +314,7 @@ int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
     return 1;
 }
 
-EVP_PKEY *EVP_PKEY_new_CMAC_key(ENGINE *e, const unsigned char *priv,
+EVP_PKEY * __cdecl EVP_PKEY_new_CMAC_key(ENGINE *e, const unsigned char *priv,
                                 size_t len, const EVP_CIPHER *cipher)
 {
 #ifndef OPENSSL_NO_CMAC
@@ -347,17 +347,17 @@ EVP_PKEY *EVP_PKEY_new_CMAC_key(ENGINE *e, const unsigned char *priv,
 #endif
 }
 
-int EVP_PKEY_set_type(EVP_PKEY *pkey, int type)
+int __cdecl EVP_PKEY_set_type(EVP_PKEY *pkey, int type)
 {
     return pkey_set_type(pkey, NULL, type, NULL, -1);
 }
 
-int EVP_PKEY_set_type_str(EVP_PKEY *pkey, const char *str, int len)
+int __cdecl EVP_PKEY_set_type_str(EVP_PKEY *pkey, const char *str, int len)
 {
     return pkey_set_type(pkey, NULL, EVP_PKEY_NONE, str, len);
 }
 
-int EVP_PKEY_set_alias_type(EVP_PKEY *pkey, int type)
+int __cdecl EVP_PKEY_set_alias_type(EVP_PKEY *pkey, int type)
 {
     if (pkey->type == type) {
         return 1; /* it already is that type */
@@ -377,7 +377,7 @@ int EVP_PKEY_set_alias_type(EVP_PKEY *pkey, int type)
 }
 
 #ifndef OPENSSL_NO_ENGINE
-int EVP_PKEY_set1_engine(EVP_PKEY *pkey, ENGINE *e)
+int __cdecl EVP_PKEY_set1_engine(EVP_PKEY *pkey, ENGINE *e)
 {
     if (e != NULL) {
         if (!ENGINE_init(e)) {
@@ -395,12 +395,12 @@ int EVP_PKEY_set1_engine(EVP_PKEY *pkey, ENGINE *e)
     return 1;
 }
 
-ENGINE *EVP_PKEY_get0_engine(const EVP_PKEY *pkey)
+ENGINE * __cdecl EVP_PKEY_get0_engine(const EVP_PKEY *pkey)
 {
     return pkey->engine;
 }
 #endif
-int EVP_PKEY_assign(EVP_PKEY *pkey, int type, void *key)
+int __cdecl EVP_PKEY_assign(EVP_PKEY *pkey, int type, void *key)
 {
     if (pkey == NULL || !EVP_PKEY_set_type(pkey, type))
         return 0;
@@ -408,12 +408,12 @@ int EVP_PKEY_assign(EVP_PKEY *pkey, int type, void *key)
     return (key != NULL);
 }
 
-void *EVP_PKEY_get0(const EVP_PKEY *pkey)
+void * __cdecl EVP_PKEY_get0(const EVP_PKEY *pkey)
 {
     return pkey->pkey.ptr;
 }
 
-const unsigned char *EVP_PKEY_get0_hmac(const EVP_PKEY *pkey, size_t *len)
+const unsigned char * __cdecl EVP_PKEY_get0_hmac(const EVP_PKEY *pkey, size_t *len)
 {
     ASN1_OCTET_STRING *os = NULL;
     if (pkey->type != EVP_PKEY_HMAC) {
@@ -426,7 +426,7 @@ const unsigned char *EVP_PKEY_get0_hmac(const EVP_PKEY *pkey, size_t *len)
 }
 
 #ifndef OPENSSL_NO_POLY1305
-const unsigned char *EVP_PKEY_get0_poly1305(const EVP_PKEY *pkey, size_t *len)
+const unsigned char * __cdecl EVP_PKEY_get0_poly1305(const EVP_PKEY *pkey, size_t *len)
 {
     ASN1_OCTET_STRING *os = NULL;
     if (pkey->type != EVP_PKEY_POLY1305) {
@@ -440,7 +440,7 @@ const unsigned char *EVP_PKEY_get0_poly1305(const EVP_PKEY *pkey, size_t *len)
 #endif
 
 #ifndef OPENSSL_NO_SIPHASH
-const unsigned char *EVP_PKEY_get0_siphash(const EVP_PKEY *pkey, size_t *len)
+const unsigned char * __cdecl EVP_PKEY_get0_siphash(const EVP_PKEY *pkey, size_t *len)
 {
     ASN1_OCTET_STRING *os = NULL;
 
@@ -455,7 +455,7 @@ const unsigned char *EVP_PKEY_get0_siphash(const EVP_PKEY *pkey, size_t *len)
 #endif
 
 #ifndef OPENSSL_NO_RSA
-int EVP_PKEY_set1_RSA(EVP_PKEY *pkey, RSA *key)
+int __cdecl EVP_PKEY_set1_RSA(EVP_PKEY *pkey, RSA *key)
 {
     int ret = EVP_PKEY_assign_RSA(pkey, key);
     if (ret)
@@ -463,7 +463,7 @@ int EVP_PKEY_set1_RSA(EVP_PKEY *pkey, RSA *key)
     return ret;
 }
 
-RSA *EVP_PKEY_get0_RSA(EVP_PKEY *pkey)
+RSA * __cdecl EVP_PKEY_get0_RSA(EVP_PKEY *pkey)
 {
     if (pkey->type != EVP_PKEY_RSA) {
         EVPerr(EVP_F_EVP_PKEY_GET0_RSA, EVP_R_EXPECTING_AN_RSA_KEY);
@@ -472,7 +472,7 @@ RSA *EVP_PKEY_get0_RSA(EVP_PKEY *pkey)
     return pkey->pkey.rsa;
 }
 
-RSA *EVP_PKEY_get1_RSA(EVP_PKEY *pkey)
+RSA * __cdecl EVP_PKEY_get1_RSA(EVP_PKEY *pkey)
 {
     RSA *ret = EVP_PKEY_get0_RSA(pkey);
     if (ret != NULL)
@@ -482,7 +482,7 @@ RSA *EVP_PKEY_get1_RSA(EVP_PKEY *pkey)
 #endif
 
 #ifndef OPENSSL_NO_DSA
-int EVP_PKEY_set1_DSA(EVP_PKEY *pkey, DSA *key)
+int __cdecl EVP_PKEY_set1_DSA(EVP_PKEY *pkey, DSA *key)
 {
     int ret = EVP_PKEY_assign_DSA(pkey, key);
     if (ret)
@@ -490,7 +490,7 @@ int EVP_PKEY_set1_DSA(EVP_PKEY *pkey, DSA *key)
     return ret;
 }
 
-DSA *EVP_PKEY_get0_DSA(EVP_PKEY *pkey)
+DSA * __cdecl EVP_PKEY_get0_DSA(EVP_PKEY *pkey)
 {
     if (pkey->type != EVP_PKEY_DSA) {
         EVPerr(EVP_F_EVP_PKEY_GET0_DSA, EVP_R_EXPECTING_A_DSA_KEY);
@@ -499,7 +499,7 @@ DSA *EVP_PKEY_get0_DSA(EVP_PKEY *pkey)
     return pkey->pkey.dsa;
 }
 
-DSA *EVP_PKEY_get1_DSA(EVP_PKEY *pkey)
+DSA * __cdecl EVP_PKEY_get1_DSA(EVP_PKEY *pkey)
 {
     DSA *ret = EVP_PKEY_get0_DSA(pkey);
     if (ret != NULL)
@@ -510,7 +510,7 @@ DSA *EVP_PKEY_get1_DSA(EVP_PKEY *pkey)
 
 #ifndef OPENSSL_NO_EC
 
-int EVP_PKEY_set1_EC_KEY(EVP_PKEY *pkey, EC_KEY *key)
+int __cdecl EVP_PKEY_set1_EC_KEY(EVP_PKEY *pkey, EC_KEY *key)
 {
     int ret = EVP_PKEY_assign_EC_KEY(pkey, key);
     if (ret)
@@ -518,7 +518,7 @@ int EVP_PKEY_set1_EC_KEY(EVP_PKEY *pkey, EC_KEY *key)
     return ret;
 }
 
-EC_KEY *EVP_PKEY_get0_EC_KEY(EVP_PKEY *pkey)
+EC_KEY * __cdecl EVP_PKEY_get0_EC_KEY(EVP_PKEY *pkey)
 {
     if (pkey->type != EVP_PKEY_EC) {
         EVPerr(EVP_F_EVP_PKEY_GET0_EC_KEY, EVP_R_EXPECTING_A_EC_KEY);
@@ -527,7 +527,7 @@ EC_KEY *EVP_PKEY_get0_EC_KEY(EVP_PKEY *pkey)
     return pkey->pkey.ec;
 }
 
-EC_KEY *EVP_PKEY_get1_EC_KEY(EVP_PKEY *pkey)
+EC_KEY * __cdecl EVP_PKEY_get1_EC_KEY(EVP_PKEY *pkey)
 {
     EC_KEY *ret = EVP_PKEY_get0_EC_KEY(pkey);
     if (ret != NULL)
@@ -538,7 +538,7 @@ EC_KEY *EVP_PKEY_get1_EC_KEY(EVP_PKEY *pkey)
 
 #ifndef OPENSSL_NO_DH
 
-int EVP_PKEY_set1_DH(EVP_PKEY *pkey, DH *key)
+int __cdecl EVP_PKEY_set1_DH(EVP_PKEY *pkey, DH *key)
 {
     int ret = EVP_PKEY_assign_DH(pkey, key);
     if (ret)
@@ -546,7 +546,7 @@ int EVP_PKEY_set1_DH(EVP_PKEY *pkey, DH *key)
     return ret;
 }
 
-DH *EVP_PKEY_get0_DH(EVP_PKEY *pkey)
+DH * __cdecl EVP_PKEY_get0_DH(EVP_PKEY *pkey)
 {
     if (pkey->type != EVP_PKEY_DH && pkey->type != EVP_PKEY_DHX) {
         EVPerr(EVP_F_EVP_PKEY_GET0_DH, EVP_R_EXPECTING_A_DH_KEY);
@@ -555,7 +555,7 @@ DH *EVP_PKEY_get0_DH(EVP_PKEY *pkey)
     return pkey->pkey.dh;
 }
 
-DH *EVP_PKEY_get1_DH(EVP_PKEY *pkey)
+DH * __cdecl EVP_PKEY_get1_DH(EVP_PKEY *pkey)
 {
     DH *ret = EVP_PKEY_get0_DH(pkey);
     if (ret != NULL)
@@ -564,7 +564,7 @@ DH *EVP_PKEY_get1_DH(EVP_PKEY *pkey)
 }
 #endif
 
-int EVP_PKEY_type(int type)
+int __cdecl EVP_PKEY_type(int type)
 {
     int ret;
     const EVP_PKEY_ASN1_METHOD *ameth;
@@ -580,17 +580,17 @@ int EVP_PKEY_type(int type)
     return ret;
 }
 
-int EVP_PKEY_id(const EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_id(const EVP_PKEY *pkey)
 {
     return pkey->type;
 }
 
-int EVP_PKEY_base_id(const EVP_PKEY *pkey)
+int __cdecl EVP_PKEY_base_id(const EVP_PKEY *pkey)
 {
     return EVP_PKEY_type(pkey->type);
 }
 
-void EVP_PKEY_free(EVP_PKEY *x)
+void __cdecl EVP_PKEY_free(EVP_PKEY *x)
 {
     int i;
 
@@ -632,7 +632,7 @@ static int unsup_alg(BIO *out, const EVP_PKEY *pkey, int indent,
     return 1;
 }
 
-int EVP_PKEY_print_public(BIO *out, const EVP_PKEY *pkey,
+int __cdecl EVP_PKEY_print_public(BIO *out, const EVP_PKEY *pkey,
                           int indent, ASN1_PCTX *pctx)
 {
     if (pkey->ameth && pkey->ameth->pub_print)
@@ -641,7 +641,7 @@ int EVP_PKEY_print_public(BIO *out, const EVP_PKEY *pkey,
     return unsup_alg(out, pkey, indent, "Public Key");
 }
 
-int EVP_PKEY_print_private(BIO *out, const EVP_PKEY *pkey,
+int __cdecl EVP_PKEY_print_private(BIO *out, const EVP_PKEY *pkey,
                            int indent, ASN1_PCTX *pctx)
 {
     if (pkey->ameth && pkey->ameth->priv_print)
@@ -650,7 +650,7 @@ int EVP_PKEY_print_private(BIO *out, const EVP_PKEY *pkey,
     return unsup_alg(out, pkey, indent, "Private Key");
 }
 
-int EVP_PKEY_print_params(BIO *out, const EVP_PKEY *pkey,
+int __cdecl EVP_PKEY_print_params(BIO *out, const EVP_PKEY *pkey,
                           int indent, ASN1_PCTX *pctx)
 {
     if (pkey->ameth && pkey->ameth->param_print)
@@ -665,12 +665,12 @@ static int evp_pkey_asn1_ctrl(EVP_PKEY *pkey, int op, int arg1, void *arg2)
     return pkey->ameth->pkey_ctrl(pkey, op, arg1, arg2);
 }
 
-int EVP_PKEY_get_default_digest_nid(EVP_PKEY *pkey, int *pnid)
+int __cdecl EVP_PKEY_get_default_digest_nid(EVP_PKEY *pkey, int *pnid)
 {
     return evp_pkey_asn1_ctrl(pkey, ASN1_PKEY_CTRL_DEFAULT_MD_NID, 0, pnid);
 }
 
-int EVP_PKEY_set1_tls_encodedpoint(EVP_PKEY *pkey,
+int __cdecl EVP_PKEY_set1_tls_encodedpoint(EVP_PKEY *pkey,
                                const unsigned char *pt, size_t ptlen)
 {
     if (ptlen > INT_MAX)
@@ -681,7 +681,7 @@ int EVP_PKEY_set1_tls_encodedpoint(EVP_PKEY *pkey,
     return 1;
 }
 
-size_t EVP_PKEY_get1_tls_encodedpoint(EVP_PKEY *pkey, unsigned char **ppt)
+size_t __cdecl EVP_PKEY_get1_tls_encodedpoint(EVP_PKEY *pkey, unsigned char **ppt)
 {
     int rv;
     rv = evp_pkey_asn1_ctrl(pkey, ASN1_PKEY_CTRL_GET1_TLS_ENCPT, 0, ppt);

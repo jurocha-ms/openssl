@@ -85,19 +85,19 @@ static int do_sigver_init(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
     return 1;
 }
 
-int EVP_DigestSignInit(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
+int __cdecl EVP_DigestSignInit(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
                        const EVP_MD *type, ENGINE *e, EVP_PKEY *pkey)
 {
     return do_sigver_init(ctx, pctx, type, e, pkey, 0);
 }
 
-int EVP_DigestVerifyInit(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
+int __cdecl EVP_DigestVerifyInit(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
                          const EVP_MD *type, ENGINE *e, EVP_PKEY *pkey)
 {
     return do_sigver_init(ctx, pctx, type, e, pkey, 1);
 }
 
-int EVP_DigestSignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
+int __cdecl EVP_DigestSignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
                         size_t *siglen)
 {
     int sctx = 0, r = 0;
@@ -160,7 +160,7 @@ int EVP_DigestSignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
     return 1;
 }
 
-int EVP_DigestSign(EVP_MD_CTX *ctx, unsigned char *sigret, size_t *siglen,
+int __cdecl EVP_DigestSign(EVP_MD_CTX *ctx, unsigned char *sigret, size_t *siglen,
                    const unsigned char *tbs, size_t tbslen)
 {
     if (ctx->pctx->pmeth->digestsign != NULL)
@@ -170,7 +170,7 @@ int EVP_DigestSign(EVP_MD_CTX *ctx, unsigned char *sigret, size_t *siglen,
     return EVP_DigestSignFinal(ctx, sigret, siglen);
 }
 
-int EVP_DigestVerifyFinal(EVP_MD_CTX *ctx, const unsigned char *sig,
+int __cdecl EVP_DigestVerifyFinal(EVP_MD_CTX *ctx, const unsigned char *sig,
                           size_t siglen)
 {
     unsigned char md[EVP_MAX_MD_SIZE];
@@ -207,7 +207,7 @@ int EVP_DigestVerifyFinal(EVP_MD_CTX *ctx, const unsigned char *sig,
     return EVP_PKEY_verify(ctx->pctx, sig, siglen, md, mdlen);
 }
 
-int EVP_DigestVerify(EVP_MD_CTX *ctx, const unsigned char *sigret,
+int __cdecl EVP_DigestVerify(EVP_MD_CTX *ctx, const unsigned char *sigret,
                      size_t siglen, const unsigned char *tbs, size_t tbslen)
 {
     if (ctx->pctx->pmeth->digestverify != NULL)

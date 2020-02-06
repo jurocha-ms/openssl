@@ -209,7 +209,7 @@ static X509_ALGOR *pkcs5_scrypt_set(const unsigned char *salt, size_t saltlen,
     return NULL;
 }
 
-int PKCS5_v2_scrypt_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass,
+int __cdecl PKCS5_v2_scrypt_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass,
                              int passlen, ASN1_TYPE *param,
                              const EVP_CIPHER *c, const EVP_MD *md, int en_de)
 {

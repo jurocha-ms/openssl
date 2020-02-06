@@ -17,7 +17,7 @@
 /* should be init to zeros. */
 static char prompt_string[80];
 
-void EVP_set_pw_prompt(const char *prompt)
+void __cdecl EVP_set_pw_prompt(const char *prompt)
 {
     if (prompt == NULL)
         prompt_string[0] = '\0';
@@ -27,7 +27,7 @@ void EVP_set_pw_prompt(const char *prompt)
     }
 }
 
-char *EVP_get_pw_prompt(void)
+char * __cdecl EVP_get_pw_prompt(void)
 {
     if (prompt_string[0] == '\0')
         return NULL;
@@ -40,12 +40,12 @@ char *EVP_get_pw_prompt(void)
  * the DES library -- if someone ever wants to disable DES, this function
  * will fail
  */
-int EVP_read_pw_string(char *buf, int len, const char *prompt, int verify)
+int __cdecl EVP_read_pw_string(char *buf, int len, const char *prompt, int verify)
 {
     return EVP_read_pw_string_min(buf, 0, len, prompt, verify);
 }
 
-int EVP_read_pw_string_min(char *buf, int min, int len, const char *prompt,
+int __cdecl EVP_read_pw_string_min(char *buf, int min, int len, const char *prompt,
                            int verify)
 {
     int ret = -1;
@@ -71,7 +71,7 @@ int EVP_read_pw_string_min(char *buf, int min, int len, const char *prompt,
     return ret;
 }
 
-int EVP_BytesToKey(const EVP_CIPHER *type, const EVP_MD *md,
+int __cdecl EVP_BytesToKey(const EVP_CIPHER *type, const EVP_MD *md,
                    const unsigned char *salt, const unsigned char *data,
                    int datal, int count, unsigned char *key,
                    unsigned char *iv)

@@ -16,7 +16,7 @@
 #include "internal/asn1_int.h"
 #include "internal/evp_int.h"
 
-int EVP_PKEY_paramgen_init(EVP_PKEY_CTX *ctx)
+int __cdecl EVP_PKEY_paramgen_init(EVP_PKEY_CTX *ctx)
 {
     int ret;
     if (!ctx || !ctx->pmeth || !ctx->pmeth->paramgen) {
@@ -33,7 +33,7 @@ int EVP_PKEY_paramgen_init(EVP_PKEY_CTX *ctx)
     return ret;
 }
 
-int EVP_PKEY_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
+int __cdecl EVP_PKEY_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
 {
     int ret;
     if (!ctx || !ctx->pmeth || !ctx->pmeth->paramgen) {
@@ -66,7 +66,7 @@ int EVP_PKEY_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
     return ret;
 }
 
-int EVP_PKEY_keygen_init(EVP_PKEY_CTX *ctx)
+int __cdecl EVP_PKEY_keygen_init(EVP_PKEY_CTX *ctx)
 {
     int ret;
     if (!ctx || !ctx->pmeth || !ctx->pmeth->keygen) {
@@ -83,7 +83,7 @@ int EVP_PKEY_keygen_init(EVP_PKEY_CTX *ctx)
     return ret;
 }
 
-int EVP_PKEY_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
+int __cdecl EVP_PKEY_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
 {
     int ret;
 
@@ -113,12 +113,12 @@ int EVP_PKEY_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
     return ret;
 }
 
-void EVP_PKEY_CTX_set_cb(EVP_PKEY_CTX *ctx, EVP_PKEY_gen_cb *cb)
+void __cdecl EVP_PKEY_CTX_set_cb(EVP_PKEY_CTX *ctx, EVP_PKEY_gen_cb *cb)
 {
     ctx->pkey_gencb = cb;
 }
 
-EVP_PKEY_gen_cb *EVP_PKEY_CTX_get_cb(EVP_PKEY_CTX *ctx)
+EVP_PKEY_gen_cb * __cdecl EVP_PKEY_CTX_get_cb(EVP_PKEY_CTX *ctx)
 {
     return ctx->pkey_gencb;
 }
@@ -141,7 +141,7 @@ void evp_pkey_set_cb_translate(BN_GENCB *cb, EVP_PKEY_CTX *ctx)
     BN_GENCB_set(cb, trans_cb, ctx);
 }
 
-int EVP_PKEY_CTX_get_keygen_info(EVP_PKEY_CTX *ctx, int idx)
+int __cdecl EVP_PKEY_CTX_get_keygen_info(EVP_PKEY_CTX *ctx, int idx)
 {
     if (idx == -1)
         return ctx->keygen_info_count;
@@ -150,7 +150,7 @@ int EVP_PKEY_CTX_get_keygen_info(EVP_PKEY_CTX *ctx, int idx)
     return ctx->keygen_info[idx];
 }
 
-EVP_PKEY *EVP_PKEY_new_mac_key(int type, ENGINE *e,
+EVP_PKEY * __cdecl EVP_PKEY_new_mac_key(int type, ENGINE *e,
                                const unsigned char *key, int keylen)
 {
     EVP_PKEY_CTX *mac_ctx = NULL;
@@ -169,7 +169,7 @@ EVP_PKEY *EVP_PKEY_new_mac_key(int type, ENGINE *e,
     return mac_key;
 }
 
-int EVP_PKEY_check(EVP_PKEY_CTX *ctx)
+int __cdecl EVP_PKEY_check(EVP_PKEY_CTX *ctx)
 {
     EVP_PKEY *pkey = ctx->pkey;
 
@@ -192,7 +192,7 @@ int EVP_PKEY_check(EVP_PKEY_CTX *ctx)
     return pkey->ameth->pkey_check(pkey);
 }
 
-int EVP_PKEY_public_check(EVP_PKEY_CTX *ctx)
+int __cdecl EVP_PKEY_public_check(EVP_PKEY_CTX *ctx)
 {
     EVP_PKEY *pkey = ctx->pkey;
 
@@ -215,7 +215,7 @@ int EVP_PKEY_public_check(EVP_PKEY_CTX *ctx)
     return pkey->ameth->pkey_public_check(pkey);
 }
 
-int EVP_PKEY_param_check(EVP_PKEY_CTX *ctx)
+int __cdecl EVP_PKEY_param_check(EVP_PKEY_CTX *ctx)
 {
     EVP_PKEY *pkey = ctx->pkey;
 

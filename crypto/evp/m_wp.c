@@ -47,7 +47,7 @@ static const EVP_MD whirlpool_md = {
     sizeof(EVP_MD *) + sizeof(WHIRLPOOL_CTX),
 };
 
-const EVP_MD *EVP_whirlpool(void)
+const EVP_MD * __cdecl EVP_whirlpool(void)
 {
     return &whirlpool_md;
 }

@@ -52,7 +52,7 @@ static const EVP_MD blake2b_md = {
     sizeof(EVP_MD *) + sizeof(BLAKE2B_CTX),
 };
 
-const EVP_MD *EVP_blake2b512(void)
+const EVP_MD * __cdecl EVP_blake2b512(void)
 {
     return &blake2b_md;
 }

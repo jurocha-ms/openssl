@@ -165,7 +165,7 @@ static const EVP_CIPHER aria_##keylen##_##mode = { \
         NULL,                           \
         sizeof(EVP_ARIA_KEY),           \
         NULL,NULL,NULL,NULL };          \
-const EVP_CIPHER *EVP_aria_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aria_##keylen##_##mode(void) \
 { return &aria_##keylen##_##mode; }
 
 static int aria_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
@@ -763,7 +763,7 @@ static const EVP_CIPHER aria_##keylen##_##mode = { \
         aria_##mode##_cleanup,                     \
         sizeof(EVP_ARIA_##MODE##_CTX),             \
         NULL,NULL,aria_##mode##_ctrl,NULL };       \
-const EVP_CIPHER *EVP_aria_##keylen##_##mode(void) \
+const EVP_CIPHER *__cdecl EVP_aria_##keylen##_##mode(void) \
 { return (EVP_CIPHER*)&aria_##keylen##_##mode; }
 
 BLOCK_CIPHER_aead(NID_aria, 128, 1, 12, gcm, gcm, GCM, 0)

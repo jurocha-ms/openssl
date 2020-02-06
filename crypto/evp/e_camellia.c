@@ -195,7 +195,7 @@ static const EVP_CIPHER camellia_##keylen##_##mode = { \
         NULL,                           \
         sizeof(EVP_CAMELLIA_KEY),       \
         NULL,NULL,NULL,NULL }; \
-const EVP_CIPHER *EVP_camellia_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_camellia_##keylen##_##mode(void) \
 { return &camellia_##keylen##_##mode; }
 
 # endif

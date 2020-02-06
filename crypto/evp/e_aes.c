@@ -548,7 +548,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = { \
         NULL,                           \
         sizeof(EVP_AES_KEY),            \
         NULL,NULL,NULL,NULL }; \
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void) \
 { return AESNI_CAPABLE?&aesni_##keylen##_##mode:&aes_##keylen##_##mode; }
 
 # define BLOCK_CIPHER_custom(nid,keylen,blocksize,ivlen,mode,MODE,flags) \
@@ -570,7 +570,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = { \
         aes_##mode##_cleanup,           \
         sizeof(EVP_AES_##MODE##_CTX),   \
         NULL,NULL,aes_##mode##_ctrl,NULL }; \
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void) \
 { return AESNI_CAPABLE?&aesni_##keylen##_##mode:&aes_##keylen##_##mode; }
 
 #elif   defined(AES_ASM) && (defined(__sparc) || defined(__sparc__))
@@ -971,7 +971,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = { \
         NULL,                           \
         sizeof(EVP_AES_KEY),            \
         NULL,NULL,NULL,NULL }; \
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void) \
 { return SPARC_AES_CAPABLE?&aes_t4_##keylen##_##mode:&aes_##keylen##_##mode; }
 
 # define BLOCK_CIPHER_custom(nid,keylen,blocksize,ivlen,mode,MODE,flags) \
@@ -993,7 +993,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = { \
         aes_##mode##_cleanup,           \
         sizeof(EVP_AES_##MODE##_CTX),   \
         NULL,NULL,aes_##mode##_ctrl,NULL }; \
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void) \
 { return SPARC_AES_CAPABLE?&aes_t4_##keylen##_##mode:&aes_##keylen##_##mode; }
 
 #elif defined(OPENSSL_CPUID_OBJ) && defined(__s390__)
@@ -2478,7 +2478,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = {			\
     NULL,								\
     NULL								\
 };									\
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void)			\
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void)			\
 {									\
     return S390X_aes_##keylen##_##mode##_CAPABLE ?			\
            &s390x_aes_##keylen##_##mode : &aes_##keylen##_##mode;	\
@@ -2514,7 +2514,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = {			\
     aes_##mode##_ctrl,							\
     NULL								\
 };									\
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void)			\
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void)			\
 {									\
     return S390X_aes_##keylen##_##mode##_CAPABLE ?			\
            &s390x_aes_##keylen##_##mode : &aes_##keylen##_##mode;	\
@@ -2531,7 +2531,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = { \
         NULL,                           \
         sizeof(EVP_AES_KEY),            \
         NULL,NULL,NULL,NULL }; \
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void) \
 { return &aes_##keylen##_##mode; }
 
 # define BLOCK_CIPHER_custom(nid,keylen,blocksize,ivlen,mode,MODE,flags) \
@@ -2544,7 +2544,7 @@ static const EVP_CIPHER aes_##keylen##_##mode = { \
         aes_##mode##_cleanup,           \
         sizeof(EVP_AES_##MODE##_CTX),   \
         NULL,NULL,aes_##mode##_ctrl,NULL }; \
-const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aes_##keylen##_##mode(void) \
 { return &aes_##keylen##_##mode; }
 
 #endif
@@ -3882,7 +3882,7 @@ static const EVP_CIPHER aes_128_wrap = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_aes_128_wrap(void)
+const EVP_CIPHER * __cdecl EVP_aes_128_wrap(void)
 {
     return &aes_128_wrap;
 }
@@ -3896,7 +3896,7 @@ static const EVP_CIPHER aes_192_wrap = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_aes_192_wrap(void)
+const EVP_CIPHER * __cdecl EVP_aes_192_wrap(void)
 {
     return &aes_192_wrap;
 }
@@ -3910,7 +3910,7 @@ static const EVP_CIPHER aes_256_wrap = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_aes_256_wrap(void)
+const EVP_CIPHER * __cdecl EVP_aes_256_wrap(void)
 {
     return &aes_256_wrap;
 }
@@ -3924,7 +3924,7 @@ static const EVP_CIPHER aes_128_wrap_pad = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_aes_128_wrap_pad(void)
+const EVP_CIPHER * __cdecl EVP_aes_128_wrap_pad(void)
 {
     return &aes_128_wrap_pad;
 }
@@ -3938,7 +3938,7 @@ static const EVP_CIPHER aes_192_wrap_pad = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_aes_192_wrap_pad(void)
+const EVP_CIPHER * __cdecl EVP_aes_192_wrap_pad(void)
 {
     return &aes_192_wrap_pad;
 }
@@ -3952,7 +3952,7 @@ static const EVP_CIPHER aes_256_wrap_pad = {
     NULL, NULL, NULL, NULL
 };
 
-const EVP_CIPHER *EVP_aes_256_wrap_pad(void)
+const EVP_CIPHER * __cdecl EVP_aes_256_wrap_pad(void)
 {
     return &aes_256_wrap_pad;
 }

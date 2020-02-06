@@ -924,26 +924,26 @@ static EVP_CIPHER aesni_256_cbc_hmac_sha256_cipher = {
     NULL
 };
 
-const EVP_CIPHER *EVP_aes_128_cbc_hmac_sha256(void)
+const EVP_CIPHER * __cdecl EVP_aes_128_cbc_hmac_sha256(void)
 {
     return ((OPENSSL_ia32cap_P[1] & AESNI_CAPABLE) &&
             aesni_cbc_sha256_enc(NULL, NULL, 0, NULL, NULL, NULL, NULL) ?
             &aesni_128_cbc_hmac_sha256_cipher : NULL);
 }
 
-const EVP_CIPHER *EVP_aes_256_cbc_hmac_sha256(void)
+const EVP_CIPHER * __cdecl EVP_aes_256_cbc_hmac_sha256(void)
 {
     return ((OPENSSL_ia32cap_P[1] & AESNI_CAPABLE) &&
             aesni_cbc_sha256_enc(NULL, NULL, 0, NULL, NULL, NULL, NULL) ?
             &aesni_256_cbc_hmac_sha256_cipher : NULL);
 }
 #else
-const EVP_CIPHER *EVP_aes_128_cbc_hmac_sha256(void)
+const EVP_CIPHER * __cdecl EVP_aes_128_cbc_hmac_sha256(void)
 {
     return NULL;
 }
 
-const EVP_CIPHER *EVP_aes_256_cbc_hmac_sha256(void)
+const EVP_CIPHER * __cdecl EVP_aes_256_cbc_hmac_sha256(void)
 {
     return NULL;
 }

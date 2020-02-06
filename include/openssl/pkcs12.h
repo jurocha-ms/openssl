@@ -166,7 +166,7 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
 int PKCS12_key_gen_utf8(const char *pass, int passlen, unsigned char *salt,
                         int saltlen, int id, int iter, int n,
                         unsigned char *out, const EVP_MD *md_type);
-int PKCS12_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
+int __cdecl PKCS12_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
                         ASN1_TYPE *param, const EVP_CIPHER *cipher,
                         const EVP_MD *md_type, int en_de);
 int PKCS12_gen_mac(PKCS12 *p12, const char *pass, int passlen,

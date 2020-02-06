@@ -81,7 +81,7 @@ static const EVP_PBE_CTL builtin_pbe[] = {
 #endif
 };
 
-int EVP_PBE_CipherInit(ASN1_OBJECT *pbe_obj, const char *pass, int passlen,
+int __cdecl EVP_PBE_CipherInit(ASN1_OBJECT *pbe_obj, const char *pass, int passlen,
                        ASN1_TYPE *param, EVP_CIPHER_CTX *ctx, int en_de)
 {
     const EVP_CIPHER *cipher;
@@ -157,7 +157,7 @@ static int __cdecl pbe_cmp(const EVP_PBE_CTL *const *a, const EVP_PBE_CTL *const
 
 /* Add a PBE algorithm */
 
-int EVP_PBE_alg_add_type(int pbe_type, int pbe_nid, int cipher_nid,
+int __cdecl EVP_PBE_alg_add_type(int pbe_type, int pbe_nid, int cipher_nid,
                          int md_nid, EVP_PBE_KEYGEN *keygen)
 {
     EVP_PBE_CTL *pbe_tmp;
@@ -188,7 +188,7 @@ int EVP_PBE_alg_add_type(int pbe_type, int pbe_nid, int cipher_nid,
     return 0;
 }
 
-int EVP_PBE_alg_add(int nid, const EVP_CIPHER *cipher, const EVP_MD *md,
+int __cdecl EVP_PBE_alg_add(int nid, const EVP_CIPHER *cipher, const EVP_MD *md,
                     EVP_PBE_KEYGEN *keygen)
 {
     int cipher_nid, md_nid;
@@ -206,7 +206,7 @@ int EVP_PBE_alg_add(int nid, const EVP_CIPHER *cipher, const EVP_MD *md,
                                 cipher_nid, md_nid, keygen);
 }
 
-int EVP_PBE_find(int type, int pbe_nid,
+int __cdecl EVP_PBE_find(int type, int pbe_nid,
                  int *pcnid, int *pmnid, EVP_PBE_KEYGEN **pkeygen)
 {
     EVP_PBE_CTL *pbetmp = NULL, pbelu;
@@ -240,13 +240,13 @@ static void __cdecl free_evp_pbe_ctl(EVP_PBE_CTL *pbe)
     OPENSSL_free(pbe);
 }
 
-void EVP_PBE_cleanup(void)
+void __cdecl EVP_PBE_cleanup(void)
 {
     sk_EVP_PBE_CTL_pop_free(pbe_algs, free_evp_pbe_ctl);
     pbe_algs = NULL;
 }
 
-int EVP_PBE_get(int *ptype, int *ppbe_nid, size_t num)
+int __cdecl EVP_PBE_get(int *ptype, int *ppbe_nid, size_t num)
 {
     const EVP_PBE_CTL *tpbe;
 

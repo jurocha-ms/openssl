@@ -48,7 +48,7 @@ static const EVP_MD ripemd160_md = {
     sizeof(EVP_MD *) + sizeof(RIPEMD160_CTX),
 };
 
-const EVP_MD *EVP_ripemd160(void)
+const EVP_MD * __cdecl EVP_ripemd160(void)
 {
     return &ripemd160_md;
 }

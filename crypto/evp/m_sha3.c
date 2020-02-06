@@ -361,7 +361,7 @@ const EVP_MD *EVP_shake##bitlen(void)                \
 #else
 
 # define EVP_MD_SHA3(bitlen)                    \
-const EVP_MD *EVP_sha3_##bitlen(void)           \
+const EVP_MD * __cdecl EVP_sha3_##bitlen(void)           \
 {                                               \
     static const EVP_MD sha3_##bitlen##_md = {  \
         NID_sha3_##bitlen,                      \
@@ -380,7 +380,7 @@ const EVP_MD *EVP_sha3_##bitlen(void)           \
 }
 
 # define EVP_MD_SHAKE(bitlen)                   \
-const EVP_MD *EVP_shake##bitlen(void)           \
+const EVP_MD * __cdecl EVP_shake##bitlen(void)           \
 {                                               \
     static const EVP_MD shake##bitlen##_md = {  \
         NID_shake##bitlen,                      \

@@ -56,7 +56,7 @@ static const BIO_METHOD methods_enc = {
     enc_callback_ctrl,
 };
 
-const BIO_METHOD *BIO_f_cipher(void)
+const BIO_METHOD * __cdecl BIO_f_cipher(void)
 {
     return &methods_enc;
 }
@@ -401,7 +401,7 @@ static long enc_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-int BIO_set_cipher(BIO *b, const EVP_CIPHER *c, const unsigned char *k,
+int __cdecl BIO_set_cipher(BIO *b, const EVP_CIPHER *c, const unsigned char *k,
                    const unsigned char *i, int e)
 {
     BIO_ENC_CTX *ctx;

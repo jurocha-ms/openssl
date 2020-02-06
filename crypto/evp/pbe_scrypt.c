@@ -155,7 +155,7 @@ static void scryptROMix(unsigned char *B, uint64_t r, uint64_t N,
 # define SCRYPT_MAX_MEM  (1024 * 1024 * 32)
 #endif
 
-int EVP_PBE_scrypt(const char *pass, size_t passlen,
+int __cdecl EVP_PBE_scrypt(const char *pass, size_t passlen,
                    const unsigned char *salt, size_t saltlen,
                    uint64_t N, uint64_t r, uint64_t p, uint64_t maxmem,
                    unsigned char *key, size_t keylen)

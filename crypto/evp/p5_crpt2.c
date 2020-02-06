@@ -28,7 +28,7 @@ static void h__dump(const unsigned char *p, int len);
  * posted by Peter Gutmann to the PKCS-TNG mailing list.
  */
 
-int PKCS5_PBKDF2_HMAC(const char *pass, int passlen,
+int __cdecl PKCS5_PBKDF2_HMAC(const char *pass, int passlen,
                       const unsigned char *salt, int saltlen, int iter,
                       const EVP_MD *digest, int keylen, unsigned char *out)
 {
@@ -121,7 +121,7 @@ int PKCS5_PBKDF2_HMAC(const char *pass, int passlen,
     return 1;
 }
 
-int PKCS5_PBKDF2_HMAC_SHA1(const char *pass, int passlen,
+int __cdecl PKCS5_PBKDF2_HMAC_SHA1(const char *pass, int passlen,
                            const unsigned char *salt, int saltlen, int iter,
                            int keylen, unsigned char *out)
 {
@@ -135,7 +135,7 @@ int PKCS5_PBKDF2_HMAC_SHA1(const char *pass, int passlen,
  * them...
  */
 
-int PKCS5_v2_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
+int __cdecl PKCS5_v2_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
                           ASN1_TYPE *param, const EVP_CIPHER *c,
                           const EVP_MD *md, int en_de)
 {
@@ -183,7 +183,7 @@ int PKCS5_v2_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passlen,
     return rv;
 }
 
-int PKCS5_v2_PBKDF2_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass,
+int __cdecl PKCS5_v2_PBKDF2_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass,
                              int passlen, ASN1_TYPE *param,
                              const EVP_CIPHER *c, const EVP_MD *md, int en_de)
 {
