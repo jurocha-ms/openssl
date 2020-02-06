@@ -13,7 +13,7 @@
 
 /* PKCS#12 PBE algorithms now in static table */
 
-void PKCS12_PBE_add(void)
+void __cdecl PKCS12_PBE_add(void)
 {
 }
 
@@ -25,7 +25,7 @@ int __cdecl PKCS12_PBE_keyivgen(EVP_CIPHER_CTX *ctx, const char *pass, int passl
     int saltlen, iter, ret;
     unsigned char *salt;
     unsigned char key[EVP_MAX_KEY_LENGTH], iv[EVP_MAX_IV_LENGTH];
-    int (*pkcs12_key_gen)(const char *pass, int passlen,
+    int (__cdecl *pkcs12_key_gen)(const char *pass, int passlen,
                           unsigned char *salt, int slen,
                           int id, int iter, int n,
                           unsigned char *out,

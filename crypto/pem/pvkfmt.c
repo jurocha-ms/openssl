@@ -382,22 +382,22 @@ static EVP_PKEY *b2i_rsa(const unsigned char **in,
     return NULL;
 }
 
-EVP_PKEY *b2i_PrivateKey(const unsigned char **in, long length)
+EVP_PKEY * __cdecl b2i_PrivateKey(const unsigned char **in, long length)
 {
     return do_b2i(in, length, 0);
 }
 
-EVP_PKEY *b2i_PublicKey(const unsigned char **in, long length)
+EVP_PKEY * __cdecl b2i_PublicKey(const unsigned char **in, long length)
 {
     return do_b2i(in, length, 1);
 }
 
-EVP_PKEY *b2i_PrivateKey_bio(BIO *in)
+EVP_PKEY * __cdecl b2i_PrivateKey_bio(BIO *in)
 {
     return do_b2i_bio(in, 0);
 }
 
-EVP_PKEY *b2i_PublicKey_bio(BIO *in)
+EVP_PKEY * __cdecl b2i_PublicKey_bio(BIO *in)
 {
     return do_b2i_bio(in, 1);
 }
@@ -599,12 +599,12 @@ static void write_dsa(unsigned char **out, DSA *dsa, int ispub)
     return;
 }
 
-int i2b_PrivateKey_bio(BIO *out, EVP_PKEY *pk)
+int __cdecl i2b_PrivateKey_bio(BIO *out, EVP_PKEY *pk)
 {
     return do_i2b_bio(out, pk, 0);
 }
 
-int i2b_PublicKey_bio(BIO *out, EVP_PKEY *pk)
+int __cdecl i2b_PublicKey_bio(BIO *out, EVP_PKEY *pk)
 {
     return do_i2b_bio(out, pk, 1);
 }
@@ -746,7 +746,7 @@ static EVP_PKEY *do_PVK_body(const unsigned char **in,
     return ret;
 }
 
-EVP_PKEY *b2i_PVK_bio(BIO *in, pem_password_cb *cb, void *u)
+EVP_PKEY * __cdecl b2i_PVK_bio(BIO *in, pem_password_cb *cb, void *u)
 {
     unsigned char pvk_hdr[24], *buf = NULL;
     const unsigned char *p;
@@ -864,7 +864,7 @@ static int i2b_PVK(unsigned char **out, EVP_PKEY *pk, int enclevel,
     return -1;
 }
 
-int i2b_PVK_bio(BIO *out, EVP_PKEY *pk, int enclevel,
+int __cdecl i2b_PVK_bio(BIO *out, EVP_PKEY *pk, int enclevel,
                 pem_password_cb *cb, void *u)
 {
     unsigned char *tmp = NULL;

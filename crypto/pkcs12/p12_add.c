@@ -14,7 +14,7 @@
 
 /* Pack an object into an OCTET STRING and turn into a safebag */
 
-PKCS12_SAFEBAG *PKCS12_item_pack_safebag(void *obj, const ASN1_ITEM *it,
+PKCS12_SAFEBAG * __cdecl PKCS12_item_pack_safebag(void *obj, const ASN1_ITEM *it,
                                          int nid1, int nid2)
 {
     PKCS12_BAGS *bag;
@@ -43,7 +43,7 @@ PKCS12_SAFEBAG *PKCS12_item_pack_safebag(void *obj, const ASN1_ITEM *it,
 }
 
 /* Turn a stack of SAFEBAGS into a PKCS#7 data Contentinfo */
-PKCS7 *PKCS12_pack_p7data(STACK_OF(PKCS12_SAFEBAG) *sk)
+PKCS7 * __cdecl PKCS12_pack_p7data(STACK_OF(PKCS12_SAFEBAG) *sk)
 {
     PKCS7 *p7;
 
@@ -69,7 +69,7 @@ PKCS7 *PKCS12_pack_p7data(STACK_OF(PKCS12_SAFEBAG) *sk)
 }
 
 /* Unpack SAFEBAGS from PKCS#7 data ContentInfo */
-STACK_OF(PKCS12_SAFEBAG) *PKCS12_unpack_p7data(PKCS7 *p7)
+STACK_OF(PKCS12_SAFEBAG) * __cdecl PKCS12_unpack_p7data(PKCS7 *p7)
 {
     if (!PKCS7_type_is_data(p7)) {
         PKCS12err(PKCS12_F_PKCS12_UNPACK_P7DATA,
@@ -81,7 +81,7 @@ STACK_OF(PKCS12_SAFEBAG) *PKCS12_unpack_p7data(PKCS7 *p7)
 
 /* Turn a stack of SAFEBAGS into a PKCS#7 encrypted data ContentInfo */
 
-PKCS7 *PKCS12_pack_p7encdata(int pbe_nid, const char *pass, int passlen,
+PKCS7 * __cdecl PKCS12_pack_p7encdata(int pbe_nid, const char *pass, int passlen,
                              unsigned char *salt, int saltlen, int iter,
                              STACK_OF(PKCS12_SAFEBAG) *bags)
 {
@@ -127,7 +127,7 @@ PKCS7 *PKCS12_pack_p7encdata(int pbe_nid, const char *pass, int passlen,
     return NULL;
 }
 
-STACK_OF(PKCS12_SAFEBAG) *PKCS12_unpack_p7encdata(PKCS7 *p7, const char *pass,
+STACK_OF(PKCS12_SAFEBAG) * __cdecl PKCS12_unpack_p7encdata(PKCS7 *p7, const char *pass,
                                                   int passlen)
 {
     if (!PKCS7_type_is_encrypted(p7))
@@ -138,13 +138,13 @@ STACK_OF(PKCS12_SAFEBAG) *PKCS12_unpack_p7encdata(PKCS7 *p7, const char *pass,
                                    p7->d.encrypted->enc_data->enc_data, 1);
 }
 
-PKCS8_PRIV_KEY_INFO *PKCS12_decrypt_skey(const PKCS12_SAFEBAG *bag,
+PKCS8_PRIV_KEY_INFO * __cdecl PKCS12_decrypt_skey(const PKCS12_SAFEBAG *bag,
                                          const char *pass, int passlen)
 {
     return PKCS8_decrypt(bag->value.shkeybag, pass, passlen);
 }
 
-int PKCS12_pack_authsafes(PKCS12 *p12, STACK_OF(PKCS7) *safes)
+int __cdecl PKCS12_pack_authsafes(PKCS12 *p12, STACK_OF(PKCS7) *safes)
 {
     if (ASN1_item_pack(safes, ASN1_ITEM_rptr(PKCS12_AUTHSAFES),
                        &p12->authsafes->d.data))
@@ -152,7 +152,7 @@ int PKCS12_pack_authsafes(PKCS12 *p12, STACK_OF(PKCS7) *safes)
     return 0;
 }
 
-STACK_OF(PKCS7) *PKCS12_unpack_authsafes(const PKCS12 *p12)
+STACK_OF(PKCS7) * __cdecl PKCS12_unpack_authsafes(const PKCS12 *p12)
 {
     if (!PKCS7_type_is_data(p12->authsafes)) {
         PKCS12err(PKCS12_F_PKCS12_UNPACK_AUTHSAFES,

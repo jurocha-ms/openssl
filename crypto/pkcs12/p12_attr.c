@@ -14,7 +14,7 @@
 
 /* Add a local keyid to a safebag */
 
-int PKCS12_add_localkeyid(PKCS12_SAFEBAG *bag, unsigned char *name,
+int __cdecl PKCS12_add_localkeyid(PKCS12_SAFEBAG *bag, unsigned char *name,
                           int namelen)
 {
     if (X509at_add1_attr_by_NID(&bag->attrib, NID_localKeyID,
@@ -26,7 +26,7 @@ int PKCS12_add_localkeyid(PKCS12_SAFEBAG *bag, unsigned char *name,
 
 /* Add key usage to PKCS#8 structure */
 
-int PKCS8_add_keyusage(PKCS8_PRIV_KEY_INFO *p8, int usage)
+int __cdecl PKCS8_add_keyusage(PKCS8_PRIV_KEY_INFO *p8, int usage)
 {
     unsigned char us_val = (unsigned char)usage;
     return PKCS8_pkey_add1_attr_by_NID(p8, NID_key_usage,
@@ -35,7 +35,7 @@ int PKCS8_add_keyusage(PKCS8_PRIV_KEY_INFO *p8, int usage)
 
 /* Add a friendlyname to a safebag */
 
-int PKCS12_add_friendlyname_asc(PKCS12_SAFEBAG *bag, const char *name,
+int __cdecl PKCS12_add_friendlyname_asc(PKCS12_SAFEBAG *bag, const char *name,
                                 int namelen)
 {
     if (X509at_add1_attr_by_NID(&bag->attrib, NID_friendlyName,
@@ -45,7 +45,7 @@ int PKCS12_add_friendlyname_asc(PKCS12_SAFEBAG *bag, const char *name,
         return 0;
 }
 
-int PKCS12_add_friendlyname_utf8(PKCS12_SAFEBAG *bag, const char *name,
+int __cdecl PKCS12_add_friendlyname_utf8(PKCS12_SAFEBAG *bag, const char *name,
                                 int namelen)
 {
     if (X509at_add1_attr_by_NID(&bag->attrib, NID_friendlyName,
@@ -55,7 +55,7 @@ int PKCS12_add_friendlyname_utf8(PKCS12_SAFEBAG *bag, const char *name,
         return 0;
 }
 
-int PKCS12_add_friendlyname_uni(PKCS12_SAFEBAG *bag,
+int __cdecl PKCS12_add_friendlyname_uni(PKCS12_SAFEBAG *bag,
                                 const unsigned char *name, int namelen)
 {
     if (X509at_add1_attr_by_NID(&bag->attrib, NID_friendlyName,
@@ -65,7 +65,7 @@ int PKCS12_add_friendlyname_uni(PKCS12_SAFEBAG *bag,
         return 0;
 }
 
-int PKCS12_add_CSPName_asc(PKCS12_SAFEBAG *bag, const char *name, int namelen)
+int __cdecl PKCS12_add_CSPName_asc(PKCS12_SAFEBAG *bag, const char *name, int namelen)
 {
     if (X509at_add1_attr_by_NID(&bag->attrib, NID_ms_csp_name,
                                 MBSTRING_ASC, (unsigned char *)name, namelen))
@@ -74,7 +74,7 @@ int PKCS12_add_CSPName_asc(PKCS12_SAFEBAG *bag, const char *name, int namelen)
         return 0;
 }
 
-ASN1_TYPE *PKCS12_get_attr_gen(const STACK_OF(X509_ATTRIBUTE) *attrs,
+ASN1_TYPE * __cdecl PKCS12_get_attr_gen(const STACK_OF(X509_ATTRIBUTE) *attrs,
                                int attr_nid)
 {
     X509_ATTRIBUTE *attrib;
@@ -84,7 +84,7 @@ ASN1_TYPE *PKCS12_get_attr_gen(const STACK_OF(X509_ATTRIBUTE) *attrs,
     return X509_ATTRIBUTE_get0_type(attrib, 0);
 }
 
-char *PKCS12_get_friendlyname(PKCS12_SAFEBAG *bag)
+char * __cdecl PKCS12_get_friendlyname(PKCS12_SAFEBAG *bag)
 {
     const ASN1_TYPE *atype;
 
@@ -96,7 +96,7 @@ char *PKCS12_get_friendlyname(PKCS12_SAFEBAG *bag)
                             atype->value.bmpstring->length);
 }
 
-const STACK_OF(X509_ATTRIBUTE) *
+const STACK_OF(X509_ATTRIBUTE) * __cdecl 
 PKCS12_SAFEBAG_get0_attrs(const PKCS12_SAFEBAG *bag)
 {
     return bag->attrib;

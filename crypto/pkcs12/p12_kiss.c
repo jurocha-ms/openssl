@@ -29,7 +29,7 @@ static int parse_bag(PKCS12_SAFEBAG *bag, const char *pass, int passlen,
  * uninitialised.
  */
 
-int PKCS12_parse(PKCS12 *p12, const char *pass, EVP_PKEY **pkey, X509 **cert,
+int __cdecl PKCS12_parse(PKCS12 *p12, const char *pass, EVP_PKEY **pkey, X509 **cert,
                  STACK_OF(X509) **ca)
 {
     STACK_OF(X509) *ocerts = NULL;

@@ -19,32 +19,32 @@ ASN1_TYPE *PKCS12_get_attr(const PKCS12_SAFEBAG *bag, int attr_nid)
 }
 #endif
 
-const ASN1_TYPE *PKCS12_SAFEBAG_get0_attr(const PKCS12_SAFEBAG *bag,
+const ASN1_TYPE * __cdecl PKCS12_SAFEBAG_get0_attr(const PKCS12_SAFEBAG *bag,
                                           int attr_nid)
 {
     return PKCS12_get_attr_gen(bag->attrib, attr_nid);
 }
 
-ASN1_TYPE *PKCS8_get_attr(PKCS8_PRIV_KEY_INFO *p8, int attr_nid)
+ASN1_TYPE * __cdecl PKCS8_get_attr(PKCS8_PRIV_KEY_INFO *p8, int attr_nid)
 {
     return PKCS12_get_attr_gen(PKCS8_pkey_get0_attrs(p8), attr_nid);
 }
 
-const PKCS8_PRIV_KEY_INFO *PKCS12_SAFEBAG_get0_p8inf(const PKCS12_SAFEBAG *bag)
+const PKCS8_PRIV_KEY_INFO * __cdecl PKCS12_SAFEBAG_get0_p8inf(const PKCS12_SAFEBAG *bag)
 {
     if (PKCS12_SAFEBAG_get_nid(bag) != NID_keyBag)
         return NULL;
     return bag->value.keybag;
 }
 
-const X509_SIG *PKCS12_SAFEBAG_get0_pkcs8(const PKCS12_SAFEBAG *bag)
+const X509_SIG * __cdecl PKCS12_SAFEBAG_get0_pkcs8(const PKCS12_SAFEBAG *bag)
 {
     if (OBJ_obj2nid(bag->type) != NID_pkcs8ShroudedKeyBag)
         return NULL;
     return bag->value.shkeybag;
 }
 
-const STACK_OF(PKCS12_SAFEBAG) *
+const STACK_OF(PKCS12_SAFEBAG) * __cdecl 
 PKCS12_SAFEBAG_get0_safes(const PKCS12_SAFEBAG *bag)
 {
     if (OBJ_obj2nid(bag->type) != NID_safeContentsBag)
@@ -52,17 +52,17 @@ PKCS12_SAFEBAG_get0_safes(const PKCS12_SAFEBAG *bag)
     return bag->value.safes;
 }
 
-const ASN1_OBJECT *PKCS12_SAFEBAG_get0_type(const PKCS12_SAFEBAG *bag)
+const ASN1_OBJECT * __cdecl PKCS12_SAFEBAG_get0_type(const PKCS12_SAFEBAG *bag)
 {
     return bag->type;
 }
 
-int PKCS12_SAFEBAG_get_nid(const PKCS12_SAFEBAG *bag)
+int __cdecl PKCS12_SAFEBAG_get_nid(const PKCS12_SAFEBAG *bag)
 {
     return OBJ_obj2nid(bag->type);
 }
 
-int PKCS12_SAFEBAG_get_bag_nid(const PKCS12_SAFEBAG *bag)
+int __cdecl PKCS12_SAFEBAG_get_bag_nid(const PKCS12_SAFEBAG *bag)
 {
     int btype = PKCS12_SAFEBAG_get_nid(bag);
 
@@ -71,7 +71,7 @@ int PKCS12_SAFEBAG_get_bag_nid(const PKCS12_SAFEBAG *bag)
     return OBJ_obj2nid(bag->value.bag->type);
 }
 
-X509 *PKCS12_SAFEBAG_get1_cert(const PKCS12_SAFEBAG *bag)
+X509 * __cdecl PKCS12_SAFEBAG_get1_cert(const PKCS12_SAFEBAG *bag)
 {
     if (PKCS12_SAFEBAG_get_nid(bag) != NID_certBag)
         return NULL;
@@ -81,7 +81,7 @@ X509 *PKCS12_SAFEBAG_get1_cert(const PKCS12_SAFEBAG *bag)
                             ASN1_ITEM_rptr(X509));
 }
 
-X509_CRL *PKCS12_SAFEBAG_get1_crl(const PKCS12_SAFEBAG *bag)
+X509_CRL * __cdecl PKCS12_SAFEBAG_get1_crl(const PKCS12_SAFEBAG *bag)
 {
     if (PKCS12_SAFEBAG_get_nid(bag) != NID_crlBag)
         return NULL;
@@ -91,13 +91,13 @@ X509_CRL *PKCS12_SAFEBAG_get1_crl(const PKCS12_SAFEBAG *bag)
                             ASN1_ITEM_rptr(X509_CRL));
 }
 
-PKCS12_SAFEBAG *PKCS12_SAFEBAG_create_cert(X509 *x509)
+PKCS12_SAFEBAG * __cdecl PKCS12_SAFEBAG_create_cert(X509 *x509)
 {
     return PKCS12_item_pack_safebag(x509, ASN1_ITEM_rptr(X509),
                                     NID_x509Certificate, NID_certBag);
 }
 
-PKCS12_SAFEBAG *PKCS12_SAFEBAG_create_crl(X509_CRL *crl)
+PKCS12_SAFEBAG * __cdecl PKCS12_SAFEBAG_create_crl(X509_CRL *crl)
 {
     return PKCS12_item_pack_safebag(crl, ASN1_ITEM_rptr(X509_CRL),
                                     NID_x509Crl, NID_crlBag);
@@ -105,7 +105,7 @@ PKCS12_SAFEBAG *PKCS12_SAFEBAG_create_crl(X509_CRL *crl)
 
 /* Turn PKCS8 object into a keybag */
 
-PKCS12_SAFEBAG *PKCS12_SAFEBAG_create0_p8inf(PKCS8_PRIV_KEY_INFO *p8)
+PKCS12_SAFEBAG * __cdecl PKCS12_SAFEBAG_create0_p8inf(PKCS8_PRIV_KEY_INFO *p8)
 {
     PKCS12_SAFEBAG *bag = PKCS12_SAFEBAG_new();
 
@@ -120,7 +120,7 @@ PKCS12_SAFEBAG *PKCS12_SAFEBAG_create0_p8inf(PKCS8_PRIV_KEY_INFO *p8)
 
 /* Turn PKCS8 object into a shrouded keybag */
 
-PKCS12_SAFEBAG *PKCS12_SAFEBAG_create0_pkcs8(X509_SIG *p8)
+PKCS12_SAFEBAG *__cdecl PKCS12_SAFEBAG_create0_pkcs8(X509_SIG *p8)
 {
     PKCS12_SAFEBAG *bag = PKCS12_SAFEBAG_new();
 
@@ -134,7 +134,7 @@ PKCS12_SAFEBAG *PKCS12_SAFEBAG_create0_pkcs8(X509_SIG *p8)
     return bag;
 }
 
-PKCS12_SAFEBAG *PKCS12_SAFEBAG_create_pkcs8_encrypt(int pbe_nid,
+PKCS12_SAFEBAG * __cdecl PKCS12_SAFEBAG_create_pkcs8_encrypt(int pbe_nid,
                                                     const char *pass,
                                                     int passlen,
                                                     unsigned char *salt,

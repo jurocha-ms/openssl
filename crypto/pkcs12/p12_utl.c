@@ -13,7 +13,7 @@
 
 /* Cheap and nasty Unicode stuff */
 
-unsigned char *OPENSSL_asc2uni(const char *asc, int asclen,
+unsigned char * __cdecl OPENSSL_asc2uni(const char *asc, int asclen,
                                unsigned char **uni, int *unilen)
 {
     int ulen, i;
@@ -40,7 +40,7 @@ unsigned char *OPENSSL_asc2uni(const char *asc, int asclen,
     return unitmp;
 }
 
-char *OPENSSL_uni2asc(const unsigned char *uni, int unilen)
+char * __cdecl OPENSSL_uni2asc(const unsigned char *uni, int unilen)
 {
     int asclen, i;
     char *asctmp;
@@ -71,7 +71,7 @@ char *OPENSSL_uni2asc(const unsigned char *uni, int unilen)
  * expressed not in number of UTF-16 characters, but in number of
  * bytes the string occupies, and treat it, the length, accordingly.
  */
-unsigned char *OPENSSL_utf82uni(const char *asc, int asclen,
+unsigned char * __cdecl OPENSSL_utf82uni(const char *asc, int asclen,
                                 unsigned char **uni, int *unilen)
 {
     int ulen, i, j;
@@ -173,7 +173,7 @@ static int bmp_to_utf8(char *str, const unsigned char *utf16, int len)
     return UTF8_putc((unsigned char *)str, len > 4 ? 4 : len, utf32chr);
 }
 
-char *OPENSSL_uni2utf8(const unsigned char *uni, int unilen)
+char * __cdecl OPENSSL_uni2utf8(const unsigned char *uni, int unilen)
 {
     int asclen, i, j;
     char *asctmp;
@@ -219,25 +219,25 @@ char *OPENSSL_uni2utf8(const unsigned char *uni, int unilen)
     return asctmp;
 }
 
-int i2d_PKCS12_bio(BIO *bp, PKCS12 *p12)
+int __cdecl i2d_PKCS12_bio(BIO *bp, PKCS12 *p12)
 {
     return ASN1_item_i2d_bio(ASN1_ITEM_rptr(PKCS12), bp, p12);
 }
 
 #ifndef OPENSSL_NO_STDIO
-int i2d_PKCS12_fp(FILE *fp, PKCS12 *p12)
+int __cdecl i2d_PKCS12_fp(FILE *fp, PKCS12 *p12)
 {
     return ASN1_item_i2d_fp(ASN1_ITEM_rptr(PKCS12), fp, p12);
 }
 #endif
 
-PKCS12 *d2i_PKCS12_bio(BIO *bp, PKCS12 **p12)
+PKCS12 * __cdecl d2i_PKCS12_bio(BIO *bp, PKCS12 **p12)
 {
     return ASN1_item_d2i_bio(ASN1_ITEM_rptr(PKCS12), bp, p12);
 }
 
 #ifndef OPENSSL_NO_STDIO
-PKCS12 *d2i_PKCS12_fp(FILE *fp, PKCS12 **p12)
+PKCS12 * __cdecl d2i_PKCS12_fp(FILE *fp, PKCS12 **p12)
 {
     return ASN1_item_d2i_fp(ASN1_ITEM_rptr(PKCS12), fp, p12);
 }

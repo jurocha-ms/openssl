@@ -17,7 +17,7 @@
 #include <openssl/x509.h>
 #include <openssl/err.h>
 
-int PKCS7_add_attrib_smimecap(PKCS7_SIGNER_INFO *si,
+int __cdecl PKCS7_add_attrib_smimecap(PKCS7_SIGNER_INFO *si,
                               STACK_OF(X509_ALGOR) *cap)
 {
     ASN1_STRING *seq;
@@ -32,7 +32,7 @@ int PKCS7_add_attrib_smimecap(PKCS7_SIGNER_INFO *si,
                                       V_ASN1_SEQUENCE, seq);
 }
 
-STACK_OF(X509_ALGOR) *PKCS7_get_smimecap(PKCS7_SIGNER_INFO *si)
+STACK_OF(X509_ALGOR) * __cdecl PKCS7_get_smimecap(PKCS7_SIGNER_INFO *si)
 {
     ASN1_TYPE *cap;
     const unsigned char *p;
@@ -47,7 +47,7 @@ STACK_OF(X509_ALGOR) *PKCS7_get_smimecap(PKCS7_SIGNER_INFO *si)
 }
 
 /* Basic smime-capabilities OID and optional integer arg */
-int PKCS7_simple_smimecap(STACK_OF(X509_ALGOR) *sk, int nid, int arg)
+int __cdecl PKCS7_simple_smimecap(STACK_OF(X509_ALGOR) *sk, int nid, int arg)
 {
     ASN1_INTEGER *nbit = NULL;
     X509_ALGOR *alg;
@@ -83,7 +83,7 @@ err:
     return 0;
 }
 
-int PKCS7_add_attrib_content_type(PKCS7_SIGNER_INFO *si, ASN1_OBJECT *coid)
+int __cdecl PKCS7_add_attrib_content_type(PKCS7_SIGNER_INFO *si, ASN1_OBJECT *coid)
 {
     if (PKCS7_get_signed_attribute(si, NID_pkcs9_contentType))
         return 0;
@@ -93,7 +93,7 @@ int PKCS7_add_attrib_content_type(PKCS7_SIGNER_INFO *si, ASN1_OBJECT *coid)
                                       V_ASN1_OBJECT, coid);
 }
 
-int PKCS7_add0_attrib_signing_time(PKCS7_SIGNER_INFO *si, ASN1_TIME *t)
+int __cdecl PKCS7_add0_attrib_signing_time(PKCS7_SIGNER_INFO *si, ASN1_TIME *t)
 {
     if (t == NULL && (t = X509_gmtime_adj(NULL, 0)) == NULL) {
         PKCS7err(PKCS7_F_PKCS7_ADD0_ATTRIB_SIGNING_TIME,
@@ -104,7 +104,7 @@ int PKCS7_add0_attrib_signing_time(PKCS7_SIGNER_INFO *si, ASN1_TIME *t)
                                       V_ASN1_UTCTIME, t);
 }
 
-int PKCS7_add1_attrib_digest(PKCS7_SIGNER_INFO *si,
+int __cdecl PKCS7_add1_attrib_digest(PKCS7_SIGNER_INFO *si,
                              const unsigned char *md, int mdlen)
 {
     ASN1_OCTET_STRING *os;

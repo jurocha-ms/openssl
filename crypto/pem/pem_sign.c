@@ -14,17 +14,17 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-int PEM_SignInit(EVP_MD_CTX *ctx, EVP_MD *type)
+int __cdecl PEM_SignInit(EVP_MD_CTX *ctx, EVP_MD *type)
 {
     return EVP_DigestInit_ex(ctx, type, NULL);
 }
 
-int PEM_SignUpdate(EVP_MD_CTX *ctx, unsigned char *data, unsigned int count)
+int __cdecl PEM_SignUpdate(EVP_MD_CTX *ctx, unsigned char *data, unsigned int count)
 {
     return EVP_DigestUpdate(ctx, data, count);
 }
 
-int PEM_SignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
+int __cdecl PEM_SignFinal(EVP_MD_CTX *ctx, unsigned char *sigret,
                   unsigned int *siglen, EVP_PKEY *pkey)
 {
     unsigned char *m;

@@ -11,7 +11,7 @@
 #include "internal/cryptlib.h"
 #include <openssl/pkcs12.h>
 
-PKCS8_PRIV_KEY_INFO *PKCS8_decrypt(const X509_SIG *p8, const char *pass,
+PKCS8_PRIV_KEY_INFO * __cdecl PKCS8_decrypt(const X509_SIG *p8, const char *pass,
                                    int passlen)
 {
     const X509_ALGOR *dalg;

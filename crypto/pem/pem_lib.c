@@ -28,7 +28,7 @@ static int load_iv(char **fromp, unsigned char *to, int num);
 static int check_pem(const char *nm, const char *name);
 int pem_check_suffix(const char *pem_str, const char *suffix);
 
-int PEM_def_callback(char *buf, int num, int rwflag, void *userdata)
+int __cdecl PEM_def_callback(char *buf, int num, int rwflag, void *userdata)
 {
     int i, min_len;
     const char *prompt;
@@ -63,7 +63,7 @@ int PEM_def_callback(char *buf, int num, int rwflag, void *userdata)
     return strlen(buf);
 }
 
-void PEM_proc_type(char *buf, int type)
+void __cdecl PEM_proc_type(char *buf, int type)
 {
     const char *str;
     char *p = buf + strlen(buf);
@@ -80,7 +80,7 @@ void PEM_proc_type(char *buf, int type)
     BIO_snprintf(p, PEM_BUFSIZE - (size_t)(p - buf), "Proc-Type: 4,%s\n", str);
 }
 
-void PEM_dek_info(char *buf, const char *type, int len, char *str)
+void __cdecl PEM_dek_info(char *buf, const char *type, int len, char *str)
 {
     long i;
     char *p = buf + strlen(buf);
@@ -103,7 +103,7 @@ void PEM_dek_info(char *buf, const char *type, int len, char *str)
 }
 
 #ifndef OPENSSL_NO_STDIO
-void *PEM_ASN1_read(d2i_of_void *d2i, const char *name, FILE *fp, void **x,
+void * __cdecl PEM_ASN1_read(d2i_of_void *d2i, const char *name, FILE *fp, void **x,
                     pem_password_cb *cb, void *u)
 {
     BIO *b;
@@ -272,14 +272,14 @@ static int pem_bytes_read_bio_flags(unsigned char **pdata, long *plen,
     return ret;
 }
 
-int PEM_bytes_read_bio(unsigned char **pdata, long *plen, char **pnm,
+int __cdecl PEM_bytes_read_bio(unsigned char **pdata, long *plen, char **pnm,
                        const char *name, BIO *bp, pem_password_cb *cb,
                        void *u) {
     return pem_bytes_read_bio_flags(pdata, plen, pnm, name, bp, cb, u,
                                     PEM_FLAG_EAY_COMPATIBLE);
 }
 
-int PEM_bytes_read_bio_secmem(unsigned char **pdata, long *plen, char **pnm,
+int __cdecl PEM_bytes_read_bio_secmem(unsigned char **pdata, long *plen, char **pnm,
                               const char *name, BIO *bp, pem_password_cb *cb,
                               void *u) {
     return pem_bytes_read_bio_flags(pdata, plen, pnm, name, bp, cb, u,
@@ -287,7 +287,7 @@ int PEM_bytes_read_bio_secmem(unsigned char **pdata, long *plen, char **pnm,
 }
 
 #ifndef OPENSSL_NO_STDIO
-int PEM_ASN1_write(i2d_of_void *i2d, const char *name, FILE *fp,
+int __cdecl PEM_ASN1_write(i2d_of_void *i2d, const char *name, FILE *fp,
                    void *x, const EVP_CIPHER *enc, unsigned char *kstr,
                    int klen, pem_password_cb *callback, void *u)
 {
@@ -305,7 +305,7 @@ int PEM_ASN1_write(i2d_of_void *i2d, const char *name, FILE *fp,
 }
 #endif
 
-int PEM_ASN1_write_bio(i2d_of_void *i2d, const char *name, BIO *bp,
+int __cdecl PEM_ASN1_write_bio(i2d_of_void *i2d, const char *name, BIO *bp,
                        void *x, const EVP_CIPHER *enc, unsigned char *kstr,
                        int klen, pem_password_cb *callback, void *u)
 {
@@ -405,7 +405,7 @@ int PEM_ASN1_write_bio(i2d_of_void *i2d, const char *name, BIO *bp,
     return ret;
 }
 
-int PEM_do_header(EVP_CIPHER_INFO *cipher, unsigned char *data, long *plen,
+int __cdecl PEM_do_header(EVP_CIPHER_INFO *cipher, unsigned char *data, long *plen,
                   pem_password_cb *callback, void *u)
 {
     int ok;
@@ -478,7 +478,7 @@ int PEM_do_header(EVP_CIPHER_INFO *cipher, unsigned char *data, long *plen,
  * presumably we also parse rfc822-style headers for S/MIME, so a common
  * abstraction might well be more generally useful.
  */
-int PEM_get_EVP_CIPHER_INFO(char *header, EVP_CIPHER_INFO *cipher)
+int __cdecl PEM_get_EVP_CIPHER_INFO(char *header, EVP_CIPHER_INFO *cipher)
 {
     static const char ProcType[] = "Proc-Type:";
     static const char ENCRYPTED[] = "ENCRYPTED";
@@ -582,7 +582,7 @@ static int load_iv(char **fromp, unsigned char *to, int num)
 }
 
 #ifndef OPENSSL_NO_STDIO
-int PEM_write(FILE *fp, const char *name, const char *header,
+int __cdecl PEM_write(FILE *fp, const char *name, const char *header,
               const unsigned char *data, long len)
 {
     BIO *b;
@@ -599,7 +599,7 @@ int PEM_write(FILE *fp, const char *name, const char *header,
 }
 #endif
 
-int PEM_write_bio(BIO *bp, const char *name, const char *header,
+int __cdecl PEM_write_bio(BIO *bp, const char *name, const char *header,
                   const unsigned char *data, long len)
 {
     int nlen, n, i, j, outl;
@@ -662,7 +662,7 @@ int PEM_write_bio(BIO *bp, const char *name, const char *header,
 }
 
 #ifndef OPENSSL_NO_STDIO
-int PEM_read(FILE *fp, char **name, char **header, unsigned char **data,
+int __cdecl PEM_read(FILE *fp, char **name, char **header, unsigned char **data,
              long *len)
 {
     BIO *b;
@@ -882,7 +882,7 @@ err:
  * By nature of the PEM format, all content must be printable ASCII (except
  * for line endings).  Other characters are malformed input and will be rejected.
  */
-int PEM_read_bio_ex(BIO *bp, char **name_out, char **header,
+int __cdecl PEM_read_bio_ex(BIO *bp, char **name_out, char **header,
                     unsigned char **data, long *len_out, unsigned int flags)
 {
     EVP_ENCODE_CTX *ctx = EVP_ENCODE_CTX_new();
@@ -959,7 +959,7 @@ end:
     return ret;
 }
 
-int PEM_read_bio(BIO *bp, char **name, char **header, unsigned char **data,
+int __cdecl PEM_read_bio(BIO *bp, char **name, char **header, unsigned char **data,
                  long *len)
 {
     return PEM_read_bio_ex(bp, name, header, data, len, PEM_FLAG_EAY_COMPATIBLE);

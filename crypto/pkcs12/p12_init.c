@@ -14,7 +14,7 @@
 
 /* Initialise a PKCS12 structure to take data */
 
-PKCS12 *PKCS12_init(int mode)
+PKCS12 * __cdecl PKCS12_init(int mode)
 {
     PKCS12 *pkcs12;
 

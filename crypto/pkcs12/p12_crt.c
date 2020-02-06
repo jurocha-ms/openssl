@@ -28,7 +28,7 @@ static int copy_bag_attr(PKCS12_SAFEBAG *bag, EVP_PKEY *pkey, int nid)
     return 1;
 }
 
-PKCS12 *PKCS12_create(const char *pass, const char *name, EVP_PKEY *pkey, X509 *cert,
+PKCS12 * __cdecl PKCS12_create(const char *pass, const char *name, EVP_PKEY *pkey, X509 *cert,
                       STACK_OF(X509) *ca, int nid_key, int nid_cert, int iter,
                       int mac_iter, int keytype)
 {
@@ -131,7 +131,7 @@ PKCS12 *PKCS12_create(const char *pass, const char *name, EVP_PKEY *pkey, X509 *
 
 }
 
-PKCS12_SAFEBAG *PKCS12_add_cert(STACK_OF(PKCS12_SAFEBAG) **pbags, X509 *cert)
+PKCS12_SAFEBAG * __cdecl PKCS12_add_cert(STACK_OF(PKCS12_SAFEBAG) **pbags, X509 *cert)
 {
     PKCS12_SAFEBAG *bag = NULL;
     char *name;
@@ -168,7 +168,7 @@ PKCS12_SAFEBAG *PKCS12_add_cert(STACK_OF(PKCS12_SAFEBAG) **pbags, X509 *cert)
 
 }
 
-PKCS12_SAFEBAG *PKCS12_add_key(STACK_OF(PKCS12_SAFEBAG) **pbags,
+PKCS12_SAFEBAG * __cdecl PKCS12_add_key(STACK_OF(PKCS12_SAFEBAG) **pbags,
                                EVP_PKEY *key, int key_usage, int iter,
                                int nid_key, const char *pass)
 {
@@ -202,7 +202,7 @@ PKCS12_SAFEBAG *PKCS12_add_key(STACK_OF(PKCS12_SAFEBAG) **pbags,
 
 }
 
-int PKCS12_add_safe(STACK_OF(PKCS7) **psafes, STACK_OF(PKCS12_SAFEBAG) *bags,
+int __cdecl PKCS12_add_safe(STACK_OF(PKCS7) **psafes, STACK_OF(PKCS12_SAFEBAG) *bags,
                     int nid_safe, int iter, const char *pass)
 {
     PKCS7 *p7 = NULL;
@@ -271,7 +271,7 @@ static int pkcs12_add_bag(STACK_OF(PKCS12_SAFEBAG) **pbags,
 
 }
 
-PKCS12 *PKCS12_add_safes(STACK_OF(PKCS7) *safes, int nid_p7)
+PKCS12 * __cdecl PKCS12_add_safes(STACK_OF(PKCS7) *safes, int nid_p7)
 {
     PKCS12 *p12;
     if (nid_p7 <= 0)

@@ -15,12 +15,12 @@
 #include <openssl/pkcs12.h>
 #include "p12_lcl.h"
 
-int PKCS12_mac_present(const PKCS12 *p12)
+int __cdecl PKCS12_mac_present(const PKCS12 *p12)
 {
     return p12->mac ? 1 : 0;
 }
 
-void PKCS12_get0_mac(const ASN1_OCTET_STRING **pmac,
+void __cdecl PKCS12_get0_mac(const ASN1_OCTET_STRING **pmac,
                      const X509_ALGOR **pmacalg,
                      const ASN1_OCTET_STRING **psalt,
                      const ASN1_INTEGER **piter,
@@ -67,9 +67,9 @@ static int pkcs12_gen_gost_mac_key(const char *pass, int passlen,
 }
 
 /* Generate a MAC */
-static int pkcs12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
+static int __cdecl pkcs12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
                           unsigned char *mac, unsigned int *maclen,
-                          int (*pkcs12_key_gen)(const char *pass, int passlen,
+                          int (__cdecl *pkcs12_key_gen)(const char *pass, int passlen,
                                                 unsigned char *salt, int slen,
                                                 int id, int iter, int n,
                                                 unsigned char *out,
@@ -140,14 +140,14 @@ err:
     return ret;
 }
 
-int PKCS12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
+int __cdecl PKCS12_gen_mac(PKCS12 *p12, const char *pass, int passlen,
                    unsigned char *mac, unsigned int *maclen)
 {
     return pkcs12_gen_mac(p12, pass, passlen, mac, maclen, NULL);
 }
 
 /* Verify the mac */
-int PKCS12_verify_mac(PKCS12 *p12, const char *pass, int passlen)
+int __cdecl PKCS12_verify_mac(PKCS12 *p12, const char *pass, int passlen)
 {
     unsigned char mac[EVP_MAX_MD_SIZE];
     unsigned int maclen;
@@ -172,7 +172,7 @@ int PKCS12_verify_mac(PKCS12 *p12, const char *pass, int passlen)
 
 /* Set a mac */
 
-int PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
+int __cdecl PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
                    unsigned char *salt, int saltlen, int iter,
                    const EVP_MD *md_type)
 {
@@ -203,7 +203,7 @@ int PKCS12_set_mac(PKCS12 *p12, const char *pass, int passlen,
 }
 
 /* Set up a mac structure */
-int PKCS12_setup_mac(PKCS12 *p12, int iter, unsigned char *salt, int saltlen,
+int __cdecl PKCS12_setup_mac(PKCS12 *p12, int iter, unsigned char *salt, int saltlen,
                      const EVP_MD *md_type)
 {
     X509_ALGOR *macalg;

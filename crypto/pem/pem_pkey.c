@@ -102,7 +102,7 @@ int PEM_write_bio_PrivateKey(BIO *bp, EVP_PKEY *x, const EVP_CIPHER *enc,
     return PEM_write_bio_PrivateKey_traditional(bp, x, enc, kstr, klen, cb, u);
 }
 
-int PEM_write_bio_PrivateKey_traditional(BIO *bp, EVP_PKEY *x,
+int __cdecl PEM_write_bio_PrivateKey_traditional(BIO *bp, EVP_PKEY *x,
                                          const EVP_CIPHER *enc,
                                          unsigned char *kstr, int klen,
                                          pem_password_cb *cb, void *u)
@@ -113,7 +113,7 @@ int PEM_write_bio_PrivateKey_traditional(BIO *bp, EVP_PKEY *x,
                               pem_str, bp, x, enc, kstr, klen, cb, u);
 }
 
-EVP_PKEY *PEM_read_bio_Parameters(BIO *bp, EVP_PKEY **x)
+EVP_PKEY * __cdecl PEM_read_bio_Parameters(BIO *bp, EVP_PKEY **x)
 {
     char *nm = NULL;
     const unsigned char *p = NULL;
@@ -151,7 +151,7 @@ EVP_PKEY *PEM_read_bio_Parameters(BIO *bp, EVP_PKEY **x)
     return ret;
 }
 
-int PEM_write_bio_Parameters(BIO *bp, EVP_PKEY *x)
+int __cdecl PEM_write_bio_Parameters(BIO *bp, EVP_PKEY *x)
 {
     char pem_str[80];
     if (!x->ameth || !x->ameth->param_encode)

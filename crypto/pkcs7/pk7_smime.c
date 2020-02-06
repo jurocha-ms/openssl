@@ -19,7 +19,7 @@
 
 static int pkcs7_copy_existing_digest(PKCS7 *p7, PKCS7_SIGNER_INFO *si);
 
-PKCS7 *PKCS7_sign(X509 *signcert, EVP_PKEY *pkey, STACK_OF(X509) *certs,
+PKCS7 * __cdecl PKCS7_sign(X509 *signcert, EVP_PKEY *pkey, STACK_OF(X509) *certs,
                   BIO *data, int flags)
 {
     PKCS7 *p7;
@@ -62,7 +62,7 @@ PKCS7 *PKCS7_sign(X509 *signcert, EVP_PKEY *pkey, STACK_OF(X509) *certs,
     return NULL;
 }
 
-int PKCS7_final(PKCS7 *p7, BIO *data, int flags)
+int __cdecl PKCS7_final(PKCS7 *p7, BIO *data, int flags)
 {
     BIO *p7bio;
     int ret = 0;
@@ -106,7 +106,7 @@ static int add_digest_smcap(STACK_OF(X509_ALGOR) *sk, int nid, int arg)
     return 1;
 }
 
-PKCS7_SIGNER_INFO *PKCS7_sign_add_signer(PKCS7 *p7, X509 *signcert,
+PKCS7_SIGNER_INFO * __cdecl PKCS7_sign_add_signer(PKCS7 *p7, X509 *signcert,
                                          EVP_PKEY *pkey, const EVP_MD *md,
                                          int flags)
 {
@@ -201,7 +201,7 @@ static int pkcs7_copy_existing_digest(PKCS7 *p7, PKCS7_SIGNER_INFO *si)
     return 0;
 }
 
-int PKCS7_verify(PKCS7 *p7, STACK_OF(X509) *certs, X509_STORE *store,
+int __cdecl PKCS7_verify(PKCS7 *p7, STACK_OF(X509) *certs, X509_STORE *store,
                  BIO *indata, BIO *out, int flags)
 {
     STACK_OF(X509) *signers;
@@ -369,7 +369,7 @@ int PKCS7_verify(PKCS7 *p7, STACK_OF(X509) *certs, X509_STORE *store,
     return ret;
 }
 
-STACK_OF(X509) *PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs,
+STACK_OF(X509) * __cdecl PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs,
                                    int flags)
 {
     STACK_OF(X509) *signers;
@@ -433,7 +433,7 @@ STACK_OF(X509) *PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs,
 
 /* Build a complete PKCS#7 enveloped data */
 
-PKCS7 *PKCS7_encrypt(STACK_OF(X509) *certs, BIO *in, const EVP_CIPHER *cipher,
+PKCS7 * __cdecl PKCS7_encrypt(STACK_OF(X509) *certs, BIO *in, const EVP_CIPHER *cipher,
                      int flags)
 {
     PKCS7 *p7;
@@ -474,7 +474,7 @@ PKCS7 *PKCS7_encrypt(STACK_OF(X509) *certs, BIO *in, const EVP_CIPHER *cipher,
 
 }
 
-int PKCS7_decrypt(PKCS7 *p7, EVP_PKEY *pkey, X509 *cert, BIO *data, int flags)
+int __cdecl PKCS7_decrypt(PKCS7 *p7, EVP_PKEY *pkey, X509 *cert, BIO *data, int flags)
 {
     BIO *tmpmem;
     int ret = 0, i;

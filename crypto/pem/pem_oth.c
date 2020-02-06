@@ -17,7 +17,7 @@
 
 /* Handle 'other' PEMs: not private keys */
 
-void *PEM_ASN1_read_bio(d2i_of_void *d2i, const char *name, BIO *bp, void **x,
+void * __cdecl PEM_ASN1_read_bio(d2i_of_void *d2i, const char *name, BIO *bp, void **x,
                         pem_password_cb *cb, void *u)
 {
     const unsigned char *p = NULL;

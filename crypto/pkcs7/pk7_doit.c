@@ -193,7 +193,7 @@ static int pkcs7_decrypt_rinfo(unsigned char **pek, int *peklen,
     return ret;
 }
 
-BIO *PKCS7_dataInit(PKCS7 *p7, BIO *bio)
+BIO * __cdecl PKCS7_dataInit(PKCS7 *p7, BIO *bio)
 {
     int i;
     BIO *out = NULL, *btmp = NULL;
@@ -356,7 +356,7 @@ static int pkcs7_cmp_ri(PKCS7_RECIP_INFO *ri, X509 *pcert)
 }
 
 /* int */
-BIO *PKCS7_dataDecode(PKCS7 *p7, EVP_PKEY *pkey, BIO *in_bio, X509 *pcert)
+BIO * __cdecl PKCS7_dataDecode(PKCS7 *p7, EVP_PKEY *pkey, BIO *in_bio, X509 *pcert)
 {
     int i, j;
     BIO *out = NULL, *btmp = NULL, *etmp = NULL, *bio = NULL;
@@ -642,7 +642,7 @@ static int do_pkcs7_signed_attrib(PKCS7_SIGNER_INFO *si, EVP_MD_CTX *mctx)
     return 1;
 }
 
-int PKCS7_dataFinal(PKCS7 *p7, BIO *bio)
+int __cdecl PKCS7_dataFinal(PKCS7 *p7, BIO *bio)
 {
     int ret = 0;
     int i, j;
@@ -816,7 +816,7 @@ int PKCS7_dataFinal(PKCS7 *p7, BIO *bio)
     return ret;
 }
 
-int PKCS7_SIGNER_INFO_sign(PKCS7_SIGNER_INFO *si)
+int __cdecl PKCS7_SIGNER_INFO_sign(PKCS7_SIGNER_INFO *si)
 {
     EVP_MD_CTX *mctx;
     EVP_PKEY_CTX *pctx = NULL;
@@ -879,7 +879,7 @@ int PKCS7_SIGNER_INFO_sign(PKCS7_SIGNER_INFO *si)
 
 }
 
-int PKCS7_dataVerify(X509_STORE *cert_store, X509_STORE_CTX *ctx, BIO *bio,
+int __cdecl PKCS7_dataVerify(X509_STORE *cert_store, X509_STORE_CTX *ctx, BIO *bio,
                      PKCS7 *p7, PKCS7_SIGNER_INFO *si)
 {
     PKCS7_ISSUER_AND_SERIAL *ias;
@@ -936,7 +936,7 @@ int PKCS7_dataVerify(X509_STORE *cert_store, X509_STORE_CTX *ctx, BIO *bio,
     return ret;
 }
 
-int PKCS7_signatureVerify(BIO *bio, PKCS7 *p7, PKCS7_SIGNER_INFO *si,
+int __cdecl PKCS7_signatureVerify(BIO *bio, PKCS7 *p7, PKCS7_SIGNER_INFO *si,
                           X509 *x509)
 {
     ASN1_OCTET_STRING *os;
@@ -1048,7 +1048,7 @@ int PKCS7_signatureVerify(BIO *bio, PKCS7 *p7, PKCS7_SIGNER_INFO *si,
     return ret;
 }
 
-PKCS7_ISSUER_AND_SERIAL *PKCS7_get_issuer_and_serial(PKCS7 *p7, int idx)
+PKCS7_ISSUER_AND_SERIAL * __cdecl PKCS7_get_issuer_and_serial(PKCS7 *p7, int idx)
 {
     STACK_OF(PKCS7_RECIP_INFO) *rsk;
     PKCS7_RECIP_INFO *ri;
@@ -1068,12 +1068,12 @@ PKCS7_ISSUER_AND_SERIAL *PKCS7_get_issuer_and_serial(PKCS7 *p7, int idx)
     return ri->issuer_and_serial;
 }
 
-ASN1_TYPE *PKCS7_get_signed_attribute(PKCS7_SIGNER_INFO *si, int nid)
+ASN1_TYPE * __cdecl PKCS7_get_signed_attribute(PKCS7_SIGNER_INFO *si, int nid)
 {
     return get_attribute(si->auth_attr, nid);
 }
 
-ASN1_TYPE *PKCS7_get_attribute(PKCS7_SIGNER_INFO *si, int nid)
+ASN1_TYPE * __cdecl PKCS7_get_attribute(PKCS7_SIGNER_INFO *si, int nid)
 {
     return get_attribute(si->unauth_attr, nid);
 }
@@ -1087,7 +1087,7 @@ static ASN1_TYPE *get_attribute(STACK_OF(X509_ATTRIBUTE) *sk, int nid)
     return X509_ATTRIBUTE_get0_type(xa, 0);
 }
 
-ASN1_OCTET_STRING *PKCS7_digest_from_attributes(STACK_OF(X509_ATTRIBUTE) *sk)
+ASN1_OCTET_STRING * __cdecl PKCS7_digest_from_attributes(STACK_OF(X509_ATTRIBUTE) *sk)
 {
     ASN1_TYPE *astype;
     if ((astype = get_attribute(sk, NID_pkcs9_messageDigest)) == NULL)
@@ -1095,7 +1095,7 @@ ASN1_OCTET_STRING *PKCS7_digest_from_attributes(STACK_OF(X509_ATTRIBUTE) *sk)
     return astype->value.octet_string;
 }
 
-int PKCS7_set_signed_attributes(PKCS7_SIGNER_INFO *p7si,
+int __cdecl PKCS7_set_signed_attributes(PKCS7_SIGNER_INFO *p7si,
                                 STACK_OF(X509_ATTRIBUTE) *sk)
 {
     int i;
@@ -1114,7 +1114,7 @@ int PKCS7_set_signed_attributes(PKCS7_SIGNER_INFO *p7si,
     return 1;
 }
 
-int PKCS7_set_attributes(PKCS7_SIGNER_INFO *p7si,
+int __cdecl PKCS7_set_attributes(PKCS7_SIGNER_INFO *p7si,
                          STACK_OF(X509_ATTRIBUTE) *sk)
 {
     int i;
@@ -1133,13 +1133,13 @@ int PKCS7_set_attributes(PKCS7_SIGNER_INFO *p7si,
     return 1;
 }
 
-int PKCS7_add_signed_attribute(PKCS7_SIGNER_INFO *p7si, int nid, int atrtype,
+int __cdecl PKCS7_add_signed_attribute(PKCS7_SIGNER_INFO *p7si, int nid, int atrtype,
                                void *value)
 {
     return add_attribute(&(p7si->auth_attr), nid, atrtype, value);
 }
 
-int PKCS7_add_attribute(PKCS7_SIGNER_INFO *p7si, int nid, int atrtype,
+int __cdecl PKCS7_add_attribute(PKCS7_SIGNER_INFO *p7si, int nid, int atrtype,
                         void *value)
 {
     return add_attribute(&(p7si->unauth_attr), nid, atrtype, value);

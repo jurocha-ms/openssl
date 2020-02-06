@@ -151,23 +151,23 @@ int i2d_X509_CRL_bio(BIO *bp, X509_CRL *crl)
 }
 
 #ifndef OPENSSL_NO_STDIO
-PKCS7 *d2i_PKCS7_fp(FILE *fp, PKCS7 **p7)
+PKCS7 * __cdecl d2i_PKCS7_fp(FILE *fp, PKCS7 **p7)
 {
     return ASN1_item_d2i_fp(ASN1_ITEM_rptr(PKCS7), fp, p7);
 }
 
-int i2d_PKCS7_fp(FILE *fp, PKCS7 *p7)
+int __cdecl i2d_PKCS7_fp(FILE *fp, PKCS7 *p7)
 {
     return ASN1_item_i2d_fp(ASN1_ITEM_rptr(PKCS7), fp, p7);
 }
 #endif
 
-PKCS7 *d2i_PKCS7_bio(BIO *bp, PKCS7 **p7)
+PKCS7 * __cdecl d2i_PKCS7_bio(BIO *bp, PKCS7 **p7)
 {
     return ASN1_item_d2i_bio(ASN1_ITEM_rptr(PKCS7), bp, p7);
 }
 
-int i2d_PKCS7_bio(BIO *bp, PKCS7 *p7)
+int __cdecl i2d_PKCS7_bio(BIO *bp, PKCS7 *p7)
 {
     return ASN1_item_i2d_bio(ASN1_ITEM_rptr(PKCS7), bp, p7);
 }
@@ -401,7 +401,7 @@ int X509_NAME_digest(const X509_NAME *data, const EVP_MD *type,
             (ASN1_ITEM_rptr(X509_NAME), type, (char *)data, md, len));
 }
 
-int PKCS7_ISSUER_AND_SERIAL_digest(PKCS7_ISSUER_AND_SERIAL *data,
+int __cdecl PKCS7_ISSUER_AND_SERIAL_digest(PKCS7_ISSUER_AND_SERIAL *data,
                                    const EVP_MD *type, unsigned char *md,
                                    unsigned int *len)
 {
