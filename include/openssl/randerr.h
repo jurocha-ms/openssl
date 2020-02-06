@@ -16,7 +16,7 @@
 # ifdef  __cplusplus
 extern "C"
 # endif
-int ERR_load_RAND_strings(void);
+int __cdecl ERR_load_RAND_strings(void);
 
 /*
  * RAND function codes.

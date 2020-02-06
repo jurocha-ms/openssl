@@ -100,7 +100,7 @@ static RAND_DRBG *rand_drbg_new(int secure,
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_set(RAND_DRBG *drbg, int type, unsigned int flags)
+int __cdecl RAND_DRBG_set(RAND_DRBG *drbg, int type, unsigned int flags)
 {
     int ret = 1;
 
@@ -150,7 +150,7 @@ int RAND_DRBG_set(RAND_DRBG *drbg, int type, unsigned int flags)
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_set_defaults(int type, unsigned int flags)
+int __cdecl RAND_DRBG_set_defaults(int type, unsigned int flags)
 {
     int ret = 1;
 
@@ -247,12 +247,12 @@ static RAND_DRBG *rand_drbg_new(int secure,
     return NULL;
 }
 
-RAND_DRBG *RAND_DRBG_new(int type, unsigned int flags, RAND_DRBG *parent)
+RAND_DRBG * __cdecl RAND_DRBG_new(int type, unsigned int flags, RAND_DRBG *parent)
 {
     return rand_drbg_new(0, type, flags, parent);
 }
 
-RAND_DRBG *RAND_DRBG_secure_new(int type, unsigned int flags, RAND_DRBG *parent)
+RAND_DRBG * __cdecl RAND_DRBG_secure_new(int type, unsigned int flags, RAND_DRBG *parent)
 {
     return rand_drbg_new(1, type, flags, parent);
 }
@@ -260,7 +260,7 @@ RAND_DRBG *RAND_DRBG_secure_new(int type, unsigned int flags, RAND_DRBG *parent)
 /*
  * Uninstantiate |drbg| and free all memory.
  */
-void RAND_DRBG_free(RAND_DRBG *drbg)
+void __cdecl RAND_DRBG_free(RAND_DRBG *drbg)
 {
     if (drbg == NULL)
         return;
@@ -285,7 +285,7 @@ void RAND_DRBG_free(RAND_DRBG *drbg)
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_instantiate(RAND_DRBG *drbg,
+int __cdecl RAND_DRBG_instantiate(RAND_DRBG *drbg,
                           const unsigned char *pers, size_t perslen)
 {
     unsigned char *nonce = NULL, *entropy = NULL;
@@ -380,7 +380,7 @@ int RAND_DRBG_instantiate(RAND_DRBG *drbg,
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_uninstantiate(RAND_DRBG *drbg)
+int __cdecl RAND_DRBG_uninstantiate(RAND_DRBG *drbg)
 {
     if (drbg->meth == NULL) {
         drbg->state = DRBG_ERROR;
@@ -404,7 +404,7 @@ int RAND_DRBG_uninstantiate(RAND_DRBG *drbg)
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_reseed(RAND_DRBG *drbg,
+int __cdecl RAND_DRBG_reseed(RAND_DRBG *drbg,
                      const unsigned char *adin, size_t adinlen,
                      int prediction_resistance)
 {
@@ -574,7 +574,7 @@ int rand_drbg_restart(RAND_DRBG *drbg,
  * Returns 1 on success, 0 on failure.
  *
  */
-int RAND_DRBG_generate(RAND_DRBG *drbg, unsigned char *out, size_t outlen,
+int __cdecl RAND_DRBG_generate(RAND_DRBG *drbg, unsigned char *out, size_t outlen,
                        int prediction_resistance,
                        const unsigned char *adin, size_t adinlen)
 {
@@ -657,7 +657,7 @@ int RAND_DRBG_generate(RAND_DRBG *drbg, unsigned char *out, size_t outlen,
  *
  * Returns 1 on success 0 on failure.
  */
-int RAND_DRBG_bytes(RAND_DRBG *drbg, unsigned char *out, size_t outlen)
+int __cdecl RAND_DRBG_bytes(RAND_DRBG *drbg, unsigned char *out, size_t outlen)
 {
     unsigned char *additional = NULL;
     size_t additional_len;
@@ -700,7 +700,7 @@ int RAND_DRBG_bytes(RAND_DRBG *drbg, unsigned char *out, size_t outlen)
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_set_callbacks(RAND_DRBG *drbg,
+int __cdecl RAND_DRBG_set_callbacks(RAND_DRBG *drbg,
                             RAND_DRBG_get_entropy_fn get_entropy,
                             RAND_DRBG_cleanup_entropy_fn cleanup_entropy,
                             RAND_DRBG_get_nonce_fn get_nonce,
@@ -725,7 +725,7 @@ int RAND_DRBG_set_callbacks(RAND_DRBG *drbg,
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_set_reseed_interval(RAND_DRBG *drbg, unsigned int interval)
+int __cdecl RAND_DRBG_set_reseed_interval(RAND_DRBG *drbg, unsigned int interval)
 {
     if (interval > MAX_RESEED_INTERVAL)
         return 0;
@@ -743,7 +743,7 @@ int RAND_DRBG_set_reseed_interval(RAND_DRBG *drbg, unsigned int interval)
  *
  * Returns 1 on success, 0 on failure.
  */
-int RAND_DRBG_set_reseed_time_interval(RAND_DRBG *drbg, time_t interval)
+int __cdecl RAND_DRBG_set_reseed_time_interval(RAND_DRBG *drbg, time_t interval)
 {
     if (interval > MAX_RESEED_TIME_INTERVAL)
         return 0;
@@ -760,7 +760,7 @@ int RAND_DRBG_set_reseed_time_interval(RAND_DRBG *drbg, time_t interval)
  * Returns 1 on success, 0 on failure.
  */
 
-int RAND_DRBG_set_reseed_defaults(
+int __cdecl RAND_DRBG_set_reseed_defaults(
                                   unsigned int _master_reseed_interval,
                                   unsigned int _slave_reseed_interval,
                                   time_t _master_reseed_time_interval,
@@ -849,12 +849,12 @@ int rand_drbg_enable_locking(RAND_DRBG *drbg)
 /*
  * Get and set the EXDATA
  */
-int RAND_DRBG_set_ex_data(RAND_DRBG *drbg, int idx, void *arg)
+int __cdecl RAND_DRBG_set_ex_data(RAND_DRBG *drbg, int idx, void *arg)
 {
     return CRYPTO_set_ex_data(&drbg->ex_data, idx, arg);
 }
 
-void *RAND_DRBG_get_ex_data(const RAND_DRBG *drbg, int idx)
+void * __cdecl RAND_DRBG_get_ex_data(const RAND_DRBG *drbg, int idx)
 {
     return CRYPTO_get_ex_data(&drbg->ex_data, idx);
 }
@@ -1097,7 +1097,7 @@ static int drbg_status(void)
  * Returns pointer to the DRBG on success, NULL on failure.
  *
  */
-RAND_DRBG *RAND_DRBG_get0_master(void)
+RAND_DRBG * __cdecl RAND_DRBG_get0_master(void)
 {
     if (!RUN_ONCE(&rand_drbg_init, do_rand_drbg_init))
         return NULL;
@@ -1109,7 +1109,7 @@ RAND_DRBG *RAND_DRBG_get0_master(void)
  * Get the public DRBG.
  * Returns pointer to the DRBG on success, NULL on failure.
  */
-RAND_DRBG *RAND_DRBG_get0_public(void)
+RAND_DRBG * __cdecl RAND_DRBG_get0_public(void)
 {
     RAND_DRBG *drbg;
 
@@ -1130,7 +1130,7 @@ RAND_DRBG *RAND_DRBG_get0_public(void)
  * Get the private DRBG.
  * Returns pointer to the DRBG on success, NULL on failure.
  */
-RAND_DRBG *RAND_DRBG_get0_private(void)
+RAND_DRBG * __cdecl RAND_DRBG_get0_private(void)
 {
     RAND_DRBG *drbg;
 
@@ -1156,7 +1156,7 @@ RAND_METHOD rand_meth = {
     drbg_status
 };
 
-RAND_METHOD *RAND_OpenSSL(void)
+RAND_METHOD * __cdecl RAND_OpenSSL(void)
 {
     return &rand_meth;
 }

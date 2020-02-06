@@ -28,40 +28,40 @@ struct rand_meth_st {
     int (*status) (void);
 };
 
-int RAND_set_rand_method(const RAND_METHOD *meth);
-const RAND_METHOD *RAND_get_rand_method(void);
+int __cdecl RAND_set_rand_method(const RAND_METHOD *meth);
+const RAND_METHOD * __cdecl RAND_get_rand_method(void);
 # ifndef OPENSSL_NO_ENGINE
-int RAND_set_rand_engine(ENGINE *engine);
+int __cdecl RAND_set_rand_engine(ENGINE *engine);
 # endif
 
-RAND_METHOD *RAND_OpenSSL(void);
+RAND_METHOD * __cdecl RAND_OpenSSL(void);
 
 # if OPENSSL_API_COMPAT < 0x10100000L
 #   define RAND_cleanup() while(0) continue
 # endif
-int RAND_bytes(unsigned char *buf, int num);
-int RAND_priv_bytes(unsigned char *buf, int num);
+int __cdecl RAND_bytes(unsigned char *buf, int num);
+int __cdecl RAND_priv_bytes(unsigned char *buf, int num);
 DEPRECATEDIN_1_1_0(int RAND_pseudo_bytes(unsigned char *buf, int num))
 
-void RAND_seed(const void *buf, int num);
-void RAND_keep_random_devices_open(int keep);
+void __cdecl RAND_seed(const void *buf, int num);
+void __cdecl RAND_keep_random_devices_open(int keep);
 
 # if defined(__ANDROID__) && defined(__NDK_FPABI__)
 __NDK_FPABI__	/* __attribute__((pcs("aapcs"))) on ARM */
 # endif
-void RAND_add(const void *buf, int num, double randomness);
-int RAND_load_file(const char *file, long max_bytes);
-int RAND_write_file(const char *file);
-const char *RAND_file_name(char *file, size_t num);
-int RAND_status(void);
+void __cdecl RAND_add(const void *buf, int num, double randomness);
+int __cdecl RAND_load_file(const char *file, long max_bytes);
+int __cdecl RAND_write_file(const char *file);
+const char * __cdecl RAND_file_name(char *file, size_t num);
+int __cdecl RAND_status(void);
 
 # ifndef OPENSSL_NO_EGD
-int RAND_query_egd_bytes(const char *path, unsigned char *buf, int bytes);
-int RAND_egd(const char *path);
-int RAND_egd_bytes(const char *path, int bytes);
+int __cdecl RAND_query_egd_bytes(const char *path, unsigned char *buf, int bytes);
+int __cdecl RAND_egd(const char *path);
+int __cdecl RAND_egd_bytes(const char *path, int bytes);
 # endif
 
-int RAND_poll(void);
+int __cdecl RAND_poll(void);
 
 # if defined(_WIN32) && (defined(BASETYPES) || defined(_WINDEF_H))
 /* application has to include <windows.h> in order to use these */

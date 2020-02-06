@@ -365,7 +365,7 @@ void rand_cleanup_int(void)
  * RAND_close_seed_files() ensures that any seed file descriptors are
  * closed after use.
  */
-void RAND_keep_random_devices_open(int keep)
+void __cdecl RAND_keep_random_devices_open(int keep)
 {
     if (RUN_ONCE(&rand_init, do_rand_init))
         rand_pool_keep_random_devices_open(keep);
@@ -378,7 +378,7 @@ void RAND_keep_random_devices_open(int keep)
  * sources which depend on the operating system and are
  * configurable via the --with-rand-seed configure option.
  */
-int RAND_poll(void)
+int __cdecl RAND_poll(void)
 {
     int ret = 0;
 
@@ -821,7 +821,7 @@ int rand_pool_add_end(RAND_POOL *pool, size_t len, size_t entropy)
     return 1;
 }
 
-int RAND_set_rand_method(const RAND_METHOD *meth)
+int __cdecl RAND_set_rand_method(const RAND_METHOD *meth)
 {
     if (!RUN_ONCE(&rand_init, do_rand_init))
         return 0;
@@ -836,7 +836,7 @@ int RAND_set_rand_method(const RAND_METHOD *meth)
     return 1;
 }
 
-const RAND_METHOD *RAND_get_rand_method(void)
+const RAND_METHOD * __cdecl RAND_get_rand_method(void)
 {
     const RAND_METHOD *tmp_meth = NULL;
 
@@ -867,7 +867,7 @@ const RAND_METHOD *RAND_get_rand_method(void)
 }
 
 #ifndef OPENSSL_NO_ENGINE
-int RAND_set_rand_engine(ENGINE *engine)
+int __cdecl RAND_set_rand_engine(ENGINE *engine)
 {
     const RAND_METHOD *tmp_meth = NULL;
 
@@ -892,7 +892,7 @@ int RAND_set_rand_engine(ENGINE *engine)
 }
 #endif
 
-void RAND_seed(const void *buf, int num)
+void __cdecl RAND_seed(const void *buf, int num)
 {
     const RAND_METHOD *meth = RAND_get_rand_method();
 
@@ -900,7 +900,7 @@ void RAND_seed(const void *buf, int num)
         meth->seed(buf, num);
 }
 
-void RAND_add(const void *buf, int num, double randomness)
+void __cdecl RAND_add(const void *buf, int num, double randomness)
 {
     const RAND_METHOD *meth = RAND_get_rand_method();
 
@@ -913,7 +913,7 @@ void RAND_add(const void *buf, int num, double randomness)
  * the default method, then just call RAND_bytes().  Otherwise make
  * sure we're instantiated and use the private DRBG.
  */
-int RAND_priv_bytes(unsigned char *buf, int num)
+int __cdecl RAND_priv_bytes(unsigned char *buf, int num)
 {
     const RAND_METHOD *meth = RAND_get_rand_method();
     RAND_DRBG *drbg;
@@ -930,7 +930,7 @@ int RAND_priv_bytes(unsigned char *buf, int num)
     return ret;
 }
 
-int RAND_bytes(unsigned char *buf, int num)
+int __cdecl RAND_bytes(unsigned char *buf, int num)
 {
     const RAND_METHOD *meth = RAND_get_rand_method();
 
@@ -951,7 +951,7 @@ int RAND_pseudo_bytes(unsigned char *buf, int num)
 }
 #endif
 
-int RAND_status(void)
+int __cdecl RAND_status(void)
 {
     const RAND_METHOD *meth = RAND_get_rand_method();
 
