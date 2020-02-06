@@ -16,7 +16,7 @@
  * used is contained in *num;
  */
 
-void RC2_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl RC2_cfb64_encrypt(const unsigned char *in, unsigned char *out,
                        long length, RC2_KEY *schedule, unsigned char *ivec,
                        int *num, int encrypt)
 {

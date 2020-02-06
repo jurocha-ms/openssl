@@ -10,7 +10,7 @@
 #include <openssl/rc2.h>
 #include "rc2_locl.h"
 
-void RC2_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
+void __cdecl RC2_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
                      RC2_KEY *ks, unsigned char *iv, int encrypt)
 {
     register unsigned long tin0, tin1;
@@ -85,7 +85,7 @@ void RC2_cbc_encrypt(const unsigned char *in, unsigned char *out, long length,
     tin[0] = tin[1] = 0;
 }
 
-void RC2_encrypt(unsigned long *d, RC2_KEY *key)
+void __cdecl RC2_encrypt(unsigned long *d, RC2_KEY *key)
 {
     int i, n;
     register RC2_INT *p0, *p1;
@@ -131,7 +131,7 @@ void RC2_encrypt(unsigned long *d, RC2_KEY *key)
         (unsigned long)(x2 & 0xffff) | ((unsigned long)(x3 & 0xffff) << 16L);
 }
 
-void RC2_decrypt(unsigned long *d, RC2_KEY *key)
+void __cdecl RC2_decrypt(unsigned long *d, RC2_KEY *key)
 {
     int i, n;
     register RC2_INT *p0, *p1;

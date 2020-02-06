@@ -16,7 +16,7 @@
  * used is contained in *num;
  */
 
-void RC5_32_cfb64_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl RC5_32_cfb64_encrypt(const unsigned char *in, unsigned char *out,
                           long length, RC5_32_KEY *schedule,
                           unsigned char *ivec, int *num, int encrypt)
 {

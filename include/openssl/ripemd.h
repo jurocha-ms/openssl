@@ -35,7 +35,7 @@ typedef struct RIPEMD160state_st {
 int __cdecl RIPEMD160_Init(RIPEMD160_CTX *c);
 int __cdecl RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
 int __cdecl RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
-unsigned char *RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * __cdecl RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
 void __cdecl RIPEMD160_Transform(RIPEMD160_CTX *c, const unsigned char *b);
 
 # ifdef  __cplusplus

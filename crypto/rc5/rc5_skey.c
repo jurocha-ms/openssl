@@ -10,7 +10,7 @@
 #include <openssl/rc5.h>
 #include "rc5_locl.h"
 
-void RC5_32_set_key(RC5_32_KEY *key, int len, const unsigned char *data,
+void __cdecl RC5_32_set_key(RC5_32_KEY *key, int len, const unsigned char *data,
                     int rounds)
 {
     RC5_32_INT L[64], l, ll, A, B, *S, k;

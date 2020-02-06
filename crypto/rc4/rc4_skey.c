@@ -11,7 +11,7 @@
 #include "rc4_locl.h"
 #include <openssl/opensslv.h>
 
-const char *RC4_options(void)
+const char * __cdecl RC4_options(void)
 {
     if (sizeof(RC4_INT) == 1)
         return "rc4(char)";
@@ -27,7 +27,7 @@ const char *RC4_options(void)
  * Date: Wed, 14 Sep 1994 06:35:31 GMT
  */
 
-void RC4_set_key(RC4_KEY *key, int len, const unsigned char *data)
+void __cdecl RC4_set_key(RC4_KEY *key, int len, const unsigned char *data)
 {
     register RC4_INT tmp;
     register int id1, id2;

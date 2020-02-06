@@ -11,7 +11,7 @@
 #include <openssl/rc5.h>
 #include "rc5_locl.h"
 
-void RC5_32_cbc_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl RC5_32_cbc_encrypt(const unsigned char *in, unsigned char *out,
                         long length, RC5_32_KEY *ks, unsigned char *iv,
                         int encrypt)
 {
@@ -87,7 +87,7 @@ void RC5_32_cbc_encrypt(const unsigned char *in, unsigned char *out,
     tin[0] = tin[1] = 0;
 }
 
-void RC5_32_encrypt(unsigned long *d, RC5_32_KEY *key)
+void __cdecl RC5_32_encrypt(unsigned long *d, RC5_32_KEY *key)
 {
     RC5_32_INT a, b, *s;
 
@@ -123,7 +123,7 @@ void RC5_32_encrypt(unsigned long *d, RC5_32_KEY *key)
     d[1] = b;
 }
 
-void RC5_32_decrypt(unsigned long *d, RC5_32_KEY *key)
+void __cdecl RC5_32_decrypt(unsigned long *d, RC5_32_KEY *key)
 {
     RC5_32_INT a, b, *s;
 
