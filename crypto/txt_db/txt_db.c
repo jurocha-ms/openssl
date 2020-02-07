@@ -17,7 +17,7 @@
 #undef BUFSIZE
 #define BUFSIZE 512
 
-TXT_DB *TXT_DB_read(BIO *in, int num)
+TXT_DB * __cdecl TXT_DB_read(BIO *in, int num)
 {
     TXT_DB *ret = NULL;
     int esc = 0;
@@ -127,7 +127,7 @@ TXT_DB *TXT_DB_read(BIO *in, int num)
     return NULL;
 }
 
-OPENSSL_STRING *TXT_DB_get_by_index(TXT_DB *db, int idx,
+OPENSSL_STRING * __cdecl TXT_DB_get_by_index(TXT_DB *db, int idx,
                                     OPENSSL_STRING *value)
 {
     OPENSSL_STRING *ret;
@@ -147,7 +147,7 @@ OPENSSL_STRING *TXT_DB_get_by_index(TXT_DB *db, int idx,
     return ret;
 }
 
-int TXT_DB_create_index(TXT_DB *db, int field, int (*qual) (OPENSSL_STRING *),
+int __cdecl TXT_DB_create_index(TXT_DB *db, int field, int (*qual) (OPENSSL_STRING *),
                         OPENSSL_LH_HASHFUNC hash, OPENSSL_LH_COMPFUNC cmp)
 {
     LHASH_OF(OPENSSL_STRING) *idx;
@@ -187,7 +187,7 @@ int TXT_DB_create_index(TXT_DB *db, int field, int (*qual) (OPENSSL_STRING *),
     return 1;
 }
 
-long TXT_DB_write(BIO *out, TXT_DB *db)
+long __cdecl TXT_DB_write(BIO *out, TXT_DB *db)
 {
     long i, j, n, nn, l, tot = 0;
     char *p, **pp, *f;
@@ -234,7 +234,7 @@ long TXT_DB_write(BIO *out, TXT_DB *db)
     return ret;
 }
 
-int TXT_DB_insert(TXT_DB *db, OPENSSL_STRING *row)
+int __cdecl TXT_DB_insert(TXT_DB *db, OPENSSL_STRING *row)
 {
     int i;
     OPENSSL_STRING *r;
@@ -279,7 +279,7 @@ int TXT_DB_insert(TXT_DB *db, OPENSSL_STRING *row)
     return 0;
 }
 
-void TXT_DB_free(TXT_DB *db)
+void __cdecl TXT_DB_free(TXT_DB *db)
 {
     int i, n;
     char **p, *max;
