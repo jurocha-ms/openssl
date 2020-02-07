@@ -34,11 +34,11 @@ typedef struct {
     size_t bitlen[WHIRLPOOL_COUNTER / sizeof(size_t)];
 } WHIRLPOOL_CTX;
 
-int WHIRLPOOL_Init(WHIRLPOOL_CTX *c);
-int WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *inp, size_t bytes);
-void WHIRLPOOL_BitUpdate(WHIRLPOOL_CTX *c, const void *inp, size_t bits);
-int WHIRLPOOL_Final(unsigned char *md, WHIRLPOOL_CTX *c);
-unsigned char *WHIRLPOOL(const void *inp, size_t bytes, unsigned char *md);
+int __cdecl WHIRLPOOL_Init(WHIRLPOOL_CTX *c);
+int __cdecl WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *inp, size_t bytes);
+void __cdecl WHIRLPOOL_BitUpdate(WHIRLPOOL_CTX *c, const void *inp, size_t bits);
+int __cdecl WHIRLPOOL_Final(unsigned char *md, WHIRLPOOL_CTX *c);
+unsigned char * __cdecl WHIRLPOOL(const void *inp, size_t bytes, unsigned char *md);
 
 # ifdef __cplusplus
 }
