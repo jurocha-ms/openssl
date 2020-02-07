@@ -78,7 +78,7 @@ static int tls1_generate_key_block(SSL *s, unsigned char *km, size_t num)
     return ret;
 }
 
-int tls1_change_cipher_state(SSL *s, int which)
+int __cdecl tls1_change_cipher_state(SSL *s, int which)
 {
     unsigned char *p, *mac_secret;
     unsigned char *ms, *key, *iv;
@@ -335,7 +335,7 @@ int tls1_change_cipher_state(SSL *s, int which)
     return 0;
 }
 
-int tls1_setup_key_block(SSL *s)
+int __cdecl tls1_setup_key_block(SSL *s)
 {
     unsigned char *p;
     const EVP_CIPHER *c;
@@ -433,7 +433,7 @@ int tls1_setup_key_block(SSL *s)
     return ret;
 }
 
-size_t tls1_final_finish_mac(SSL *s, const char *str, size_t slen,
+size_t __cdecl tls1_final_finish_mac(SSL *s, const char *str, size_t slen,
                              unsigned char *out)
 {
     size_t hashlen;
@@ -459,7 +459,7 @@ size_t tls1_final_finish_mac(SSL *s, const char *str, size_t slen,
     return TLS1_FINISH_MAC_LENGTH;
 }
 
-int tls1_generate_master_secret(SSL *s, unsigned char *out, unsigned char *p,
+int __cdecl tls1_generate_master_secret(SSL *s, unsigned char *out, unsigned char *p,
                                 size_t len, size_t *secret_size)
 {
     if (s->session->flags & SSL_SESS_FLAG_EXTMS) {
@@ -520,7 +520,7 @@ int tls1_generate_master_secret(SSL *s, unsigned char *out, unsigned char *p,
     return 1;
 }
 
-int tls1_export_keying_material(SSL *s, unsigned char *out, size_t olen,
+int __cdecl tls1_export_keying_material(SSL *s, unsigned char *out, size_t olen,
                                 const char *label, size_t llen,
                                 const unsigned char *context,
                                 size_t contextlen, int use_context)
@@ -603,7 +603,7 @@ int tls1_export_keying_material(SSL *s, unsigned char *out, size_t olen,
     return rv;
 }
 
-int tls1_alert_code(int code)
+int __cdecl tls1_alert_code(int code)
 {
     switch (code) {
     case SSL_AD_CLOSE_NOTIFY:

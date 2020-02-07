@@ -15,7 +15,7 @@
 
 /* SSL library configuration module. */
 
-void SSL_add_ssl_module(void)
+void __cdecl SSL_add_ssl_module(void)
 {
     /* Do nothing. This will be added automatically by libcrypto */
 }
@@ -83,17 +83,17 @@ static int ssl_do_config(SSL *s, SSL_CTX *ctx, const char *name, int system)
     return rv <= 0 ? 0 : 1;
 }
 
-int SSL_config(SSL *s, const char *name)
+int __cdecl SSL_config(SSL *s, const char *name)
 {
     return ssl_do_config(s, NULL, name, 0);
 }
 
-int SSL_CTX_config(SSL_CTX *ctx, const char *name)
+int __cdecl SSL_CTX_config(SSL_CTX *ctx, const char *name)
 {
     return ssl_do_config(NULL, ctx, name, 0);
 }
 
-void ssl_ctx_system_config(SSL_CTX *ctx)
+void __cdecl ssl_ctx_system_config(SSL_CTX *ctx)
 {
     ssl_do_config(NULL, ctx, NULL, 1);
 }

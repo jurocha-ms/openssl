@@ -789,7 +789,7 @@ static int ctrl_switch_option(SSL_CONF_CTX *cctx, const ssl_conf_cmd_tbl * cmd)
     return 1;
 }
 
-int SSL_CONF_cmd(SSL_CONF_CTX *cctx, const char *cmd, const char *value)
+int __cdecl SSL_CONF_cmd(SSL_CONF_CTX *cctx, const char *cmd, const char *value)
 {
     const ssl_conf_cmd_tbl *runcmd;
     if (cmd == NULL) {
@@ -829,7 +829,7 @@ int SSL_CONF_cmd(SSL_CONF_CTX *cctx, const char *cmd, const char *value)
     return -2;
 }
 
-int SSL_CONF_cmd_argv(SSL_CONF_CTX *cctx, int *pargc, char ***pargv)
+int __cdecl SSL_CONF_cmd_argv(SSL_CONF_CTX *cctx, int *pargc, char ***pargv)
 {
     int rv;
     const char *arg = NULL, *argn;
@@ -862,7 +862,7 @@ int SSL_CONF_cmd_argv(SSL_CONF_CTX *cctx, int *pargc, char ***pargv)
     return rv;
 }
 
-int SSL_CONF_cmd_value_type(SSL_CONF_CTX *cctx, const char *cmd)
+int __cdecl SSL_CONF_cmd_value_type(SSL_CONF_CTX *cctx, const char *cmd)
 {
     if (ssl_conf_cmd_skip_prefix(cctx, &cmd)) {
         const ssl_conf_cmd_tbl *runcmd;
@@ -880,7 +880,7 @@ SSL_CONF_CTX *SSL_CONF_CTX_new(void)
     return ret;
 }
 
-int SSL_CONF_CTX_finish(SSL_CONF_CTX *cctx)
+int __cdecl SSL_CONF_CTX_finish(SSL_CONF_CTX *cctx)
 {
     /* See if any certificates are missing private keys */
     size_t i;
@@ -913,7 +913,7 @@ int SSL_CONF_CTX_finish(SSL_CONF_CTX *cctx)
     return 1;
 }
 
-void SSL_CONF_CTX_free(SSL_CONF_CTX *cctx)
+void __cdecl SSL_CONF_CTX_free(SSL_CONF_CTX *cctx)
 {
     if (cctx) {
         size_t i;
@@ -925,19 +925,19 @@ void SSL_CONF_CTX_free(SSL_CONF_CTX *cctx)
     }
 }
 
-unsigned int SSL_CONF_CTX_set_flags(SSL_CONF_CTX *cctx, unsigned int flags)
+unsigned int __cdecl SSL_CONF_CTX_set_flags(SSL_CONF_CTX *cctx, unsigned int flags)
 {
     cctx->flags |= flags;
     return cctx->flags;
 }
 
-unsigned int SSL_CONF_CTX_clear_flags(SSL_CONF_CTX *cctx, unsigned int flags)
+unsigned int __cdecl SSL_CONF_CTX_clear_flags(SSL_CONF_CTX *cctx, unsigned int flags)
 {
     cctx->flags &= ~flags;
     return cctx->flags;
 }
 
-int SSL_CONF_CTX_set1_prefix(SSL_CONF_CTX *cctx, const char *pre)
+int __cdecl SSL_CONF_CTX_set1_prefix(SSL_CONF_CTX *cctx, const char *pre)
 {
     char *tmp = NULL;
     if (pre) {
@@ -954,7 +954,7 @@ int SSL_CONF_CTX_set1_prefix(SSL_CONF_CTX *cctx, const char *pre)
     return 1;
 }
 
-void SSL_CONF_CTX_set_ssl(SSL_CONF_CTX *cctx, SSL *ssl)
+void __cdecl SSL_CONF_CTX_set_ssl(SSL_CONF_CTX *cctx, SSL *ssl)
 {
     cctx->ssl = ssl;
     cctx->ctx = NULL;
@@ -973,7 +973,7 @@ void SSL_CONF_CTX_set_ssl(SSL_CONF_CTX *cctx, SSL *ssl)
     }
 }
 
-void SSL_CONF_CTX_set_ssl_ctx(SSL_CONF_CTX *cctx, SSL_CTX *ctx)
+void __cdecl SSL_CONF_CTX_set_ssl_ctx(SSL_CONF_CTX *cctx, SSL_CTX *ctx)
 {
     cctx->ctx = ctx;
     cctx->ssl = NULL;

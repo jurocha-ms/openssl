@@ -88,7 +88,7 @@ static void tls1_sha512_final_raw(void *ctx, unsigned char *md_out)
  * ssl3_cbc_record_digest_supported returns 1 iff |ctx| uses a hash function
  * which ssl3_cbc_digest_record supports.
  */
-char ssl3_cbc_record_digest_supported(const EVP_MD_CTX *ctx)
+char __cdecl ssl3_cbc_record_digest_supported(const EVP_MD_CTX *ctx)
 {
     switch (EVP_MD_CTX_type(ctx)) {
     case NID_md5:
@@ -125,7 +125,7 @@ char ssl3_cbc_record_digest_supported(const EVP_MD_CTX *ctx)
  * padding too. )
  * Returns 1 on success or 0 on error
  */
-int ssl3_cbc_digest_record(const EVP_MD_CTX *ctx,
+int __cdecl ssl3_cbc_digest_record(const EVP_MD_CTX *ctx,
                            unsigned char *md_out,
                            size_t *md_out_size,
                            const unsigned char header[13],

@@ -25,7 +25,7 @@ static const unsigned char default_zeros[EVP_MAX_MD_SIZE];
  * The |data| value may be zero length. Any errors will be treated as fatal if
  * |fatal| is set. Returns 1 on success  0 on failure.
  */
-int tls13_hkdf_expand(SSL *s, const EVP_MD *md, const unsigned char *secret,
+int __cdecl tls13_hkdf_expand(SSL *s, const EVP_MD *md, const unsigned char *secret,
                              const unsigned char *label, size_t labellen,
                              const unsigned char *data, size_t datalen,
                              unsigned char *out, size_t outlen, int fatal)
@@ -113,7 +113,7 @@ int tls13_hkdf_expand(SSL *s, const EVP_MD *md, const unsigned char *secret,
  * Given a |secret| generate a |key| of length |keylen| bytes. Returns 1 on
  * success  0 on failure.
  */
-int tls13_derive_key(SSL *s, const EVP_MD *md, const unsigned char *secret,
+int __cdecl tls13_derive_key(SSL *s, const EVP_MD *md, const unsigned char *secret,
                      unsigned char *key, size_t keylen)
 {
 #ifdef CHARSET_EBCDIC
@@ -130,7 +130,7 @@ int tls13_derive_key(SSL *s, const EVP_MD *md, const unsigned char *secret,
  * Given a |secret| generate an |iv| of length |ivlen| bytes. Returns 1 on
  * success  0 on failure.
  */
-int tls13_derive_iv(SSL *s, const EVP_MD *md, const unsigned char *secret,
+int __cdecl tls13_derive_iv(SSL *s, const EVP_MD *md, const unsigned char *secret,
                     unsigned char *iv, size_t ivlen)
 {
 #ifdef CHARSET_EBCDIC
@@ -143,7 +143,7 @@ int tls13_derive_iv(SSL *s, const EVP_MD *md, const unsigned char *secret,
                              NULL, 0, iv, ivlen, 1);
 }
 
-int tls13_derive_finishedkey(SSL *s, const EVP_MD *md,
+int __cdecl tls13_derive_finishedkey(SSL *s, const EVP_MD *md,
                              const unsigned char *secret,
                              unsigned char *fin, size_t finlen)
 {
@@ -162,7 +162,7 @@ int tls13_derive_finishedkey(SSL *s, const EVP_MD *md,
  * length |insecretlen|, generate a new secret and store it in the location
  * pointed to by |outsecret|. Returns 1 on success  0 on failure.
  */
-int tls13_generate_secret(SSL *s, const EVP_MD *md,
+int __cdecl tls13_generate_secret(SSL *s, const EVP_MD *md,
                           const unsigned char *prevsecret,
                           const unsigned char *insecret,
                           size_t insecretlen,
@@ -256,7 +256,7 @@ int tls13_generate_secret(SSL *s, const EVP_MD *md,
  * handshake secret. This requires the early secret to already have been
  * generated. Returns 1 on success  0 on failure.
  */
-int tls13_generate_handshake_secret(SSL *s, const unsigned char *insecret,
+int __cdecl tls13_generate_handshake_secret(SSL *s, const unsigned char *insecret,
                                 size_t insecretlen)
 {
     /* Calls SSLfatal() if required */
@@ -270,7 +270,7 @@ int tls13_generate_handshake_secret(SSL *s, const unsigned char *insecret,
  * secret and store its length in |*secret_size|. Returns 1 on success  0 on
  * failure.
  */
-int tls13_generate_master_secret(SSL *s, unsigned char *out,
+int __cdecl tls13_generate_master_secret(SSL *s, unsigned char *out,
                                  unsigned char *prev, size_t prevlen,
                                  size_t *secret_size)
 {
@@ -285,7 +285,7 @@ int tls13_generate_master_secret(SSL *s, unsigned char *out,
  * Generates the mac for the Finished message. Returns the length of the MAC or
  * 0 on error.
  */
-size_t tls13_final_finish_mac(SSL *s, const char *str, size_t slen,
+size_t __cdecl tls13_final_finish_mac(SSL *s, const char *str, size_t slen,
                              unsigned char *out)
 {
     const EVP_MD *md = ssl_handshake_md(s);
@@ -339,7 +339,7 @@ size_t tls13_final_finish_mac(SSL *s, const char *str, size_t slen,
  * There isn't really a key block in TLSv1.3, but we still need this function
  * for initialising the cipher and hash. Returns 1 on success or 0 on failure.
  */
-int tls13_setup_key_block(SSL *s)
+int __cdecl tls13_setup_key_block(SSL *s)
 {
     const EVP_CIPHER *c;
     const EVP_MD *hash;
@@ -427,7 +427,7 @@ static int derive_secret_key_and_iv(SSL *s, int sending, const EVP_MD *md,
     return 0;
 }
 
-int tls13_change_cipher_state(SSL *s, int which)
+int __cdecl tls13_change_cipher_state(SSL *s, int which)
 {
 #ifdef CHARSET_EBCDIC
   static const unsigned char client_early_traffic[]       = {0x63, 0x20, 0x65, 0x20,       /*traffic*/0x74, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x00};
@@ -713,7 +713,7 @@ int tls13_change_cipher_state(SSL *s, int which)
     return ret;
 }
 
-int tls13_update_key(SSL *s, int sending)
+int __cdecl tls13_update_key(SSL *s, int sending)
 {
 #ifdef CHARSET_EBCDIC
   static const unsigned char application_traffic[] = { 0x74, 0x72 ,0x61 ,0x66 ,0x66 ,0x69 ,0x63 ,0x20 ,0x75 ,0x70 ,0x64, 0x00};
@@ -761,7 +761,7 @@ int tls13_update_key(SSL *s, int sending)
     return ret;
 }
 
-int tls13_alert_code(int code)
+int __cdecl tls13_alert_code(int code)
 {
     /* There are 2 additional alerts in TLSv1.3 compared to TLSv1.2 */
     if (code == SSL_AD_MISSING_EXTENSION || code == SSL_AD_CERTIFICATE_REQUIRED)
@@ -770,7 +770,7 @@ int tls13_alert_code(int code)
     return tls1_alert_code(code);
 }
 
-int tls13_export_keying_material(SSL *s, unsigned char *out, size_t olen,
+int __cdecl tls13_export_keying_material(SSL *s, unsigned char *out, size_t olen,
                                  const char *label, size_t llen,
                                  const unsigned char *context,
                                  size_t contextlen, int use_context)
@@ -812,7 +812,7 @@ int tls13_export_keying_material(SSL *s, unsigned char *out, size_t olen,
     return ret;
 }
 
-int tls13_export_keying_material_early(SSL *s, unsigned char *out, size_t olen,
+int __cdecl tls13_export_keying_material_early(SSL *s, unsigned char *out, size_t olen,
                                        const char *label, size_t llen,
                                        const unsigned char *context,
                                        size_t contextlen)

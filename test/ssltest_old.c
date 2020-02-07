@@ -83,7 +83,7 @@ static SSL_CTX *s_ctx2 = NULL;
  */
 #define COMP_ZLIB       1
 
-static int verify_callback(int ok, X509_STORE_CTX *ctx);
+static int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx);
 static int app_verify_callback(X509_STORE_CTX *ctx, void *arg);
 #define APP_CALLBACK_STRING "Test Callback Argument"
 struct app_verify_arg {
@@ -2807,7 +2807,7 @@ int doit(SSL *s_ssl, SSL *c_ssl, long count)
     return ret;
 }
 
-static int verify_callback(int ok, X509_STORE_CTX *ctx)
+static int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx)
 {
     char *s, buf[256];
 

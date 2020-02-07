@@ -48,7 +48,7 @@ static const BIO_METHOD methods_sslp = {
     ssl_callback_ctrl,
 };
 
-const BIO_METHOD *BIO_f_ssl(void)
+const BIO_METHOD * __cdecl BIO_f_ssl(void)
 {
     return &methods_sslp;
 }
@@ -418,7 +418,7 @@ static int ssl_puts(BIO *bp, const char *str)
     return ret;
 }
 
-BIO *BIO_new_buffer_ssl_connect(SSL_CTX *ctx)
+BIO * __cdecl BIO_new_buffer_ssl_connect(SSL_CTX *ctx)
 {
 #ifndef OPENSSL_NO_SOCK
     BIO *ret = NULL, *buf = NULL, *ssl = NULL;
@@ -437,7 +437,7 @@ BIO *BIO_new_buffer_ssl_connect(SSL_CTX *ctx)
     return NULL;
 }
 
-BIO *BIO_new_ssl_connect(SSL_CTX *ctx)
+BIO * __cdecl BIO_new_ssl_connect(SSL_CTX *ctx)
 {
 #ifndef OPENSSL_NO_SOCK
     BIO *ret = NULL, *con = NULL, *ssl = NULL;
@@ -455,7 +455,7 @@ BIO *BIO_new_ssl_connect(SSL_CTX *ctx)
     return NULL;
 }
 
-BIO *BIO_new_ssl(SSL_CTX *ctx, int client)
+BIO * __cdecl BIO_new_ssl(SSL_CTX *ctx, int client)
 {
     BIO *ret;
     SSL *ssl;
@@ -475,7 +475,7 @@ BIO *BIO_new_ssl(SSL_CTX *ctx, int client)
     return ret;
 }
 
-int BIO_ssl_copy_session_id(BIO *t, BIO *f)
+int __cdecl BIO_ssl_copy_session_id(BIO *t, BIO *f)
 {
     BIO_SSL *tdata, *fdata;
     t = BIO_find_type(t, BIO_TYPE_SSL);
@@ -491,7 +491,7 @@ int BIO_ssl_copy_session_id(BIO *t, BIO *f)
     return 1;
 }
 
-void BIO_ssl_shutdown(BIO *b)
+void __cdecl BIO_ssl_shutdown(BIO *b)
 {
     BIO_SSL *bdata;
 

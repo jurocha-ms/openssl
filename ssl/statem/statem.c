@@ -63,22 +63,22 @@ static SUB_STATE_RETURN read_state_machine(SSL *s);
 static void init_write_state_machine(SSL *s);
 static SUB_STATE_RETURN write_state_machine(SSL *s);
 
-OSSL_HANDSHAKE_STATE SSL_get_state(const SSL *ssl)
+OSSL_HANDSHAKE_STATE __cdecl SSL_get_state(const SSL *ssl)
 {
     return ssl->statem.hand_state;
 }
 
-int SSL_in_init(const SSL *s)
+int __cdecl SSL_in_init(const SSL *s)
 {
     return s->statem.in_init;
 }
 
-int SSL_is_init_finished(const SSL *s)
+int __cdecl SSL_is_init_finished(const SSL *s)
 {
     return !(s->statem.in_init) && (s->statem.hand_state == TLS_ST_OK);
 }
 
-int SSL_in_before(const SSL *s)
+int __cdecl SSL_in_before(const SSL *s)
 {
     /*
      * Historically being "in before" meant before anything had happened. In the
@@ -245,17 +245,17 @@ void ossl_statem_set_hello_verify_done(SSL *s)
     s->statem.hand_state = TLS_ST_SR_CLNT_HELLO;
 }
 
-int ossl_statem_connect(SSL *s)
+int __cdecl ossl_statem_connect(SSL *s)
 {
     return state_machine(s, 0);
 }
 
-int ossl_statem_accept(SSL *s)
+int __cdecl ossl_statem_accept(SSL *s)
 {
     return state_machine(s, 1);
 }
 
-typedef void (*info_cb) (const SSL *, int, int);
+typedef void (__cdecl *info_cb) (const SSL *, int, int);
 
 static info_cb get_callback(SSL *s)
 {
@@ -298,7 +298,7 @@ static info_cb get_callback(SSL *s)
 static int state_machine(SSL *s, int server)
 {
     BUF_MEM *buf = NULL;
-    void (*cb) (const SSL *ssl, int type, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type, int val) = NULL;
     OSSL_STATEM *st = &s->statem;
     int ret = -1;
     int ssret;
@@ -545,7 +545,7 @@ static SUB_STATE_RETURN read_state_machine(SSL *s)
     MSG_PROCESS_RETURN(*process_message) (SSL *s, PACKET *pkt);
     WORK_STATE(*post_process_message) (SSL *s, WORK_STATE wst);
     size_t (*max_message_size) (SSL *s);
-    void (*cb) (const SSL *ssl, int type, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type, int val) = NULL;
 
     cb = get_callback(s);
 
@@ -761,7 +761,7 @@ static SUB_STATE_RETURN write_state_machine(SSL *s)
     int (*get_construct_message_f) (SSL *s, WPACKET *pkt,
                                     int (**confunc) (SSL *s, WPACKET *pkt),
                                     int *mt);
-    void (*cb) (const SSL *ssl, int type, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type, int val) = NULL;
     int (*confunc) (SSL *s, WPACKET *pkt);
     int mt;
     WPACKET pkt;

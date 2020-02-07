@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "ssl_locl.h"
 
-const char *SSL_state_string_long(const SSL *s)
+const char * __cdecl SSL_state_string_long(const SSL *s)
 {
     if (ossl_statem_in_error(s))
         return "error";
@@ -118,7 +118,7 @@ const char *SSL_state_string_long(const SSL *s)
     }
 }
 
-const char *SSL_state_string(const SSL *s)
+const char * __cdecl SSL_state_string(const SSL *s)
 {
     if (ossl_statem_in_error(s))
         return "SSLERR";
@@ -225,7 +225,7 @@ const char *SSL_state_string(const SSL *s)
     }
 }
 
-const char *SSL_alert_type_string_long(int value)
+const char * __cdecl SSL_alert_type_string_long(int value)
 {
     switch (value >> 8) {
     case SSL3_AL_WARNING:
@@ -237,7 +237,7 @@ const char *SSL_alert_type_string_long(int value)
     }
 }
 
-const char *SSL_alert_type_string(int value)
+const char * __cdecl SSL_alert_type_string(int value)
 {
     switch (value >> 8) {
     case SSL3_AL_WARNING:
@@ -249,7 +249,7 @@ const char *SSL_alert_type_string(int value)
     }
 }
 
-const char *SSL_alert_desc_string(int value)
+const char * __cdecl SSL_alert_desc_string(int value)
 {
     switch (value & 0xff) {
     case SSL3_AD_CLOSE_NOTIFY:
@@ -317,7 +317,7 @@ const char *SSL_alert_desc_string(int value)
     }
 }
 
-const char *SSL_alert_desc_string_long(int value)
+const char * __cdecl SSL_alert_desc_string_long(int value)
 {
     switch (value & 0xff) {
     case SSL3_AD_CLOSE_NOTIFY:

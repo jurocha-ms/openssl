@@ -3530,7 +3530,7 @@ typedef struct simple_ssl_session_st {
 
 static simple_ssl_session *first = NULL;
 
-static int add_session(SSL *ssl, SSL_SESSION *session)
+static int __cdecl add_session(SSL *ssl, SSL_SESSION *session)
 {
     simple_ssl_session *sess = app_malloc(sizeof(*sess), "get session");
     unsigned char *p;
@@ -3569,7 +3569,7 @@ static int add_session(SSL *ssl, SSL_SESSION *session)
     return 0;
 }
 
-static SSL_SESSION *get_session(SSL *ssl, const unsigned char *id, int idlen,
+static SSL_SESSION * __cdecl get_session(SSL *ssl, const unsigned char *id, int idlen,
                                 int *do_copy)
 {
     simple_ssl_session *sess;
@@ -3585,7 +3585,7 @@ static SSL_SESSION *get_session(SSL *ssl, const unsigned char *id, int idlen,
     return NULL;
 }
 
-static void del_session(SSL_CTX *sctx, SSL_SESSION *session)
+static void __cdecl del_session(SSL_CTX *sctx, SSL_SESSION *session)
 {
     simple_ssl_session *sess, *prev = NULL;
     const unsigned char *id;

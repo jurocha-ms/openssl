@@ -60,7 +60,7 @@ DEFINE_STACK_OF(X509_VERIFY_PARAM)
 
 int X509_STORE_set_depth(X509_STORE *store, int depth);
 
-typedef int (*X509_STORE_CTX_verify_cb)(int, X509_STORE_CTX *);
+typedef int (__cdecl *X509_STORE_CTX_verify_cb)(int, X509_STORE_CTX *);
 typedef int (*X509_STORE_CTX_verify_fn)(X509_STORE_CTX *);
 typedef int (*X509_STORE_CTX_get_issuer_fn)(X509 **issuer,
                                             X509_STORE_CTX *ctx, X509 *x);

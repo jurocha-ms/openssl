@@ -40,7 +40,7 @@ static const char *lookup(int val, const STRINT_PAIR* list, const char* def)
     return def;
 }
 
-int verify_callback(int ok, X509_STORE_CTX *ctx)
+int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx)
 {
     X509 *err_cert;
     int err, depth;
@@ -451,7 +451,7 @@ long __cdecl bio_dump_callback(BIO *bio, int cmd, const char *argp,
     return ret;
 }
 
-void apps_ssl_info_callback(const SSL *s, int where, int ret)
+void __cdecl apps_ssl_info_callback(const SSL *s, int where, int ret)
 {
     const char *str;
     int w;
@@ -1315,7 +1315,7 @@ int ssl_load_stores(SSL_CTX *ctx,
 typedef struct {
     BIO *out;
     int verbose;
-    int (*old_cb) (const SSL *s, const SSL_CTX *ctx, int op, int bits, int nid,
+    int (__cdecl *old_cb) (const SSL *s, const SSL_CTX *ctx, int op, int bits, int nid,
                    void *other, void *ex);
 } security_debug_ex;
 
@@ -1344,7 +1344,7 @@ static STRINT_PAIR callback_types[] = {
     {NULL}
 };
 
-static int security_callback_debug(const SSL *s, const SSL_CTX *ctx,
+static int __cdecl security_callback_debug(const SSL *s, const SSL_CTX *ctx,
                                    int op, int bits, int nid,
                                    void *other, void *ex)
 {

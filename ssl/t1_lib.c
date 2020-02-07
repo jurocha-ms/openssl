@@ -92,7 +92,7 @@ SSL3_ENC_METHOD const TLSv1_3_enc_data = {
     ssl3_handshake_write
 };
 
-long tls1_default_timeout(void)
+long __cdecl tls1_default_timeout(void)
 {
     /*
      * 2 hours, the 24 hours mentioned in the TLSv1 spec is way too long for
@@ -101,7 +101,7 @@ long tls1_default_timeout(void)
     return (60 * 60 * 2);
 }
 
-int tls1_new(SSL *s)
+int __cdecl tls1_new(SSL *s)
 {
     if (!ssl3_new(s))
         return 0;
@@ -111,13 +111,13 @@ int tls1_new(SSL *s)
     return 1;
 }
 
-void tls1_free(SSL *s)
+void __cdecl tls1_free(SSL *s)
 {
     OPENSSL_free(s->ext.session_ticket);
     ssl3_free(s);
 }
 
-int tls1_clear(SSL *s)
+int __cdecl tls1_clear(SSL *s)
 {
     if (!ssl3_clear(s))
         return 0;
@@ -190,7 +190,7 @@ static const uint16_t suiteb_curves[] = {
     TLSEXT_curve_P_384
 };
 
-const TLS_GROUP_INFO *tls1_group_id_lookup(uint16_t group_id)
+const TLS_GROUP_INFO * __cdecl tls1_group_id_lookup(uint16_t group_id)
 {
     /* ECC curves from RFC 4492 and RFC 7027 */
     if (group_id < 1 || group_id > OSSL_NELEM(nid_list))
@@ -212,7 +212,7 @@ static uint16_t tls1_nid2group_id(int nid)
  * Set *pgroups to the supported groups list and *pgroupslen to
  * the number of groups supported.
  */
-void tls1_get_supported_groups(SSL *s, const uint16_t **pgroups,
+void __cdecl tls1_get_supported_groups(SSL *s, const uint16_t **pgroups,
                                size_t *pgroupslen)
 {
 
@@ -246,7 +246,7 @@ void tls1_get_supported_groups(SSL *s, const uint16_t **pgroups,
 }
 
 /* See if curve is allowed by security callback */
-int tls_curve_allowed(SSL *s, uint16_t curve, int op)
+int __cdecl tls_curve_allowed(SSL *s, uint16_t curve, int op)
 {
     const TLS_GROUP_INFO *cinfo = tls1_group_id_lookup(curve);
     unsigned char ctmp[2];
@@ -279,7 +279,7 @@ static int tls1_in_list(uint16_t id, const uint16_t *list, size_t listlen)
  * For nmatch == -2, return the id of the group to use for
  * a tmp key, or 0 if there is no match.
  */
-uint16_t tls1_shared_group(SSL *s, int nmatch)
+uint16_t __cdecl tls1_shared_group(SSL *s, int nmatch)
 {
     const uint16_t *pref, *supp;
     size_t num_pref, num_supp, i;
@@ -334,7 +334,7 @@ uint16_t tls1_shared_group(SSL *s, int nmatch)
     return 0;
 }
 
-int tls1_set_groups(uint16_t **pext, size_t *pextlen,
+int __cdecl tls1_set_groups(uint16_t **pext, size_t *pextlen,
                     int *groups, size_t ngroups)
 {
     uint16_t *glist;
@@ -408,7 +408,7 @@ static int nid_cb(const char *elem, int len, void *arg)
 }
 
 /* Set groups based on a colon separate list */
-int tls1_set_groups_list(uint16_t **pext, size_t *pextlen, const char *str)
+int __cdecl tls1_set_groups_list(uint16_t **pext, size_t *pextlen, const char *str)
 {
     nid_cb_st ncb;
     ncb.nidcnt = 0;
@@ -478,7 +478,7 @@ static int tls1_check_pkey_comp(SSL *s, EVP_PKEY *pkey)
 }
 
 /* Check a group id matches preferences */
-int tls1_check_group_id(SSL *s, uint16_t group_id, int check_own_groups)
+int __cdecl tls1_check_group_id(SSL *s, uint16_t group_id, int check_own_groups)
     {
     const uint16_t *groups;
     size_t groups_len;
@@ -530,7 +530,7 @@ int tls1_check_group_id(SSL *s, uint16_t group_id, int check_own_groups)
     return tls1_in_list(group_id, groups, groups_len);
 }
 
-void tls1_get_formatlist(SSL *s, const unsigned char **pformats,
+void __cdecl tls1_get_formatlist(SSL *s, const unsigned char **pformats,
                          size_t *num_formats)
 {
     /*
@@ -607,7 +607,7 @@ static int tls1_check_cert_param(SSL *s, X509 *x, int check_ee_md)
  *
  * Returns 0 when the cipher can't be used or 1 when it can.
  */
-int tls1_check_ec_tmp_key(SSL *s, unsigned long cid)
+int __cdecl tls1_check_ec_tmp_key(SSL *s, unsigned long cid)
 {
     /* If not Suite B just need a shared group */
     if (!tls1_suiteb(s))
@@ -809,7 +809,7 @@ static const SIGALG_LOOKUP *tls1_lookup_sigalg(uint16_t sigalg)
     return NULL;
 }
 /* Lookup hash: return 0 if invalid or not enabled */
-int tls1_lookup_md(const SIGALG_LOOKUP *lu, const EVP_MD **pmd)
+int __cdecl tls1_lookup_md(const SIGALG_LOOKUP *lu, const EVP_MD **pmd)
 {
     const EVP_MD *md;
     if (lu == NULL)
@@ -898,7 +898,7 @@ static const SIGALG_LOOKUP *tls1_get_legacy_sigalg(const SSL *s, int idx)
     return &legacy_rsa_sigalg;
 }
 /* Set peer sigalg based key type */
-int tls1_set_peer_legacy_sigalg(SSL *s, const EVP_PKEY *pkey)
+int __cdecl tls1_set_peer_legacy_sigalg(SSL *s, const EVP_PKEY *pkey)
 {
     size_t idx;
     const SIGALG_LOOKUP *lu;
@@ -912,7 +912,7 @@ int tls1_set_peer_legacy_sigalg(SSL *s, const EVP_PKEY *pkey)
     return 1;
 }
 
-size_t tls12_get_psigalgs(SSL *s, int sent, const uint16_t **psigs)
+size_t __cdecl tls12_get_psigalgs(SSL *s, int sent, const uint16_t **psigs)
 {
     /*
      * If Suite B mode use Suite B sigalgs only, ignore any other
@@ -955,7 +955,7 @@ size_t tls12_get_psigalgs(SSL *s, int sent, const uint16_t **psigs)
  * Called by servers only. Checks that we have a sig alg that supports the
  * specified EC curve.
  */
-int tls_check_sigalg_curve(const SSL *s, int curve)
+int __cdecl tls_check_sigalg_curve(const SSL *s, int curve)
 {
    const uint16_t *sigs;
    size_t siglen, i;
@@ -988,7 +988,7 @@ int tls_check_sigalg_curve(const SSL *s, int curve)
  * algorithms and if so set relevant digest and signature scheme in
  * s.
  */
-int tls12_check_peer_sigalg(SSL *s, uint16_t sig, EVP_PKEY *pkey)
+int __cdecl tls12_check_peer_sigalg(SSL *s, uint16_t sig, EVP_PKEY *pkey)
 {
     const uint16_t *sent_sigs;
     const EVP_MD *md = NULL;
@@ -1143,7 +1143,7 @@ int SSL_get_signature_type_nid(const SSL *s, int *pnid)
  *
  * Call ssl_cipher_disabled() to check that it's enabled or not.
  */
-int ssl_set_client_disabled(SSL *s)
+int __cdecl ssl_set_client_disabled(SSL *s)
 {
     s->s3->tmp.mask_a = 0;
     s->s3->tmp.mask_k = 0;
@@ -1176,7 +1176,7 @@ int ssl_set_client_disabled(SSL *s)
  *
  * Returns 1 when it's disabled, 0 when enabled.
  */
-int ssl_cipher_disabled(SSL *s, const SSL_CIPHER *c, int op, int ecdhe)
+int __cdecl ssl_cipher_disabled(SSL *s, const SSL_CIPHER *c, int op, int ecdhe)
 {
     if (c->algorithm_mkey & s->s3->tmp.mask_k
         || c->algorithm_auth & s->s3->tmp.mask_a)
@@ -1204,14 +1204,14 @@ int ssl_cipher_disabled(SSL *s, const SSL_CIPHER *c, int op, int ecdhe)
     return !ssl_security(s, op, c->strength_bits, 0, (void *)c);
 }
 
-int tls_use_ticket(SSL *s)
+int __cdecl tls_use_ticket(SSL *s)
 {
     if ((s->options & SSL_OP_NO_TICKET))
         return 0;
     return ssl_security(s, SSL_SECOP_TICKET, 0, 0, NULL);
 }
 
-int tls1_set_server_sigalgs(SSL *s)
+int __cdecl tls1_set_server_sigalgs(SSL *s)
 {
     size_t i;
 
@@ -1269,7 +1269,7 @@ int tls1_set_server_sigalgs(SSL *s)
  *   ret: (output) on return, if a ticket was decrypted, then this is set to
  *       point to the resulting session.
  */
-SSL_TICKET_STATUS tls_get_ticket_from_client(SSL *s, CLIENTHELLO_MSG *hello,
+SSL_TICKET_STATUS __cdecl tls_get_ticket_from_client(SSL *s, CLIENTHELLO_MSG *hello,
                                              SSL_SESSION **ret)
 {
     size_t size;
@@ -1319,7 +1319,7 @@ SSL_TICKET_STATUS tls_get_ticket_from_client(SSL *s, CLIENTHELLO_MSG *hello,
  *   psess: (output) on return, if a ticket was decrypted, then this is set to
  *       point to the resulting session.
  */
-SSL_TICKET_STATUS tls_decrypt_ticket(SSL *s, const unsigned char *etick,
+SSL_TICKET_STATUS __cdecl tls_decrypt_ticket(SSL *s, const unsigned char *etick,
                                      size_t eticklen, const unsigned char *sess_id,
                                      size_t sesslen, SSL_SESSION **psess)
 {
@@ -1633,7 +1633,7 @@ static int tls12_sigalg_allowed(SSL *s, int op, const SIGALG_LOOKUP *lu)
  * disabled.
  */
 
-void ssl_set_sig_mask(uint32_t *pmask_a, SSL *s, int op)
+void __cdecl ssl_set_sig_mask(uint32_t *pmask_a, SSL *s, int op)
 {
     const uint16_t *sigalgs;
     size_t i, sigalgslen;
@@ -1662,7 +1662,7 @@ void ssl_set_sig_mask(uint32_t *pmask_a, SSL *s, int op)
     *pmask_a |= disabled_mask;
 }
 
-int tls12_copy_sigalgs(SSL *s, WPACKET *pkt,
+int __cdecl tls12_copy_sigalgs(SSL *s, WPACKET *pkt,
                        const uint16_t *psig, size_t psiglen)
 {
     size_t i;
@@ -1763,7 +1763,7 @@ static int tls1_set_shared_sigalgs(SSL *s)
     return 1;
 }
 
-int tls1_save_u16(PACKET *pkt, uint16_t **pdest, size_t *pdestlen)
+int __cdecl tls1_save_u16(PACKET *pkt, uint16_t **pdest, size_t *pdestlen)
 {
     unsigned int stmp;
     size_t size, i;
@@ -1796,7 +1796,7 @@ int tls1_save_u16(PACKET *pkt, uint16_t **pdest, size_t *pdestlen)
     return 1;
 }
 
-int tls1_save_sigalgs(SSL *s, PACKET *pkt, int cert)
+int __cdecl tls1_save_sigalgs(SSL *s, PACKET *pkt, int cert)
 {
     /* Extension ignored for inappropriate versions */
     if (!SSL_USE_SIGALGS(s))
@@ -1816,7 +1816,7 @@ int tls1_save_sigalgs(SSL *s, PACKET *pkt, int cert)
 
 /* Set preferred digest for each key type */
 
-int tls1_process_sigalgs(SSL *s)
+int __cdecl tls1_process_sigalgs(SSL *s)
 {
     size_t i;
     uint32_t *pvalid = s->s3->tmp.valid_flags;
@@ -1991,7 +1991,7 @@ static int sig_cb(const char *elem, int len, void *arg)
  * Set supported signature algorithms based on a colon separated list of the
  * form sig+hash e.g. RSA+SHA512:DSA+SHA512
  */
-int tls1_set_sigalgs_list(CERT *c, const char *str, int client)
+int __cdecl tls1_set_sigalgs_list(CERT *c, const char *str, int client)
 {
     sig_cb_st sig;
     sig.sigalgcnt = 0;
@@ -2002,7 +2002,7 @@ int tls1_set_sigalgs_list(CERT *c, const char *str, int client)
     return tls1_set_raw_sigalgs(c, sig.sigalgs, sig.sigalgcnt, client);
 }
 
-int tls1_set_raw_sigalgs(CERT *c, const uint16_t *psigs, size_t salglen,
+int __cdecl tls1_set_raw_sigalgs(CERT *c, const uint16_t *psigs, size_t salglen,
                      int client)
 {
     uint16_t *sigalgs;
@@ -2026,7 +2026,7 @@ int tls1_set_raw_sigalgs(CERT *c, const uint16_t *psigs, size_t salglen,
     return 1;
 }
 
-int tls1_set_sigalgs(CERT *c, const int *psig_nids, size_t salglen, int client)
+int __cdecl tls1_set_sigalgs(CERT *c, const int *psig_nids, size_t salglen, int client)
 {
     uint16_t *sigalgs, *sptr;
     size_t i;
@@ -2134,7 +2134,7 @@ static int ssl_check_ca_name(STACK_OF(X509_NAME) *names, X509 *x)
          (CERT_PKEY_VALID_FLAGS|CERT_PKEY_CA_SIGNATURE|CERT_PKEY_CA_PARAM \
          | CERT_PKEY_ISSUER_NAME|CERT_PKEY_CERT_TYPE)
 
-int tls1_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain,
+int __cdecl tls1_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain,
                      int idx)
 {
     int i;
@@ -2386,7 +2386,7 @@ int tls1_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain,
 }
 
 /* Set validity of certificates in an SSL structure */
-void tls1_set_cert_validity(SSL *s)
+void __cdecl tls1_set_cert_validity(SSL *s)
 {
     tls1_check_chain(s, NULL, NULL, NULL, SSL_PKEY_RSA);
     tls1_check_chain(s, NULL, NULL, NULL, SSL_PKEY_RSA_PSS_SIGN);
@@ -2406,7 +2406,7 @@ int SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain)
 }
 
 #ifndef OPENSSL_NO_DH
-DH *ssl_get_auto_dh(SSL *s)
+DH * __cdecl ssl_get_auto_dh(SSL *s)
 {
     int dh_secbits = 80;
     if (s->cert->dh_tmp_auto == 2)
@@ -2488,7 +2488,7 @@ static int ssl_security_cert_sig(SSL *s, SSL_CTX *ctx, X509 *x, int op)
         return ssl_ctx_security(ctx, op, secbits, nid, x);
 }
 
-int ssl_security_cert(SSL *s, SSL_CTX *ctx, X509 *x, int vfy, int is_ee)
+int __cdecl ssl_security_cert(SSL *s, SSL_CTX *ctx, X509 *x, int vfy, int is_ee)
 {
     if (vfy)
         vfy = SSL_SECOP_PEER;
@@ -2510,7 +2510,7 @@ int ssl_security_cert(SSL *s, SSL_CTX *ctx, X509 *x, int vfy, int is_ee)
  * one to the peer. Return values: 1 if ok otherwise error code to use
  */
 
-int ssl_security_cert_chain(SSL *s, STACK_OF(X509) *sk, X509 *x, int vfy)
+int __cdecl ssl_security_cert_chain(SSL *s, STACK_OF(X509) *sk, X509 *x, int vfy)
 {
     int rv, start_idx, i;
     if (x == NULL) {
@@ -2703,7 +2703,7 @@ static const SIGALG_LOOKUP *find_sig_alg(SSL *s, X509 *x, EVP_PKEY *pkey)
  * a fatal error: we will either try another certificate or not present one
  * to the server. In this case no error is set.
  */
-int tls_choose_sigalg(SSL *s, int fatalerrs)
+int __cdecl tls_choose_sigalg(SSL *s, int fatalerrs)
 {
     const SIGALG_LOOKUP *lu = NULL;
     int sig_idx = -1;
@@ -2857,7 +2857,7 @@ int SSL_set_tlsext_max_fragment_length(SSL *ssl, uint8_t mode)
     return 1;
 }
 
-uint8_t SSL_SESSION_get_max_fragment_length(const SSL_SESSION *session)
+uint8_t __cdecl SSL_SESSION_get_max_fragment_length(const SSL_SESSION *session)
 {
     return session->ext.max_fragment_len_mode;
 }

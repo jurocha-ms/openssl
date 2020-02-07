@@ -19,7 +19,7 @@ int do_server(int *accept_sock, const char *host, const char *port,
               int family, int type, int protocol, do_server_cb cb,
               unsigned char *context, int naccept, BIO *bio_s_out);
 
-int verify_callback(int ok, X509_STORE_CTX *ctx);
+int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx);
 
 int set_cert_stuff(SSL_CTX *ctx, char *cert_file, char *key_file);
 int set_cert_key_stuff(SSL_CTX *ctx, X509 *cert, EVP_PKEY *key,
@@ -36,7 +36,7 @@ int should_retry(int i);
 long __cdecl bio_dump_callback(BIO *bio, int cmd, const char *argp,
                        int argi, long argl, long ret);
 
-void apps_ssl_info_callback(const SSL *s, int where, int ret);
+void __cdecl apps_ssl_info_callback(const SSL *s, int where, int ret);
 void msg_cb(int write_p, int version, int content_type, const void *buf,
             size_t len, SSL *ssl, void *arg);
 void tlsext_cb(SSL *s, int client_server, int type, const unsigned char *data,

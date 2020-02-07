@@ -89,7 +89,7 @@ static void ctx_data_free_data(CTX_DATA *ctx_data)
 
 static int ex_data_idx;
 
-static void info_cb(const SSL *s, int where, int ret)
+static void __cdecl info_cb(const SSL *s, int where, int ret)
 {
     if (where & SSL_CB_ALERT) {
         HANDSHAKE_EX_DATA *ex_data =

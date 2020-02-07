@@ -843,7 +843,7 @@ int ssl3_do_compress(SSL *ssl, SSL3_RECORD *wr)
  *   -1: if the record's padding is invalid or, if sending, an internal error
  *       occurred.
  */
-int ssl3_enc(SSL *s, SSL3_RECORD *inrecs, size_t n_recs, int sending)
+int __cdecl ssl3_enc(SSL *s, SSL3_RECORD *inrecs, size_t n_recs, int sending)
 {
     SSL3_RECORD *rec;
     EVP_CIPHER_CTX *ds;
@@ -934,7 +934,7 @@ int ssl3_enc(SSL *s, SSL3_RECORD *inrecs, size_t n_recs, int sending)
  *   -1: if the record's padding/AEAD-authenticator is invalid or, if sending,
  *       an internal error occurred.
  */
-int tls1_enc(SSL *s, SSL3_RECORD *recs, size_t n_recs, int sending)
+int __cdecl tls1_enc(SSL *s, SSL3_RECORD *recs, size_t n_recs, int sending)
 {
     EVP_CIPHER_CTX *ds;
     size_t reclen[SSL_MAX_PIPELINES];
@@ -1181,7 +1181,7 @@ int tls1_enc(SSL *s, SSL3_RECORD *recs, size_t n_recs, int sending)
     return ret;
 }
 
-int n_ssl3_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int sending)
+int __cdecl n_ssl3_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int sending)
 {
     unsigned char *mac_sec, *seq;
     const EVP_MD_CTX *hash;
@@ -1277,7 +1277,7 @@ int n_ssl3_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int sending)
     return 1;
 }
 
-int tls1_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int sending)
+int __cdecl tls1_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int sending)
 {
     unsigned char *seq;
     EVP_MD_CTX *hash;
@@ -2031,7 +2031,7 @@ int dtls1_get_record(SSL *s)
 
 }
 
-int dtls_buffer_listen_record(SSL *s, size_t len, unsigned char *seq, size_t off)
+int __cdecl dtls_buffer_listen_record(SSL *s, size_t len, unsigned char *seq, size_t off)
 {
     SSL3_RECORD *rr;
 

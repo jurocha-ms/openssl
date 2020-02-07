@@ -847,7 +847,7 @@ static void freeandcopy(char **dest, const char *source)
         *dest = OPENSSL_strdup(source);
 }
 
-static int new_session_cb(SSL *s, SSL_SESSION *sess)
+static int __cdecl new_session_cb(SSL *s, SSL_SESSION *sess)
 {
 
     if (sess_out != NULL) {

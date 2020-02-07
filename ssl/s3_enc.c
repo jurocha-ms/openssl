@@ -87,7 +87,7 @@ static int ssl3_generate_key_block(SSL *s, unsigned char *km, int num)
     return ret;
 }
 
-int ssl3_change_cipher_state(SSL *s, int which)
+int __cdecl ssl3_change_cipher_state(SSL *s, int which)
 {
     unsigned char *p, *mac_secret;
     unsigned char *ms, *key, *iv;
@@ -242,7 +242,7 @@ int ssl3_change_cipher_state(SSL *s, int which)
     return 0;
 }
 
-int ssl3_setup_key_block(SSL *s)
+int __cdecl ssl3_setup_key_block(SSL *s)
 {
     unsigned char *p;
     const EVP_CIPHER *c;
@@ -310,14 +310,14 @@ int ssl3_setup_key_block(SSL *s)
     return ret;
 }
 
-void ssl3_cleanup_key_block(SSL *s)
+void __cdecl ssl3_cleanup_key_block(SSL *s)
 {
     OPENSSL_clear_free(s->s3->tmp.key_block, s->s3->tmp.key_block_length);
     s->s3->tmp.key_block = NULL;
     s->s3->tmp.key_block_length = 0;
 }
 
-int ssl3_init_finished_mac(SSL *s)
+int __cdecl ssl3_init_finished_mac(SSL *s)
 {
     BIO *buf = BIO_new(BIO_s_mem());
 
@@ -337,7 +337,7 @@ int ssl3_init_finished_mac(SSL *s)
  * together.
  */
 
-void ssl3_free_digest_list(SSL *s)
+void __cdecl ssl3_free_digest_list(SSL *s)
 {
     BIO_free(s->s3->handshake_buffer);
     s->s3->handshake_buffer = NULL;
@@ -345,7 +345,7 @@ void ssl3_free_digest_list(SSL *s)
     s->s3->handshake_dgst = NULL;
 }
 
-int ssl3_finish_mac(SSL *s, const unsigned char *buf, size_t len)
+int __cdecl ssl3_finish_mac(SSL *s, const unsigned char *buf, size_t len)
 {
     int ret;
 
@@ -373,7 +373,7 @@ int ssl3_finish_mac(SSL *s, const unsigned char *buf, size_t len)
     return 1;
 }
 
-int ssl3_digest_cached_records(SSL *s, int keep)
+int __cdecl ssl3_digest_cached_records(SSL *s, int keep)
 {
     const EVP_MD *md;
     long hdatalen;
@@ -410,7 +410,7 @@ int ssl3_digest_cached_records(SSL *s, int keep)
     return 1;
 }
 
-size_t ssl3_final_finish_mac(SSL *s, const char *sender, size_t len,
+size_t __cdecl ssl3_final_finish_mac(SSL *s, const char *sender, size_t len,
                              unsigned char *p)
 {
     int ret;
@@ -464,7 +464,7 @@ size_t ssl3_final_finish_mac(SSL *s, const char *sender, size_t len,
     return ret;
 }
 
-int ssl3_generate_master_secret(SSL *s, unsigned char *out, unsigned char *p,
+int __cdecl ssl3_generate_master_secret(SSL *s, unsigned char *out, unsigned char *p,
                                 size_t len, size_t *secret_size)
 {
     static const unsigned char *salt[3] = {
@@ -520,7 +520,7 @@ int ssl3_generate_master_secret(SSL *s, unsigned char *out, unsigned char *p,
     return ret;
 }
 
-int ssl3_alert_code(int code)
+int __cdecl ssl3_alert_code(int code)
 {
     switch (code) {
     case SSL_AD_CLOSE_NOTIFY:

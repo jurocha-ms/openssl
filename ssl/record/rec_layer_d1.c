@@ -336,13 +336,13 @@ int dtls1_process_buffered_records(SSL *s)
  *     Application data protocol
  *             none of our business
  */
-int dtls1_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
+int __cdecl dtls1_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
                      size_t len, int peek, size_t *readbytes)
 {
     int i, j, iret;
     size_t n;
     SSL3_RECORD *rr;
-    void (*cb) (const SSL *ssl, int type2, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type2, int val) = NULL;
 
     if (!SSL3_BUFFER_is_initialised(&s->rlayer.rbuf)) {
         /* Not initialized yet */
@@ -779,7 +779,7 @@ int dtls1_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
  * Call this to write data in records of type 'type' It will return <= 0 if
  * not all data has been sent or non-blocking IO.
  */
-int dtls1_write_bytes(SSL *s, int type, const void *buf, size_t len,
+int __cdecl dtls1_write_bytes(SSL *s, int type, const void *buf, size_t len,
                       size_t *written)
 {
     int i;
@@ -794,7 +794,7 @@ int dtls1_write_bytes(SSL *s, int type, const void *buf, size_t len,
     return i;
 }
 
-int do_dtls1_write(SSL *s, int type, const unsigned char *buf,
+int __cdecl do_dtls1_write(SSL *s, int type, const unsigned char *buf,
                    size_t len, int create_empty_fragment, size_t *written)
 {
     unsigned char *p, *pseq;
@@ -1031,7 +1031,7 @@ DTLS1_BITMAP *dtls1_get_bitmap(SSL *s, SSL3_RECORD *rr,
     return NULL;
 }
 
-void dtls1_reset_seq_numbers(SSL *s, int rw)
+void __cdecl dtls1_reset_seq_numbers(SSL *s, int rw)
 {
     unsigned char *seq;
     unsigned int seq_bytes = sizeof(s->rlayer.read_sequence);

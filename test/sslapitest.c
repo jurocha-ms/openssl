@@ -865,7 +865,7 @@ static int test_tlsext_status_type(void)
 #if !defined(OPENSSL_NO_TLS1_3) || !defined(OPENSSL_NO_TLS1_2)
 static int new_called, remove_called, get_called;
 
-static int new_session_cb(SSL *ssl, SSL_SESSION *sess)
+static int __cdecl new_session_cb(SSL *ssl, SSL_SESSION *sess)
 {
     new_called++;
     /*
@@ -876,14 +876,14 @@ static int new_session_cb(SSL *ssl, SSL_SESSION *sess)
     return 1;
 }
 
-static void remove_session_cb(SSL_CTX *ctx, SSL_SESSION *sess)
+static void __cdecl remove_session_cb(SSL_CTX *ctx, SSL_SESSION *sess)
 {
     remove_called++;
 }
 
 static SSL_SESSION *get_sess_val = NULL;
 
-static SSL_SESSION *get_session_cb(SSL *ssl, const unsigned char *id, int len,
+static SSL_SESSION * __cdecl get_session_cb(SSL *ssl, const unsigned char *id, int len,
                                    int *copy)
 {
     get_called++;
@@ -1222,7 +1222,7 @@ static int test_session_with_both_cache(void)
 static SSL_SESSION *sesscache[6];
 static int do_cache;
 
-static int new_cachesession_cb(SSL *ssl, SSL_SESSION *sess)
+static int __cdecl new_cachesession_cb(SSL *ssl, SSL_SESSION *sess)
 {
     if (do_cache) {
         sesscache[new_called] = sess;
@@ -5064,7 +5064,7 @@ static struct info_cb_states_st {
     }
 };
 
-static void sslapi_info_callback(const SSL *s, int where, int ret)
+static void __cdecl sslapi_info_callback(const SSL *s, int where, int ret)
 {
     struct info_cb_states_st *state = info_cb_states[info_cb_offset];
 
@@ -5977,7 +5977,7 @@ static int test_cert_cb(int tst)
     return testresult;
 }
 
-static int client_cert_cb(SSL *ssl, X509 **x509, EVP_PKEY **pkey)
+static int __cdecl client_cert_cb(SSL *ssl, X509 **x509, EVP_PKEY **pkey)
 {
     X509 *xcert, *peer;
     EVP_PKEY *privpkey;
@@ -6017,7 +6017,7 @@ static int client_cert_cb(SSL *ssl, X509 **x509, EVP_PKEY **pkey)
     return 1;
 }
 
-static int verify_cb(int preverify_ok, X509_STORE_CTX *x509_ctx)
+static int __cdecl verify_cb(int preverify_ok, X509_STORE_CTX *x509_ctx)
 {
     return 1;
 }

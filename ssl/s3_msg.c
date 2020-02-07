@@ -36,7 +36,7 @@ int ssl3_do_change_cipher_spec(SSL *s)
     return 1;
 }
 
-int ssl3_send_alert(SSL *s, int level, int desc)
+int __cdecl ssl3_send_alert(SSL *s, int level, int desc)
 {
     /* Map tls/ssl alert value to correct one */
     if (SSL_TREAT_AS_TLS13(s))
@@ -66,11 +66,11 @@ int ssl3_send_alert(SSL *s, int level, int desc)
     return -1;
 }
 
-int ssl3_dispatch_alert(SSL *s)
+int __cdecl ssl3_dispatch_alert(SSL *s)
 {
     int i, j;
     size_t alertlen;
-    void (*cb) (const SSL *ssl, int type, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type, int val) = NULL;
     size_t written;
 
     s->s3->alert_dispatch = 0;

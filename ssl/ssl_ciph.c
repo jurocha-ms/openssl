@@ -354,7 +354,7 @@ static uint32_t disabled_mac_mask;
 static uint32_t disabled_mkey_mask;
 static uint32_t disabled_auth_mask;
 
-int ssl_load_ciphers(void)
+int __cdecl ssl_load_ciphers(void)
 {
     size_t i;
     const ssl_cipher_table *t;
@@ -483,7 +483,7 @@ static int load_builtin_compressions(void)
 }
 #endif
 
-int ssl_cipher_get_evp(const SSL_SESSION *s, const EVP_CIPHER **enc,
+int __cdecl ssl_cipher_get_evp(const SSL_SESSION *s, const EVP_CIPHER **enc,
                        const EVP_MD **md, int *mac_pkey_type,
                        size_t *mac_secret_size, SSL_COMP **comp, int use_etm)
 {
@@ -583,7 +583,7 @@ int ssl_cipher_get_evp(const SSL_SESSION *s, const EVP_CIPHER **enc,
     }
 }
 
-const EVP_MD *ssl_md(int idx)
+const EVP_MD * __cdecl ssl_md(int idx)
 {
     idx &= SSL_HANDSHAKE_MAC_MASK;
     if (idx < 0 || idx >= SSL_MD_NUM_IDX)
@@ -591,12 +591,12 @@ const EVP_MD *ssl_md(int idx)
     return ssl_digest_methods[idx];
 }
 
-const EVP_MD *ssl_handshake_md(SSL *s)
+const EVP_MD * __cdecl ssl_handshake_md(SSL *s)
 {
     return ssl_md(ssl_get_algorithm2(s));
 }
 
-const EVP_MD *ssl_prf_md(SSL *s)
+const EVP_MD * __cdecl ssl_prf_md(SSL *s)
 {
     return ssl_md(ssl_get_algorithm2(s) >> TLS1_PRF_DGST_SHIFT);
 }
@@ -1373,7 +1373,7 @@ static int update_cipher_list(STACK_OF(SSL_CIPHER) **cipher_list,
     return 1;
 }
 
-int SSL_CTX_set_ciphersuites(SSL_CTX *ctx, const char *str)
+int __cdecl SSL_CTX_set_ciphersuites(SSL_CTX *ctx, const char *str)
 {
     int ret = set_ciphersuites(&(ctx->tls13_ciphersuites), str);
 
@@ -1384,7 +1384,7 @@ int SSL_CTX_set_ciphersuites(SSL_CTX *ctx, const char *str)
     return ret;
 }
 
-int SSL_set_ciphersuites(SSL *s, const char *str)
+int __cdecl SSL_set_ciphersuites(SSL *s, const char *str)
 {
     STACK_OF(SSL_CIPHER) *cipher_list;
     int ret = set_ciphersuites(&(s->tls13_ciphersuites), str);
@@ -1400,7 +1400,7 @@ int SSL_set_ciphersuites(SSL *s, const char *str)
     return ret;
 }
 
-STACK_OF(SSL_CIPHER) *ssl_create_cipher_list(const SSL_METHOD *ssl_method,
+STACK_OF(SSL_CIPHER) * __cdecl ssl_create_cipher_list(const SSL_METHOD *ssl_method,
                                              STACK_OF(SSL_CIPHER) *tls13_ciphersuites,
                                              STACK_OF(SSL_CIPHER) **cipher_list,
                                              STACK_OF(SSL_CIPHER) **cipher_list_by_id,
@@ -1634,7 +1634,7 @@ STACK_OF(SSL_CIPHER) *ssl_create_cipher_list(const SSL_METHOD *ssl_method,
     return cipherstack;
 }
 
-char *SSL_CIPHER_description(const SSL_CIPHER *cipher, char *buf, int len)
+char * __cdecl SSL_CIPHER_description(const SSL_CIPHER *cipher, char *buf, int len)
 {
     const char *ver;
     const char *kx, *au, *enc, *mac;
@@ -1834,7 +1834,7 @@ char *SSL_CIPHER_description(const SSL_CIPHER *cipher, char *buf, int len)
     return buf;
 }
 
-const char *SSL_CIPHER_get_version(const SSL_CIPHER *c)
+const char * __cdecl SSL_CIPHER_get_version(const SSL_CIPHER *c)
 {
     if (c == NULL)
         return "(NONE)";
@@ -1849,7 +1849,7 @@ const char *SSL_CIPHER_get_version(const SSL_CIPHER *c)
 }
 
 /* return the actual cipher being used */
-const char *SSL_CIPHER_get_name(const SSL_CIPHER *c)
+const char * __cdecl SSL_CIPHER_get_name(const SSL_CIPHER *c)
 {
     if (c != NULL)
         return c->name;
@@ -1857,7 +1857,7 @@ const char *SSL_CIPHER_get_name(const SSL_CIPHER *c)
 }
 
 /* return the actual cipher being used in RFC standard name */
-const char *SSL_CIPHER_standard_name(const SSL_CIPHER *c)
+const char * __cdecl SSL_CIPHER_standard_name(const SSL_CIPHER *c)
 {
     if (c != NULL)
         return c->stdname;
@@ -1865,7 +1865,7 @@ const char *SSL_CIPHER_standard_name(const SSL_CIPHER *c)
 }
 
 /* return the OpenSSL name based on given RFC standard name */
-const char *OPENSSL_cipher_name(const char *stdname)
+const char * __cdecl OPENSSL_cipher_name(const char *stdname)
 {
     const SSL_CIPHER *c;
 
@@ -1876,7 +1876,7 @@ const char *OPENSSL_cipher_name(const char *stdname)
 }
 
 /* number of bits for symmetric cipher */
-int SSL_CIPHER_get_bits(const SSL_CIPHER *c, int *alg_bits)
+int __cdecl SSL_CIPHER_get_bits(const SSL_CIPHER *c, int *alg_bits)
 {
     int ret = 0;
 
@@ -1888,17 +1888,17 @@ int SSL_CIPHER_get_bits(const SSL_CIPHER *c, int *alg_bits)
     return ret;
 }
 
-uint32_t SSL_CIPHER_get_id(const SSL_CIPHER *c)
+uint32_t __cdecl SSL_CIPHER_get_id(const SSL_CIPHER *c)
 {
     return c->id;
 }
 
-uint16_t SSL_CIPHER_get_protocol_id(const SSL_CIPHER *c)
+uint16_t __cdecl SSL_CIPHER_get_protocol_id(const SSL_CIPHER *c)
 {
     return c->id & 0xFFFF;
 }
 
-SSL_COMP *ssl3_comp_find(STACK_OF(SSL_COMP) *sk, int n)
+SSL_COMP * __cdecl ssl3_comp_find(STACK_OF(SSL_COMP) *sk, int n)
 {
     SSL_COMP *ctmp;
     int i, nn;
@@ -1915,7 +1915,7 @@ SSL_COMP *ssl3_comp_find(STACK_OF(SSL_COMP) *sk, int n)
 }
 
 #ifdef OPENSSL_NO_COMP
-STACK_OF(SSL_COMP) *SSL_COMP_get_compression_methods(void)
+STACK_OF(SSL_COMP) * __cdecl SSL_COMP_get_compression_methods(void)
 {
     return NULL;
 }
@@ -1926,19 +1926,19 @@ STACK_OF(SSL_COMP) *SSL_COMP_set0_compression_methods(STACK_OF(SSL_COMP)
     return meths;
 }
 
-int SSL_COMP_add_compression_method(int id, COMP_METHOD *cm)
+int __cdecl SSL_COMP_add_compression_method(int id, COMP_METHOD *cm)
 {
     return 1;
 }
 
 #else
-STACK_OF(SSL_COMP) *SSL_COMP_get_compression_methods(void)
+STACK_OF(SSL_COMP) * __cdecl SSL_COMP_get_compression_methods(void)
 {
     load_builtin_compressions();
     return ssl_comp_methods;
 }
 
-STACK_OF(SSL_COMP) *SSL_COMP_set0_compression_methods(STACK_OF(SSL_COMP)
+STACK_OF(SSL_COMP) * __cdecl SSL_COMP_set0_compression_methods(STACK_OF(SSL_COMP)
                                                       *meths)
 {
     STACK_OF(SSL_COMP) *old_meths = ssl_comp_methods;
@@ -1951,14 +1951,14 @@ static void __cdecl cmeth_free(SSL_COMP *cm)
     OPENSSL_free(cm);
 }
 
-void ssl_comp_free_compression_methods_int(void)
+void __cdecl ssl_comp_free_compression_methods_int(void)
 {
     STACK_OF(SSL_COMP) *old_meths = ssl_comp_methods;
     ssl_comp_methods = NULL;
     sk_SSL_COMP_pop_free(old_meths, cmeth_free);
 }
 
-int SSL_COMP_add_compression_method(int id, COMP_METHOD *cm)
+int __cdecl SSL_COMP_add_compression_method(int id, COMP_METHOD *cm)
 {
     SSL_COMP *comp;
 
@@ -2008,7 +2008,7 @@ int SSL_COMP_add_compression_method(int id, COMP_METHOD *cm)
 }
 #endif
 
-const char *SSL_COMP_get_name(const COMP_METHOD *comp)
+const char * __cdecl SSL_COMP_get_name(const COMP_METHOD *comp)
 {
 #ifndef OPENSSL_NO_COMP
     return comp ? COMP_get_name(comp) : NULL;
@@ -2017,7 +2017,7 @@ const char *SSL_COMP_get_name(const COMP_METHOD *comp)
 #endif
 }
 
-const char *SSL_COMP_get0_name(const SSL_COMP *comp)
+const char * __cdecl SSL_COMP_get0_name(const SSL_COMP *comp)
 {
 #ifndef OPENSSL_NO_COMP
     return comp->name;
@@ -2026,7 +2026,7 @@ const char *SSL_COMP_get0_name(const SSL_COMP *comp)
 #endif
 }
 
-int SSL_COMP_get_id(const SSL_COMP *comp)
+int __cdecl SSL_COMP_get_id(const SSL_COMP *comp)
 {
 #ifndef OPENSSL_NO_COMP
     return comp->id;
@@ -2035,7 +2035,7 @@ int SSL_COMP_get_id(const SSL_COMP *comp)
 #endif
 }
 
-const SSL_CIPHER *ssl_get_cipher_by_char(SSL *ssl, const unsigned char *ptr,
+const SSL_CIPHER * __cdecl ssl_get_cipher_by_char(SSL *ssl, const unsigned char *ptr,
                                          int all)
 {
     const SSL_CIPHER *c = ssl->method->get_cipher_by_char(ptr);
@@ -2045,12 +2045,12 @@ const SSL_CIPHER *ssl_get_cipher_by_char(SSL *ssl, const unsigned char *ptr,
     return c;
 }
 
-const SSL_CIPHER *SSL_CIPHER_find(SSL *ssl, const unsigned char *ptr)
+const SSL_CIPHER * __cdecl SSL_CIPHER_find(SSL *ssl, const unsigned char *ptr)
 {
     return ssl->method->get_cipher_by_char(ptr);
 }
 
-int SSL_CIPHER_get_cipher_nid(const SSL_CIPHER *c)
+int __cdecl SSL_CIPHER_get_cipher_nid(const SSL_CIPHER *c)
 {
     int i;
     if (c == NULL)
@@ -2061,7 +2061,7 @@ int SSL_CIPHER_get_cipher_nid(const SSL_CIPHER *c)
     return ssl_cipher_table_cipher[i].nid;
 }
 
-int SSL_CIPHER_get_digest_nid(const SSL_CIPHER *c)
+int __cdecl SSL_CIPHER_get_digest_nid(const SSL_CIPHER *c)
 {
     int i = ssl_cipher_info_lookup(ssl_cipher_table_mac, c->algorithm_mac);
 
@@ -2070,7 +2070,7 @@ int SSL_CIPHER_get_digest_nid(const SSL_CIPHER *c)
     return ssl_cipher_table_mac[i].nid;
 }
 
-int SSL_CIPHER_get_kx_nid(const SSL_CIPHER *c)
+int __cdecl SSL_CIPHER_get_kx_nid(const SSL_CIPHER *c)
 {
     int i = ssl_cipher_info_lookup(ssl_cipher_table_kx, c->algorithm_mkey);
 
@@ -2079,7 +2079,7 @@ int SSL_CIPHER_get_kx_nid(const SSL_CIPHER *c)
     return ssl_cipher_table_kx[i].nid;
 }
 
-int SSL_CIPHER_get_auth_nid(const SSL_CIPHER *c)
+int __cdecl SSL_CIPHER_get_auth_nid(const SSL_CIPHER *c)
 {
     int i = ssl_cipher_info_lookup(ssl_cipher_table_auth, c->algorithm_auth);
 
@@ -2088,7 +2088,7 @@ int SSL_CIPHER_get_auth_nid(const SSL_CIPHER *c)
     return ssl_cipher_table_auth[i].nid;
 }
 
-const EVP_MD *SSL_CIPHER_get_handshake_digest(const SSL_CIPHER *c)
+const EVP_MD * __cdecl SSL_CIPHER_get_handshake_digest(const SSL_CIPHER *c)
 {
     int idx = c->algorithm2 & SSL_HANDSHAKE_MAC_MASK;
 
@@ -2097,12 +2097,12 @@ const EVP_MD *SSL_CIPHER_get_handshake_digest(const SSL_CIPHER *c)
     return ssl_digest_methods[idx];
 }
 
-int SSL_CIPHER_is_aead(const SSL_CIPHER *c)
+int __cdecl SSL_CIPHER_is_aead(const SSL_CIPHER *c)
 {
     return (c->algorithm_mac & SSL_AEAD) ? 1 : 0;
 }
 
-int ssl_cipher_get_overhead(const SSL_CIPHER *c, size_t *mac_overhead,
+int __cdecl ssl_cipher_get_overhead(const SSL_CIPHER *c, size_t *mac_overhead,
                             size_t *int_overhead, size_t *blocksize,
                             size_t *ext_overhead)
 {
@@ -2154,7 +2154,7 @@ int ssl_cipher_get_overhead(const SSL_CIPHER *c, size_t *mac_overhead,
     return 1;
 }
 
-int ssl_cert_is_disabled(size_t idx)
+int __cdecl ssl_cert_is_disabled(size_t idx)
 {
     const SSL_CERT_LOOKUP *cl = ssl_cert_lookup_by_idx(idx);
 

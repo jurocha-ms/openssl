@@ -66,7 +66,7 @@
 static int build_chain(X509_STORE_CTX *ctx);
 static int verify_chain(X509_STORE_CTX *ctx);
 static int dane_verify(X509_STORE_CTX *ctx);
-static int null_callback(int ok, X509_STORE_CTX *e);
+static int __cdecl null_callback(int ok, X509_STORE_CTX *e);
 static int check_issued(X509_STORE_CTX *ctx, X509 *x, X509 *issuer);
 static X509 *find_issuer(X509_STORE_CTX *ctx, STACK_OF(X509) *sk, X509 *x);
 static int check_chain_extensions(X509_STORE_CTX *ctx);
@@ -99,7 +99,7 @@ static int check_crl_chain(X509_STORE_CTX *ctx,
 
 static int internal_verify(X509_STORE_CTX *ctx);
 
-static int null_callback(int ok, X509_STORE_CTX *e)
+static int __cdecl null_callback(int ok, X509_STORE_CTX *e)
 {
     return ok;
 }

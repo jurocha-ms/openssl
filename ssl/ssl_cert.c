@@ -24,7 +24,7 @@
 #include "ssl_cert_table.h"
 #include "internal/thread_once.h"
 
-static int ssl_security_default_callback(const SSL *s, const SSL_CTX *ctx,
+static int __cdecl ssl_security_default_callback(const SSL *s, const SSL_CTX *ctx,
                                          int op, int bits, int nid, void *other,
                                          void *ex);
 
@@ -39,7 +39,7 @@ DEFINE_RUN_ONCE_STATIC(ssl_x509_store_ctx_init)
     return ssl_x509_store_ctx_idx >= 0;
 }
 
-int SSL_get_ex_data_X509_STORE_CTX_idx(void)
+int __cdecl SSL_get_ex_data_X509_STORE_CTX_idx(void)
 {
 
     if (!RUN_ONCE(&ssl_x509_store_ctx_once, ssl_x509_store_ctx_init))
@@ -47,7 +47,7 @@ int SSL_get_ex_data_X509_STORE_CTX_idx(void)
     return ssl_x509_store_ctx_idx;
 }
 
-CERT *ssl_cert_new(void)
+CERT * __cdecl ssl_cert_new(void)
 {
     CERT *ret = OPENSSL_zalloc(sizeof(*ret));
 
@@ -71,7 +71,7 @@ CERT *ssl_cert_new(void)
     return ret;
 }
 
-CERT *ssl_cert_dup(CERT *cert)
+CERT * __cdecl ssl_cert_dup(CERT *cert)
 {
     CERT *ret = OPENSSL_zalloc(sizeof(*ret));
     int i;
@@ -200,7 +200,7 @@ CERT *ssl_cert_dup(CERT *cert)
 
 /* Free up and clear all certificates and chains */
 
-void ssl_cert_clear_certs(CERT *c)
+void __cdecl ssl_cert_clear_certs(CERT *c)
 {
     int i;
     if (c == NULL)
@@ -219,7 +219,7 @@ void ssl_cert_clear_certs(CERT *c)
     }
 }
 
-void ssl_cert_free(CERT *c)
+void __cdecl ssl_cert_free(CERT *c)
 {
     int i;
 
@@ -249,7 +249,7 @@ void ssl_cert_free(CERT *c)
     OPENSSL_free(c);
 }
 
-int ssl_cert_set0_chain(SSL *s, SSL_CTX *ctx, STACK_OF(X509) *chain)
+int __cdecl ssl_cert_set0_chain(SSL *s, SSL_CTX *ctx, STACK_OF(X509) *chain)
 {
     int i, r;
     CERT_PKEY *cpk = s ? s->cert->key : ctx->cert->key;
@@ -267,7 +267,7 @@ int ssl_cert_set0_chain(SSL *s, SSL_CTX *ctx, STACK_OF(X509) *chain)
     return 1;
 }
 
-int ssl_cert_set1_chain(SSL *s, SSL_CTX *ctx, STACK_OF(X509) *chain)
+int __cdecl ssl_cert_set1_chain(SSL *s, SSL_CTX *ctx, STACK_OF(X509) *chain)
 {
     STACK_OF(X509) *dchain;
     if (!chain)
@@ -282,7 +282,7 @@ int ssl_cert_set1_chain(SSL *s, SSL_CTX *ctx, STACK_OF(X509) *chain)
     return 1;
 }
 
-int ssl_cert_add0_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x)
+int __cdecl ssl_cert_add0_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x)
 {
     int r;
     CERT_PKEY *cpk = s ? s->cert->key : ctx->cert->key;
@@ -300,7 +300,7 @@ int ssl_cert_add0_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x)
     return 1;
 }
 
-int ssl_cert_add1_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x)
+int __cdecl ssl_cert_add1_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x)
 {
     if (!ssl_cert_add0_chain_cert(s, ctx, x))
         return 0;
@@ -308,7 +308,7 @@ int ssl_cert_add1_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x)
     return 1;
 }
 
-int ssl_cert_select_current(CERT *c, X509 *x)
+int __cdecl ssl_cert_select_current(CERT *c, X509 *x)
 {
     int i;
     if (x == NULL)
@@ -331,7 +331,7 @@ int ssl_cert_select_current(CERT *c, X509 *x)
     return 0;
 }
 
-int ssl_cert_set_current(CERT *c, long op)
+int __cdecl ssl_cert_set_current(CERT *c, long op)
 {
     int i, idx;
     if (!c)
@@ -354,13 +354,13 @@ int ssl_cert_set_current(CERT *c, long op)
     return 0;
 }
 
-void ssl_cert_set_cert_cb(CERT *c, int (*cb) (SSL *ssl, void *arg), void *arg)
+void __cdecl ssl_cert_set_cert_cb(CERT *c, int (*cb) (SSL *ssl, void *arg), void *arg)
 {
     c->cert_cb = cb;
     c->cert_cb_arg = arg;
 }
 
-int ssl_verify_cert_chain(SSL *s, STACK_OF(X509) *sk)
+int __cdecl ssl_verify_cert_chain(SSL *s, STACK_OF(X509) *sk)
 {
     X509 *x;
     int i = 0;
@@ -452,7 +452,7 @@ static void set0_CA_list(STACK_OF(X509_NAME) **ca_list,
     *ca_list = name_list;
 }
 
-STACK_OF(X509_NAME) *SSL_dup_CA_list(const STACK_OF(X509_NAME) *sk)
+STACK_OF(X509_NAME) * __cdecl SSL_dup_CA_list(const STACK_OF(X509_NAME) *sk)
 {
     int i;
     const int num = sk_X509_NAME_num(sk);
@@ -476,47 +476,47 @@ STACK_OF(X509_NAME) *SSL_dup_CA_list(const STACK_OF(X509_NAME) *sk)
     return ret;
 }
 
-void SSL_set0_CA_list(SSL *s, STACK_OF(X509_NAME) *name_list)
+void __cdecl SSL_set0_CA_list(SSL *s, STACK_OF(X509_NAME) *name_list)
 {
     set0_CA_list(&s->ca_names, name_list);
 }
 
-void SSL_CTX_set0_CA_list(SSL_CTX *ctx, STACK_OF(X509_NAME) *name_list)
+void __cdecl SSL_CTX_set0_CA_list(SSL_CTX *ctx, STACK_OF(X509_NAME) *name_list)
 {
     set0_CA_list(&ctx->ca_names, name_list);
 }
 
-const STACK_OF(X509_NAME) *SSL_CTX_get0_CA_list(const SSL_CTX *ctx)
+const STACK_OF(X509_NAME) * __cdecl SSL_CTX_get0_CA_list(const SSL_CTX *ctx)
 {
     return ctx->ca_names;
 }
 
-const STACK_OF(X509_NAME) *SSL_get0_CA_list(const SSL *s)
+const STACK_OF(X509_NAME) * __cdecl SSL_get0_CA_list(const SSL *s)
 {
     return s->ca_names != NULL ? s->ca_names : s->ctx->ca_names;
 }
 
-void SSL_CTX_set_client_CA_list(SSL_CTX *ctx, STACK_OF(X509_NAME) *name_list)
+void __cdecl SSL_CTX_set_client_CA_list(SSL_CTX *ctx, STACK_OF(X509_NAME) *name_list)
 {
     set0_CA_list(&ctx->client_ca_names, name_list);
 }
 
-STACK_OF(X509_NAME) *SSL_CTX_get_client_CA_list(const SSL_CTX *ctx)
+STACK_OF(X509_NAME) * __cdecl SSL_CTX_get_client_CA_list(const SSL_CTX *ctx)
 {
     return ctx->client_ca_names;
 }
 
-void SSL_set_client_CA_list(SSL *s, STACK_OF(X509_NAME) *name_list)
+void __cdecl SSL_set_client_CA_list(SSL *s, STACK_OF(X509_NAME) *name_list)
 {
     set0_CA_list(&s->client_ca_names, name_list);
 }
 
-const STACK_OF(X509_NAME) *SSL_get0_peer_CA_list(const SSL *s)
+const STACK_OF(X509_NAME) * __cdecl SSL_get0_peer_CA_list(const SSL *s)
 {
     return s->s3 != NULL ? s->s3->tmp.peer_ca_names : NULL;
 }
 
-STACK_OF(X509_NAME) *SSL_get_client_CA_list(const SSL *s)
+STACK_OF(X509_NAME) * __cdecl SSL_get_client_CA_list(const SSL *s)
 {
     if (!s->server)
         return s->s3 != NULL ?  s->s3->tmp.peer_ca_names : NULL;
@@ -543,12 +543,12 @@ static int add_ca_name(STACK_OF(X509_NAME) **sk, const X509 *x)
     return 1;
 }
 
-int SSL_add1_to_CA_list(SSL *ssl, const X509 *x)
+int __cdecl SSL_add1_to_CA_list(SSL *ssl, const X509 *x)
 {
     return add_ca_name(&ssl->ca_names, x);
 }
 
-int SSL_CTX_add1_to_CA_list(SSL_CTX *ctx, const X509 *x)
+int __cdecl SSL_CTX_add1_to_CA_list(SSL_CTX *ctx, const X509 *x)
 {
     return add_ca_name(&ctx->ca_names, x);
 }
@@ -557,12 +557,12 @@ int SSL_CTX_add1_to_CA_list(SSL_CTX *ctx, const X509 *x)
  * The following two are older names are to be replaced with
  * SSL(_CTX)_add1_to_CA_list
  */
-int SSL_add_client_CA(SSL *ssl, X509 *x)
+int __cdecl SSL_add_client_CA(SSL *ssl, X509 *x)
 {
     return add_ca_name(&ssl->client_ca_names, x);
 }
 
-int SSL_CTX_add_client_CA(SSL_CTX *ctx, X509 *x)
+int __cdecl SSL_CTX_add_client_CA(SSL_CTX *ctx, X509 *x)
 {
     return add_ca_name(&ctx->client_ca_names, x);
 }
@@ -609,7 +609,7 @@ static unsigned long xname_hash(const X509_NAME *a)
  * \param file the file containing one or more certs.
  * \return a ::STACK containing the certs.
  */
-STACK_OF(X509_NAME) *SSL_load_client_CA_file(const char *file)
+STACK_OF(X509_NAME) * __cdecl SSL_load_client_CA_file(const char *file)
 {
     BIO *in = BIO_new(BIO_s_file());
     X509 *x = NULL;
@@ -675,7 +675,7 @@ STACK_OF(X509_NAME) *SSL_load_client_CA_file(const char *file)
  * certs may have been added to \c stack.
  */
 
-int SSL_add_file_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
+int __cdecl SSL_add_file_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
                                         const char *file)
 {
     BIO *in;
@@ -736,7 +736,7 @@ int SSL_add_file_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
  * certs may have been added to \c stack.
  */
 
-int SSL_add_dir_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
+int __cdecl SSL_add_dir_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
                                        const char *dir)
 {
     OPENSSL_DIR_CTX *d = NULL;
@@ -782,7 +782,7 @@ int SSL_add_dir_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
 }
 
 /* Build a certificate chain for current certificate */
-int ssl_build_cert_chain(SSL *s, SSL_CTX *ctx, int flags)
+int __cdecl ssl_build_cert_chain(SSL *s, SSL_CTX *ctx, int flags)
 {
     CERT *c = s ? s->cert : ctx->cert;
     CERT_PKEY *cpk = c->key;
@@ -890,7 +890,7 @@ int ssl_build_cert_chain(SSL *s, SSL_CTX *ctx, int flags)
     return rv;
 }
 
-int ssl_cert_set_cert_store(CERT *c, X509_STORE *store, int chain, int ref)
+int __cdecl ssl_cert_set_cert_store(CERT *c, X509_STORE *store, int chain, int ref)
 {
     X509_STORE **pstore;
     if (chain)
@@ -904,7 +904,7 @@ int ssl_cert_set_cert_store(CERT *c, X509_STORE *store, int chain, int ref)
     return 1;
 }
 
-static int ssl_security_default_callback(const SSL *s, const SSL_CTX *ctx,
+static int __cdecl ssl_security_default_callback(const SSL *s, const SSL_CTX *ctx,
                                          int op, int bits, int nid, void *other,
                                          void *ex)
 {
@@ -987,18 +987,18 @@ static int ssl_security_default_callback(const SSL *s, const SSL_CTX *ctx,
     return 1;
 }
 
-int ssl_security(const SSL *s, int op, int bits, int nid, void *other)
+int __cdecl ssl_security(const SSL *s, int op, int bits, int nid, void *other)
 {
     return s->cert->sec_cb(s, NULL, op, bits, nid, other, s->cert->sec_ex);
 }
 
-int ssl_ctx_security(const SSL_CTX *ctx, int op, int bits, int nid, void *other)
+int __cdecl ssl_ctx_security(const SSL_CTX *ctx, int op, int bits, int nid, void *other)
 {
     return ctx->cert->sec_cb(NULL, ctx, op, bits, nid, other,
                              ctx->cert->sec_ex);
 }
 
-int ssl_cert_lookup_by_nid(int nid, size_t *pidx)
+int __cdecl ssl_cert_lookup_by_nid(int nid, size_t *pidx)
 {
     size_t i;
 
@@ -1012,7 +1012,7 @@ int ssl_cert_lookup_by_nid(int nid, size_t *pidx)
     return 0;
 }
 
-const SSL_CERT_LOOKUP *ssl_cert_lookup_by_pkey(const EVP_PKEY *pk, size_t *pidx)
+const SSL_CERT_LOOKUP * __cdecl ssl_cert_lookup_by_pkey(const EVP_PKEY *pk, size_t *pidx)
 {
     int nid = EVP_PKEY_id(pk);
     size_t tmpidx;
@@ -1029,7 +1029,7 @@ const SSL_CERT_LOOKUP *ssl_cert_lookup_by_pkey(const EVP_PKEY *pk, size_t *pidx)
     return &ssl_cert_info[tmpidx];
 }
 
-const SSL_CERT_LOOKUP *ssl_cert_lookup_by_idx(size_t idx)
+const SSL_CERT_LOOKUP * __cdecl ssl_cert_lookup_by_idx(size_t idx)
 {
     if (idx >= OSSL_NELEM(ssl_cert_info))
         return NULL;

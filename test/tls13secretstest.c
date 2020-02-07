@@ -136,7 +136,7 @@ static unsigned char server_ats_iv[] = {
 };
 
 /* Mocked out implementations of various functions */
-int ssl3_digest_cached_records(SSL *s, int keep)
+int __cdecl ssl3_digest_cached_records(SSL *s, int keep)
 {
     return 1;
 }
@@ -162,7 +162,7 @@ int ssl_handshake_hash(SSL *s, unsigned char *out, size_t outlen,
     return 1;
 }
 
-const EVP_MD *ssl_handshake_md(SSL *s)
+const EVP_MD * __cdecl ssl_handshake_md(SSL *s)
 {
     return EVP_sha256();
 }
@@ -175,7 +175,7 @@ void RECORD_LAYER_reset_write_sequence(RECORD_LAYER *rl)
 {
 }
 
-int ssl_cipher_get_evp(const SSL_SESSION *s, const EVP_CIPHER **enc,
+int __cdecl ssl_cipher_get_evp(const SSL_SESSION *s, const EVP_CIPHER **enc,
                        const EVP_MD **md, int *mac_pkey_type,
                        size_t *mac_secret_size, SSL_COMP **comp, int use_etm)
 
@@ -183,7 +183,7 @@ int ssl_cipher_get_evp(const SSL_SESSION *s, const EVP_CIPHER **enc,
     return 0;
 }
 
-int tls1_alert_code(int code)
+int __cdecl tls1_alert_code(int code)
 {
     return code;
 }
@@ -196,7 +196,7 @@ int ssl_log_secret(SSL *ssl,
     return 1;
 }
 
-const EVP_MD *ssl_md(int idx)
+const EVP_MD * __cdecl ssl_md(int idx)
 {
     return EVP_sha256();
 }

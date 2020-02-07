@@ -19,7 +19,7 @@
 #ifndef OPENSSL_NO_SRP
 # include <openssl/srp.h>
 
-int SSL_CTX_SRP_CTX_free(struct ssl_ctx_st *ctx)
+int __cdecl SSL_CTX_SRP_CTX_free(struct ssl_ctx_st *ctx)
 {
     if (ctx == NULL)
         return 0;
@@ -38,7 +38,7 @@ int SSL_CTX_SRP_CTX_free(struct ssl_ctx_st *ctx)
     return 1;
 }
 
-int SSL_SRP_CTX_free(struct ssl_st *s)
+int __cdecl SSL_SRP_CTX_free(struct ssl_st *s)
 {
     if (s == NULL)
         return 0;
@@ -57,7 +57,7 @@ int SSL_SRP_CTX_free(struct ssl_st *s)
     return 1;
 }
 
-int SSL_SRP_CTX_init(struct ssl_st *s)
+int __cdecl SSL_SRP_CTX_init(struct ssl_st *s)
 {
     SSL_CTX *ctx;
 
@@ -126,7 +126,7 @@ int SSL_SRP_CTX_init(struct ssl_st *s)
     return 0;
 }
 
-int SSL_CTX_SRP_CTX_init(struct ssl_ctx_st *ctx)
+int __cdecl SSL_CTX_SRP_CTX_init(struct ssl_ctx_st *ctx)
 {
     if (ctx == NULL)
         return 0;
@@ -138,7 +138,7 @@ int SSL_CTX_SRP_CTX_init(struct ssl_ctx_st *ctx)
 }
 
 /* server side */
-int SSL_srp_server_param_with_username(SSL *s, int *ad)
+int __cdecl SSL_srp_server_param_with_username(SSL *s, int *ad)
 {
     unsigned char b[SSL_MAX_MASTER_KEY_LENGTH];
     int al;
@@ -174,7 +174,7 @@ int SSL_srp_server_param_with_username(SSL *s, int *ad)
  * If the server just has the raw password, make up a verifier entry on the
  * fly
  */
-int SSL_set_srp_server_param_pw(SSL *s, const char *user, const char *pass,
+int __cdecl SSL_set_srp_server_param_pw(SSL *s, const char *user, const char *pass,
                                 const char *grp)
 {
     SRP_gN *GN = SRP_get_default_gN(grp);
@@ -193,7 +193,7 @@ int SSL_set_srp_server_param_pw(SSL *s, const char *user, const char *pass,
     return 1;
 }
 
-int SSL_set_srp_server_param(SSL *s, const BIGNUM *N, const BIGNUM *g,
+int __cdecl SSL_set_srp_server_param(SSL *s, const BIGNUM *N, const BIGNUM *g,
                              BIGNUM *sa, BIGNUM *v, char *info)
 {
     if (N != NULL) {
@@ -246,7 +246,7 @@ int SSL_set_srp_server_param(SSL *s, const BIGNUM *N, const BIGNUM *g,
     return 1;
 }
 
-int srp_generate_server_master_secret(SSL *s)
+int __cdecl srp_generate_server_master_secret(SSL *s)
 {
     BIGNUM *K = NULL, *u = NULL;
     int ret = -1, tmp_len = 0;
@@ -276,7 +276,7 @@ int srp_generate_server_master_secret(SSL *s)
 }
 
 /* client side */
-int srp_generate_client_master_secret(SSL *s)
+int __cdecl srp_generate_client_master_secret(SSL *s)
 {
     BIGNUM *x = NULL, *u = NULL, *K = NULL;
     int ret = -1, tmp_len = 0;
@@ -329,7 +329,7 @@ int srp_generate_client_master_secret(SSL *s)
     return ret;
 }
 
-int srp_verify_server_param(SSL *s)
+int __cdecl srp_verify_server_param(SSL *s)
 {
     SRP_CTX *srp = &s->srp_ctx;
     /*
@@ -365,7 +365,7 @@ int srp_verify_server_param(SSL *s)
     return 1;
 }
 
-int SRP_Calc_A_param(SSL *s)
+int __cdecl SRP_Calc_A_param(SSL *s)
 {
     unsigned char rnd[SSL_MAX_MASTER_KEY_LENGTH];
 
@@ -380,28 +380,28 @@ int SRP_Calc_A_param(SSL *s)
     return 1;
 }
 
-BIGNUM *SSL_get_srp_g(SSL *s)
+BIGNUM * __cdecl SSL_get_srp_g(SSL *s)
 {
     if (s->srp_ctx.g != NULL)
         return s->srp_ctx.g;
     return s->ctx->srp_ctx.g;
 }
 
-BIGNUM *SSL_get_srp_N(SSL *s)
+BIGNUM * __cdecl SSL_get_srp_N(SSL *s)
 {
     if (s->srp_ctx.N != NULL)
         return s->srp_ctx.N;
     return s->ctx->srp_ctx.N;
 }
 
-char *SSL_get_srp_username(SSL *s)
+char * __cdecl SSL_get_srp_username(SSL *s)
 {
     if (s->srp_ctx.login != NULL)
         return s->srp_ctx.login;
     return s->ctx->srp_ctx.login;
 }
 
-char *SSL_get_srp_userinfo(SSL *s)
+char * __cdecl SSL_get_srp_userinfo(SSL *s)
 {
     if (s->srp_ctx.info != NULL)
         return s->srp_ctx.info;
@@ -411,42 +411,42 @@ char *SSL_get_srp_userinfo(SSL *s)
 # define tls1_ctx_ctrl ssl3_ctx_ctrl
 # define tls1_ctx_callback_ctrl ssl3_ctx_callback_ctrl
 
-int SSL_CTX_set_srp_username(SSL_CTX *ctx, char *name)
+int __cdecl SSL_CTX_set_srp_username(SSL_CTX *ctx, char *name)
 {
     return tls1_ctx_ctrl(ctx, SSL_CTRL_SET_TLS_EXT_SRP_USERNAME, 0, name);
 }
 
-int SSL_CTX_set_srp_password(SSL_CTX *ctx, char *password)
+int __cdecl SSL_CTX_set_srp_password(SSL_CTX *ctx, char *password)
 {
     return tls1_ctx_ctrl(ctx, SSL_CTRL_SET_TLS_EXT_SRP_PASSWORD, 0, password);
 }
 
-int SSL_CTX_set_srp_strength(SSL_CTX *ctx, int strength)
+int __cdecl SSL_CTX_set_srp_strength(SSL_CTX *ctx, int strength)
 {
     return tls1_ctx_ctrl(ctx, SSL_CTRL_SET_TLS_EXT_SRP_STRENGTH, strength,
                          NULL);
 }
 
-int SSL_CTX_set_srp_verify_param_callback(SSL_CTX *ctx,
+int __cdecl SSL_CTX_set_srp_verify_param_callback(SSL_CTX *ctx,
                                           int (*cb) (SSL *, void *))
 {
     return tls1_ctx_callback_ctrl(ctx, SSL_CTRL_SET_SRP_VERIFY_PARAM_CB,
                                   (void (*)(void))cb);
 }
 
-int SSL_CTX_set_srp_cb_arg(SSL_CTX *ctx, void *arg)
+int __cdecl SSL_CTX_set_srp_cb_arg(SSL_CTX *ctx, void *arg)
 {
     return tls1_ctx_ctrl(ctx, SSL_CTRL_SET_SRP_ARG, 0, arg);
 }
 
-int SSL_CTX_set_srp_username_callback(SSL_CTX *ctx,
+int __cdecl SSL_CTX_set_srp_username_callback(SSL_CTX *ctx,
                                       int (*cb) (SSL *, int *, void *))
 {
     return tls1_ctx_callback_ctrl(ctx, SSL_CTRL_SET_TLS_EXT_SRP_USERNAME_CB,
                                   (void (*)(void))cb);
 }
 
-int SSL_CTX_set_srp_client_pwd_callback(SSL_CTX *ctx,
+int __cdecl SSL_CTX_set_srp_client_pwd_callback(SSL_CTX *ctx,
                                         char *(*cb) (SSL *, void *))
 {
     return tls1_ctx_callback_ctrl(ctx, SSL_CTRL_SET_SRP_GIVE_CLIENT_PWD_CB,

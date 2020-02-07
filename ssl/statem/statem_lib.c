@@ -38,7 +38,7 @@ const unsigned char hrrrandom[] = {
  * send s->init_buf in records of type 'type' (SSL3_RT_HANDSHAKE or
  * SSL3_RT_CHANGE_CIPHER_SPEC)
  */
-int ssl3_do_write(SSL *s, int type)
+int __cdecl ssl3_do_write(SSL *s, int type)
 {
     int ret;
     size_t written = 0;
@@ -72,7 +72,7 @@ int ssl3_do_write(SSL *s, int type)
     return 0;
 }
 
-int tls_close_construct_packet(SSL *s, WPACKET *pkt, int htype)
+int __cdecl tls_close_construct_packet(SSL *s, WPACKET *pkt, int htype)
 {
     size_t msglen;
 
@@ -86,7 +86,7 @@ int tls_close_construct_packet(SSL *s, WPACKET *pkt, int htype)
     return 1;
 }
 
-int tls_setup_handshake(SSL *s)
+int __cdecl tls_setup_handshake(SSL *s)
 {
     if (!ssl3_init_finished_mac(s)) {
         /* SSLfatal() already called */
@@ -1002,7 +1002,7 @@ static int ssl_add_cert_chain(SSL *s, WPACKET *pkt, CERT_PKEY *cpk)
     return 1;
 }
 
-unsigned long ssl3_output_cert_chain(SSL *s, WPACKET *pkt, CERT_PKEY *cpk)
+unsigned long __cdecl ssl3_output_cert_chain(SSL *s, WPACKET *pkt, CERT_PKEY *cpk)
 {
     if (!WPACKET_start_sub_packet_u24(pkt)) {
         SSLfatal(s, SSL_AD_INTERNAL_ERROR, SSL_F_SSL3_OUTPUT_CERT_CHAIN,
@@ -1029,7 +1029,7 @@ unsigned long ssl3_output_cert_chain(SSL *s, WPACKET *pkt, CERT_PKEY *cpk)
  */
 WORK_STATE tls_finish_handshake(SSL *s, WORK_STATE wst, int clearbufs, int stop)
 {
-    void (*cb) (const SSL *ssl, int type, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type, int val) = NULL;
     int cleanuphand = s->statem.cleanuphand;
 
     if (clearbufs) {
@@ -1370,7 +1370,7 @@ static const X509ERR2ALERT x509table[] = {
     {X509_V_OK, SSL_AD_CERTIFICATE_UNKNOWN}
 };
 
-int ssl_x509err2alert(int x509err)
+int __cdecl ssl_x509err2alert(int x509err)
 {
     const X509ERR2ALERT *tp;
 
@@ -1380,7 +1380,7 @@ int ssl_x509err2alert(int x509err)
     return tp->alert;
 }
 
-int ssl_allow_compression(SSL *s)
+int __cdecl ssl_allow_compression(SSL *s)
 {
     if (s->options & SSL_OP_NO_COMPRESSION)
         return 0;
@@ -1400,8 +1400,8 @@ static int version_cmp(const SSL *s, int a, int b)
 
 typedef struct {
     int version;
-    const SSL_METHOD *(*cmeth) (void);
-    const SSL_METHOD *(*smeth) (void);
+    const SSL_METHOD *(__cdecl *cmeth) (void);
+    const SSL_METHOD *(__cdecl *smeth) (void);
 } version_info;
 
 #if TLS_MAX_VERSION != TLS1_3_VERSION
@@ -1553,7 +1553,7 @@ static int is_tls13_capable(const SSL *s)
  *
  * Returns 1 when supported, otherwise 0
  */
-int ssl_version_supported(const SSL *s, int version, const SSL_METHOD **meth)
+int __cdecl ssl_version_supported(const SSL *s, int version, const SSL_METHOD **meth)
 {
     const version_info *vent;
     const version_info *table;
@@ -1596,7 +1596,7 @@ int ssl_version_supported(const SSL *s, int version, const SSL_METHOD **meth)
  *
  * Returns 1 when using the highest enabled version, 0 otherwise.
  */
-int ssl_check_version_downgrade(SSL *s)
+int __cdecl ssl_check_version_downgrade(SSL *s)
 {
     const version_info *vent;
     const version_info *table;
@@ -1641,7 +1641,7 @@ int ssl_check_version_downgrade(SSL *s)
  *
  * Returns 1 on success, 0 on failure.
  */
-int ssl_set_version_bound(int method_version, int version, int *bound)
+int __cdecl ssl_set_version_bound(int method_version, int version, int *bound)
 {
     if (version == 0) {
         *bound = version;
@@ -1716,7 +1716,7 @@ static void check_for_downgrade(SSL *s, int vers, DOWNGRADE *dgrd)
  *
  * Returns 0 on success or an SSL error reason number on failure.
  */
-int ssl_choose_server_version(SSL *s, CLIENTHELLO_MSG *hello, DOWNGRADE *dgrd)
+int __cdecl ssl_choose_server_version(SSL *s, CLIENTHELLO_MSG *hello, DOWNGRADE *dgrd)
 {
     /*-
      * With version-flexible methods we have an initial state with:
@@ -1864,7 +1864,7 @@ int ssl_choose_server_version(SSL *s, CLIENTHELLO_MSG *hello, DOWNGRADE *dgrd)
  *
  * Returns 1 on success or 0 on error.
  */
-int ssl_choose_client_version(SSL *s, int version, RAW_EXTENSION *extensions)
+int __cdecl ssl_choose_client_version(SSL *s, int version, RAW_EXTENSION *extensions)
 {
     const version_info *vent;
     const version_info *table;
@@ -2002,7 +2002,7 @@ int ssl_choose_client_version(SSL *s, int version, RAW_EXTENSION *extensions)
  * Returns 0 on success or an SSL error reason number on failure.  On failure
  * min_version and max_version will also be set to 0.
  */
-int ssl_get_min_max_version(const SSL *s, int *min_version, int *max_version,
+int __cdecl ssl_get_min_max_version(const SSL *s, int *min_version, int *max_version,
                             int *real_max)
 {
     int version, tmp_real_max;
@@ -2109,7 +2109,7 @@ int ssl_get_min_max_version(const SSL *s, int *min_version, int *max_version,
  *
  * Returns 0 on success or an SSL error reason number on failure.
  */
-int ssl_set_client_hello_version(SSL *s)
+int __cdecl ssl_set_client_hello_version(SSL *s)
 {
     int ver_min, ver_max, ret;
 

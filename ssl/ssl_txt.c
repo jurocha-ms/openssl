@@ -13,7 +13,7 @@
 #include "ssl_locl.h"
 
 #ifndef OPENSSL_NO_STDIO
-int SSL_SESSION_print_fp(FILE *fp, const SSL_SESSION *x)
+int __cdecl SSL_SESSION_print_fp(FILE *fp, const SSL_SESSION *x)
 {
     BIO *b;
     int ret;
@@ -29,7 +29,7 @@ int SSL_SESSION_print_fp(FILE *fp, const SSL_SESSION *x)
 }
 #endif
 
-int SSL_SESSION_print(BIO *bp, const SSL_SESSION *x)
+int __cdecl SSL_SESSION_print(BIO *bp, const SSL_SESSION *x)
 {
     size_t i;
     const char *s;
@@ -165,7 +165,7 @@ int SSL_SESSION_print(BIO *bp, const SSL_SESSION *x)
  * print session id and master key in NSS keylog format (RSA
  * Session-ID:<session id> Master-Key:<master key>)
  */
-int SSL_SESSION_print_keylog(BIO *bp, const SSL_SESSION *x)
+int __cdecl SSL_SESSION_print_keylog(BIO *bp, const SSL_SESSION *x)
 {
     size_t i;
 

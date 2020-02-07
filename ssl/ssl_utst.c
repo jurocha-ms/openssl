@@ -16,7 +16,7 @@ static const struct openssl_ssl_test_functions ssl_test_functions = {
     ssl3_setup_buffers,
 };
 
-const struct openssl_ssl_test_functions *SSL_test_functions(void)
+const struct openssl_ssl_test_functions * __cdecl SSL_test_functions(void)
 {
     return &ssl_test_functions;
 }

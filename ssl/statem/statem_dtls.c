@@ -91,7 +91,7 @@ static hm_fragment *dtls1_hm_fragment_new(size_t frag_len, int reassembly)
     return frag;
 }
 
-void dtls1_hm_fragment_free(hm_fragment *frag)
+void __cdecl dtls1_hm_fragment_free(hm_fragment *frag)
 {
     if (!frag)
         return;
@@ -109,7 +109,7 @@ void dtls1_hm_fragment_free(hm_fragment *frag)
  * send s->init_buf in records of type 'type' (SSL3_RT_HANDSHAKE or
  * SSL3_RT_CHANGE_CIPHER_SPEC)
  */
-int dtls1_do_write(SSL *s, int type)
+int __cdecl dtls1_do_write(SSL *s, int type)
 {
     int ret;
     size_t written;
@@ -965,7 +965,7 @@ WORK_STATE dtls_wait_for_dry(SSL *s)
 }
 #endif
 
-int dtls1_read_failed(SSL *s, int code)
+int __cdecl dtls1_read_failed(SSL *s, int code)
 {
     if (code > 0) {
         SSLfatal(s, SSL_AD_INTERNAL_ERROR,
@@ -990,7 +990,7 @@ int dtls1_read_failed(SSL *s, int code)
     return dtls1_handle_timeout(s);
 }
 
-int dtls1_get_queue_priority(unsigned short seq, int is_ccs)
+int __cdecl dtls1_get_queue_priority(unsigned short seq, int is_ccs)
 {
     /*
      * The index of the retransmission queue actually is the message sequence
@@ -1005,7 +1005,7 @@ int dtls1_get_queue_priority(unsigned short seq, int is_ccs)
     return seq * 2 - is_ccs;
 }
 
-int dtls1_retransmit_buffered_messages(SSL *s)
+int __cdecl dtls1_retransmit_buffered_messages(SSL *s)
 {
     pqueue *sent = s->d1->sent_messages;
     piterator iter;
@@ -1027,7 +1027,7 @@ int dtls1_retransmit_buffered_messages(SSL *s)
     return 1;
 }
 
-int dtls1_buffer_message(SSL *s, int is_ccs)
+int __cdecl dtls1_buffer_message(SSL *s, int is_ccs)
 {
     pitem *item;
     hm_fragment *frag;
@@ -1094,7 +1094,7 @@ int dtls1_buffer_message(SSL *s, int is_ccs)
     return 1;
 }
 
-int dtls1_retransmit_message(SSL *s, unsigned short seq, int *found)
+int __cdecl dtls1_retransmit_message(SSL *s, unsigned short seq, int *found)
 {
     int ret;
     /* XDTLS: for now assuming that read/writes are blocking */
@@ -1168,7 +1168,7 @@ int dtls1_retransmit_message(SSL *s, unsigned short seq, int *found)
     return ret;
 }
 
-void dtls1_set_message_header(SSL *s,
+void __cdecl dtls1_set_message_header(SSL *s,
                               unsigned char mt, size_t len,
                               size_t frag_off, size_t frag_len)
 {
@@ -1219,7 +1219,7 @@ static unsigned char *dtls1_write_message_header(SSL *s, unsigned char *p)
     return p;
 }
 
-void dtls1_get_message_header(unsigned char *data, struct hm_header_st *msg_hdr)
+void __cdecl dtls1_get_message_header(unsigned char *data, struct hm_header_st *msg_hdr)
 {
     memset(msg_hdr, 0, sizeof(*msg_hdr));
     msg_hdr->type = *(data++);
@@ -1230,7 +1230,7 @@ void dtls1_get_message_header(unsigned char *data, struct hm_header_st *msg_hdr)
     n2l3(data, msg_hdr->frag_len);
 }
 
-int dtls1_set_handshake_header(SSL *s, WPACKET *pkt, int htype)
+int __cdecl dtls1_set_handshake_header(SSL *s, WPACKET *pkt, int htype)
 {
     unsigned char *header;
 
@@ -1254,7 +1254,7 @@ int dtls1_set_handshake_header(SSL *s, WPACKET *pkt, int htype)
     return 1;
 }
 
-int dtls1_close_construct_packet(SSL *s, WPACKET *pkt, int htype)
+int __cdecl dtls1_close_construct_packet(SSL *s, WPACKET *pkt, int htype)
 {
     size_t msglen;
 

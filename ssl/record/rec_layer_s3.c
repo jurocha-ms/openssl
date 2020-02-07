@@ -108,7 +108,7 @@ void RECORD_LAYER_reset_write_sequence(RECORD_LAYER *rl)
     memset(rl->write_sequence, 0, sizeof(rl->write_sequence));
 }
 
-size_t ssl3_pending(const SSL *s)
+size_t __cdecl ssl3_pending(const SSL *s)
 {
     size_t i, num = 0;
 
@@ -125,17 +125,17 @@ size_t ssl3_pending(const SSL *s)
     return num;
 }
 
-void SSL_CTX_set_default_read_buffer_len(SSL_CTX *ctx, size_t len)
+void __cdecl SSL_CTX_set_default_read_buffer_len(SSL_CTX *ctx, size_t len)
 {
     ctx->default_read_buf_len = len;
 }
 
-void SSL_set_default_read_buffer_len(SSL *s, size_t len)
+void __cdecl SSL_set_default_read_buffer_len(SSL *s, size_t len)
 {
     SSL3_BUFFER_set_default_len(RECORD_LAYER_get_rbuf(&s->rlayer), len);
 }
 
-const char *SSL_rstate_string_long(const SSL *s)
+const char * __cdecl SSL_rstate_string_long(const SSL *s)
 {
     switch (s->rlayer.rstate) {
     case SSL_ST_READ_HEADER:
@@ -149,7 +149,7 @@ const char *SSL_rstate_string_long(const SSL *s)
     }
 }
 
-const char *SSL_rstate_string(const SSL *s)
+const char * __cdecl SSL_rstate_string(const SSL *s)
 {
     switch (s->rlayer.rstate) {
     case SSL_ST_READ_HEADER:
@@ -334,7 +334,7 @@ int ssl3_read_n(SSL *s, size_t n, size_t max, int extend, int clearold,
  * Call this to write data in records of type 'type' It will return <= 0 if
  * not all data has been sent or non-blocking IO.
  */
-int ssl3_write_bytes(SSL *s, int type, const void *buf_, size_t len,
+int __cdecl ssl3_write_bytes(SSL *s, int type, const void *buf_, size_t len,
                      size_t *written)
 {
     const unsigned char *buf = buf_;
@@ -649,7 +649,7 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, size_t len,
     }
 }
 
-int do_ssl3_write(SSL *s, int type, const unsigned char *buf,
+int __cdecl do_ssl3_write(SSL *s, int type, const unsigned char *buf,
                   size_t *pipelens, size_t numpipes,
                   int create_empty_fragment, size_t *written)
 {
@@ -1123,7 +1123,7 @@ int do_ssl3_write(SSL *s, int type, const unsigned char *buf,
  *
  * Return values are as per SSL_write()
  */
-int ssl3_write_pending(SSL *s, int type, const unsigned char *buf, size_t len,
+int __cdecl ssl3_write_pending(SSL *s, int type, const unsigned char *buf, size_t len,
                        size_t *written)
 {
     int i;
@@ -1214,14 +1214,14 @@ int ssl3_write_pending(SSL *s, int type, const unsigned char *buf, size_t len,
  *     Application data protocol
  *             none of our business
  */
-int ssl3_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
+int __cdecl ssl3_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
                     size_t len, int peek, size_t *readbytes)
 {
     int i, j, ret;
     size_t n, curr_rec, num_recs, totalbytes;
     SSL3_RECORD *rr;
     SSL3_BUFFER *rbuf;
-    void (*cb) (const SSL *ssl, int type2, int val) = NULL;
+    void (__cdecl *cb) (const SSL *ssl, int type2, int val) = NULL;
     int is_tls13 = SSL_IS_TLS13(s);
 
     rbuf = &s->rlayer.rbuf;

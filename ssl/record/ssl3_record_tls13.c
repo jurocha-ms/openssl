@@ -22,7 +22,7 @@
  *   -1: if the record's AEAD-authenticator is invalid or, if sending,
  *       an internal error occurred.
  */
-int tls13_enc(SSL *s, SSL3_RECORD *recs, size_t n_recs, int sending)
+int __cdecl tls13_enc(SSL *s, SSL3_RECORD *recs, size_t n_recs, int sending)
 {
     EVP_CIPHER_CTX *ctx;
     unsigned char iv[EVP_MAX_IV_LENGTH], recheader[SSL3_RT_HEADER_LENGTH];

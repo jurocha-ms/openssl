@@ -113,7 +113,7 @@ struct x509_store_st {
     /* called to verify a certificate */
     int (*verify) (X509_STORE_CTX *ctx);
     /* error callback */
-    int (*verify_cb) (int ok, X509_STORE_CTX *ctx);
+    int (__cdecl *verify_cb) (int ok, X509_STORE_CTX *ctx);
     /* get issuers cert from ctx */
     int (*get_issuer) (X509 **issuer, X509_STORE_CTX *ctx, X509 *x);
     /* check issued */

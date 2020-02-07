@@ -78,7 +78,7 @@ static int custom_ext_parse_old_cb_wrap(SSL *s, unsigned int ext_type,
  * are trying to find a method relevant to the server, ENDPOINT_CLIENT for the
  * client, or ENDPOINT_BOTH for either
  */
-custom_ext_method *custom_ext_find(const custom_ext_methods *exts,
+custom_ext_method * __cdecl custom_ext_find(const custom_ext_methods *exts,
                                    ENDPOINT role, unsigned int ext_type,
                                    size_t *idx)
 {
@@ -100,7 +100,7 @@ custom_ext_method *custom_ext_find(const custom_ext_methods *exts,
 /*
  * Initialise custom extensions flags to indicate neither sent nor received.
  */
-void custom_ext_init(custom_ext_methods *exts)
+void __cdecl custom_ext_init(custom_ext_methods *exts)
 {
     size_t i;
     custom_ext_method *meth = exts->meths;
@@ -110,7 +110,7 @@ void custom_ext_init(custom_ext_methods *exts)
 }
 
 /* Pass received custom extension data to the application for parsing. */
-int custom_ext_parse(SSL *s, unsigned int context, unsigned int ext_type,
+int __cdecl custom_ext_parse(SSL *s, unsigned int context, unsigned int ext_type,
                      const unsigned char *ext_data, size_t ext_size, X509 *x,
                      size_t chainidx)
 {
@@ -170,7 +170,7 @@ int custom_ext_parse(SSL *s, unsigned int context, unsigned int ext_type,
  * Request custom extension data from the application and add to the return
  * buffer.
  */
-int custom_ext_add(SSL *s, int context, WPACKET *pkt, X509 *x, size_t chainidx,
+int __cdecl custom_ext_add(SSL *s, int context, WPACKET *pkt, X509 *x, size_t chainidx,
                    int maxversion)
 {
     custom_ext_methods *exts = &s->cert->custext;
@@ -247,7 +247,7 @@ int custom_ext_add(SSL *s, int context, WPACKET *pkt, X509 *x, size_t chainidx,
 }
 
 /* Copy the flags from src to dst for any extensions that exist in both */
-int custom_exts_copy_flags(custom_ext_methods *dst,
+int __cdecl custom_exts_copy_flags(custom_ext_methods *dst,
                            const custom_ext_methods *src)
 {
     size_t i;
@@ -267,7 +267,7 @@ int custom_exts_copy_flags(custom_ext_methods *dst,
 }
 
 /* Copy table of custom extensions */
-int custom_exts_copy(custom_ext_methods *dst, const custom_ext_methods *src)
+int __cdecl custom_exts_copy(custom_ext_methods *dst, const custom_ext_methods *src)
 {
     size_t i;
     int err = 0;
@@ -316,7 +316,7 @@ int custom_exts_copy(custom_ext_methods *dst, const custom_ext_methods *src)
     return 1;
 }
 
-void custom_exts_free(custom_ext_methods *exts)
+void __cdecl custom_exts_free(custom_ext_methods *exts)
 {
     size_t i;
     custom_ext_method *meth;
@@ -333,7 +333,7 @@ void custom_exts_free(custom_ext_methods *exts)
 }
 
 /* Return true if a client custom extension exists, false otherwise */
-int SSL_CTX_has_client_custom_ext(const SSL_CTX *ctx, unsigned int ext_type)
+int __cdecl SSL_CTX_has_client_custom_ext(const SSL_CTX *ctx, unsigned int ext_type)
 {
     return custom_ext_find(&ctx->cert->custext, ENDPOINT_CLIENT, ext_type,
                            NULL) != NULL;
@@ -447,7 +447,7 @@ static int add_old_custom_ext(SSL_CTX *ctx, ENDPOINT role,
 }
 
 /* Application level functions to add the old custom extension callbacks */
-int SSL_CTX_add_client_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
+int __cdecl SSL_CTX_add_client_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
                                   custom_ext_add_cb add_cb,
                                   custom_ext_free_cb free_cb,
                                   void *add_arg,
@@ -461,7 +461,7 @@ int SSL_CTX_add_client_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
                               add_cb, free_cb, add_arg, parse_cb, parse_arg);
 }
 
-int SSL_CTX_add_server_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
+int __cdecl SSL_CTX_add_server_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
                                   custom_ext_add_cb add_cb,
                                   custom_ext_free_cb free_cb,
                                   void *add_arg,
@@ -475,7 +475,7 @@ int SSL_CTX_add_server_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
                               add_cb, free_cb, add_arg, parse_cb, parse_arg);
 }
 
-int SSL_CTX_add_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
+int __cdecl SSL_CTX_add_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
                            unsigned int context,
                            SSL_custom_ext_add_cb_ex add_cb,
                            SSL_custom_ext_free_cb_ex free_cb,
@@ -486,7 +486,7 @@ int SSL_CTX_add_custom_ext(SSL_CTX *ctx, unsigned int ext_type,
                                  free_cb, add_arg, parse_cb, parse_arg);
 }
 
-int SSL_extension_supported(unsigned int ext_type)
+int __cdecl SSL_extension_supported(unsigned int ext_type)
 {
     switch (ext_type) {
         /* Internally supported extensions. */

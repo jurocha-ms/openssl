@@ -14,7 +14,7 @@
 #include "ssl_locl.h"
 
 static void get_current_time(struct timeval *t);
-static int dtls1_handshake_write(SSL *s);
+static int __cdecl dtls1_handshake_write(SSL *s);
 static size_t dtls1_link_min_mtu(void);
 
 /* XDTLS:  figure out the right values */
@@ -55,7 +55,7 @@ const SSL3_ENC_METHOD DTLSv1_2_enc_data = {
     dtls1_handshake_write
 };
 
-long dtls1_default_timeout(void)
+long __cdecl dtls1_default_timeout(void)
 {
     /*
      * 2 hours, the 24 hours mentioned in the DTLSv1 spec is way too long for
@@ -64,7 +64,7 @@ long dtls1_default_timeout(void)
     return (60 * 60 * 2);
 }
 
-int dtls1_new(SSL *s)
+int __cdecl dtls1_new(SSL *s)
 {
     DTLS1_STATE *d1;
 
@@ -111,7 +111,7 @@ static void dtls1_clear_queues(SSL *s)
     dtls1_clear_sent_buffer(s);
 }
 
-void dtls1_clear_received_buffer(SSL *s)
+void __cdecl dtls1_clear_received_buffer(SSL *s)
 {
     pitem *item = NULL;
     hm_fragment *frag = NULL;
@@ -123,7 +123,7 @@ void dtls1_clear_received_buffer(SSL *s)
     }
 }
 
-void dtls1_clear_sent_buffer(SSL *s)
+void __cdecl dtls1_clear_sent_buffer(SSL *s)
 {
     pitem *item = NULL;
     hm_fragment *frag = NULL;
@@ -136,7 +136,7 @@ void dtls1_clear_sent_buffer(SSL *s)
 }
 
 
-void dtls1_free(SSL *s)
+void __cdecl dtls1_free(SSL *s)
 {
     DTLS_RECORD_LAYER_free(&s->rlayer);
 
@@ -151,7 +151,7 @@ void dtls1_free(SSL *s)
     s->d1 = NULL;
 }
 
-int dtls1_clear(SSL *s)
+int __cdecl dtls1_clear(SSL *s)
 {
     pqueue *buffered_messages;
     pqueue *sent_messages;
@@ -203,7 +203,7 @@ int dtls1_clear(SSL *s)
     return 1;
 }
 
-long dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
+long __cdecl dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
 {
     int ret = 0;
 
@@ -239,7 +239,7 @@ long dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
     return ret;
 }
 
-void dtls1_start_timer(SSL *s)
+void __cdecl dtls1_start_timer(SSL *s)
 {
     unsigned int sec, usec;
 
@@ -283,7 +283,7 @@ void dtls1_start_timer(SSL *s)
              &(s->d1->next_timeout));
 }
 
-struct timeval *dtls1_get_timeout(SSL *s, struct timeval *timeleft)
+struct timeval * __cdecl dtls1_get_timeout(SSL *s, struct timeval *timeleft)
 {
     struct timeval timenow;
 
@@ -323,7 +323,7 @@ struct timeval *dtls1_get_timeout(SSL *s, struct timeval *timeleft)
     return timeleft;
 }
 
-int dtls1_is_timer_expired(SSL *s)
+int __cdecl dtls1_is_timer_expired(SSL *s)
 {
     struct timeval timeleft;
 
@@ -341,7 +341,7 @@ int dtls1_is_timer_expired(SSL *s)
     return 1;
 }
 
-void dtls1_double_timeout(SSL *s)
+void __cdecl dtls1_double_timeout(SSL *s)
 {
     s->d1->timeout_duration_us *= 2;
     if (s->d1->timeout_duration_us > 60000000)
@@ -349,7 +349,7 @@ void dtls1_double_timeout(SSL *s)
     dtls1_start_timer(s);
 }
 
-void dtls1_stop_timer(SSL *s)
+void __cdecl dtls1_stop_timer(SSL *s)
 {
     /* Reset everything */
     memset(&s->d1->timeout, 0, sizeof(s->d1->timeout));
@@ -361,7 +361,7 @@ void dtls1_stop_timer(SSL *s)
     dtls1_clear_sent_buffer(s);
 }
 
-int dtls1_check_timeout_num(SSL *s)
+int __cdecl dtls1_check_timeout_num(SSL *s)
 {
     size_t mtu;
 
@@ -386,7 +386,7 @@ int dtls1_check_timeout_num(SSL *s)
     return 0;
 }
 
-int dtls1_handle_timeout(SSL *s)
+int __cdecl dtls1_handle_timeout(SSL *s)
 {
     /* if no timer is expired, don't do anything */
     if (!dtls1_is_timer_expired(s)) {
@@ -443,7 +443,7 @@ static void get_current_time(struct timeval *t)
 #define LISTEN_SEND_VERIFY_REQUEST  1
 
 #ifndef OPENSSL_NO_SOCK
-int DTLSv1_listen(SSL *s, BIO_ADDR *client)
+int __cdecl DTLSv1_listen(SSL *s, BIO_ADDR *client)
 {
     int next, n, ret = 0;
     unsigned char cookie[DTLS1_COOKIE_LENGTH];
@@ -859,12 +859,12 @@ int DTLSv1_listen(SSL *s, BIO_ADDR *client)
 }
 #endif
 
-static int dtls1_handshake_write(SSL *s)
+static int __cdecl dtls1_handshake_write(SSL *s)
 {
     return dtls1_do_write(s, SSL3_RT_HANDSHAKE);
 }
 
-int dtls1_shutdown(SSL *s)
+int __cdecl dtls1_shutdown(SSL *s)
 {
     int ret;
 #ifndef OPENSSL_NO_SCTP
@@ -889,7 +889,7 @@ int dtls1_shutdown(SSL *s)
     return ret;
 }
 
-int dtls1_query_mtu(SSL *s)
+int __cdecl dtls1_query_mtu(SSL *s)
 {
     if (s->d1->link_mtu) {
         s->d1->mtu =
@@ -925,12 +925,12 @@ static size_t dtls1_link_min_mtu(void)
                             sizeof(g_probable_mtu[0])) - 1]);
 }
 
-size_t dtls1_min_mtu(SSL *s)
+size_t __cdecl dtls1_min_mtu(SSL *s)
 {
     return dtls1_link_min_mtu() - BIO_dgram_get_mtu_overhead(SSL_get_wbio(s));
 }
 
-size_t DTLS_get_data_mtu(const SSL *s)
+size_t __cdecl DTLS_get_data_mtu(const SSL *s)
 {
     size_t mac_overhead, int_overhead, blocksize, ext_overhead;
     const SSL_CIPHER *ciph = SSL_get_current_cipher(s);
@@ -966,7 +966,7 @@ size_t DTLS_get_data_mtu(const SSL *s)
     return mtu;
 }
 
-void DTLS_set_timer_cb(SSL *s, DTLS_timer_cb cb)
+void __cdecl DTLS_set_timer_cb(SSL *s, DTLS_timer_cb cb)
 {
     s->d1->timer_cb = cb;
 }

@@ -1495,7 +1495,7 @@ static int ssl_print_handshake(BIO *bio, const SSL *ssl, int server,
     return 1;
 }
 
-void SSL_trace(int write_p, int version, int content_type,
+void __cdecl SSL_trace(int write_p, int version, int content_type,
                const void *buf, size_t msglen, SSL *ssl, void *arg)
 {
     const unsigned char *msg = buf;

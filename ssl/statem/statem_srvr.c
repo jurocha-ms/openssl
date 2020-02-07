@@ -348,7 +348,7 @@ static int send_server_key_exchange(SSL *s)
  *   1: Yes
  *   0: No
  */
-int send_certificate_request(SSL *s)
+int __cdecl send_certificate_request(SSL *s)
 {
     if (
            /* don't request cert unless asked for it: */
@@ -1257,7 +1257,7 @@ static int ssl_check_srp_ext_ClientHello(SSL *s)
 }
 #endif
 
-int dtls_raw_hello_verify_request(WPACKET *pkt, unsigned char *cookie,
+int __cdecl dtls_raw_hello_verify_request(WPACKET *pkt, unsigned char *cookie,
                                   size_t cookie_len)
 {
     /* Always use DTLS 1.0 version: see RFC 6347 */
