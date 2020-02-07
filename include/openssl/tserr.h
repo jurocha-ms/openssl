@@ -22,7 +22,7 @@
 #  ifdef  __cplusplus
 extern "C"
 #  endif
-int ERR_load_TS_strings(void);
+int __cdecl ERR_load_TS_strings(void);
 
 /*
  * TS function codes.
