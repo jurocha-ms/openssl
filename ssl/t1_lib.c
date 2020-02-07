@@ -1117,7 +1117,7 @@ int __cdecl tls12_check_peer_sigalg(SSL *s, uint16_t sig, EVP_PKEY *pkey)
     return 1;
 }
 
-int SSL_get_peer_signature_type_nid(const SSL *s, int *pnid)
+int __cdecl SSL_get_peer_signature_type_nid(const SSL *s, int *pnid)
 {
     if (s->s3->tmp.peer_sigalg == NULL)
         return 0;
@@ -1125,7 +1125,7 @@ int SSL_get_peer_signature_type_nid(const SSL *s, int *pnid)
     return 1;
 }
 
-int SSL_get_signature_type_nid(const SSL *s, int *pnid)
+int __cdecl SSL_get_signature_type_nid(const SSL *s, int *pnid)
 {
     if (s->s3->tmp.sigalg == NULL)
         return 0;
@@ -1841,7 +1841,7 @@ int __cdecl tls1_process_sigalgs(SSL *s)
     return 1;
 }
 
-int SSL_get_sigalgs(SSL *s, int idx,
+int __cdecl SSL_get_sigalgs(SSL *s, int idx,
                     int *psign, int *phash, int *psignhash,
                     unsigned char *rsig, unsigned char *rhash)
 {
@@ -1870,7 +1870,7 @@ int SSL_get_sigalgs(SSL *s, int idx,
     return (int)numsigalgs;
 }
 
-int SSL_get_shared_sigalgs(SSL *s, int idx,
+int __cdecl SSL_get_shared_sigalgs(SSL *s, int idx,
                            int *psign, int *phash, int *psignhash,
                            unsigned char *rsig, unsigned char *rhash)
 {
@@ -2400,7 +2400,7 @@ void __cdecl tls1_set_cert_validity(SSL *s)
 }
 
 /* User level utility function to check a chain is suitable */
-int SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain)
+int __cdecl SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain)
 {
     return tls1_check_chain(s, x, pk, chain, -1);
 }
@@ -2831,7 +2831,7 @@ int __cdecl tls_choose_sigalg(SSL *s, int fatalerrs)
     return 1;
 }
 
-int SSL_CTX_set_tlsext_max_fragment_length(SSL_CTX *ctx, uint8_t mode)
+int __cdecl SSL_CTX_set_tlsext_max_fragment_length(SSL_CTX *ctx, uint8_t mode)
 {
     if (mode != TLSEXT_max_fragment_length_DISABLED
             && !IS_MAX_FRAGMENT_LENGTH_EXT_VALID(mode)) {
@@ -2844,7 +2844,7 @@ int SSL_CTX_set_tlsext_max_fragment_length(SSL_CTX *ctx, uint8_t mode)
     return 1;
 }
 
-int SSL_set_tlsext_max_fragment_length(SSL *ssl, uint8_t mode)
+int __cdecl SSL_set_tlsext_max_fragment_length(SSL *ssl, uint8_t mode)
 {
     if (mode != TLSEXT_max_fragment_length_DISABLED
             && !IS_MAX_FRAGMENT_LENGTH_EXT_VALID(mode)) {

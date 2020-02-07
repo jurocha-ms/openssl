@@ -2627,7 +2627,7 @@ char * __cdecl SSL_get_shared_ciphers(const SSL *s, char *buf, int size)
  * So far, only host_name types are defined (RFC 3546).
  */
 
-const char *SSL_get_servername(const SSL *s, const int type)
+const char * __cdecl SSL_get_servername(const SSL *s, const int type)
 {
     if (type != TLSEXT_NAMETYPE_host_name)
         return NULL;
@@ -2643,7 +2643,7 @@ const char *SSL_get_servername(const SSL *s, const int type)
     return s->ext.hostname;
 }
 
-int SSL_get_servername_type(const SSL *s)
+int __cdecl SSL_get_servername_type(const SSL *s)
 {
     if (s->session
         && (!s->ext.hostname ? s->session->
@@ -2836,7 +2836,7 @@ void __cdecl SSL_get0_alpn_selected(const SSL *ssl, const unsigned char **data,
         *len = (unsigned int)ssl->s3->alpn_selected_len;
 }
 
-int SSL_export_keying_material(SSL *s, unsigned char *out, size_t olen,
+int __cdecl SSL_export_keying_material(SSL *s, unsigned char *out, size_t olen,
                                const char *label, size_t llen,
                                const unsigned char *context, size_t contextlen,
                                int use_context)
@@ -2849,7 +2849,7 @@ int SSL_export_keying_material(SSL *s, unsigned char *out, size_t olen,
                                                        contextlen, use_context);
 }
 
-int SSL_export_keying_material_early(SSL *s, unsigned char *out, size_t olen,
+int __cdecl SSL_export_keying_material_early(SSL *s, unsigned char *out, size_t olen,
                                      const char *label, size_t llen,
                                      const unsigned char *context,
                                      size_t contextlen)

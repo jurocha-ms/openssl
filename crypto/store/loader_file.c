@@ -752,7 +752,7 @@ static void OSSL_STORE_LOADER_CTX_free(OSSL_STORE_LOADER_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-static OSSL_STORE_LOADER_CTX *file_open(const OSSL_STORE_LOADER *loader,
+static OSSL_STORE_LOADER_CTX * __cdecl file_open(const OSSL_STORE_LOADER *loader,
                                         const char *uri,
                                         const UI_METHOD *ui_method,
                                         void *ui_data)
@@ -892,7 +892,7 @@ static OSSL_STORE_LOADER_CTX *file_open(const OSSL_STORE_LOADER *loader,
     return NULL;
 }
 
-static int file_ctrl(OSSL_STORE_LOADER_CTX *ctx, int cmd, va_list args)
+static int __cdecl file_ctrl(OSSL_STORE_LOADER_CTX *ctx, int cmd, va_list args)
 {
     int ret = 1;
 
@@ -923,13 +923,13 @@ static int file_ctrl(OSSL_STORE_LOADER_CTX *ctx, int cmd, va_list args)
     return ret;
 }
 
-static int file_expect(OSSL_STORE_LOADER_CTX *ctx, int expected)
+static int __cdecl file_expect(OSSL_STORE_LOADER_CTX *ctx, int expected)
 {
     ctx->expected_type = expected;
     return 1;
 }
 
-static int file_find(OSSL_STORE_LOADER_CTX *ctx, OSSL_STORE_SEARCH *search)
+static int __cdecl file_find(OSSL_STORE_LOADER_CTX *ctx, OSSL_STORE_SEARCH *search)
 {
     /*
      * If ctx == NULL, the library is looking to know if this loader supports
@@ -1242,9 +1242,9 @@ static int file_name_check(OSSL_STORE_LOADER_CTX *ctx, const char *name)
     return *p == '\0';
 }
 
-static int file_eof(OSSL_STORE_LOADER_CTX *ctx);
-static int file_error(OSSL_STORE_LOADER_CTX *ctx);
-static OSSL_STORE_INFO *file_load(OSSL_STORE_LOADER_CTX *ctx,
+static int __cdecl file_eof(OSSL_STORE_LOADER_CTX *ctx);
+static int __cdecl file_error(OSSL_STORE_LOADER_CTX *ctx);
+static OSSL_STORE_INFO * __cdecl file_load(OSSL_STORE_LOADER_CTX *ctx,
                                   const UI_METHOD *ui_method, void *ui_data)
 {
     OSSL_STORE_INFO *result = NULL;
@@ -1379,12 +1379,12 @@ static OSSL_STORE_INFO *file_load(OSSL_STORE_LOADER_CTX *ctx,
     return result;
 }
 
-static int file_error(OSSL_STORE_LOADER_CTX *ctx)
+static int __cdecl file_error(OSSL_STORE_LOADER_CTX *ctx)
 {
     return ctx->errcnt > 0;
 }
 
-static int file_eof(OSSL_STORE_LOADER_CTX *ctx)
+static int __cdecl file_eof(OSSL_STORE_LOADER_CTX *ctx)
 {
     if (ctx->type == is_dir)
         return ctx->_.dir.end_reached;
@@ -1395,7 +1395,7 @@ static int file_eof(OSSL_STORE_LOADER_CTX *ctx)
     return BIO_eof(ctx->_.file.file);
 }
 
-static int file_close(OSSL_STORE_LOADER_CTX *ctx)
+static int __cdecl file_close(OSSL_STORE_LOADER_CTX *ctx)
 {
     if (ctx->type == is_dir) {
         OPENSSL_DIR_end(&ctx->_.dir.ctx);

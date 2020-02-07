@@ -208,13 +208,13 @@ extern "C" {
 # define TLSEXT_max_fragment_length_2048        3
 # define TLSEXT_max_fragment_length_4096        4
 
-int SSL_CTX_set_tlsext_max_fragment_length(SSL_CTX *ctx, uint8_t mode);
-int SSL_set_tlsext_max_fragment_length(SSL *ssl, uint8_t mode);
+int __cdecl SSL_CTX_set_tlsext_max_fragment_length(SSL_CTX *ctx, uint8_t mode);
+int __cdecl SSL_set_tlsext_max_fragment_length(SSL *ssl, uint8_t mode);
 
 # define TLSEXT_MAXLEN_host_name 255
 
-__owur const char *SSL_get_servername(const SSL *s, const int type);
-__owur int SSL_get_servername_type(const SSL *s);
+__owur const char * __cdecl SSL_get_servername(const SSL *s, const int type);
+__owur int __cdecl SSL_get_servername_type(const SSL *s);
 /*
  * SSL_export_keying_material exports a value derived from the master secret,
  * as specified in RFC 5705. It writes |olen| bytes to |out| given a label and
@@ -222,7 +222,7 @@ __owur int SSL_get_servername_type(const SSL *s);
  * flag controls whether a context is included.) It returns 1 on success and
  * 0 or -1 otherwise.
  */
-__owur int SSL_export_keying_material(SSL *s, unsigned char *out, size_t olen,
+__owur int __cdecl SSL_export_keying_material(SSL *s, unsigned char *out, size_t olen,
                                       const char *label, size_t llen,
                                       const unsigned char *context,
                                       size_t contextlen, int use_context);
@@ -234,24 +234,24 @@ __owur int SSL_export_keying_material(SSL *s, unsigned char *out, size_t olen,
  * |olen| bytes to |out| given a label and optional context. It
  * returns 1 on success and 0 otherwise.
  */
-__owur int SSL_export_keying_material_early(SSL *s, unsigned char *out,
+__owur int __cdecl SSL_export_keying_material_early(SSL *s, unsigned char *out,
                                             size_t olen, const char *label,
                                             size_t llen,
                                             const unsigned char *context,
                                             size_t contextlen);
 
-int SSL_get_peer_signature_type_nid(const SSL *s, int *pnid);
-int SSL_get_signature_type_nid(const SSL *s, int *pnid);
+int __cdecl SSL_get_peer_signature_type_nid(const SSL *s, int *pnid);
+int __cdecl SSL_get_signature_type_nid(const SSL *s, int *pnid);
 
-int SSL_get_sigalgs(SSL *s, int idx,
+int __cdecl SSL_get_sigalgs(SSL *s, int idx,
                     int *psign, int *phash, int *psignandhash,
                     unsigned char *rsig, unsigned char *rhash);
 
-int SSL_get_shared_sigalgs(SSL *s, int idx,
+int __cdecl SSL_get_shared_sigalgs(SSL *s, int idx,
                            int *psign, int *phash, int *psignandhash,
                            unsigned char *rsig, unsigned char *rhash);
 
-__owur int SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain);
+__owur int __cdecl SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509) *chain);
 
 # define SSL_set_tlsext_host_name(s,name) \
         SSL_ctrl(s,SSL_CTRL_SET_TLSEXT_HOSTNAME,TLSEXT_NAMETYPE_host_name,\
