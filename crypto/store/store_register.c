@@ -28,7 +28,7 @@ DEFINE_RUN_ONCE_STATIC(do_registry_init)
  *  Functions for manipulating OSSL_STORE_LOADERs
  */
 
-OSSL_STORE_LOADER *OSSL_STORE_LOADER_new(ENGINE *e, const char *scheme)
+OSSL_STORE_LOADER * __cdecl OSSL_STORE_LOADER_new(ENGINE *e, const char *scheme)
 {
     OSSL_STORE_LOADER *res = NULL;
 
@@ -54,73 +54,73 @@ OSSL_STORE_LOADER *OSSL_STORE_LOADER_new(ENGINE *e, const char *scheme)
     return res;
 }
 
-const ENGINE *OSSL_STORE_LOADER_get0_engine(const OSSL_STORE_LOADER *loader)
+const ENGINE * __cdecl OSSL_STORE_LOADER_get0_engine(const OSSL_STORE_LOADER *loader)
 {
     return loader->engine;
 }
 
-const char *OSSL_STORE_LOADER_get0_scheme(const OSSL_STORE_LOADER *loader)
+const char * __cdecl OSSL_STORE_LOADER_get0_scheme(const OSSL_STORE_LOADER *loader)
 {
     return loader->scheme;
 }
 
-int OSSL_STORE_LOADER_set_open(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_open(OSSL_STORE_LOADER *loader,
                                OSSL_STORE_open_fn open_function)
 {
     loader->open = open_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_ctrl(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_ctrl(OSSL_STORE_LOADER *loader,
                                OSSL_STORE_ctrl_fn ctrl_function)
 {
     loader->ctrl = ctrl_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_expect(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_expect(OSSL_STORE_LOADER *loader,
                                  OSSL_STORE_expect_fn expect_function)
 {
     loader->expect = expect_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_find(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_find(OSSL_STORE_LOADER *loader,
                                OSSL_STORE_find_fn find_function)
 {
     loader->find = find_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_load(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_load(OSSL_STORE_LOADER *loader,
                                OSSL_STORE_load_fn load_function)
 {
     loader->load = load_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_eof(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_eof(OSSL_STORE_LOADER *loader,
                               OSSL_STORE_eof_fn eof_function)
 {
     loader->eof = eof_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_error(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_error(OSSL_STORE_LOADER *loader,
                                 OSSL_STORE_error_fn error_function)
 {
     loader->error = error_function;
     return 1;
 }
 
-int OSSL_STORE_LOADER_set_close(OSSL_STORE_LOADER *loader,
+int __cdecl OSSL_STORE_LOADER_set_close(OSSL_STORE_LOADER *loader,
                                 OSSL_STORE_close_fn close_function)
 {
     loader->close = close_function;
     return 1;
 }
 
-void OSSL_STORE_LOADER_free(OSSL_STORE_LOADER *loader)
+void __cdecl OSSL_STORE_LOADER_free(OSSL_STORE_LOADER *loader)
 {
     OPENSSL_free(loader);
 }
@@ -196,7 +196,7 @@ int ossl_store_register_loader_int(OSSL_STORE_LOADER *loader)
 
     return ok;
 }
-int OSSL_STORE_register_loader(OSSL_STORE_LOADER *loader)
+int __cdecl OSSL_STORE_register_loader(OSSL_STORE_LOADER *loader)
 {
     if (!ossl_store_init_once())
         return 0;
@@ -267,7 +267,7 @@ OSSL_STORE_LOADER *ossl_store_unregister_loader_int(const char *scheme)
 
     return loader;
 }
-OSSL_STORE_LOADER *OSSL_STORE_unregister_loader(const char *scheme)
+OSSL_STORE_LOADER * __cdecl OSSL_STORE_unregister_loader(const char *scheme)
 {
     if (!ossl_store_init_once())
         return 0;
@@ -288,7 +288,7 @@ void ossl_store_destroy_loaders_int(void)
  */
 
 IMPLEMENT_LHASH_DOALL_ARG_CONST(OSSL_STORE_LOADER, void);
-int OSSL_STORE_do_all_loaders(void (*do_function) (const OSSL_STORE_LOADER
+int __cdecl OSSL_STORE_do_all_loaders(void (*do_function) (const OSSL_STORE_LOADER
                                                    *loader, void *do_arg),
                               void *do_arg)
 {

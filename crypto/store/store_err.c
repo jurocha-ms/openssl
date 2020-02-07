@@ -134,7 +134,7 @@ static const ERR_STRING_DATA OSSL_STORE_str_reasons[] = {
 
 #endif
 
-int ERR_load_OSSL_STORE_strings(void)
+int __cdecl ERR_load_OSSL_STORE_strings(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_func_error_string(OSSL_STORE_str_functs[0].error) == NULL) {
