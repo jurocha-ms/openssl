@@ -15,7 +15,7 @@
 #define BUFSIZ 256
 #endif
 
-int UI_UTIL_read_pw_string(char *buf, int length, const char *prompt,
+int __cdecl UI_UTIL_read_pw_string(char *buf, int length, const char *prompt,
                            int verify)
 {
     char buff[BUFSIZ];
@@ -28,7 +28,7 @@ int UI_UTIL_read_pw_string(char *buf, int length, const char *prompt,
     return ret;
 }
 
-int UI_UTIL_read_pw(char *buf, char *buff, int size, const char *prompt,
+int __cdecl UI_UTIL_read_pw(char *buf, char *buff, int size, const char *prompt,
                     int verify)
 {
     int ok = 0;
@@ -95,11 +95,11 @@ DEFINE_RUN_ONCE_STATIC(ui_method_data_index_init)
     return 1;
 }
 
-static int ui_open(UI *ui)
+static int __cdecl ui_open(UI *ui)
 {
     return 1;
 }
-static int ui_read(UI *ui, UI_STRING *uis)
+static int __cdecl ui_read(UI *ui, UI_STRING *uis)
 {
     switch (UI_get_string_type(uis)) {
     case UIT_PROMPT:
@@ -129,16 +129,16 @@ static int ui_read(UI *ui, UI_STRING *uis)
     }
     return 1;
 }
-static int ui_write(UI *ui, UI_STRING *uis)
+static int __cdecl ui_write(UI *ui, UI_STRING *uis)
 {
     return 1;
 }
-static int ui_close(UI *ui)
+static int __cdecl ui_close(UI *ui)
 {
     return 1;
 }
 
-UI_METHOD *UI_UTIL_wrap_read_pem_callback(pem_password_cb *cb, int rwflag)
+UI_METHOD * __cdecl UI_UTIL_wrap_read_pem_callback(pem_password_cb *cb, int rwflag)
 {
     struct pem_password_cb_data *data = NULL;
     UI_METHOD *ui_method = NULL;

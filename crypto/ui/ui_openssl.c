@@ -192,19 +192,19 @@ static int noecho_fgets(char *buf, int size, FILE *tty);
 # endif
 static int read_string_inner(UI *ui, UI_STRING *uis, int echo, int strip_nl);
 
-static int read_string(UI *ui, UI_STRING *uis);
-static int write_string(UI *ui, UI_STRING *uis);
+static int __cdecl read_string(UI *ui, UI_STRING *uis);
+static int __cdecl write_string(UI *ui, UI_STRING *uis);
 
-static int open_console(UI *ui);
-static int echo_console(UI *ui);
-static int noecho_console(UI *ui);
-static int close_console(UI *ui);
+static int __cdecl open_console(UI *ui);
+static int __cdecl echo_console(UI *ui);
+static int __cdecl noecho_console(UI *ui);
+static int __cdecl close_console(UI *ui);
 
 /*
  * The following function makes sure that info and error strings are printed
  * before any prompt.
  */
-static int write_string(UI *ui, UI_STRING *uis)
+static int __cdecl write_string(UI *ui, UI_STRING *uis)
 {
     switch (UI_get_string_type(uis)) {
     case UIT_ERROR:
@@ -221,7 +221,7 @@ static int write_string(UI *ui, UI_STRING *uis)
     return 1;
 }
 
-static int read_string(UI *ui, UI_STRING *uis)
+static int __cdecl read_string(UI *ui, UI_STRING *uis)
 {
     int ok = 0;
 
@@ -374,7 +374,7 @@ static int read_string_inner(UI *ui, UI_STRING *uis, int echo, int strip_nl)
 }
 
 /* Internal functions to open, handle and close a channel to the console.  */
-static int open_console(UI *ui)
+static int __cdecl open_console(UI *ui)
 {
     CRYPTO_THREAD_write_lock(ui->lock);
     is_a_tty = 1;
@@ -481,7 +481,7 @@ static int open_console(UI *ui)
     return 1;
 }
 
-static int noecho_console(UI *ui)
+static int __cdecl noecho_console(UI *ui)
 {
 # ifdef TTY_FLAGS
     memcpy(&(tty_new), &(tty_orig), sizeof(tty_orig));
@@ -523,7 +523,7 @@ static int noecho_console(UI *ui)
     return 1;
 }
 
-static int echo_console(UI *ui)
+static int __cdecl echo_console(UI *ui)
 {
 # if defined(TTY_set) && !defined(OPENSSL_SYS_VMS)
     memcpy(&(tty_new), &(tty_orig), sizeof(tty_orig));
@@ -560,7 +560,7 @@ static int echo_console(UI *ui)
     return 1;
 }
 
-static int close_console(UI *ui)
+static int __cdecl close_console(UI *ui)
 {
     if (tty_in != stdin)
         fclose(tty_in);
@@ -720,7 +720,7 @@ static UI_METHOD ui_openssl = {
 };
 
 /* The method with all the built-in console thingies */
-UI_METHOD *UI_OpenSSL(void)
+UI_METHOD * __cdecl UI_OpenSSL(void)
 {
     return &ui_openssl;
 }
@@ -733,12 +733,12 @@ static const UI_METHOD *default_UI_meth = NULL;
 
 #endif
 
-void UI_set_default_method(const UI_METHOD *meth)
+void __cdecl UI_set_default_method(const UI_METHOD *meth)
 {
     default_UI_meth = meth;
 }
 
-const UI_METHOD *UI_get_default_method(void)
+const UI_METHOD * __cdecl UI_get_default_method(void)
 {
     return default_UI_meth;
 }

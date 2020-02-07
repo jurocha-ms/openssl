@@ -180,18 +180,18 @@ int dump_cert_text(BIO *out, X509 *x)
     return 0;
 }
 
-static int ui_open(UI *ui)
+static int __cdecl ui_open(UI *ui)
 {
-    int (*opener)(UI *ui) = UI_method_get_opener(ui_fallback_method);
+    int (__cdecl *opener)(UI *ui) = UI_method_get_opener(ui_fallback_method);
 
     if (opener)
         return opener(ui);
     return 1;
 }
 
-static int ui_read(UI *ui, UI_STRING *uis)
+static int __cdecl ui_read(UI *ui, UI_STRING *uis)
 {
-    int (*reader)(UI *ui, UI_STRING *uis) = NULL;
+    int (__cdecl *reader)(UI *ui, UI_STRING *uis) = NULL;
 
     if (UI_get_input_flags(uis) & UI_INPUT_FLAG_DEFAULT_PWD
         && UI_get0_user_data(ui)) {
@@ -221,9 +221,9 @@ static int ui_read(UI *ui, UI_STRING *uis)
     return 1;
 }
 
-static int ui_write(UI *ui, UI_STRING *uis)
+static int __cdecl ui_write(UI *ui, UI_STRING *uis)
 {
-    int (*writer)(UI *ui, UI_STRING *uis) = NULL;
+    int (__cdecl *writer)(UI *ui, UI_STRING *uis) = NULL;
 
     if (UI_get_input_flags(uis) & UI_INPUT_FLAG_DEFAULT_PWD
         && UI_get0_user_data(ui)) {
@@ -251,9 +251,9 @@ static int ui_write(UI *ui, UI_STRING *uis)
     return 1;
 }
 
-static int ui_close(UI *ui)
+static int __cdecl ui_close(UI *ui)
 {
-    int (*closer)(UI *ui) = UI_method_get_closer(ui_fallback_method);
+    int (__cdecl *closer)(UI *ui) = UI_method_get_closer(ui_fallback_method);
 
     if (closer)
         return closer(ui);
