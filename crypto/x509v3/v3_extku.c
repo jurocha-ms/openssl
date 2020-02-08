@@ -14,10 +14,10 @@
 #include <openssl/x509v3.h>
 #include "ext_dat.h"
 
-static void *v2i_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD *method,
+static void * __cdecl v2i_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD *method,
                                     X509V3_CTX *ctx,
                                     STACK_OF(CONF_VALUE) *nval);
-static STACK_OF(CONF_VALUE) *i2v_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD
+static STACK_OF(CONF_VALUE) * __cdecl i2v_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD
                                                     *method, void *eku, STACK_OF(CONF_VALUE)
                                                     *extlist);
 
@@ -50,7 +50,7 @@ ASN1_ITEM_TEMPLATE_END(EXTENDED_KEY_USAGE)
 
 IMPLEMENT_ASN1_FUNCTIONS(EXTENDED_KEY_USAGE)
 
-static STACK_OF(CONF_VALUE) *i2v_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD
+static STACK_OF(CONF_VALUE) * __cdecl i2v_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD
                                                     *method, void *a, STACK_OF(CONF_VALUE)
                                                     *ext_list)
 {
@@ -66,7 +66,7 @@ static STACK_OF(CONF_VALUE) *i2v_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD
     return ext_list;
 }
 
-static void *v2i_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD *method,
+static void * __cdecl v2i_EXTENDED_KEY_USAGE(const X509V3_EXT_METHOD *method,
                                     X509V3_CTX *ctx,
                                     STACK_OF(CONF_VALUE) *nval)
 {

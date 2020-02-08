@@ -57,7 +57,7 @@ ASN1_SEQUENCE_cb(X509_PUBKEY, pubkey_cb) = {
 
 IMPLEMENT_ASN1_FUNCTIONS(X509_PUBKEY)
 
-int X509_PUBKEY_set(X509_PUBKEY **x, EVP_PKEY *pkey)
+int __cdecl X509_PUBKEY_set(X509_PUBKEY **x, EVP_PKEY *pkey)
 {
     X509_PUBKEY *pk = NULL;
 
@@ -138,7 +138,7 @@ static int x509_pubkey_decode(EVP_PKEY **ppkey, X509_PUBKEY *key)
     return 0;
 }
 
-EVP_PKEY *X509_PUBKEY_get0(X509_PUBKEY *key)
+EVP_PKEY * __cdecl X509_PUBKEY_get0(X509_PUBKEY *key)
 {
     EVP_PKEY *ret = NULL;
 
@@ -166,7 +166,7 @@ EVP_PKEY *X509_PUBKEY_get0(X509_PUBKEY *key)
     return NULL;
 }
 
-EVP_PKEY *X509_PUBKEY_get(X509_PUBKEY *key)
+EVP_PKEY * __cdecl X509_PUBKEY_get(X509_PUBKEY *key)
 {
     EVP_PKEY *ret = X509_PUBKEY_get0(key);
     if (ret != NULL)
@@ -335,7 +335,7 @@ int __cdecl i2d_EC_PUBKEY(EC_KEY *a, unsigned char **pp)
 }
 #endif
 
-int X509_PUBKEY_set0_param(X509_PUBKEY *pub, ASN1_OBJECT *aobj,
+int __cdecl X509_PUBKEY_set0_param(X509_PUBKEY *pub, ASN1_OBJECT *aobj,
                            int ptype, void *pval,
                            unsigned char *penc, int penclen)
 {
@@ -352,7 +352,7 @@ int X509_PUBKEY_set0_param(X509_PUBKEY *pub, ASN1_OBJECT *aobj,
     return 1;
 }
 
-int X509_PUBKEY_get0_param(ASN1_OBJECT **ppkalg,
+int __cdecl X509_PUBKEY_get0_param(ASN1_OBJECT **ppkalg,
                            const unsigned char **pk, int *ppklen,
                            X509_ALGOR **pa, X509_PUBKEY *pub)
 {
@@ -367,7 +367,7 @@ int X509_PUBKEY_get0_param(ASN1_OBJECT **ppkalg,
     return 1;
 }
 
-ASN1_BIT_STRING *X509_get0_pubkey_bitstr(const X509 *x)
+ASN1_BIT_STRING * __cdecl X509_get0_pubkey_bitstr(const X509 *x)
 {
     if (x == NULL)
         return NULL;

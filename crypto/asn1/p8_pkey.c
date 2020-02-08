@@ -35,7 +35,7 @@ ASN1_SEQUENCE_cb(PKCS8_PRIV_KEY_INFO, pkey_cb) = {
 
 IMPLEMENT_ASN1_FUNCTIONS(PKCS8_PRIV_KEY_INFO)
 
-int PKCS8_pkey_set0(PKCS8_PRIV_KEY_INFO *priv, ASN1_OBJECT *aobj,
+int __cdecl PKCS8_pkey_set0(PKCS8_PRIV_KEY_INFO *priv, ASN1_OBJECT *aobj,
                     int version,
                     int ptype, void *pval, unsigned char *penc, int penclen)
 {
@@ -50,7 +50,7 @@ int PKCS8_pkey_set0(PKCS8_PRIV_KEY_INFO *priv, ASN1_OBJECT *aobj,
     return 1;
 }
 
-int PKCS8_pkey_get0(const ASN1_OBJECT **ppkalg,
+int __cdecl PKCS8_pkey_get0(const ASN1_OBJECT **ppkalg,
                     const unsigned char **pk, int *ppklen,
                     const X509_ALGOR **pa, const PKCS8_PRIV_KEY_INFO *p8)
 {
@@ -66,12 +66,12 @@ int PKCS8_pkey_get0(const ASN1_OBJECT **ppkalg,
 }
 
 const STACK_OF(X509_ATTRIBUTE) *
-PKCS8_pkey_get0_attrs(const PKCS8_PRIV_KEY_INFO *p8)
+__cdecl PKCS8_pkey_get0_attrs(const PKCS8_PRIV_KEY_INFO *p8)
 {
     return p8->attributes;
 }
 
-int PKCS8_pkey_add1_attr_by_NID(PKCS8_PRIV_KEY_INFO *p8, int nid, int type,
+int __cdecl PKCS8_pkey_add1_attr_by_NID(PKCS8_PRIV_KEY_INFO *p8, int nid, int type,
                                 const unsigned char *bytes, int len)
 {
     if (X509at_add1_attr_by_NID(&p8->attributes, nid, type, bytes, len) != NULL)

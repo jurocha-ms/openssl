@@ -204,26 +204,26 @@ struct x509_store_ctx_st {      /* X509_STORE_CTX */
     void *other_ctx;
     /* Callbacks for various operations */
     /* called to verify a certificate */
-    int (*verify) (X509_STORE_CTX *ctx);
+    int (__cdecl *verify) (X509_STORE_CTX *ctx);
     /* error callback */
     int (__cdecl *verify_cb) (int ok, X509_STORE_CTX *ctx);
     /* get issuers cert from ctx */
-    int (*get_issuer) (X509 **issuer, X509_STORE_CTX *ctx, X509 *x);
+    int (__cdecl *get_issuer) (X509 **issuer, X509_STORE_CTX *ctx, X509 *x);
     /* check issued */
-    int (*check_issued) (X509_STORE_CTX *ctx, X509 *x, X509 *issuer);
+    int (__cdecl *check_issued) (X509_STORE_CTX *ctx, X509 *x, X509 *issuer);
     /* Check revocation status of chain */
-    int (*check_revocation) (X509_STORE_CTX *ctx);
+    int (__cdecl *check_revocation) (X509_STORE_CTX *ctx);
     /* retrieve CRL */
-    int (*get_crl) (X509_STORE_CTX *ctx, X509_CRL **crl, X509 *x);
+    int (__cdecl *get_crl) (X509_STORE_CTX *ctx, X509_CRL **crl, X509 *x);
     /* Check CRL validity */
-    int (*check_crl) (X509_STORE_CTX *ctx, X509_CRL *crl);
+    int (__cdecl *check_crl) (X509_STORE_CTX *ctx, X509_CRL *crl);
     /* Check certificate against CRL */
-    int (*cert_crl) (X509_STORE_CTX *ctx, X509_CRL *crl, X509 *x);
+    int (__cdecl *cert_crl) (X509_STORE_CTX *ctx, X509_CRL *crl, X509 *x);
     /* Check policy status of the chain */
-    int (*check_policy) (X509_STORE_CTX *ctx);
-    STACK_OF(X509) *(*lookup_certs) (X509_STORE_CTX *ctx, X509_NAME *nm);
-    STACK_OF(X509_CRL) *(*lookup_crls) (X509_STORE_CTX *ctx, X509_NAME *nm);
-    int (*cleanup) (X509_STORE_CTX *ctx);
+    int (__cdecl *check_policy) (X509_STORE_CTX *ctx);
+    STACK_OF(X509) *(__cdecl *lookup_certs) (X509_STORE_CTX *ctx, X509_NAME *nm);
+    STACK_OF(X509_CRL) *(__cdecl *lookup_crls) (X509_STORE_CTX *ctx, X509_NAME *nm);
+    int (__cdecl *cleanup) (X509_STORE_CTX *ctx);
     /* The following is built up */
     /* if 0, rebuild chain */
     int valid;

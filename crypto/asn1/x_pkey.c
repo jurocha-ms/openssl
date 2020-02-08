@@ -13,7 +13,7 @@
 #include <openssl/objects.h>
 #include <openssl/x509.h>
 
-X509_PKEY *X509_PKEY_new(void)
+X509_PKEY * __cdecl X509_PKEY_new(void)
 {
     X509_PKEY *ret = NULL;
 
@@ -33,7 +33,7 @@ err:
     return NULL;
 }
 
-void X509_PKEY_free(X509_PKEY *x)
+void __cdecl X509_PKEY_free(X509_PKEY *x)
 {
     if (x == NULL)
         return;

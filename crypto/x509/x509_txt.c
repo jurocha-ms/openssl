@@ -18,7 +18,7 @@
 #include <openssl/x509.h>
 #include <openssl/objects.h>
 
-const char *X509_verify_cert_error_string(long n)
+const char * __cdecl X509_verify_cert_error_string(long n)
 {
     switch ((int)n) {
     case X509_V_OK:

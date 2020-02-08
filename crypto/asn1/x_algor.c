@@ -26,7 +26,7 @@ IMPLEMENT_ASN1_FUNCTIONS(X509_ALGOR)
 IMPLEMENT_ASN1_ENCODE_FUNCTIONS_fname(X509_ALGORS, X509_ALGORS, X509_ALGORS)
 IMPLEMENT_ASN1_DUP_FUNCTION(X509_ALGOR)
 
-int X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype, void *pval)
+int __cdecl X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype, void *pval)
 {
     if (alg == NULL)
         return 0;
@@ -51,7 +51,7 @@ int X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype, void *pval)
     return 1;
 }
 
-void X509_ALGOR_get0(const ASN1_OBJECT **paobj, int *pptype,
+void __cdecl X509_ALGOR_get0(const ASN1_OBJECT **paobj, int *pptype,
                      const void **ppval, const X509_ALGOR *algor)
 {
     if (paobj)
@@ -69,7 +69,7 @@ void X509_ALGOR_get0(const ASN1_OBJECT **paobj, int *pptype,
 
 /* Set up an X509_ALGOR DigestAlgorithmIdentifier from an EVP_MD */
 
-void X509_ALGOR_set_md(X509_ALGOR *alg, const EVP_MD *md)
+void __cdecl X509_ALGOR_set_md(X509_ALGOR *alg, const EVP_MD *md)
 {
     int param_type;
 
@@ -82,7 +82,7 @@ void X509_ALGOR_set_md(X509_ALGOR *alg, const EVP_MD *md)
 
 }
 
-int X509_ALGOR_cmp(const X509_ALGOR *a, const X509_ALGOR *b)
+int __cdecl X509_ALGOR_cmp(const X509_ALGOR *a, const X509_ALGOR *b)
 {
     int rv;
     rv = OBJ_cmp(a->algorithm, b->algorithm);

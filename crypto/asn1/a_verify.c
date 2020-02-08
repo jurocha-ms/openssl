@@ -23,7 +23,7 @@
 
 #ifndef NO_ASN1_OLD
 
-int ASN1_verify(i2d_of_void *i2d, X509_ALGOR *a, ASN1_BIT_STRING *signature,
+int __cdecl ASN1_verify(i2d_of_void *i2d, X509_ALGOR *a, ASN1_BIT_STRING *signature,
                 char *data, EVP_PKEY *pkey)
 {
     EVP_MD_CTX *ctx = EVP_MD_CTX_new();
@@ -85,7 +85,7 @@ int ASN1_verify(i2d_of_void *i2d, X509_ALGOR *a, ASN1_BIT_STRING *signature,
 
 #endif
 
-int ASN1_item_verify(const ASN1_ITEM *it, X509_ALGOR *a,
+int __cdecl ASN1_item_verify(const ASN1_ITEM *it, X509_ALGOR *a,
                      ASN1_BIT_STRING *signature, void *asn, EVP_PKEY *pkey)
 {
     EVP_MD_CTX *ctx = NULL;

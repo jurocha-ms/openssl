@@ -67,16 +67,16 @@ static int build_chain(X509_STORE_CTX *ctx);
 static int verify_chain(X509_STORE_CTX *ctx);
 static int dane_verify(X509_STORE_CTX *ctx);
 static int __cdecl null_callback(int ok, X509_STORE_CTX *e);
-static int check_issued(X509_STORE_CTX *ctx, X509 *x, X509 *issuer);
+static int __cdecl check_issued(X509_STORE_CTX *ctx, X509 *x, X509 *issuer);
 static X509 *find_issuer(X509_STORE_CTX *ctx, STACK_OF(X509) *sk, X509 *x);
 static int check_chain_extensions(X509_STORE_CTX *ctx);
 static int check_name_constraints(X509_STORE_CTX *ctx);
 static int check_id(X509_STORE_CTX *ctx);
 static int check_trust(X509_STORE_CTX *ctx, int num_untrusted);
-static int check_revocation(X509_STORE_CTX *ctx);
+static int __cdecl check_revocation(X509_STORE_CTX *ctx);
 static int check_cert(X509_STORE_CTX *ctx);
-static int check_policy(X509_STORE_CTX *ctx);
-static int get_issuer_sk(X509 **issuer, X509_STORE_CTX *ctx, X509 *x);
+static int __cdecl check_policy(X509_STORE_CTX *ctx);
+static int __cdecl get_issuer_sk(X509 **issuer, X509_STORE_CTX *ctx, X509 *x);
 static int check_dane_issuer(X509_STORE_CTX *ctx, int depth);
 static int check_key_level(X509_STORE_CTX *ctx, X509 *cert);
 static int check_sig_level(X509_STORE_CTX *ctx, X509 *cert);
@@ -97,7 +97,7 @@ static int check_crl_chain(X509_STORE_CTX *ctx,
                            STACK_OF(X509) *cert_path,
                            STACK_OF(X509) *crl_path);
 
-static int internal_verify(X509_STORE_CTX *ctx);
+static int __cdecl internal_verify(X509_STORE_CTX *ctx);
 
 static int __cdecl null_callback(int ok, X509_STORE_CTX *e)
 {
@@ -250,7 +250,7 @@ static int verify_chain(X509_STORE_CTX *ctx)
     return ok;
 }
 
-int X509_verify_cert(X509_STORE_CTX *ctx)
+int __cdecl X509_verify_cert(X509_STORE_CTX *ctx)
 {
     SSL_DANE *dane = ctx->dane;
     int ret;
@@ -325,7 +325,7 @@ static X509 *find_issuer(X509_STORE_CTX *ctx, STACK_OF(X509) *sk, X509 *x)
 
 /* Given a possible certificate and issuer check them */
 
-static int check_issued(X509_STORE_CTX *ctx, X509 *x, X509 *issuer)
+static int __cdecl check_issued(X509_STORE_CTX *ctx, X509 *x, X509 *issuer)
 {
     int ret;
     if (x == issuer)
@@ -351,7 +351,7 @@ static int check_issued(X509_STORE_CTX *ctx, X509 *x, X509 *issuer)
 
 /* Alternative lookup method: look from a STACK stored in other_ctx */
 
-static int get_issuer_sk(X509 **issuer, X509_STORE_CTX *ctx, X509 *x)
+static int __cdecl get_issuer_sk(X509 **issuer, X509_STORE_CTX *ctx, X509 *x)
 {
     *issuer = find_issuer(ctx, ctx->other_ctx, x);
     if (*issuer) {
@@ -361,7 +361,7 @@ static int get_issuer_sk(X509 **issuer, X509_STORE_CTX *ctx, X509 *x)
         return 0;
 }
 
-static STACK_OF(X509) *lookup_certs_sk(X509_STORE_CTX *ctx, X509_NAME *nm)
+static STACK_OF(X509) * __cdecl lookup_certs_sk(X509_STORE_CTX *ctx, X509_NAME *nm)
 {
     STACK_OF(X509) *sk = NULL;
     X509 *x;
@@ -841,7 +841,7 @@ static int check_trust(X509_STORE_CTX *ctx, int num_untrusted)
     return X509_TRUST_UNTRUSTED;
 }
 
-static int check_revocation(X509_STORE_CTX *ctx)
+static int __cdecl check_revocation(X509_STORE_CTX *ctx)
 {
     int i = 0, last = 0, ok = 0;
     if (!(ctx->param->flags & X509_V_FLAG_CRL_CHECK))
@@ -1481,7 +1481,7 @@ static int get_crl_delta(X509_STORE_CTX *ctx,
 }
 
 /* Check CRL validity */
-static int check_crl(X509_STORE_CTX *ctx, X509_CRL *crl)
+static int __cdecl check_crl(X509_STORE_CTX *ctx, X509_CRL *crl)
 {
     X509 *issuer = NULL;
     EVP_PKEY *ikey = NULL;
@@ -1557,7 +1557,7 @@ static int check_crl(X509_STORE_CTX *ctx, X509_CRL *crl)
 }
 
 /* Check certificate against CRL */
-static int cert_crl(X509_STORE_CTX *ctx, X509_CRL *crl, X509 *x)
+static int __cdecl cert_crl(X509_STORE_CTX *ctx, X509_CRL *crl, X509 *x)
 {
     X509_REVOKED *rev;
 
@@ -1585,7 +1585,7 @@ static int cert_crl(X509_STORE_CTX *ctx, X509_CRL *crl, X509 *x)
     return 1;
 }
 
-static int check_policy(X509_STORE_CTX *ctx)
+static int __cdecl check_policy(X509_STORE_CTX *ctx)
 {
     int ret;
 
@@ -1697,7 +1697,7 @@ int x509_check_cert_time(X509_STORE_CTX *ctx, X509 *x, int depth)
     return 1;
 }
 
-static int internal_verify(X509_STORE_CTX *ctx)
+static int __cdecl internal_verify(X509_STORE_CTX *ctx)
 {
     int n = sk_X509_num(ctx->chain) - 1;
     X509 *xi = sk_X509_value(ctx->chain, n);
@@ -1777,12 +1777,12 @@ static int internal_verify(X509_STORE_CTX *ctx)
     return 1;
 }
 
-int X509_cmp_current_time(const ASN1_TIME *ctm)
+int __cdecl X509_cmp_current_time(const ASN1_TIME *ctm)
 {
     return X509_cmp_time(ctm, NULL);
 }
 
-int X509_cmp_time(const ASN1_TIME *ctm, time_t *cmp_time)
+int __cdecl X509_cmp_time(const ASN1_TIME *ctm, time_t *cmp_time)
 {
     static const size_t utctime_length = sizeof("YYMMDDHHMMSSZ") - 1;
     static const size_t generalizedtime_length = sizeof("YYYYMMDDHHMMSSZ") - 1;
@@ -1851,17 +1851,17 @@ int X509_cmp_time(const ASN1_TIME *ctm, time_t *cmp_time)
     return ret;
 }
 
-ASN1_TIME *X509_gmtime_adj(ASN1_TIME *s, long adj)
+ASN1_TIME * __cdecl X509_gmtime_adj(ASN1_TIME *s, long adj)
 {
     return X509_time_adj(s, adj, NULL);
 }
 
-ASN1_TIME *X509_time_adj(ASN1_TIME *s, long offset_sec, time_t *in_tm)
+ASN1_TIME * __cdecl X509_time_adj(ASN1_TIME *s, long offset_sec, time_t *in_tm)
 {
     return X509_time_adj_ex(s, 0, offset_sec, in_tm);
 }
 
-ASN1_TIME *X509_time_adj_ex(ASN1_TIME *s,
+ASN1_TIME * __cdecl X509_time_adj_ex(ASN1_TIME *s,
                             int offset_day, long offset_sec, time_t *in_tm)
 {
     time_t t;
@@ -1880,7 +1880,7 @@ ASN1_TIME *X509_time_adj_ex(ASN1_TIME *s,
     return ASN1_TIME_adj(s, t, offset_day, offset_sec);
 }
 
-int X509_get_pubkey_parameters(EVP_PKEY *pkey, STACK_OF(X509) *chain)
+int __cdecl X509_get_pubkey_parameters(EVP_PKEY *pkey, STACK_OF(X509) *chain)
 {
     EVP_PKEY *ktmp = NULL, *ktmp2;
     int i, j;
@@ -1917,7 +1917,7 @@ int X509_get_pubkey_parameters(EVP_PKEY *pkey, STACK_OF(X509) *chain)
 
 /* Make a delta CRL as the diff between two full CRLs */
 
-X509_CRL *X509_CRL_diff(X509_CRL *base, X509_CRL *newer,
+X509_CRL * __cdecl X509_CRL_diff(X509_CRL *base, X509_CRL *newer,
                         EVP_PKEY *skey, const EVP_MD *md, unsigned int flags)
 {
     X509_CRL *crl = NULL;
@@ -2022,84 +2022,84 @@ X509_CRL *X509_CRL_diff(X509_CRL *base, X509_CRL *newer,
     return NULL;
 }
 
-int X509_STORE_CTX_set_ex_data(X509_STORE_CTX *ctx, int idx, void *data)
+int __cdecl X509_STORE_CTX_set_ex_data(X509_STORE_CTX *ctx, int idx, void *data)
 {
     return CRYPTO_set_ex_data(&ctx->ex_data, idx, data);
 }
 
-void *X509_STORE_CTX_get_ex_data(X509_STORE_CTX *ctx, int idx)
+void * __cdecl X509_STORE_CTX_get_ex_data(X509_STORE_CTX *ctx, int idx)
 {
     return CRYPTO_get_ex_data(&ctx->ex_data, idx);
 }
 
-int X509_STORE_CTX_get_error(X509_STORE_CTX *ctx)
+int __cdecl X509_STORE_CTX_get_error(X509_STORE_CTX *ctx)
 {
     return ctx->error;
 }
 
-void X509_STORE_CTX_set_error(X509_STORE_CTX *ctx, int err)
+void __cdecl X509_STORE_CTX_set_error(X509_STORE_CTX *ctx, int err)
 {
     ctx->error = err;
 }
 
-int X509_STORE_CTX_get_error_depth(X509_STORE_CTX *ctx)
+int __cdecl X509_STORE_CTX_get_error_depth(X509_STORE_CTX *ctx)
 {
     return ctx->error_depth;
 }
 
-void X509_STORE_CTX_set_error_depth(X509_STORE_CTX *ctx, int depth)
+void __cdecl X509_STORE_CTX_set_error_depth(X509_STORE_CTX *ctx, int depth)
 {
     ctx->error_depth = depth;
 }
 
-X509 *X509_STORE_CTX_get_current_cert(X509_STORE_CTX *ctx)
+X509 * __cdecl X509_STORE_CTX_get_current_cert(X509_STORE_CTX *ctx)
 {
     return ctx->current_cert;
 }
 
-void X509_STORE_CTX_set_current_cert(X509_STORE_CTX *ctx, X509 *x)
+void __cdecl X509_STORE_CTX_set_current_cert(X509_STORE_CTX *ctx, X509 *x)
 {
     ctx->current_cert = x;
 }
 
-STACK_OF(X509) *X509_STORE_CTX_get0_chain(X509_STORE_CTX *ctx)
+STACK_OF(X509) * __cdecl X509_STORE_CTX_get0_chain(X509_STORE_CTX *ctx)
 {
     return ctx->chain;
 }
 
-STACK_OF(X509) *X509_STORE_CTX_get1_chain(X509_STORE_CTX *ctx)
+STACK_OF(X509) * __cdecl X509_STORE_CTX_get1_chain(X509_STORE_CTX *ctx)
 {
     if (!ctx->chain)
         return NULL;
     return X509_chain_up_ref(ctx->chain);
 }
 
-X509 *X509_STORE_CTX_get0_current_issuer(X509_STORE_CTX *ctx)
+X509 * __cdecl X509_STORE_CTX_get0_current_issuer(X509_STORE_CTX *ctx)
 {
     return ctx->current_issuer;
 }
 
-X509_CRL *X509_STORE_CTX_get0_current_crl(X509_STORE_CTX *ctx)
+X509_CRL * __cdecl X509_STORE_CTX_get0_current_crl(X509_STORE_CTX *ctx)
 {
     return ctx->current_crl;
 }
 
-X509_STORE_CTX *X509_STORE_CTX_get0_parent_ctx(X509_STORE_CTX *ctx)
+X509_STORE_CTX * __cdecl X509_STORE_CTX_get0_parent_ctx(X509_STORE_CTX *ctx)
 {
     return ctx->parent;
 }
 
-void X509_STORE_CTX_set_cert(X509_STORE_CTX *ctx, X509 *x)
+void __cdecl X509_STORE_CTX_set_cert(X509_STORE_CTX *ctx, X509 *x)
 {
     ctx->cert = x;
 }
 
-void X509_STORE_CTX_set0_crls(X509_STORE_CTX *ctx, STACK_OF(X509_CRL) *sk)
+void __cdecl X509_STORE_CTX_set0_crls(X509_STORE_CTX *ctx, STACK_OF(X509_CRL) *sk)
 {
     ctx->crls = sk;
 }
 
-int X509_STORE_CTX_set_purpose(X509_STORE_CTX *ctx, int purpose)
+int __cdecl X509_STORE_CTX_set_purpose(X509_STORE_CTX *ctx, int purpose)
 {
     /*
      * XXX: Why isn't this function always used to set the associated trust?
@@ -2109,7 +2109,7 @@ int X509_STORE_CTX_set_purpose(X509_STORE_CTX *ctx, int purpose)
     return X509_STORE_CTX_purpose_inherit(ctx, 0, purpose, 0);
 }
 
-int X509_STORE_CTX_set_trust(X509_STORE_CTX *ctx, int trust)
+int __cdecl X509_STORE_CTX_set_trust(X509_STORE_CTX *ctx, int trust)
 {
     /*
      * XXX: See above, this function would only be needed when the default
@@ -2129,7 +2129,7 @@ int X509_STORE_CTX_set_trust(X509_STORE_CTX *ctx, int trust)
  * client/server.
  */
 
-int X509_STORE_CTX_purpose_inherit(X509_STORE_CTX *ctx, int def_purpose,
+int __cdecl X509_STORE_CTX_purpose_inherit(X509_STORE_CTX *ctx, int def_purpose,
                                    int purpose, int trust)
 {
     int idx;
@@ -2180,7 +2180,7 @@ int X509_STORE_CTX_purpose_inherit(X509_STORE_CTX *ctx, int def_purpose,
     return 1;
 }
 
-X509_STORE_CTX *X509_STORE_CTX_new(void)
+X509_STORE_CTX * __cdecl X509_STORE_CTX_new(void)
 {
     X509_STORE_CTX *ctx = OPENSSL_zalloc(sizeof(*ctx));
 
@@ -2191,7 +2191,7 @@ X509_STORE_CTX *X509_STORE_CTX_new(void)
     return ctx;
 }
 
-void X509_STORE_CTX_free(X509_STORE_CTX *ctx)
+void __cdecl X509_STORE_CTX_free(X509_STORE_CTX *ctx)
 {
     if (ctx == NULL)
         return;
@@ -2200,7 +2200,7 @@ void X509_STORE_CTX_free(X509_STORE_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-int X509_STORE_CTX_init(X509_STORE_CTX *ctx, X509_STORE *store, X509 *x509,
+int __cdecl X509_STORE_CTX_init(X509_STORE_CTX *ctx, X509_STORE *store, X509 *x509,
                         STACK_OF(X509) *chain)
 {
     int ret = 1;
@@ -2342,14 +2342,14 @@ int X509_STORE_CTX_init(X509_STORE_CTX *ctx, X509_STORE *store, X509 *x509,
  * Set alternative lookup method: just a STACK of trusted certificates. This
  * avoids X509_STORE nastiness where it isn't needed.
  */
-void X509_STORE_CTX_set0_trusted_stack(X509_STORE_CTX *ctx, STACK_OF(X509) *sk)
+void __cdecl X509_STORE_CTX_set0_trusted_stack(X509_STORE_CTX *ctx, STACK_OF(X509) *sk)
 {
     ctx->other_ctx = sk;
     ctx->get_issuer = get_issuer_sk;
     ctx->lookup_certs = lookup_certs_sk;
 }
 
-void X509_STORE_CTX_cleanup(X509_STORE_CTX *ctx)
+void __cdecl X509_STORE_CTX_cleanup(X509_STORE_CTX *ctx)
 {
     /*
      * We need to be idempotent because, unfortunately, free() also calls
@@ -2375,55 +2375,55 @@ void X509_STORE_CTX_cleanup(X509_STORE_CTX *ctx)
     memset(&ctx->ex_data, 0, sizeof(ctx->ex_data));
 }
 
-void X509_STORE_CTX_set_depth(X509_STORE_CTX *ctx, int depth)
+void __cdecl X509_STORE_CTX_set_depth(X509_STORE_CTX *ctx, int depth)
 {
     X509_VERIFY_PARAM_set_depth(ctx->param, depth);
 }
 
-void X509_STORE_CTX_set_flags(X509_STORE_CTX *ctx, unsigned long flags)
+void __cdecl X509_STORE_CTX_set_flags(X509_STORE_CTX *ctx, unsigned long flags)
 {
     X509_VERIFY_PARAM_set_flags(ctx->param, flags);
 }
 
-void X509_STORE_CTX_set_time(X509_STORE_CTX *ctx, unsigned long flags,
+void __cdecl X509_STORE_CTX_set_time(X509_STORE_CTX *ctx, unsigned long flags,
                              time_t t)
 {
     X509_VERIFY_PARAM_set_time(ctx->param, t);
 }
 
-X509 *X509_STORE_CTX_get0_cert(X509_STORE_CTX *ctx)
+X509 * __cdecl X509_STORE_CTX_get0_cert(X509_STORE_CTX *ctx)
 {
     return ctx->cert;
 }
 
-STACK_OF(X509) *X509_STORE_CTX_get0_untrusted(X509_STORE_CTX *ctx)
+STACK_OF(X509) * __cdecl X509_STORE_CTX_get0_untrusted(X509_STORE_CTX *ctx)
 {
     return ctx->untrusted;
 }
 
-void X509_STORE_CTX_set0_untrusted(X509_STORE_CTX *ctx, STACK_OF(X509) *sk)
+void __cdecl X509_STORE_CTX_set0_untrusted(X509_STORE_CTX *ctx, STACK_OF(X509) *sk)
 {
     ctx->untrusted = sk;
 }
 
-void X509_STORE_CTX_set0_verified_chain(X509_STORE_CTX *ctx, STACK_OF(X509) *sk)
+void __cdecl X509_STORE_CTX_set0_verified_chain(X509_STORE_CTX *ctx, STACK_OF(X509) *sk)
 {
     sk_X509_pop_free(ctx->chain, X509_free);
     ctx->chain = sk;
 }
 
-void X509_STORE_CTX_set_verify_cb(X509_STORE_CTX *ctx,
+void __cdecl X509_STORE_CTX_set_verify_cb(X509_STORE_CTX *ctx,
                                   X509_STORE_CTX_verify_cb verify_cb)
 {
     ctx->verify_cb = verify_cb;
 }
 
-X509_STORE_CTX_verify_cb X509_STORE_CTX_get_verify_cb(X509_STORE_CTX *ctx)
+X509_STORE_CTX_verify_cb __cdecl X509_STORE_CTX_get_verify_cb(X509_STORE_CTX *ctx)
 {
     return ctx->verify_cb;
 }
 
-void X509_STORE_CTX_set_verify(X509_STORE_CTX *ctx,
+void __cdecl X509_STORE_CTX_set_verify(X509_STORE_CTX *ctx,
                                X509_STORE_CTX_verify_fn verify)
 {
     ctx->verify = verify;
@@ -2484,22 +2484,22 @@ X509_STORE_CTX_cleanup_fn X509_STORE_CTX_get_cleanup(X509_STORE_CTX *ctx)
     return ctx->cleanup;
 }
 
-X509_POLICY_TREE *X509_STORE_CTX_get0_policy_tree(X509_STORE_CTX *ctx)
+X509_POLICY_TREE * __cdecl X509_STORE_CTX_get0_policy_tree(X509_STORE_CTX *ctx)
 {
     return ctx->tree;
 }
 
-int X509_STORE_CTX_get_explicit_policy(X509_STORE_CTX *ctx)
+int __cdecl X509_STORE_CTX_get_explicit_policy(X509_STORE_CTX *ctx)
 {
     return ctx->explicit_policy;
 }
 
-int X509_STORE_CTX_get_num_untrusted(X509_STORE_CTX *ctx)
+int __cdecl X509_STORE_CTX_get_num_untrusted(X509_STORE_CTX *ctx)
 {
     return ctx->num_untrusted;
 }
 
-int X509_STORE_CTX_set_default(X509_STORE_CTX *ctx, const char *name)
+int __cdecl X509_STORE_CTX_set_default(X509_STORE_CTX *ctx, const char *name)
 {
     const X509_VERIFY_PARAM *param;
     param = X509_VERIFY_PARAM_lookup(name);
@@ -2508,18 +2508,18 @@ int X509_STORE_CTX_set_default(X509_STORE_CTX *ctx, const char *name)
     return X509_VERIFY_PARAM_inherit(ctx->param, param);
 }
 
-X509_VERIFY_PARAM *X509_STORE_CTX_get0_param(X509_STORE_CTX *ctx)
+X509_VERIFY_PARAM * __cdecl X509_STORE_CTX_get0_param(X509_STORE_CTX *ctx)
 {
     return ctx->param;
 }
 
-void X509_STORE_CTX_set0_param(X509_STORE_CTX *ctx, X509_VERIFY_PARAM *param)
+void __cdecl X509_STORE_CTX_set0_param(X509_STORE_CTX *ctx, X509_VERIFY_PARAM *param)
 {
     X509_VERIFY_PARAM_free(ctx->param);
     ctx->param = param;
 }
 
-void X509_STORE_CTX_set0_dane(X509_STORE_CTX *ctx, SSL_DANE *dane)
+void __cdecl X509_STORE_CTX_set0_dane(X509_STORE_CTX *ctx, SSL_DANE *dane)
 {
     ctx->dane = dane;
 }

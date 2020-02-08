@@ -24,13 +24,13 @@ const X509V3_EXT_METHOD v3_skey_id = {
     NULL
 };
 
-char *i2s_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method,
+char * __cdecl i2s_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method,
                             const ASN1_OCTET_STRING *oct)
 {
     return OPENSSL_buf2hexstr(oct->data, oct->length);
 }
 
-ASN1_OCTET_STRING *s2i_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method,
+ASN1_OCTET_STRING * __cdecl s2i_ASN1_OCTET_STRING(X509V3_EXT_METHOD *method,
                                          X509V3_CTX *ctx, const char *str)
 {
     ASN1_OCTET_STRING *oct;

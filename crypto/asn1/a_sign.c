@@ -23,7 +23,7 @@
 
 #ifndef NO_ASN1_OLD
 
-int ASN1_sign(i2d_of_void *i2d, X509_ALGOR *algor1, X509_ALGOR *algor2,
+int __cdecl ASN1_sign(i2d_of_void *i2d, X509_ALGOR *algor1, X509_ALGOR *algor2,
               ASN1_BIT_STRING *signature, char *data, EVP_PKEY *pkey,
               const EVP_MD *type)
 {
@@ -114,7 +114,7 @@ int ASN1_sign(i2d_of_void *i2d, X509_ALGOR *algor1, X509_ALGOR *algor2,
 
 #endif
 
-int ASN1_item_sign(const ASN1_ITEM *it, X509_ALGOR *algor1,
+int __cdecl ASN1_item_sign(const ASN1_ITEM *it, X509_ALGOR *algor1,
                    X509_ALGOR *algor2, ASN1_BIT_STRING *signature, void *asn,
                    EVP_PKEY *pkey, const EVP_MD *type)
 {
@@ -136,7 +136,7 @@ int ASN1_item_sign(const ASN1_ITEM *it, X509_ALGOR *algor1,
     return rv;
 }
 
-int ASN1_item_sign_ctx(const ASN1_ITEM *it,
+int __cdecl ASN1_item_sign_ctx(const ASN1_ITEM *it,
                        X509_ALGOR *algor1, X509_ALGOR *algor2,
                        ASN1_BIT_STRING *signature, void *asn, EVP_MD_CTX *ctx)
 {

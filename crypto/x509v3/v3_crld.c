@@ -17,9 +17,9 @@
 #include "internal/x509_int.h"
 #include "ext_dat.h"
 
-static void *v2i_crld(const X509V3_EXT_METHOD *method,
+static void * __cdecl v2i_crld(const X509V3_EXT_METHOD *method,
                       X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval);
-static int i2r_crldp(const X509V3_EXT_METHOD *method, void *pcrldp, BIO *out,
+static int __cdecl i2r_crldp(const X509V3_EXT_METHOD *method, void *pcrldp, BIO *out,
                      int indent);
 
 const X509V3_EXT_METHOD v3_crld = {
@@ -234,7 +234,7 @@ static DIST_POINT *crldp_from_section(X509V3_CTX *ctx,
     return NULL;
 }
 
-static void *v2i_crld(const X509V3_EXT_METHOD *method,
+static void * __cdecl v2i_crld(const X509V3_EXT_METHOD *method,
                       X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval)
 {
     STACK_OF(DIST_POINT) *crld;
@@ -341,9 +341,9 @@ ASN1_SEQUENCE(ISSUING_DIST_POINT) = {
 
 IMPLEMENT_ASN1_FUNCTIONS(ISSUING_DIST_POINT)
 
-static int i2r_idp(const X509V3_EXT_METHOD *method, void *pidp, BIO *out,
+static int __cdecl i2r_idp(const X509V3_EXT_METHOD *method, void *pidp, BIO *out,
                    int indent);
-static void *v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
+static void * __cdecl v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
                      STACK_OF(CONF_VALUE) *nval);
 
 const X509V3_EXT_METHOD v3_idp = {
@@ -357,7 +357,7 @@ const X509V3_EXT_METHOD v3_idp = {
     NULL
 };
 
-static void *v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
+static void * __cdecl v2i_idp(const X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
                      STACK_OF(CONF_VALUE) *nval)
 {
     ISSUING_DIST_POINT *idp = NULL;
@@ -432,7 +432,7 @@ static int print_distpoint(BIO *out, DIST_POINT_NAME *dpn, int indent)
     return 1;
 }
 
-static int i2r_idp(const X509V3_EXT_METHOD *method, void *pidp, BIO *out,
+static int __cdecl i2r_idp(const X509V3_EXT_METHOD *method, void *pidp, BIO *out,
                    int indent)
 {
     ISSUING_DIST_POINT *idp = pidp;
@@ -456,7 +456,7 @@ static int i2r_idp(const X509V3_EXT_METHOD *method, void *pidp, BIO *out,
     return 1;
 }
 
-static int i2r_crldp(const X509V3_EXT_METHOD *method, void *pcrldp, BIO *out,
+static int __cdecl i2r_crldp(const X509V3_EXT_METHOD *method, void *pcrldp, BIO *out,
                      int indent)
 {
     STACK_OF(DIST_POINT) *crld = pcrldp;
@@ -477,7 +477,7 @@ static int i2r_crldp(const X509V3_EXT_METHOD *method, void *pcrldp, BIO *out,
     return 1;
 }
 
-int DIST_POINT_set_dpname(DIST_POINT_NAME *dpn, X509_NAME *iname)
+int __cdecl DIST_POINT_set_dpname(DIST_POINT_NAME *dpn, X509_NAME *iname)
 {
     int i;
     STACK_OF(X509_NAME_ENTRY) *frag;

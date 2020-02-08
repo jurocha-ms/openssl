@@ -36,7 +36,7 @@ static X509_ALGOR *pkcs5_scrypt_set(const unsigned char *salt, size_t saltlen,
  * Return an algorithm identifier for a PKCS#5 v2.0 PBE algorithm using scrypt
  */
 
-X509_ALGOR *PKCS5_pbe2_set_scrypt(const EVP_CIPHER *cipher,
+X509_ALGOR * __cdecl PKCS5_pbe2_set_scrypt(const EVP_CIPHER *cipher,
                                   const unsigned char *salt, int saltlen,
                                   unsigned char *aiv, uint64_t N, uint64_t r,
                                   uint64_t p)

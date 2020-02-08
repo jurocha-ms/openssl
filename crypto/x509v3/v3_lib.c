@@ -22,7 +22,7 @@ static int __cdecl ext_cmp(const X509V3_EXT_METHOD *const *a,
                    const X509V3_EXT_METHOD *const *b);
 static void __cdecl ext_list_free(X509V3_EXT_METHOD *ext);
 
-int X509V3_EXT_add(X509V3_EXT_METHOD *ext)
+int __cdecl X509V3_EXT_add(X509V3_EXT_METHOD *ext)
 {
     if (ext_list == NULL
         && (ext_list = sk_X509V3_EXT_METHOD_new(ext_cmp)) == NULL) {
@@ -49,7 +49,7 @@ IMPLEMENT_OBJ_BSEARCH_CMP_FN(const X509V3_EXT_METHOD *,
 
 #include "standard_exts.h"
 
-const X509V3_EXT_METHOD *X509V3_EXT_get_nid(int nid)
+const X509V3_EXT_METHOD * __cdecl X509V3_EXT_get_nid(int nid)
 {
     X509V3_EXT_METHOD tmp;
     const X509V3_EXT_METHOD *t = &tmp, *const *ret;
@@ -67,7 +67,7 @@ const X509V3_EXT_METHOD *X509V3_EXT_get_nid(int nid)
     return sk_X509V3_EXT_METHOD_value(ext_list, idx);
 }
 
-const X509V3_EXT_METHOD *X509V3_EXT_get(X509_EXTENSION *ext)
+const X509V3_EXT_METHOD * __cdecl X509V3_EXT_get(X509_EXTENSION *ext)
 {
     int nid;
     if ((nid = OBJ_obj2nid(X509_EXTENSION_get_object(ext))) == NID_undef)
@@ -75,7 +75,7 @@ const X509V3_EXT_METHOD *X509V3_EXT_get(X509_EXTENSION *ext)
     return X509V3_EXT_get_nid(nid);
 }
 
-int X509V3_EXT_add_list(X509V3_EXT_METHOD *extlist)
+int __cdecl X509V3_EXT_add_list(X509V3_EXT_METHOD *extlist)
 {
     for (; extlist->ext_nid != -1; extlist++)
         if (!X509V3_EXT_add(extlist))
@@ -83,7 +83,7 @@ int X509V3_EXT_add_list(X509V3_EXT_METHOD *extlist)
     return 1;
 }
 
-int X509V3_EXT_add_alias(int nid_to, int nid_from)
+int __cdecl X509V3_EXT_add_alias(int nid_to, int nid_from)
 {
     const X509V3_EXT_METHOD *ext;
     X509V3_EXT_METHOD *tmpext;
@@ -102,7 +102,7 @@ int X509V3_EXT_add_alias(int nid_to, int nid_from)
     return X509V3_EXT_add(tmpext);
 }
 
-void X509V3_EXT_cleanup(void)
+void __cdecl X509V3_EXT_cleanup(void)
 {
     sk_X509V3_EXT_METHOD_pop_free(ext_list, ext_list_free);
     ext_list = NULL;
@@ -119,14 +119,14 @@ static void __cdecl ext_list_free(X509V3_EXT_METHOD *ext)
  * they are now kept in ext_dat.h.
  */
 
-int X509V3_add_standard_extensions(void)
+int __cdecl X509V3_add_standard_extensions(void)
 {
     return 1;
 }
 
 /* Return an extension internal structure */
 
-void *X509V3_EXT_d2i(X509_EXTENSION *ext)
+void * __cdecl X509V3_EXT_d2i(X509_EXTENSION *ext)
 {
     const X509V3_EXT_METHOD *method;
     const unsigned char *p;
@@ -159,7 +159,7 @@ void *X509V3_EXT_d2i(X509_EXTENSION *ext)
  * -2 extension occurs more than once.
  */
 
-void *X509V3_get_d2i(const STACK_OF(X509_EXTENSION) *x, int nid, int *crit,
+void * __cdecl X509V3_get_d2i(const STACK_OF(X509_EXTENSION) *x, int nid, int *crit,
                      int *idx)
 {
     int lastpos, i;
@@ -215,7 +215,7 @@ void *X509V3_get_d2i(const STACK_OF(X509_EXTENSION) *x, int nid, int *crit,
  * 'value' arguments (if relevant) are the extensions internal structure.
  */
 
-int X509V3_add1_i2d(STACK_OF(X509_EXTENSION) **x, int nid, void *value,
+int __cdecl X509V3_add1_i2d(STACK_OF(X509_EXTENSION) **x, int nid, void *value,
                     int crit, unsigned long flags)
 {
     int errcode, extidx = -1;

@@ -46,7 +46,7 @@ const X509V3_EXT_METHOD v3_alt[3] = {
      NULL, NULL, NULL, NULL},
 };
 
-STACK_OF(CONF_VALUE) *i2v_GENERAL_NAMES(X509V3_EXT_METHOD *method,
+STACK_OF(CONF_VALUE) * __cdecl i2v_GENERAL_NAMES(X509V3_EXT_METHOD *method,
                                         GENERAL_NAMES *gens,
                                         STACK_OF(CONF_VALUE) *ret)
 {
@@ -61,7 +61,7 @@ STACK_OF(CONF_VALUE) *i2v_GENERAL_NAMES(X509V3_EXT_METHOD *method,
     return ret;
 }
 
-STACK_OF(CONF_VALUE) *i2v_GENERAL_NAME(X509V3_EXT_METHOD *method,
+STACK_OF(CONF_VALUE) * __cdecl i2v_GENERAL_NAME(X509V3_EXT_METHOD *method,
                                        GENERAL_NAME *gen,
                                        STACK_OF(CONF_VALUE) *ret)
 {
@@ -138,7 +138,7 @@ STACK_OF(CONF_VALUE) *i2v_GENERAL_NAME(X509V3_EXT_METHOD *method,
     return ret;
 }
 
-int GENERAL_NAME_print(BIO *out, GENERAL_NAME *gen)
+int __cdecl GENERAL_NAME_print(BIO *out, GENERAL_NAME *gen)
 {
     unsigned char *p;
     int i;
@@ -375,7 +375,7 @@ static int copy_email(X509V3_CTX *ctx, GENERAL_NAMES *gens, int move_p)
 
 }
 
-GENERAL_NAMES *v2i_GENERAL_NAMES(const X509V3_EXT_METHOD *method,
+GENERAL_NAMES * __cdecl v2i_GENERAL_NAMES(const X509V3_EXT_METHOD *method,
                                  X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval)
 {
     GENERAL_NAME *gen;
@@ -403,13 +403,13 @@ GENERAL_NAMES *v2i_GENERAL_NAMES(const X509V3_EXT_METHOD *method,
     return NULL;
 }
 
-GENERAL_NAME *v2i_GENERAL_NAME(const X509V3_EXT_METHOD *method,
+GENERAL_NAME * __cdecl v2i_GENERAL_NAME(const X509V3_EXT_METHOD *method,
                                X509V3_CTX *ctx, CONF_VALUE *cnf)
 {
     return v2i_GENERAL_NAME_ex(NULL, method, ctx, cnf, 0);
 }
 
-GENERAL_NAME *a2i_GENERAL_NAME(GENERAL_NAME *out,
+GENERAL_NAME * __cdecl a2i_GENERAL_NAME(GENERAL_NAME *out,
                                const X509V3_EXT_METHOD *method,
                                X509V3_CTX *ctx, int gen_type, const char *value,
                                int is_nc)
@@ -500,7 +500,7 @@ GENERAL_NAME *a2i_GENERAL_NAME(GENERAL_NAME *out,
     return NULL;
 }
 
-GENERAL_NAME *v2i_GENERAL_NAME_ex(GENERAL_NAME *out,
+GENERAL_NAME * __cdecl v2i_GENERAL_NAME_ex(GENERAL_NAME *out,
                                   const X509V3_EXT_METHOD *method,
                                   X509V3_CTX *ctx, CONF_VALUE *cnf, int is_nc)
 {

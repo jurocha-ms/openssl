@@ -75,7 +75,7 @@ static int __cdecl xp_cmp(const X509_PURPOSE *const *a, const X509_PURPOSE *cons
  * really can't because it does recalculate hashes and do other non-const
  * things.
  */
-int X509_check_purpose(X509 *x, int id, int ca)
+int __cdecl X509_check_purpose(X509 *x, int id, int ca)
 {
     int idx;
     const X509_PURPOSE *pt;
@@ -92,7 +92,7 @@ int X509_check_purpose(X509 *x, int id, int ca)
     return pt->check_purpose(pt, x, ca);
 }
 
-int X509_PURPOSE_set(int *p, int purpose)
+int __cdecl X509_PURPOSE_set(int *p, int purpose)
 {
     if (X509_PURPOSE_get_by_id(purpose) == -1) {
         X509V3err(X509V3_F_X509_PURPOSE_SET, X509V3_R_INVALID_PURPOSE);
@@ -102,14 +102,14 @@ int X509_PURPOSE_set(int *p, int purpose)
     return 1;
 }
 
-int X509_PURPOSE_get_count(void)
+int __cdecl X509_PURPOSE_get_count(void)
 {
     if (!xptable)
         return X509_PURPOSE_COUNT;
     return sk_X509_PURPOSE_num(xptable) + X509_PURPOSE_COUNT;
 }
 
-X509_PURPOSE *X509_PURPOSE_get0(int idx)
+X509_PURPOSE * __cdecl X509_PURPOSE_get0(int idx)
 {
     if (idx < 0)
         return NULL;
@@ -118,7 +118,7 @@ X509_PURPOSE *X509_PURPOSE_get0(int idx)
     return sk_X509_PURPOSE_value(xptable, idx - X509_PURPOSE_COUNT);
 }
 
-int X509_PURPOSE_get_by_sname(const char *sname)
+int __cdecl X509_PURPOSE_get_by_sname(const char *sname)
 {
     int i;
     X509_PURPOSE *xptmp;
@@ -130,7 +130,7 @@ int X509_PURPOSE_get_by_sname(const char *sname)
     return -1;
 }
 
-int X509_PURPOSE_get_by_id(int purpose)
+int __cdecl X509_PURPOSE_get_by_id(int purpose)
 {
     X509_PURPOSE tmp;
     int idx;
@@ -146,7 +146,7 @@ int X509_PURPOSE_get_by_id(int purpose)
     return idx + X509_PURPOSE_COUNT;
 }
 
-int X509_PURPOSE_add(int id, int trust, int flags,
+int __cdecl X509_PURPOSE_add(int id, int trust, int flags,
                      int (*ck) (const X509_PURPOSE *, const X509 *, int),
                      const char *name, const char *sname, void *arg)
 {
@@ -227,28 +227,28 @@ static void __cdecl xptable_free(X509_PURPOSE *p)
     }
 }
 
-void X509_PURPOSE_cleanup(void)
+void __cdecl X509_PURPOSE_cleanup(void)
 {
     sk_X509_PURPOSE_pop_free(xptable, xptable_free);
     xptable = NULL;
 }
 
-int X509_PURPOSE_get_id(const X509_PURPOSE *xp)
+int __cdecl X509_PURPOSE_get_id(const X509_PURPOSE *xp)
 {
     return xp->purpose;
 }
 
-char *X509_PURPOSE_get0_name(const X509_PURPOSE *xp)
+char * __cdecl X509_PURPOSE_get0_name(const X509_PURPOSE *xp)
 {
     return xp->name;
 }
 
-char *X509_PURPOSE_get0_sname(const X509_PURPOSE *xp)
+char * __cdecl X509_PURPOSE_get0_sname(const X509_PURPOSE *xp)
 {
     return xp->sname;
 }
 
-int X509_PURPOSE_get_trust(const X509_PURPOSE *xp)
+int __cdecl X509_PURPOSE_get_trust(const X509_PURPOSE *xp)
 {
     return xp->trust;
 }
@@ -261,7 +261,7 @@ static int __cdecl nid_cmp(const int *a, const int *b)
 DECLARE_OBJ_BSEARCH_CMP_FN(int, int, nid);
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(int, int, nid);
 
-int X509_supported_extension(X509_EXTENSION *ex)
+int __cdecl X509_supported_extension(X509_EXTENSION *ex)
 {
     /*
      * This table is a list of the NIDs of supported extensions: that is
@@ -549,17 +549,17 @@ static int check_ca(const X509 *x)
     }
 }
 
-void X509_set_proxy_flag(X509 *x)
+void __cdecl X509_set_proxy_flag(X509 *x)
 {
     x->ex_flags |= EXFLAG_PROXY;
 }
 
-void X509_set_proxy_pathlen(X509 *x, long l)
+void __cdecl X509_set_proxy_pathlen(X509 *x, long l)
 {
     x->ex_pcpathlen = l;
 }
 
-int X509_check_ca(X509 *x)
+int __cdecl X509_check_ca(X509 *x)
 {
     x509v3_cache_extensions(x);
 
@@ -770,7 +770,7 @@ static int no_check(const X509_PURPOSE *xp, const X509 *x, int ca)
  * codes for X509_verify_cert()
  */
 
-int X509_check_issued(X509 *issuer, X509 *subject)
+int __cdecl X509_check_issued(X509 *issuer, X509 *subject)
 {
     if (X509_NAME_cmp(X509_get_subject_name(issuer),
                       X509_get_issuer_name(subject)))
@@ -793,7 +793,7 @@ int X509_check_issued(X509 *issuer, X509 *subject)
     return X509_V_OK;
 }
 
-int X509_check_akid(X509 *issuer, AUTHORITY_KEYID *akid)
+int __cdecl X509_check_akid(X509 *issuer, AUTHORITY_KEYID *akid)
 {
 
     if (!akid)
@@ -832,14 +832,14 @@ int X509_check_akid(X509 *issuer, AUTHORITY_KEYID *akid)
     return X509_V_OK;
 }
 
-uint32_t X509_get_extension_flags(X509 *x)
+uint32_t __cdecl X509_get_extension_flags(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
     return x->ex_flags;
 }
 
-uint32_t X509_get_key_usage(X509 *x)
+uint32_t __cdecl X509_get_key_usage(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
@@ -848,7 +848,7 @@ uint32_t X509_get_key_usage(X509 *x)
     return UINT32_MAX;
 }
 
-uint32_t X509_get_extended_key_usage(X509 *x)
+uint32_t __cdecl X509_get_extended_key_usage(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
@@ -857,35 +857,35 @@ uint32_t X509_get_extended_key_usage(X509 *x)
     return UINT32_MAX;
 }
 
-const ASN1_OCTET_STRING *X509_get0_subject_key_id(X509 *x)
+const ASN1_OCTET_STRING * __cdecl X509_get0_subject_key_id(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
     return x->skid;
 }
 
-const ASN1_OCTET_STRING *X509_get0_authority_key_id(X509 *x)
+const ASN1_OCTET_STRING * __cdecl X509_get0_authority_key_id(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
     return (x->akid != NULL ? x->akid->keyid : NULL);
 }
 
-const GENERAL_NAMES *X509_get0_authority_issuer(X509 *x)
+const GENERAL_NAMES * __cdecl X509_get0_authority_issuer(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
     return (x->akid != NULL ? x->akid->issuer : NULL);
 }
 
-const ASN1_INTEGER *X509_get0_authority_serial(X509 *x)
+const ASN1_INTEGER * __cdecl X509_get0_authority_serial(X509 *x)
 {
     /* Call for side-effect of computing hash and caching extensions */
     X509_check_purpose(x, -1, -1);
     return (x->akid != NULL ? x->akid->serial : NULL);
 }
 
-long X509_get_pathlen(X509 *x)
+long __cdecl X509_get_pathlen(X509 *x)
 {
     /* Called for side effect of caching extensions */
     if (X509_check_purpose(x, -1, -1) != 1
@@ -894,7 +894,7 @@ long X509_get_pathlen(X509 *x)
     return x->ex_pathlen;
 }
 
-long X509_get_proxy_pathlen(X509 *x)
+long __cdecl X509_get_proxy_pathlen(X509 *x)
 {
     /* Called for side effect of caching extensions */
     if (X509_check_purpose(x, -1, -1) != 1

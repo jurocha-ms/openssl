@@ -18,10 +18,10 @@
 #include "internal/x509_int.h"
 #include "ext_dat.h"
 
-static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
+static void * __cdecl v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
                                   X509V3_CTX *ctx,
                                   STACK_OF(CONF_VALUE) *nval);
-static int i2r_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method, void *a,
+static int __cdecl i2r_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method, void *a,
                                 BIO *bp, int ind);
 static int do_i2r_name_constraints(const X509V3_EXT_METHOD *method,
                                    STACK_OF(GENERAL_SUBTREE) *trees, BIO *bp,
@@ -103,7 +103,7 @@ static int ia5casecmp(const char *s1, const char *s2)
     return ia5ncasecmp(s1, s2, SIZE_MAX);
 }
 
-static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
+static void * __cdecl v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
                                   X509V3_CTX *ctx, STACK_OF(CONF_VALUE) *nval)
 {
     int i;
@@ -151,7 +151,7 @@ static void *v2i_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method,
     return NULL;
 }
 
-static int i2r_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method, void *a,
+static int __cdecl i2r_NAME_CONSTRAINTS(const X509V3_EXT_METHOD *method, void *a,
                                 BIO *bp, int ind)
 {
     NAME_CONSTRAINTS *ncons = a;
@@ -234,7 +234,7 @@ static int add_lengths(int *out, int a, int b)
  *  X509_V_ERR_UNSUPPORTED_NAME_SYNTAX: bad or unsupported syntax of name
  */
 
-int NAME_CONSTRAINTS_check(X509 *x, NAME_CONSTRAINTS *nc)
+int __cdecl NAME_CONSTRAINTS_check(X509 *x, NAME_CONSTRAINTS *nc)
 {
     int r, i, name_count, constraint_count;
     X509_NAME *nm;
@@ -393,7 +393,7 @@ static int cn2dnsid(ASN1_STRING *cn, unsigned char **dnsid, size_t *idlen)
 /*
  * Check CN against DNS-ID name constraints.
  */
-int NAME_CONSTRAINTS_check_CN(X509 *x, NAME_CONSTRAINTS *nc)
+int __cdecl NAME_CONSTRAINTS_check_CN(X509 *x, NAME_CONSTRAINTS *nc)
 {
     int r, i;
     X509_NAME *nm = X509_get_subject_name(x);

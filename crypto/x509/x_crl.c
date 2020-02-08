@@ -318,7 +318,7 @@ static int __cdecl X509_REVOKED_cmp(const X509_REVOKED *const *a,
                             (ASN1_STRING *)&(*b)->serialNumber));
 }
 
-int X509_CRL_add0_revoked(X509_CRL *crl, X509_REVOKED *rev)
+int __cdecl X509_CRL_add0_revoked(X509_CRL *crl, X509_REVOKED *rev)
 {
     X509_CRL_INFO *inf;
 
@@ -333,14 +333,14 @@ int X509_CRL_add0_revoked(X509_CRL *crl, X509_REVOKED *rev)
     return 1;
 }
 
-int X509_CRL_verify(X509_CRL *crl, EVP_PKEY *r)
+int __cdecl X509_CRL_verify(X509_CRL *crl, EVP_PKEY *r)
 {
     if (crl->meth->crl_verify)
         return crl->meth->crl_verify(crl, r);
     return 0;
 }
 
-int X509_CRL_get0_by_serial(X509_CRL *crl,
+int __cdecl X509_CRL_get0_by_serial(X509_CRL *crl,
                             X509_REVOKED **ret, ASN1_INTEGER *serial)
 {
     if (crl->meth->crl_lookup)
@@ -348,7 +348,7 @@ int X509_CRL_get0_by_serial(X509_CRL *crl,
     return 0;
 }
 
-int X509_CRL_get0_by_cert(X509_CRL *crl, X509_REVOKED **ret, X509 *x)
+int __cdecl X509_CRL_get0_by_cert(X509_CRL *crl, X509_REVOKED **ret, X509 *x)
 {
     if (crl->meth->crl_lookup)
         return crl->meth->crl_lookup(crl, ret,
@@ -429,7 +429,7 @@ static int def_crl_lookup(X509_CRL *crl,
     return 0;
 }
 
-void X509_CRL_set_default_method(const X509_CRL_METHOD *meth)
+void __cdecl X509_CRL_set_default_method(const X509_CRL_METHOD *meth)
 {
     if (meth == NULL)
         default_crl_method = &int_crl_meth;
@@ -437,7 +437,7 @@ void X509_CRL_set_default_method(const X509_CRL_METHOD *meth)
         default_crl_method = meth;
 }
 
-X509_CRL_METHOD *X509_CRL_METHOD_new(int (*crl_init) (X509_CRL *crl),
+X509_CRL_METHOD * __cdecl X509_CRL_METHOD_new(int (*crl_init) (X509_CRL *crl),
                                      int (*crl_free) (X509_CRL *crl),
                                      int (*crl_lookup) (X509_CRL *crl,
                                                         X509_REVOKED **ret,
@@ -460,19 +460,19 @@ X509_CRL_METHOD *X509_CRL_METHOD_new(int (*crl_init) (X509_CRL *crl),
     return m;
 }
 
-void X509_CRL_METHOD_free(X509_CRL_METHOD *m)
+void __cdecl X509_CRL_METHOD_free(X509_CRL_METHOD *m)
 {
     if (m == NULL || !(m->flags & X509_CRL_METHOD_DYNAMIC))
         return;
     OPENSSL_free(m);
 }
 
-void X509_CRL_set_meth_data(X509_CRL *crl, void *dat)
+void __cdecl X509_CRL_set_meth_data(X509_CRL *crl, void *dat)
 {
     crl->meth_data = dat;
 }
 
-void *X509_CRL_get_meth_data(X509_CRL *crl)
+void * __cdecl X509_CRL_get_meth_data(X509_CRL *crl)
 {
     return crl->meth_data;
 }

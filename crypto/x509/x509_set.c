@@ -19,7 +19,7 @@
 #include "internal/x509_int.h"
 #include "x509_lcl.h"
 
-int X509_set_version(X509 *x, long version)
+int __cdecl X509_set_version(X509 *x, long version)
 {
     if (x == NULL)
         return 0;
@@ -35,7 +35,7 @@ int X509_set_version(X509 *x, long version)
     return ASN1_INTEGER_set(x->cert_info.version, version);
 }
 
-int X509_set_serialNumber(X509 *x, ASN1_INTEGER *serial)
+int __cdecl X509_set_serialNumber(X509 *x, ASN1_INTEGER *serial)
 {
     ASN1_INTEGER *in;
 
@@ -47,14 +47,14 @@ int X509_set_serialNumber(X509 *x, ASN1_INTEGER *serial)
     return 1;
 }
 
-int X509_set_issuer_name(X509 *x, X509_NAME *name)
+int __cdecl X509_set_issuer_name(X509 *x, X509_NAME *name)
 {
     if (x == NULL)
         return 0;
     return X509_NAME_set(&x->cert_info.issuer, name);
 }
 
-int X509_set_subject_name(X509 *x, X509_NAME *name)
+int __cdecl X509_set_subject_name(X509 *x, X509_NAME *name)
 {
     if (x == NULL)
         return 0;
@@ -75,28 +75,28 @@ int x509_set1_time(ASN1_TIME **ptm, const ASN1_TIME *tm)
     return (in != NULL);
 }
 
-int X509_set1_notBefore(X509 *x, const ASN1_TIME *tm)
+int __cdecl X509_set1_notBefore(X509 *x, const ASN1_TIME *tm)
 {
     if (x == NULL)
         return 0;
     return x509_set1_time(&x->cert_info.validity.notBefore, tm);
 }
 
-int X509_set1_notAfter(X509 *x, const ASN1_TIME *tm)
+int __cdecl X509_set1_notAfter(X509 *x, const ASN1_TIME *tm)
 {
     if (x == NULL)
         return 0;
     return x509_set1_time(&x->cert_info.validity.notAfter, tm);
 }
 
-int X509_set_pubkey(X509 *x, EVP_PKEY *pkey)
+int __cdecl X509_set_pubkey(X509 *x, EVP_PKEY *pkey)
 {
     if (x == NULL)
         return 0;
     return X509_PUBKEY_set(&(x->cert_info.key), pkey);
 }
 
-int X509_up_ref(X509 *x)
+int __cdecl X509_up_ref(X509 *x)
 {
     int i;
 
@@ -108,47 +108,47 @@ int X509_up_ref(X509 *x)
     return ((i > 1) ? 1 : 0);
 }
 
-long X509_get_version(const X509 *x)
+long __cdecl X509_get_version(const X509 *x)
 {
     return ASN1_INTEGER_get(x->cert_info.version);
 }
 
-const ASN1_TIME *X509_get0_notBefore(const X509 *x)
+const ASN1_TIME * __cdecl X509_get0_notBefore(const X509 *x)
 {
     return x->cert_info.validity.notBefore;
 }
 
-const ASN1_TIME *X509_get0_notAfter(const X509 *x)
+const ASN1_TIME * __cdecl X509_get0_notAfter(const X509 *x)
 {
     return x->cert_info.validity.notAfter;
 }
 
-ASN1_TIME *X509_getm_notBefore(const X509 *x)
+ASN1_TIME * __cdecl X509_getm_notBefore(const X509 *x)
 {
     return x->cert_info.validity.notBefore;
 }
 
-ASN1_TIME *X509_getm_notAfter(const X509 *x)
+ASN1_TIME * __cdecl X509_getm_notAfter(const X509 *x)
 {
     return x->cert_info.validity.notAfter;
 }
 
-int X509_get_signature_type(const X509 *x)
+int __cdecl X509_get_signature_type(const X509 *x)
 {
     return EVP_PKEY_type(OBJ_obj2nid(x->sig_alg.algorithm));
 }
 
-X509_PUBKEY *X509_get_X509_PUBKEY(const X509 *x)
+X509_PUBKEY * __cdecl X509_get_X509_PUBKEY(const X509 *x)
 {
     return x->cert_info.key;
 }
 
-const STACK_OF(X509_EXTENSION) *X509_get0_extensions(const X509 *x)
+const STACK_OF(X509_EXTENSION) * __cdecl X509_get0_extensions(const X509 *x)
 {
     return x->cert_info.extensions;
 }
 
-void X509_get0_uids(const X509 *x, const ASN1_BIT_STRING **piuid,
+void __cdecl X509_get0_uids(const X509 *x, const ASN1_BIT_STRING **piuid,
                     const ASN1_BIT_STRING **psuid)
 {
     if (piuid != NULL)
@@ -157,12 +157,12 @@ void X509_get0_uids(const X509 *x, const ASN1_BIT_STRING **piuid,
         *psuid = x->cert_info.subjectUID;
 }
 
-const X509_ALGOR *X509_get0_tbs_sigalg(const X509 *x)
+const X509_ALGOR * __cdecl X509_get0_tbs_sigalg(const X509 *x)
 {
     return &x->cert_info.signature;
 }
 
-int X509_SIG_INFO_get(const X509_SIG_INFO *siginf, int *mdnid, int *pknid,
+int __cdecl X509_SIG_INFO_get(const X509_SIG_INFO *siginf, int *mdnid, int *pknid,
                       int *secbits, uint32_t *flags)
 {
     if (mdnid != NULL)
@@ -176,7 +176,7 @@ int X509_SIG_INFO_get(const X509_SIG_INFO *siginf, int *mdnid, int *pknid,
     return (siginf->flags & X509_SIG_INFO_VALID) != 0;
 }
 
-void X509_SIG_INFO_set(X509_SIG_INFO *siginf, int mdnid, int pknid,
+void __cdecl X509_SIG_INFO_set(X509_SIG_INFO *siginf, int mdnid, int pknid,
                        int secbits, uint32_t flags)
 {
     siginf->mdnid = mdnid;
@@ -185,7 +185,7 @@ void X509_SIG_INFO_set(X509_SIG_INFO *siginf, int mdnid, int pknid,
     siginf->flags = flags;
 }
 
-int X509_get_signature_info(X509 *x, int *mdnid, int *pknid, int *secbits,
+int __cdecl X509_get_signature_info(X509 *x, int *mdnid, int *pknid, int *secbits,
                             uint32_t *flags)
 {
     X509_check_purpose(x, -1, -1);

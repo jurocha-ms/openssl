@@ -110,12 +110,12 @@ IMPLEMENT_ASN1_FUNCTIONS(X509)
 
 IMPLEMENT_ASN1_DUP_FUNCTION(X509)
 
-int X509_set_ex_data(X509 *r, int idx, void *arg)
+int __cdecl X509_set_ex_data(X509 *r, int idx, void *arg)
 {
     return CRYPTO_set_ex_data(&r->ex_data, idx, arg);
 }
 
-void *X509_get_ex_data(X509 *r, int idx)
+void * __cdecl X509_get_ex_data(X509 *r, int idx)
 {
     return CRYPTO_get_ex_data(&r->ex_data, idx);
 }
@@ -226,13 +226,13 @@ int __cdecl i2d_X509_AUX(X509 *a, unsigned char **pp)
     return length;
 }
 
-int i2d_re_X509_tbs(X509 *x, unsigned char **pp)
+int __cdecl i2d_re_X509_tbs(X509 *x, unsigned char **pp)
 {
     x->cert_info.enc.modified = 1;
     return i2d_X509_CINF(&x->cert_info, pp);
 }
 
-void X509_get0_signature(const ASN1_BIT_STRING **psig,
+void __cdecl X509_get0_signature(const ASN1_BIT_STRING **psig,
                          const X509_ALGOR **palg, const X509 *x)
 {
     if (psig)
@@ -241,7 +241,7 @@ void X509_get0_signature(const ASN1_BIT_STRING **psig,
         *palg = &x->sig_alg;
 }
 
-int X509_get_signature_nid(const X509 *x)
+int __cdecl X509_get_signature_nid(const X509 *x)
 {
     return OBJ_obj2nid(x->sig_alg.algorithm);
 }

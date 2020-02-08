@@ -20,7 +20,7 @@
 
 #ifndef NO_ASN1_OLD
 
-int ASN1_digest(i2d_of_void *i2d, const EVP_MD *type, char *data,
+int __cdecl ASN1_digest(i2d_of_void *i2d, const EVP_MD *type, char *data,
                 unsigned char *md, unsigned int *len)
 {
     int inl;
@@ -48,7 +48,7 @@ int ASN1_digest(i2d_of_void *i2d, const EVP_MD *type, char *data,
 
 #endif
 
-int ASN1_item_digest(const ASN1_ITEM *it, const EVP_MD *type, void *asn,
+int __cdecl ASN1_item_digest(const ASN1_ITEM *it, const EVP_MD *type, void *asn,
                      unsigned char *md, unsigned int *len)
 {
     int i;

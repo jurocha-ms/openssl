@@ -54,7 +54,7 @@ static int __cdecl tr_cmp(const X509_TRUST *const *a, const X509_TRUST *const *b
     return (*a)->trust - (*b)->trust;
 }
 
-int (*X509_TRUST_set_default(int (*trust) (int, X509 *, int))) (int, X509 *,
+int (* __cdecl X509_TRUST_set_default(int (*trust) (int, X509 *, int))) (int, X509 *,
                                                                 int) {
     int (*oldtrust) (int, X509 *, int);
     oldtrust = default_trust;
@@ -62,7 +62,7 @@ int (*X509_TRUST_set_default(int (*trust) (int, X509 *, int))) (int, X509 *,
     return oldtrust;
 }
 
-int X509_check_trust(X509 *x, int id, int flags)
+int __cdecl X509_check_trust(X509 *x, int id, int flags)
 {
     X509_TRUST *pt;
     int idx;
@@ -78,14 +78,14 @@ int X509_check_trust(X509 *x, int id, int flags)
     return pt->check_trust(pt, x, flags);
 }
 
-int X509_TRUST_get_count(void)
+int __cdecl X509_TRUST_get_count(void)
 {
     if (!trtable)
         return X509_TRUST_COUNT;
     return sk_X509_TRUST_num(trtable) + X509_TRUST_COUNT;
 }
 
-X509_TRUST *X509_TRUST_get0(int idx)
+X509_TRUST * __cdecl X509_TRUST_get0(int idx)
 {
     if (idx < 0)
         return NULL;
@@ -94,7 +94,7 @@ X509_TRUST *X509_TRUST_get0(int idx)
     return sk_X509_TRUST_value(trtable, idx - X509_TRUST_COUNT);
 }
 
-int X509_TRUST_get_by_id(int id)
+int __cdecl X509_TRUST_get_by_id(int id)
 {
     X509_TRUST tmp;
     int idx;
@@ -110,7 +110,7 @@ int X509_TRUST_get_by_id(int id)
     return idx + X509_TRUST_COUNT;
 }
 
-int X509_TRUST_set(int *t, int trust)
+int __cdecl X509_TRUST_set(int *t, int trust)
 {
     if (X509_TRUST_get_by_id(trust) == -1) {
         X509err(X509_F_X509_TRUST_SET, X509_R_INVALID_TRUST);
@@ -120,7 +120,7 @@ int X509_TRUST_set(int *t, int trust)
     return 1;
 }
 
-int X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
+int __cdecl X509_TRUST_add(int id, int flags, int (*ck) (X509_TRUST *, X509 *, int),
                    const char *name, int arg1, void *arg2)
 {
     int idx;
@@ -193,23 +193,23 @@ static void __cdecl trtable_free(X509_TRUST *p)
     }
 }
 
-void X509_TRUST_cleanup(void)
+void __cdecl X509_TRUST_cleanup(void)
 {
     sk_X509_TRUST_pop_free(trtable, trtable_free);
     trtable = NULL;
 }
 
-int X509_TRUST_get_flags(const X509_TRUST *xp)
+int __cdecl X509_TRUST_get_flags(const X509_TRUST *xp)
 {
     return xp->flags;
 }
 
-char *X509_TRUST_get0_name(const X509_TRUST *xp)
+char * __cdecl X509_TRUST_get0_name(const X509_TRUST *xp)
 {
     return xp->name;
 }
 
-int X509_TRUST_get_trust(const X509_TRUST *xp)
+int __cdecl X509_TRUST_get_trust(const X509_TRUST *xp)
 {
     return xp->trust;
 }

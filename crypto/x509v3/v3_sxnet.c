@@ -101,7 +101,7 @@ static SXNET *sxnet_v2i(X509V3_EXT_METHOD *method, X509V3_CTX *ctx,
 
 /* Add an id given the zone as an ASCII number */
 
-int SXNET_add_id_asc(SXNET **psx, const char *zone, const char *user, int userlen)
+int __cdecl SXNET_add_id_asc(SXNET **psx, const char *zone, const char *user, int userlen)
 {
     ASN1_INTEGER *izone;
 
@@ -114,7 +114,7 @@ int SXNET_add_id_asc(SXNET **psx, const char *zone, const char *user, int userle
 
 /* Add an id given the zone as an unsigned long */
 
-int SXNET_add_id_ulong(SXNET **psx, unsigned long lzone, const char *user,
+int __cdecl SXNET_add_id_ulong(SXNET **psx, unsigned long lzone, const char *user,
                        int userlen)
 {
     ASN1_INTEGER *izone;
@@ -134,7 +134,7 @@ int SXNET_add_id_ulong(SXNET **psx, unsigned long lzone, const char *user,
  * passed integer and doesn't make a copy so don't free it up afterwards.
  */
 
-int SXNET_add_id_INTEGER(SXNET **psx, ASN1_INTEGER *zone, const char *user,
+int __cdecl SXNET_add_id_INTEGER(SXNET **psx, ASN1_INTEGER *zone, const char *user,
                          int userlen)
 {
     SXNET *sx = NULL;
@@ -183,7 +183,7 @@ int SXNET_add_id_INTEGER(SXNET **psx, ASN1_INTEGER *zone, const char *user,
     return 0;
 }
 
-ASN1_OCTET_STRING *SXNET_get_id_asc(SXNET *sx, const char *zone)
+ASN1_OCTET_STRING * __cdecl SXNET_get_id_asc(SXNET *sx, const char *zone)
 {
     ASN1_INTEGER *izone;
     ASN1_OCTET_STRING *oct;
@@ -197,7 +197,7 @@ ASN1_OCTET_STRING *SXNET_get_id_asc(SXNET *sx, const char *zone)
     return oct;
 }
 
-ASN1_OCTET_STRING *SXNET_get_id_ulong(SXNET *sx, unsigned long lzone)
+ASN1_OCTET_STRING * __cdecl SXNET_get_id_ulong(SXNET *sx, unsigned long lzone)
 {
     ASN1_INTEGER *izone;
     ASN1_OCTET_STRING *oct;
@@ -213,7 +213,7 @@ ASN1_OCTET_STRING *SXNET_get_id_ulong(SXNET *sx, unsigned long lzone)
     return oct;
 }
 
-ASN1_OCTET_STRING *SXNET_get_id_INTEGER(SXNET *sx, ASN1_INTEGER *zone)
+ASN1_OCTET_STRING * __cdecl SXNET_get_id_INTEGER(SXNET *sx, ASN1_INTEGER *zone)
 {
     SXNETID *id;
     int i;

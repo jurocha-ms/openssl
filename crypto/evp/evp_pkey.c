@@ -18,7 +18,7 @@
 
 /* Extract a private key from a PKCS8 structure */
 
-EVP_PKEY *EVP_PKCS82PKEY(const PKCS8_PRIV_KEY_INFO *p8)
+EVP_PKEY * __cdecl EVP_PKCS82PKEY(const PKCS8_PRIV_KEY_INFO *p8)
 {
     EVP_PKEY *pkey = NULL;
     const ASN1_OBJECT *algoid;
@@ -58,7 +58,7 @@ EVP_PKEY *EVP_PKCS82PKEY(const PKCS8_PRIV_KEY_INFO *p8)
 
 /* Turn a private key into a PKCS8 structure */
 
-PKCS8_PRIV_KEY_INFO *EVP_PKEY2PKCS8(EVP_PKEY *pkey)
+PKCS8_PRIV_KEY_INFO * __cdecl EVP_PKEY2PKCS8(EVP_PKEY *pkey)
 {
     PKCS8_PRIV_KEY_INFO *p8 = PKCS8_PRIV_KEY_INFO_new();
     if (p8  == NULL) {
@@ -88,40 +88,40 @@ PKCS8_PRIV_KEY_INFO *EVP_PKEY2PKCS8(EVP_PKEY *pkey)
 
 /* EVP_PKEY attribute functions */
 
-int EVP_PKEY_get_attr_count(const EVP_PKEY *key)
+int __cdecl EVP_PKEY_get_attr_count(const EVP_PKEY *key)
 {
     return X509at_get_attr_count(key->attributes);
 }
 
-int EVP_PKEY_get_attr_by_NID(const EVP_PKEY *key, int nid, int lastpos)
+int __cdecl EVP_PKEY_get_attr_by_NID(const EVP_PKEY *key, int nid, int lastpos)
 {
     return X509at_get_attr_by_NID(key->attributes, nid, lastpos);
 }
 
-int EVP_PKEY_get_attr_by_OBJ(const EVP_PKEY *key, const ASN1_OBJECT *obj,
+int __cdecl EVP_PKEY_get_attr_by_OBJ(const EVP_PKEY *key, const ASN1_OBJECT *obj,
                              int lastpos)
 {
     return X509at_get_attr_by_OBJ(key->attributes, obj, lastpos);
 }
 
-X509_ATTRIBUTE *EVP_PKEY_get_attr(const EVP_PKEY *key, int loc)
+X509_ATTRIBUTE * __cdecl EVP_PKEY_get_attr(const EVP_PKEY *key, int loc)
 {
     return X509at_get_attr(key->attributes, loc);
 }
 
-X509_ATTRIBUTE *EVP_PKEY_delete_attr(EVP_PKEY *key, int loc)
+X509_ATTRIBUTE * __cdecl EVP_PKEY_delete_attr(EVP_PKEY *key, int loc)
 {
     return X509at_delete_attr(key->attributes, loc);
 }
 
-int EVP_PKEY_add1_attr(EVP_PKEY *key, X509_ATTRIBUTE *attr)
+int __cdecl EVP_PKEY_add1_attr(EVP_PKEY *key, X509_ATTRIBUTE *attr)
 {
     if (X509at_add1_attr(&key->attributes, attr))
         return 1;
     return 0;
 }
 
-int EVP_PKEY_add1_attr_by_OBJ(EVP_PKEY *key,
+int __cdecl EVP_PKEY_add1_attr_by_OBJ(EVP_PKEY *key,
                               const ASN1_OBJECT *obj, int type,
                               const unsigned char *bytes, int len)
 {
@@ -130,7 +130,7 @@ int EVP_PKEY_add1_attr_by_OBJ(EVP_PKEY *key,
     return 0;
 }
 
-int EVP_PKEY_add1_attr_by_NID(EVP_PKEY *key,
+int __cdecl EVP_PKEY_add1_attr_by_NID(EVP_PKEY *key,
                               int nid, int type,
                               const unsigned char *bytes, int len)
 {
@@ -139,7 +139,7 @@ int EVP_PKEY_add1_attr_by_NID(EVP_PKEY *key,
     return 0;
 }
 
-int EVP_PKEY_add1_attr_by_txt(EVP_PKEY *key,
+int __cdecl EVP_PKEY_add1_attr_by_txt(EVP_PKEY *key,
                               const char *attrname, int type,
                               const unsigned char *bytes, int len)
 {

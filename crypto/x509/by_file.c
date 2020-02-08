@@ -17,7 +17,7 @@
 #include <openssl/pem.h>
 #include "x509_lcl.h"
 
-static int by_file_ctrl(X509_LOOKUP *ctx, int cmd, const char *argc,
+static int __cdecl by_file_ctrl(X509_LOOKUP *ctx, int cmd, const char *argc,
                         long argl, char **ret);
 static X509_LOOKUP_METHOD x509_file_lookup = {
     "Load file into cache",
@@ -32,12 +32,12 @@ static X509_LOOKUP_METHOD x509_file_lookup = {
     NULL,                       /* get_by_alias */
 };
 
-X509_LOOKUP_METHOD *X509_LOOKUP_file(void)
+X509_LOOKUP_METHOD * __cdecl X509_LOOKUP_file(void)
 {
     return &x509_file_lookup;
 }
 
-static int by_file_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp,
+static int __cdecl by_file_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp,
                         long argl, char **ret)
 {
     int ok = 0;
@@ -71,7 +71,7 @@ static int by_file_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp,
     return ok;
 }
 
-int X509_load_cert_file(X509_LOOKUP *ctx, const char *file, int type)
+int __cdecl X509_load_cert_file(X509_LOOKUP *ctx, const char *file, int type)
 {
     int ret = 0;
     BIO *in = NULL;
@@ -128,7 +128,7 @@ int X509_load_cert_file(X509_LOOKUP *ctx, const char *file, int type)
     return ret;
 }
 
-int X509_load_crl_file(X509_LOOKUP *ctx, const char *file, int type)
+int __cdecl X509_load_crl_file(X509_LOOKUP *ctx, const char *file, int type)
 {
     int ret = 0;
     BIO *in = NULL;
@@ -185,7 +185,7 @@ int X509_load_crl_file(X509_LOOKUP *ctx, const char *file, int type)
     return ret;
 }
 
-int X509_load_cert_crl_file(X509_LOOKUP *ctx, const char *file, int type)
+int __cdecl X509_load_cert_crl_file(X509_LOOKUP *ctx, const char *file, int type)
 {
     STACK_OF(X509_INFO) *inf;
     X509_INFO *itmp;

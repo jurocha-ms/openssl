@@ -479,7 +479,7 @@ static int i2d_name_canon(STACK_OF(STACK_OF_X509_NAME_ENTRY) * _intname,
     return len;
 }
 
-int X509_NAME_set(X509_NAME **xn, X509_NAME *name)
+int __cdecl X509_NAME_set(X509_NAME **xn, X509_NAME *name)
 {
     if (*xn == name)
         return *xn != NULL;
@@ -490,7 +490,7 @@ int X509_NAME_set(X509_NAME **xn, X509_NAME *name)
     return 1;
 }
 
-int X509_NAME_print(BIO *bp, const X509_NAME *name, int obase)
+int __cdecl X509_NAME_print(BIO *bp, const X509_NAME *name, int obase)
 {
     char *s, *c, *b;
     int l, i;
@@ -537,7 +537,7 @@ int X509_NAME_print(BIO *bp, const X509_NAME *name, int obase)
     return 0;
 }
 
-int X509_NAME_get0_der(X509_NAME *nm, const unsigned char **pder,
+int __cdecl X509_NAME_get0_der(X509_NAME *nm, const unsigned char **pder,
                        size_t *pderlen)
 {
     /* Make sure encoding is valid */

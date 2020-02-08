@@ -50,7 +50,7 @@ ASN1_ITEM_TEMPLATE_END(GENERAL_NAMES)
 
 IMPLEMENT_ASN1_FUNCTIONS(GENERAL_NAMES)
 
-GENERAL_NAME *GENERAL_NAME_dup(GENERAL_NAME *a)
+GENERAL_NAME * __cdecl GENERAL_NAME_dup(GENERAL_NAME *a)
 {
     return (GENERAL_NAME *)ASN1_dup((i2d_of_void *)i2d_GENERAL_NAME,
                                     (d2i_of_void *)d2i_GENERAL_NAME,
@@ -58,7 +58,7 @@ GENERAL_NAME *GENERAL_NAME_dup(GENERAL_NAME *a)
 }
 
 /* Returns 0 if they are equal, != 0 otherwise. */
-int GENERAL_NAME_cmp(GENERAL_NAME *a, GENERAL_NAME *b)
+int __cdecl GENERAL_NAME_cmp(GENERAL_NAME *a, GENERAL_NAME *b)
 {
     int result = -1;
 
@@ -96,7 +96,7 @@ int GENERAL_NAME_cmp(GENERAL_NAME *a, GENERAL_NAME *b)
 }
 
 /* Returns 0 if they are equal, != 0 otherwise. */
-int OTHERNAME_cmp(OTHERNAME *a, OTHERNAME *b)
+int __cdecl OTHERNAME_cmp(OTHERNAME *a, OTHERNAME *b)
 {
     int result = -1;
 
@@ -110,7 +110,7 @@ int OTHERNAME_cmp(OTHERNAME *a, OTHERNAME *b)
     return result;
 }
 
-void GENERAL_NAME_set0_value(GENERAL_NAME *a, int type, void *value)
+void __cdecl GENERAL_NAME_set0_value(GENERAL_NAME *a, int type, void *value)
 {
     switch (type) {
     case GEN_X400:
@@ -143,7 +143,7 @@ void GENERAL_NAME_set0_value(GENERAL_NAME *a, int type, void *value)
     a->type = type;
 }
 
-void *GENERAL_NAME_get0_value(const GENERAL_NAME *a, int *ptype)
+void * __cdecl GENERAL_NAME_get0_value(const GENERAL_NAME *a, int *ptype)
 {
     if (ptype)
         *ptype = a->type;
@@ -174,7 +174,7 @@ void *GENERAL_NAME_get0_value(const GENERAL_NAME *a, int *ptype)
     }
 }
 
-int GENERAL_NAME_set0_othername(GENERAL_NAME *gen,
+int __cdecl GENERAL_NAME_set0_othername(GENERAL_NAME *gen,
                                 ASN1_OBJECT *oid, ASN1_TYPE *value)
 {
     OTHERNAME *oth;
@@ -188,7 +188,7 @@ int GENERAL_NAME_set0_othername(GENERAL_NAME *gen,
     return 1;
 }
 
-int GENERAL_NAME_get0_otherName(const GENERAL_NAME *gen,
+int __cdecl GENERAL_NAME_get0_otherName(const GENERAL_NAME *gen,
                                 ASN1_OBJECT **poid, ASN1_TYPE **pvalue)
 {
     if (gen->type != GEN_OTHERNAME)

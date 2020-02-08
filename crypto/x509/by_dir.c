@@ -39,12 +39,12 @@ typedef struct lookup_dir_st {
     CRYPTO_RWLOCK *lock;
 } BY_DIR;
 
-static int dir_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp, long argl,
+static int __cdecl dir_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp, long argl,
                     char **ret);
-static int new_dir(X509_LOOKUP *lu);
-static void free_dir(X509_LOOKUP *lu);
-static int add_cert_dir(BY_DIR *ctx, const char *dir, int type);
-static int get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
+static int __cdecl new_dir(X509_LOOKUP *lu);
+static void __cdecl free_dir(X509_LOOKUP *lu);
+static int __cdecl add_cert_dir(BY_DIR *ctx, const char *dir, int type);
+static int __cdecl get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
                                X509_NAME *name, X509_OBJECT *ret);
 static X509_LOOKUP_METHOD x509_dir_lookup = {
     "Load certs from files in a directory",
@@ -59,12 +59,12 @@ static X509_LOOKUP_METHOD x509_dir_lookup = {
     NULL,                       /* get_by_alias */
 };
 
-X509_LOOKUP_METHOD *X509_LOOKUP_hash_dir(void)
+X509_LOOKUP_METHOD * __cdecl X509_LOOKUP_hash_dir(void)
 {
     return &x509_dir_lookup;
 }
 
-static int dir_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp, long argl,
+static int __cdecl dir_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp, long argl,
                     char **retp)
 {
     int ret = 0;
@@ -90,7 +90,7 @@ static int dir_ctrl(X509_LOOKUP *ctx, int cmd, const char *argp, long argl,
     return ret;
 }
 
-static int new_dir(X509_LOOKUP *lu)
+static int __cdecl new_dir(X509_LOOKUP *lu)
 {
     BY_DIR *a = OPENSSL_malloc(sizeof(*a));
 
@@ -140,7 +140,7 @@ static void __cdecl by_dir_entry_free(BY_DIR_ENTRY *ent)
     OPENSSL_free(ent);
 }
 
-static void free_dir(X509_LOOKUP *lu)
+static void __cdecl free_dir(X509_LOOKUP *lu)
 {
     BY_DIR *a = (BY_DIR *)lu->method_data;
 
@@ -150,7 +150,7 @@ static void free_dir(X509_LOOKUP *lu)
     OPENSSL_free(a);
 }
 
-static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
+static int __cdecl add_cert_dir(BY_DIR *ctx, const char *dir, int type)
 {
     int j;
     size_t len;
@@ -208,7 +208,7 @@ static int add_cert_dir(BY_DIR *ctx, const char *dir, int type)
     return 1;
 }
 
-static int get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
+static int __cdecl get_cert_by_subject(X509_LOOKUP *xl, X509_LOOKUP_TYPE type,
                                X509_NAME *name, X509_OBJECT *ret)
 {
     BY_DIR *ctx;

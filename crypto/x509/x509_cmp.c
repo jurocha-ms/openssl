@@ -15,7 +15,7 @@
 #include <openssl/x509v3.h>
 #include "internal/x509_int.h"
 
-int X509_issuer_and_serial_cmp(const X509 *a, const X509 *b)
+int __cdecl X509_issuer_and_serial_cmp(const X509 *a, const X509 *b)
 {
     int i;
     const X509_CINF *ai, *bi;
@@ -29,7 +29,7 @@ int X509_issuer_and_serial_cmp(const X509 *a, const X509 *b)
 }
 
 #ifndef OPENSSL_NO_MD5
-unsigned long X509_issuer_and_serial_hash(X509 *a)
+unsigned long __cdecl X509_issuer_and_serial_hash(X509 *a)
 {
     unsigned long ret = 0;
     EVP_MD_CTX *ctx = EVP_MD_CTX_new();
@@ -59,65 +59,65 @@ unsigned long X509_issuer_and_serial_hash(X509 *a)
 }
 #endif
 
-int X509_issuer_name_cmp(const X509 *a, const X509 *b)
+int __cdecl X509_issuer_name_cmp(const X509 *a, const X509 *b)
 {
     return X509_NAME_cmp(a->cert_info.issuer, b->cert_info.issuer);
 }
 
-int X509_subject_name_cmp(const X509 *a, const X509 *b)
+int __cdecl X509_subject_name_cmp(const X509 *a, const X509 *b)
 {
     return X509_NAME_cmp(a->cert_info.subject, b->cert_info.subject);
 }
 
-int X509_CRL_cmp(const X509_CRL *a, const X509_CRL *b)
+int __cdecl X509_CRL_cmp(const X509_CRL *a, const X509_CRL *b)
 {
     return X509_NAME_cmp(a->crl.issuer, b->crl.issuer);
 }
 
-int X509_CRL_match(const X509_CRL *a, const X509_CRL *b)
+int __cdecl X509_CRL_match(const X509_CRL *a, const X509_CRL *b)
 {
     return memcmp(a->sha1_hash, b->sha1_hash, 20);
 }
 
-X509_NAME *X509_get_issuer_name(const X509 *a)
+X509_NAME * __cdecl X509_get_issuer_name(const X509 *a)
 {
     return a->cert_info.issuer;
 }
 
-unsigned long X509_issuer_name_hash(X509 *x)
+unsigned long __cdecl X509_issuer_name_hash(X509 *x)
 {
     return X509_NAME_hash(x->cert_info.issuer);
 }
 
 #ifndef OPENSSL_NO_MD5
-unsigned long X509_issuer_name_hash_old(X509 *x)
+unsigned long __cdecl X509_issuer_name_hash_old(X509 *x)
 {
     return X509_NAME_hash_old(x->cert_info.issuer);
 }
 #endif
 
-X509_NAME *X509_get_subject_name(const X509 *a)
+X509_NAME * __cdecl X509_get_subject_name(const X509 *a)
 {
     return a->cert_info.subject;
 }
 
-ASN1_INTEGER *X509_get_serialNumber(X509 *a)
+ASN1_INTEGER * __cdecl X509_get_serialNumber(X509 *a)
 {
     return &a->cert_info.serialNumber;
 }
 
-const ASN1_INTEGER *X509_get0_serialNumber(const X509 *a)
+const ASN1_INTEGER * __cdecl X509_get0_serialNumber(const X509 *a)
 {
     return &a->cert_info.serialNumber;
 }
 
-unsigned long X509_subject_name_hash(X509 *x)
+unsigned long __cdecl X509_subject_name_hash(X509 *x)
 {
     return X509_NAME_hash(x->cert_info.subject);
 }
 
 #ifndef OPENSSL_NO_MD5
-unsigned long X509_subject_name_hash_old(X509 *x)
+unsigned long __cdecl X509_subject_name_hash_old(X509 *x)
 {
     return X509_NAME_hash_old(x->cert_info.subject);
 }
@@ -131,7 +131,7 @@ unsigned long X509_subject_name_hash_old(X509 *x)
  * certain cert information is cached. So this is the point where the
  * "depth-first" constification tree has to halt with an evil cast.
  */
-int X509_cmp(const X509 *a, const X509 *b)
+int __cdecl X509_cmp(const X509 *a, const X509 *b)
 {
     int rv;
     /* ensure hash is valid */
@@ -153,7 +153,7 @@ int X509_cmp(const X509 *a, const X509 *b)
     return rv;
 }
 
-int X509_NAME_cmp(const X509_NAME *a, const X509_NAME *b)
+int __cdecl X509_NAME_cmp(const X509_NAME *a, const X509_NAME *b)
 {
     int ret;
 
@@ -180,7 +180,7 @@ int X509_NAME_cmp(const X509_NAME *a, const X509_NAME *b)
 
 }
 
-unsigned long X509_NAME_hash(X509_NAME *x)
+unsigned long __cdecl X509_NAME_hash(X509_NAME *x)
 {
     unsigned long ret = 0;
     unsigned char md[SHA_DIGEST_LENGTH];
@@ -203,7 +203,7 @@ unsigned long X509_NAME_hash(X509_NAME *x)
  * this is reasonably efficient.
  */
 
-unsigned long X509_NAME_hash_old(X509_NAME *x)
+unsigned long __cdecl X509_NAME_hash_old(X509_NAME *x)
 {
     EVP_MD_CTX *md_ctx = EVP_MD_CTX_new();
     unsigned long ret = 0;
@@ -228,7 +228,7 @@ unsigned long X509_NAME_hash_old(X509_NAME *x)
 #endif
 
 /* Search a stack of X509 for a match */
-X509 *X509_find_by_issuer_and_serial(STACK_OF(X509) *sk, X509_NAME *name,
+X509 * __cdecl X509_find_by_issuer_and_serial(STACK_OF(X509) *sk, X509_NAME *name,
                                      ASN1_INTEGER *serial)
 {
     int i;
@@ -248,7 +248,7 @@ X509 *X509_find_by_issuer_and_serial(STACK_OF(X509) *sk, X509_NAME *name,
     return NULL;
 }
 
-X509 *X509_find_by_subject(STACK_OF(X509) *sk, X509_NAME *name)
+X509 * __cdecl X509_find_by_subject(STACK_OF(X509) *sk, X509_NAME *name)
 {
     X509 *x509;
     int i;
@@ -261,21 +261,21 @@ X509 *X509_find_by_subject(STACK_OF(X509) *sk, X509_NAME *name)
     return NULL;
 }
 
-EVP_PKEY *X509_get0_pubkey(const X509 *x)
+EVP_PKEY * __cdecl X509_get0_pubkey(const X509 *x)
 {
     if (x == NULL)
         return NULL;
     return X509_PUBKEY_get0(x->cert_info.key);
 }
 
-EVP_PKEY *X509_get_pubkey(X509 *x)
+EVP_PKEY * __cdecl X509_get_pubkey(X509 *x)
 {
     if (x == NULL)
         return NULL;
     return X509_PUBKEY_get(x->cert_info.key);
 }
 
-int X509_check_private_key(const X509 *x, const EVP_PKEY *k)
+int __cdecl X509_check_private_key(const X509 *x, const EVP_PKEY *k)
 {
     const EVP_PKEY *xk;
     int ret;
@@ -343,7 +343,7 @@ static int check_suite_b(EVP_PKEY *pkey, int sign_nid, unsigned long *pflags)
     return X509_V_OK;
 }
 
-int X509_chain_check_suiteb(int *perror_depth, X509 *x, STACK_OF(X509) *chain,
+int __cdecl X509_chain_check_suiteb(int *perror_depth, X509 *x, STACK_OF(X509) *chain,
                             unsigned long flags)
 {
     int rv, i, sign_nid;
@@ -418,7 +418,7 @@ int X509_chain_check_suiteb(int *perror_depth, X509 *x, STACK_OF(X509) *chain,
     return rv;
 }
 
-int X509_CRL_check_suiteb(X509_CRL *crl, EVP_PKEY *pk, unsigned long flags)
+int __cdecl X509_CRL_check_suiteb(X509_CRL *crl, EVP_PKEY *pk, unsigned long flags)
 {
     int sign_nid;
     if (!(flags & X509_V_FLAG_SUITEB_128_LOS))
@@ -428,13 +428,13 @@ int X509_CRL_check_suiteb(X509_CRL *crl, EVP_PKEY *pk, unsigned long flags)
 }
 
 #else
-int X509_chain_check_suiteb(int *perror_depth, X509 *x, STACK_OF(X509) *chain,
+int __cdecl X509_chain_check_suiteb(int *perror_depth, X509 *x, STACK_OF(X509) *chain,
                             unsigned long flags)
 {
     return 0;
 }
 
-int X509_CRL_check_suiteb(X509_CRL *crl, EVP_PKEY *pk, unsigned long flags)
+int __cdecl X509_CRL_check_suiteb(X509_CRL *crl, EVP_PKEY *pk, unsigned long flags)
 {
     return 0;
 }
@@ -445,7 +445,7 @@ int X509_CRL_check_suiteb(X509_CRL *crl, EVP_PKEY *pk, unsigned long flags)
  * count but it has the same effect by duping the STACK and upping the ref of
  * each X509 structure.
  */
-STACK_OF(X509) *X509_chain_up_ref(STACK_OF(X509) *chain)
+STACK_OF(X509) * __cdecl X509_chain_up_ref(STACK_OF(X509) *chain)
 {
     STACK_OF(X509) *ret;
     int i;

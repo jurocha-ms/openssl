@@ -25,7 +25,7 @@ const X509V3_EXT_METHOD v3_ns_ia5_list[8] = {
     EXT_END
 };
 
-char *i2s_ASN1_IA5STRING(X509V3_EXT_METHOD *method, ASN1_IA5STRING *ia5)
+char * __cdecl i2s_ASN1_IA5STRING(X509V3_EXT_METHOD *method, ASN1_IA5STRING *ia5)
 {
     char *tmp;
 
@@ -40,7 +40,7 @@ char *i2s_ASN1_IA5STRING(X509V3_EXT_METHOD *method, ASN1_IA5STRING *ia5)
     return tmp;
 }
 
-ASN1_IA5STRING *s2i_ASN1_IA5STRING(X509V3_EXT_METHOD *method,
+ASN1_IA5STRING * __cdecl s2i_ASN1_IA5STRING(X509V3_EXT_METHOD *method,
                                    X509V3_CTX *ctx, const char *str)
 {
     ASN1_IA5STRING *ia5;

@@ -474,7 +474,7 @@ static void print_notice(BIO *out, USERNOTICE *notice, int indent)
                    notice->exptext->data);
 }
 
-void X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent)
+void __cdecl X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent)
 {
     const X509_POLICY_DATA *dat = node->data;
 

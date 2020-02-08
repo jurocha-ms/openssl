@@ -13,7 +13,7 @@
 #include <openssl/objects.h>
 #include <openssl/x509.h>
 
-int X509_certificate_type(const X509 *x, const EVP_PKEY *pkey)
+int __cdecl X509_certificate_type(const X509 *x, const EVP_PKEY *pkey)
 {
     const EVP_PKEY *pk;
     int ret = 0, i;

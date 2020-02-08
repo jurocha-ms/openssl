@@ -21,7 +21,7 @@ static int unknown_ext_print(BIO *out, const unsigned char *ext, int extlen,
 
 /* Print out a name+value stack */
 
-void X509V3_EXT_val_prn(BIO *out, STACK_OF(CONF_VALUE) *val, int indent,
+void __cdecl X509V3_EXT_val_prn(BIO *out, STACK_OF(CONF_VALUE) *val, int indent,
                         int ml)
 {
     int i;
@@ -66,7 +66,7 @@ void X509V3_EXT_val_prn(BIO *out, STACK_OF(CONF_VALUE) *val, int indent,
 
 /* Main routine: print out a general extension */
 
-int X509V3_EXT_print(BIO *out, X509_EXTENSION *ext, unsigned long flag,
+int __cdecl X509V3_EXT_print(BIO *out, X509_EXTENSION *ext, unsigned long flag,
                      int indent)
 {
     void *ext_str = NULL;
@@ -135,7 +135,7 @@ int X509V3_EXT_print(BIO *out, X509_EXTENSION *ext, unsigned long flag,
     return ok;
 }
 
-int X509V3_extensions_print(BIO *bp, const char *title,
+int __cdecl X509V3_extensions_print(BIO *bp, const char *title,
                             const STACK_OF(X509_EXTENSION) *exts,
                             unsigned long flag, int indent)
 {
@@ -196,7 +196,7 @@ static int unknown_ext_print(BIO *out, const unsigned char *ext, int extlen,
 }
 
 #ifndef OPENSSL_NO_STDIO
-int X509V3_EXT_print_fp(FILE *fp, X509_EXTENSION *ext, int flag, int indent)
+int __cdecl X509V3_EXT_print_fp(FILE *fp, X509_EXTENSION *ext, int flag, int indent)
 {
     BIO *bio_tmp;
     int ret;

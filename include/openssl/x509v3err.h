@@ -18,7 +18,7 @@
 # ifdef  __cplusplus
 extern "C"
 # endif
-int ERR_load_X509V3_strings(void);
+int __cdecl ERR_load_X509V3_strings(void);
 
 /*
  * X509V3 function codes.

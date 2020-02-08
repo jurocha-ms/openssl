@@ -82,7 +82,7 @@ static int length_from_afi(const unsigned afi)
 /*
  * Extract the AFI from an IPAddressFamily.
  */
-unsigned int X509v3_addr_get_afi(const IPAddressFamily *f)
+unsigned int __cdecl X509v3_addr_get_afi(const IPAddressFamily *f)
 {
     if (f == NULL
             || f->addressFamily == NULL
@@ -195,7 +195,7 @@ static int i2r_IPAddressOrRanges(BIO *out,
 /*
  * i2r handler for an IPAddrBlocks extension.
  */
-static int i2r_IPAddrBlocks(const X509V3_EXT_METHOD *method,
+static int __cdecl i2r_IPAddrBlocks(const X509V3_EXT_METHOD *method,
                             void *ext, BIO *out, int indent)
 {
     const IPAddrBlocks *addr = ext;
@@ -526,7 +526,7 @@ static IPAddressFamily *make_IPAddressFamily(IPAddrBlocks *addr,
 /*
  * Add an inheritance element.
  */
-int X509v3_addr_add_inherit(IPAddrBlocks *addr,
+int __cdecl X509v3_addr_add_inherit(IPAddrBlocks *addr,
                             const unsigned afi, const unsigned *safi)
 {
     IPAddressFamily *f = make_IPAddressFamily(addr, afi, safi);
@@ -582,7 +582,7 @@ static IPAddressOrRanges *make_prefix_or_range(IPAddrBlocks *addr,
 /*
  * Add a prefix.
  */
-int X509v3_addr_add_prefix(IPAddrBlocks *addr,
+int __cdecl X509v3_addr_add_prefix(IPAddrBlocks *addr,
                            const unsigned afi,
                            const unsigned *safi,
                            unsigned char *a, const int prefixlen)
@@ -600,7 +600,7 @@ int X509v3_addr_add_prefix(IPAddrBlocks *addr,
 /*
  * Add a range.
  */
-int X509v3_addr_add_range(IPAddrBlocks *addr,
+int __cdecl X509v3_addr_add_range(IPAddrBlocks *addr,
                           const unsigned afi,
                           const unsigned *safi,
                           unsigned char *min, unsigned char *max)
@@ -640,7 +640,7 @@ static int extract_min_max(IPAddressOrRange *aor,
 /*
  * Public wrapper for extract_min_max().
  */
-int X509v3_addr_get_range(IPAddressOrRange *aor,
+int __cdecl X509v3_addr_get_range(IPAddressOrRange *aor,
                           const unsigned afi,
                           unsigned char *min,
                           unsigned char *max, const int length)
@@ -679,7 +679,7 @@ static int __cdecl IPAddressFamily_cmp(const IPAddressFamily *const *a_,
 /*
  * Check whether an IPAddrBLocks is in canonical form.
  */
-int X509v3_addr_is_canonical(IPAddrBlocks *addr)
+int __cdecl X509v3_addr_is_canonical(IPAddrBlocks *addr)
 {
     unsigned char a_min[ADDR_RAW_BUF_LEN], a_max[ADDR_RAW_BUF_LEN];
     unsigned char b_min[ADDR_RAW_BUF_LEN], b_max[ADDR_RAW_BUF_LEN];
@@ -863,7 +863,7 @@ static int IPAddressOrRanges_canonize(IPAddressOrRanges *aors,
 /*
  * Whack an IPAddrBlocks extension into canonical form.
  */
-int X509v3_addr_canonize(IPAddrBlocks *addr)
+int __cdecl X509v3_addr_canonize(IPAddrBlocks *addr)
 {
     int i;
     for (i = 0; i < sk_IPAddressFamily_num(addr); i++) {
@@ -884,7 +884,7 @@ int X509v3_addr_canonize(IPAddrBlocks *addr)
 /*
  * v2i handler for the IPAddrBlocks extension.
  */
-static void *v2i_IPAddrBlocks(const struct v3_ext_method *method,
+static void * __cdecl v2i_IPAddrBlocks(const struct v3_ext_method *method,
                               struct v3_ext_ctx *ctx,
                               STACK_OF(CONF_VALUE) *values)
 {
@@ -1073,7 +1073,7 @@ const X509V3_EXT_METHOD v3_addr = {
 /*
  * Figure out whether extension sues inheritance.
  */
-int X509v3_addr_inherits(IPAddrBlocks *addr)
+int __cdecl X509v3_addr_inherits(IPAddrBlocks *addr)
 {
     int i;
     if (addr == NULL)
@@ -1126,7 +1126,7 @@ static int addr_contains(IPAddressOrRanges *parent,
 /*
  * Test whether a is a subset of b.
  */
-int X509v3_addr_subset(IPAddrBlocks *a, IPAddrBlocks *b)
+int __cdecl X509v3_addr_subset(IPAddrBlocks *a, IPAddrBlocks *b)
 {
     int i;
     if (a == NULL || a == b)
@@ -1285,7 +1285,7 @@ static int addr_validate_path_internal(X509_STORE_CTX *ctx,
 /*
  * RFC 3779 2.3 path validation -- called from X509_verify_cert().
  */
-int X509v3_addr_validate_path(X509_STORE_CTX *ctx)
+int __cdecl X509v3_addr_validate_path(X509_STORE_CTX *ctx)
 {
     if (ctx->chain == NULL
             || sk_X509_num(ctx->chain) == 0
@@ -1300,7 +1300,7 @@ int X509v3_addr_validate_path(X509_STORE_CTX *ctx)
  * RFC 3779 2.3 path validation of an extension.
  * Test whether chain covers extension.
  */
-int X509v3_addr_validate_resource_set(STACK_OF(X509) *chain,
+int __cdecl X509v3_addr_validate_resource_set(STACK_OF(X509) *chain,
                                   IPAddrBlocks *ext, int allow_inheritance)
 {
     if (ext == NULL)

@@ -106,7 +106,7 @@ static int i2r_ASIdentifierChoice(BIO *out,
 /*
  * i2r method for an ASIdentifier extension.
  */
-static int i2r_ASIdentifiers(const X509V3_EXT_METHOD *method,
+static int __cdecl i2r_ASIdentifiers(const X509V3_EXT_METHOD *method,
                              void *ext, BIO *out, int indent)
 {
     ASIdentifiers *asid = ext;
@@ -150,7 +150,7 @@ static int __cdecl ASIdOrRange_cmp(const ASIdOrRange *const *a_,
 /*
  * Add an inherit element.
  */
-int X509v3_asid_add_inherit(ASIdentifiers *asid, int which)
+int __cdecl X509v3_asid_add_inherit(ASIdentifiers *asid, int which)
 {
     ASIdentifierChoice **choice;
     if (asid == NULL)
@@ -178,7 +178,7 @@ int X509v3_asid_add_inherit(ASIdentifiers *asid, int which)
 /*
  * Add an ID or range to an ASIdentifierChoice.
  */
-int X509v3_asid_add_id_or_range(ASIdentifiers *asid,
+int __cdecl X509v3_asid_add_id_or_range(ASIdentifiers *asid,
                                 int which, ASN1_INTEGER *min, ASN1_INTEGER *max)
 {
     ASIdentifierChoice **choice;
@@ -338,7 +338,7 @@ static int ASIdentifierChoice_is_canonical(ASIdentifierChoice *choice)
 /*
  * Check whether an ASIdentifier extension is in canonical form.
  */
-int X509v3_asid_is_canonical(ASIdentifiers *asid)
+int __cdecl X509v3_asid_is_canonical(ASIdentifiers *asid)
 {
     return (asid == NULL ||
             (ASIdentifierChoice_is_canonical(asid->asnum) &&
@@ -490,7 +490,7 @@ static int ASIdentifierChoice_canonize(ASIdentifierChoice *choice)
 /*
  * Whack an ASIdentifier extension into canonical form.
  */
-int X509v3_asid_canonize(ASIdentifiers *asid)
+int __cdecl X509v3_asid_canonize(ASIdentifiers *asid)
 {
     return (asid == NULL ||
             (ASIdentifierChoice_canonize(asid->asnum) &&
@@ -500,7 +500,7 @@ int X509v3_asid_canonize(ASIdentifiers *asid)
 /*
  * v2i method for an ASIdentifier extension.
  */
-static void *v2i_ASIdentifiers(const struct v3_ext_method *method,
+static void * __cdecl v2i_ASIdentifiers(const struct v3_ext_method *method,
                                struct v3_ext_ctx *ctx,
                                STACK_OF(CONF_VALUE) *values)
 {
@@ -638,7 +638,7 @@ const X509V3_EXT_METHOD v3_asid = {
 /*
  * Figure out whether extension uses inheritance.
  */
-int X509v3_asid_inherits(ASIdentifiers *asid)
+int __cdecl X509v3_asid_inherits(ASIdentifiers *asid)
 {
     return (asid != NULL &&
             ((asid->asnum != NULL &&
@@ -684,7 +684,7 @@ static int asid_contains(ASIdOrRanges *parent, ASIdOrRanges *child)
 /*
  * Test whether a is a subset of b.
  */
-int X509v3_asid_subset(ASIdentifiers *a, ASIdentifiers *b)
+int __cdecl X509v3_asid_subset(ASIdentifiers *a, ASIdentifiers *b)
 {
     return (a == NULL ||
             a == b ||
@@ -850,7 +850,7 @@ static int asid_validate_path_internal(X509_STORE_CTX *ctx,
 /*
  * RFC 3779 3.3 path validation -- called from X509_verify_cert().
  */
-int X509v3_asid_validate_path(X509_STORE_CTX *ctx)
+int __cdecl X509v3_asid_validate_path(X509_STORE_CTX *ctx)
 {
     if (ctx->chain == NULL
             || sk_X509_num(ctx->chain) == 0
@@ -865,7 +865,7 @@ int X509v3_asid_validate_path(X509_STORE_CTX *ctx)
  * RFC 3779 3.3 path validation of an extension.
  * Test whether chain covers extension.
  */
-int X509v3_asid_validate_resource_set(STACK_OF(X509) *chain,
+int __cdecl X509v3_asid_validate_resource_set(STACK_OF(X509) *chain,
                                       ASIdentifiers *ext, int allow_inheritance)
 {
     if (ext == NULL)
