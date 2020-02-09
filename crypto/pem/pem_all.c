@@ -60,7 +60,7 @@ static RSA *pkey_get_rsa(EVP_PKEY *key, RSA **rsa)
     return rtmp;
 }
 
-RSA *PEM_read_bio_RSAPrivateKey(BIO *bp, RSA **rsa, pem_password_cb *cb,
+RSA * __cdecl PEM_read_bio_RSAPrivateKey(BIO *bp, RSA **rsa, pem_password_cb *cb,
                                 void *u)
 {
     EVP_PKEY *pktmp;
@@ -70,7 +70,7 @@ RSA *PEM_read_bio_RSAPrivateKey(BIO *bp, RSA **rsa, pem_password_cb *cb,
 
 # ifndef OPENSSL_NO_STDIO
 
-RSA *PEM_read_RSAPrivateKey(FILE *fp, RSA **rsa, pem_password_cb *cb, void *u)
+RSA * __cdecl PEM_read_RSAPrivateKey(FILE *fp, RSA **rsa, pem_password_cb *cb, void *u)
 {
     EVP_PKEY *pktmp;
     pktmp = PEM_read_PrivateKey(fp, NULL, cb, u);
@@ -105,7 +105,7 @@ static DSA *pkey_get_dsa(EVP_PKEY *key, DSA **dsa)
     return dtmp;
 }
 
-DSA *PEM_read_bio_DSAPrivateKey(BIO *bp, DSA **dsa, pem_password_cb *cb,
+DSA * __cdecl PEM_read_bio_DSAPrivateKey(BIO *bp, DSA **dsa, pem_password_cb *cb,
                                 void *u)
 {
     EVP_PKEY *pktmp;
@@ -117,7 +117,7 @@ IMPLEMENT_PEM_write_cb_const(DSAPrivateKey, DSA, PEM_STRING_DSA,
                              DSAPrivateKey)
     IMPLEMENT_PEM_rw(DSA_PUBKEY, DSA, PEM_STRING_PUBLIC, DSA_PUBKEY)
 # ifndef OPENSSL_NO_STDIO
-DSA *PEM_read_DSAPrivateKey(FILE *fp, DSA **dsa, pem_password_cb *cb, void *u)
+DSA * __cdecl PEM_read_DSAPrivateKey(FILE *fp, DSA **dsa, pem_password_cb *cb, void *u)
 {
     EVP_PKEY *pktmp;
     pktmp = PEM_read_PrivateKey(fp, NULL, cb, u);
@@ -145,7 +145,7 @@ static EC_KEY *pkey_get_eckey(EVP_PKEY *key, EC_KEY **eckey)
     return dtmp;
 }
 
-EC_KEY *PEM_read_bio_ECPrivateKey(BIO *bp, EC_KEY **key, pem_password_cb *cb,
+EC_KEY * __cdecl PEM_read_bio_ECPrivateKey(BIO *bp, EC_KEY **key, pem_password_cb *cb,
                                   void *u)
 {
     EVP_PKEY *pktmp;
@@ -161,7 +161,7 @@ IMPLEMENT_PEM_write_cb(ECPrivateKey, EC_KEY, PEM_STRING_ECPRIVATEKEY,
                        ECPrivateKey)
 IMPLEMENT_PEM_rw(EC_PUBKEY, EC_KEY, PEM_STRING_PUBLIC, EC_PUBKEY)
 # ifndef OPENSSL_NO_STDIO
-EC_KEY *PEM_read_ECPrivateKey(FILE *fp, EC_KEY **eckey, pem_password_cb *cb,
+EC_KEY * __cdecl PEM_read_ECPrivateKey(FILE *fp, EC_KEY **eckey, pem_password_cb *cb,
                               void *u)
 {
     EVP_PKEY *pktmp;

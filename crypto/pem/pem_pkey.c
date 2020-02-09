@@ -22,7 +22,7 @@
 
 int pem_check_suffix(const char *pem_str, const char *suffix);
 
-EVP_PKEY *PEM_read_bio_PrivateKey(BIO *bp, EVP_PKEY **x, pem_password_cb *cb,
+EVP_PKEY * __cdecl PEM_read_bio_PrivateKey(BIO *bp, EVP_PKEY **x, pem_password_cb *cb,
                                   void *u)
 {
     char *nm = NULL;
@@ -92,7 +92,7 @@ EVP_PKEY *PEM_read_bio_PrivateKey(BIO *bp, EVP_PKEY **x, pem_password_cb *cb,
     return ret;
 }
 
-int PEM_write_bio_PrivateKey(BIO *bp, EVP_PKEY *x, const EVP_CIPHER *enc,
+int __cdecl PEM_write_bio_PrivateKey(BIO *bp, EVP_PKEY *x, const EVP_CIPHER *enc,
                              unsigned char *kstr, int klen,
                              pem_password_cb *cb, void *u)
 {
@@ -163,7 +163,7 @@ int __cdecl PEM_write_bio_Parameters(BIO *bp, EVP_PKEY *x)
 }
 
 #ifndef OPENSSL_NO_STDIO
-EVP_PKEY *PEM_read_PrivateKey(FILE *fp, EVP_PKEY **x, pem_password_cb *cb,
+EVP_PKEY * __cdecl PEM_read_PrivateKey(FILE *fp, EVP_PKEY **x, pem_password_cb *cb,
                               void *u)
 {
     BIO *b;
@@ -179,7 +179,7 @@ EVP_PKEY *PEM_read_PrivateKey(FILE *fp, EVP_PKEY **x, pem_password_cb *cb,
     return ret;
 }
 
-int PEM_write_PrivateKey(FILE *fp, EVP_PKEY *x, const EVP_CIPHER *enc,
+int __cdecl PEM_write_PrivateKey(FILE *fp, EVP_PKEY *x, const EVP_CIPHER *enc,
                          unsigned char *kstr, int klen,
                          pem_password_cb *cb, void *u)
 {
@@ -201,7 +201,7 @@ int PEM_write_PrivateKey(FILE *fp, EVP_PKEY *x, const EVP_CIPHER *enc,
 
 /* Transparently read in PKCS#3 or X9.42 DH parameters */
 
-DH *PEM_read_bio_DHparams(BIO *bp, DH **x, pem_password_cb *cb, void *u)
+DH * __cdecl PEM_read_bio_DHparams(BIO *bp, DH **x, pem_password_cb *cb, void *u)
 {
     char *nm = NULL;
     const unsigned char *p = NULL;
@@ -226,7 +226,7 @@ DH *PEM_read_bio_DHparams(BIO *bp, DH **x, pem_password_cb *cb, void *u)
 }
 
 # ifndef OPENSSL_NO_STDIO
-DH *PEM_read_DHparams(FILE *fp, DH **x, pem_password_cb *cb, void *u)
+DH * __cdecl PEM_read_DHparams(FILE *fp, DH **x, pem_password_cb *cb, void *u)
 {
     BIO *b;
     DH *ret;
