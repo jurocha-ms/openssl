@@ -42,11 +42,11 @@ typedef struct ndef_aux_st {
     unsigned char *derbuf;
 } NDEF_SUPPORT;
 
-static int ndef_prefix(BIO *b, unsigned char **pbuf, int *plen, void *parg);
-static int ndef_prefix_free(BIO *b, unsigned char **pbuf, int *plen,
+static int __cdecl ndef_prefix(BIO *b, unsigned char **pbuf, int *plen, void *parg);
+static int __cdecl ndef_prefix_free(BIO *b, unsigned char **pbuf, int *plen,
                             void *parg);
-static int ndef_suffix(BIO *b, unsigned char **pbuf, int *plen, void *parg);
-static int ndef_suffix_free(BIO *b, unsigned char **pbuf, int *plen,
+static int __cdecl ndef_suffix(BIO *b, unsigned char **pbuf, int *plen, void *parg);
+static int __cdecl ndef_suffix_free(BIO *b, unsigned char **pbuf, int *plen,
                             void *parg);
 
 BIO * __cdecl BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
@@ -101,7 +101,7 @@ BIO * __cdecl BIO_new_NDEF(BIO *out, ASN1_VALUE *val, const ASN1_ITEM *it)
     return NULL;
 }
 
-static int ndef_prefix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
+static int __cdecl ndef_prefix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
 {
     NDEF_SUPPORT *ndef_aux;
     unsigned char *p;
@@ -130,7 +130,7 @@ static int ndef_prefix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
     return 1;
 }
 
-static int ndef_prefix_free(BIO *b, unsigned char **pbuf, int *plen,
+static int __cdecl ndef_prefix_free(BIO *b, unsigned char **pbuf, int *plen,
                             void *parg)
 {
     NDEF_SUPPORT *ndef_aux;
@@ -148,7 +148,7 @@ static int ndef_prefix_free(BIO *b, unsigned char **pbuf, int *plen,
     return 1;
 }
 
-static int ndef_suffix_free(BIO *b, unsigned char **pbuf, int *plen,
+static int __cdecl ndef_suffix_free(BIO *b, unsigned char **pbuf, int *plen,
                             void *parg)
 {
     NDEF_SUPPORT **pndef_aux = (NDEF_SUPPORT **)parg;
@@ -159,7 +159,7 @@ static int ndef_suffix_free(BIO *b, unsigned char **pbuf, int *plen,
     return 1;
 }
 
-static int ndef_suffix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
+static int __cdecl ndef_suffix(BIO *b, unsigned char **pbuf, int *plen, void *parg)
 {
     NDEF_SUPPORT *ndef_aux;
     unsigned char *p;

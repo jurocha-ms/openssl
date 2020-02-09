@@ -33,16 +33,16 @@ typedef struct bio_accept_st {
     BIO *bio_chain;
 } BIO_ACCEPT;
 
-static int acpt_write(BIO *h, const char *buf, int num);
-static int acpt_read(BIO *h, char *buf, int size);
-static int acpt_puts(BIO *h, const char *str);
-static long acpt_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int acpt_new(BIO *h);
-static int acpt_free(BIO *data);
-static int acpt_state(BIO *b, BIO_ACCEPT *c);
-static void acpt_close_socket(BIO *data);
-static BIO_ACCEPT *BIO_ACCEPT_new(void);
-static void BIO_ACCEPT_free(BIO_ACCEPT *a);
+static int __cdecl acpt_write(BIO *h, const char *buf, int num);
+static int __cdecl acpt_read(BIO *h, char *buf, int size);
+static int __cdecl acpt_puts(BIO *h, const char *str);
+static long __cdecl acpt_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl acpt_new(BIO *h);
+static int __cdecl acpt_free(BIO *data);
+static int __cdecl acpt_state(BIO *b, BIO_ACCEPT *c);
+static void __cdecl acpt_close_socket(BIO *data);
+static BIO_ACCEPT * __cdecl BIO_ACCEPT_new(void);
+static void __cdecl BIO_ACCEPT_free(BIO_ACCEPT *a);
 
 # define ACPT_S_BEFORE                   1
 # define ACPT_S_GET_ADDR                 2
@@ -73,7 +73,7 @@ const BIO_METHOD * __cdecl BIO_s_accept(void)
     return &methods_acceptp;
 }
 
-static int acpt_new(BIO *bi)
+static int __cdecl acpt_new(BIO *bi)
 {
     BIO_ACCEPT *ba;
 
@@ -88,7 +88,7 @@ static int acpt_new(BIO *bi)
     return 1;
 }
 
-static BIO_ACCEPT *BIO_ACCEPT_new(void)
+static BIO_ACCEPT * __cdecl BIO_ACCEPT_new(void)
 {
     BIO_ACCEPT *ret;
 
@@ -101,7 +101,7 @@ static BIO_ACCEPT *BIO_ACCEPT_new(void)
     return ret;
 }
 
-static void BIO_ACCEPT_free(BIO_ACCEPT *a)
+static void __cdecl BIO_ACCEPT_free(BIO_ACCEPT *a)
 {
     if (a == NULL)
         return;
@@ -116,7 +116,7 @@ static void BIO_ACCEPT_free(BIO_ACCEPT *a)
     OPENSSL_free(a);
 }
 
-static void acpt_close_socket(BIO *bio)
+static void __cdecl acpt_close_socket(BIO *bio)
 {
     BIO_ACCEPT *c;
 
@@ -129,7 +129,7 @@ static void acpt_close_socket(BIO *bio)
     }
 }
 
-static int acpt_free(BIO *a)
+static int __cdecl acpt_free(BIO *a)
 {
     BIO_ACCEPT *data;
 
@@ -147,7 +147,7 @@ static int acpt_free(BIO *a)
     return 1;
 }
 
-static int acpt_state(BIO *b, BIO_ACCEPT *c)
+static int __cdecl acpt_state(BIO *b, BIO_ACCEPT *c)
 {
     BIO *bio = NULL, *dbio;
     int s = -1, ret = -1;
@@ -354,7 +354,7 @@ static int acpt_state(BIO *b, BIO_ACCEPT *c)
     return ret;
 }
 
-static int acpt_read(BIO *b, char *out, int outl)
+static int __cdecl acpt_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
     BIO_ACCEPT *data;
@@ -373,7 +373,7 @@ static int acpt_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int acpt_write(BIO *b, const char *in, int inl)
+static int __cdecl acpt_write(BIO *b, const char *in, int inl)
 {
     int ret;
     BIO_ACCEPT *data;
@@ -392,7 +392,7 @@ static int acpt_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long acpt_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl acpt_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     int *ip;
     long ret = 1;
@@ -535,7 +535,7 @@ static long acpt_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int acpt_puts(BIO *bp, const char *str)
+static int __cdecl acpt_puts(BIO *bp, const char *str)
 {
     int n, ret;
 

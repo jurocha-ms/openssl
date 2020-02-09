@@ -99,7 +99,7 @@ unsigned long _sparcv9_random(void);
 size_t _sparcv9_vis1_instrument_bus(unsigned int *, size_t);
 size_t _sparcv9_vis1_instrument_bus2(unsigned int *, size_t, size_t);
 
-uint32_t OPENSSL_rdtsc(void)
+uint32_t __cdecl OPENSSL_rdtsc(void)
 {
     if (OPENSSL_sparcv9cap_P[0] & SPARCV9_TICK_PRIVILEGED)
 #if defined(__sun) && defined(__SVR4)
@@ -111,7 +111,7 @@ uint32_t OPENSSL_rdtsc(void)
         return _sparcv9_rdtick();
 }
 
-size_t OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
+size_t __cdecl OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
 {
     if ((OPENSSL_sparcv9cap_P[0] & (SPARCV9_TICK_PRIVILEGED | SPARCV9_BLK)) ==
         SPARCV9_BLK)
@@ -120,7 +120,7 @@ size_t OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
         return 0;
 }
 
-size_t OPENSSL_instrument_bus2(unsigned int *out, size_t cnt, size_t max)
+size_t __cdecl OPENSSL_instrument_bus2(unsigned int *out, size_t cnt, size_t max)
 {
     if ((OPENSSL_sparcv9cap_P[0] & (SPARCV9_TICK_PRIVILEGED | SPARCV9_BLK)) ==
         SPARCV9_BLK)

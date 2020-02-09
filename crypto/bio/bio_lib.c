@@ -202,7 +202,7 @@ void __cdecl BIO_set_flags(BIO *b, int flags)
     b->flags |= flags;
 }
 
-BIO_callback_fn __cdecl BIO_get_callback(const BIO *b)
+BIO_callback_fn BIO_get_callback(const BIO *b)
 {
     return b->callback;
 }
@@ -212,7 +212,7 @@ void __cdecl BIO_set_callback(BIO *b, BIO_callback_fn cb)
     b->callback = cb;
 }
 
-BIO_callback_fn_ex __cdecl BIO_get_callback_ex(const BIO *b)
+BIO_callback_fn_ex BIO_get_callback_ex(const BIO *b)
 {
     return b->callback_ex;
 }
@@ -769,12 +769,12 @@ uint64_t __cdecl BIO_number_written(BIO *bio)
     return 0;
 }
 
-void bio_free_ex_data(BIO *bio)
+void __cdecl bio_free_ex_data(BIO *bio)
 {
     CRYPTO_free_ex_data(CRYPTO_EX_INDEX_BIO, bio, &bio->ex_data);
 }
 
-void bio_cleanup(void)
+void __cdecl bio_cleanup(void)
 {
 #ifndef OPENSSL_NO_SOCK
     bio_sock_cleanup_int();

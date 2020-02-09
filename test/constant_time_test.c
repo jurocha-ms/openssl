@@ -58,7 +58,7 @@ static uint64_t test_values_64[] = {
     UINT64_MAX / 2 + 1, UINT64_MAX - 1, UINT64_MAX
 };
 
-static int test_binary_op(unsigned int (*op) (unsigned int a, unsigned int b),
+static int test_binary_op(unsigned int (__cdecl *op) (unsigned int a, unsigned int b),
                           const char *op_name, unsigned int a, unsigned int b,
                           int is_true)
 {
@@ -70,7 +70,7 @@ static int test_binary_op(unsigned int (*op) (unsigned int a, unsigned int b),
 }
 
 static int test_binary_op_8(unsigned
-                            char (*op) (unsigned int a, unsigned int b),
+                            char (__cdecl *op) (unsigned int a, unsigned int b),
                             const char *op_name, unsigned int a,
                             unsigned int b, int is_true)
 {
@@ -81,7 +81,7 @@ static int test_binary_op_8(unsigned
     return 1;
 }
 
-static int test_binary_op_s(size_t (*op) (size_t a, size_t b),
+static int test_binary_op_s(size_t (__cdecl *op) (size_t a, size_t b),
                             const char *op_name, size_t a, size_t b,
                             int is_true)
 {
@@ -92,7 +92,7 @@ static int test_binary_op_s(size_t (*op) (size_t a, size_t b),
     return 1;
 }
 
-static int test_binary_op_64(uint64_t (*op)(uint64_t a, uint64_t b),
+static int test_binary_op_64(uint64_t (__cdecl *op)(uint64_t a, uint64_t b),
                              const char *op_name, uint64_t a, uint64_t b,
                              int is_true)
 {

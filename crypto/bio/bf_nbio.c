@@ -17,14 +17,14 @@
  * BIO_put and BIO_get both add to the digest, BIO_gets returns the digest
  */
 
-static int nbiof_write(BIO *h, const char *buf, int num);
-static int nbiof_read(BIO *h, char *buf, int size);
-static int nbiof_puts(BIO *h, const char *str);
-static int nbiof_gets(BIO *h, char *str, int size);
-static long nbiof_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int nbiof_new(BIO *h);
-static int nbiof_free(BIO *data);
-static long nbiof_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl nbiof_write(BIO *h, const char *buf, int num);
+static int __cdecl nbiof_read(BIO *h, char *buf, int size);
+static int __cdecl nbiof_puts(BIO *h, const char *str);
+static int __cdecl nbiof_gets(BIO *h, char *str, int size);
+static long __cdecl nbiof_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl nbiof_new(BIO *h);
+static int __cdecl nbiof_free(BIO *data);
+static long __cdecl nbiof_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 typedef struct nbio_test_st {
     /* only set if we sent a 'should retry' error */
     int lrn;
@@ -53,7 +53,7 @@ const BIO_METHOD * __cdecl BIO_f_nbio_test(void)
     return &methods_nbiof;
 }
 
-static int nbiof_new(BIO *bi)
+static int __cdecl nbiof_new(BIO *bi)
 {
     NBIO_TEST *nt;
 
@@ -68,7 +68,7 @@ static int nbiof_new(BIO *bi)
     return 1;
 }
 
-static int nbiof_free(BIO *a)
+static int __cdecl nbiof_free(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -79,7 +79,7 @@ static int nbiof_free(BIO *a)
     return 1;
 }
 
-static int nbiof_read(BIO *b, char *out, int outl)
+static int __cdecl nbiof_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
     int num;
@@ -109,7 +109,7 @@ static int nbiof_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int nbiof_write(BIO *b, const char *in, int inl)
+static int __cdecl nbiof_write(BIO *b, const char *in, int inl)
 {
     NBIO_TEST *nt;
     int ret = 0;
@@ -149,7 +149,7 @@ static int nbiof_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long nbiof_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl nbiof_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret;
 
@@ -171,7 +171,7 @@ static long nbiof_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long nbiof_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl nbiof_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
 
@@ -185,14 +185,14 @@ static long nbiof_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int nbiof_gets(BIO *bp, char *buf, int size)
+static int __cdecl nbiof_gets(BIO *bp, char *buf, int size)
 {
     if (bp->next_bio == NULL)
         return 0;
     return BIO_gets(bp->next_bio, buf, size);
 }
 
-static int nbiof_puts(BIO *bp, const char *str)
+static int __cdecl nbiof_puts(BIO *bp, const char *str)
 {
     if (bp->next_bio == NULL)
         return 0;

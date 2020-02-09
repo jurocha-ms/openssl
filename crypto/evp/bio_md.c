@@ -20,13 +20,13 @@
  * BIO_put and BIO_get both add to the digest, BIO_gets returns the digest
  */
 
-static int md_write(BIO *h, char const *buf, int num);
-static int md_read(BIO *h, char *buf, int size);
-static int md_gets(BIO *h, char *str, int size);
-static long md_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int md_new(BIO *h);
-static int md_free(BIO *data);
-static long md_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl md_write(BIO *h, char const *buf, int num);
+static int __cdecl md_read(BIO *h, char *buf, int size);
+static int __cdecl md_gets(BIO *h, char *str, int size);
+static long __cdecl md_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl md_new(BIO *h);
+static int __cdecl md_free(BIO *data);
+static long __cdecl md_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 
 static const BIO_METHOD methods_md = {
     BIO_TYPE_MD,
@@ -50,7 +50,7 @@ const BIO_METHOD * __cdecl BIO_f_md(void)
     return &methods_md;
 }
 
-static int md_new(BIO *bi)
+static int __cdecl md_new(BIO *bi)
 {
     EVP_MD_CTX *ctx;
 
@@ -64,7 +64,7 @@ static int md_new(BIO *bi)
     return 1;
 }
 
-static int md_free(BIO *a)
+static int __cdecl md_free(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -75,7 +75,7 @@ static int md_free(BIO *a)
     return 1;
 }
 
-static int md_read(BIO *b, char *out, int outl)
+static int __cdecl md_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
     EVP_MD_CTX *ctx;
@@ -103,7 +103,7 @@ static int md_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int md_write(BIO *b, const char *in, int inl)
+static int __cdecl md_write(BIO *b, const char *in, int inl)
 {
     int ret = 0;
     EVP_MD_CTX *ctx;
@@ -133,7 +133,7 @@ static int md_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long md_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl md_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     EVP_MD_CTX *ctx, *dctx, **pctx;
     const EVP_MD **ppmd;
@@ -198,7 +198,7 @@ static long md_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long md_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl md_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
     BIO *next;
@@ -216,7 +216,7 @@ static long md_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int md_gets(BIO *bp, char *buf, int size)
+static int __cdecl md_gets(BIO *bp, char *buf, int size)
 {
     EVP_MD_CTX *ctx;
     unsigned int ret;

@@ -13,15 +13,15 @@
 #include <openssl/bio.h>
 #include "apps.h"
 
-static int prefix_write(BIO *b, const char *out, size_t outl,
+static int __cdecl prefix_write(BIO *b, const char *out, size_t outl,
                         size_t *numwritten);
-static int prefix_read(BIO *b, char *buf, size_t size, size_t *numread);
-static int prefix_puts(BIO *b, const char *str);
-static int prefix_gets(BIO *b, char *str, int size);
-static long prefix_ctrl(BIO *b, int cmd, long arg1, void *arg2);
-static int prefix_create(BIO *b);
-static int prefix_destroy(BIO *b);
-static long prefix_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp);
+static int __cdecl prefix_read(BIO *b, char *buf, size_t size, size_t *numread);
+static int __cdecl prefix_puts(BIO *b, const char *str);
+static int __cdecl prefix_gets(BIO *b, char *str, int size);
+static long __cdecl prefix_ctrl(BIO *b, int cmd, long arg1, void *arg2);
+static int __cdecl prefix_create(BIO *b);
+static int __cdecl prefix_destroy(BIO *b);
+static long __cdecl prefix_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp);
 
 static BIO_METHOD *prefix_meth = NULL;
 
@@ -50,7 +50,7 @@ typedef struct prefix_ctx_st {
     int linestart;               /* flag to indicate we're at the line start */
 } PREFIX_CTX;
 
-static int prefix_create(BIO *b)
+static int __cdecl prefix_create(BIO *b)
 {
     PREFIX_CTX *ctx = OPENSSL_zalloc(sizeof(*ctx));
 
@@ -64,7 +64,7 @@ static int prefix_create(BIO *b)
     return 1;
 }
 
-static int prefix_destroy(BIO *b)
+static int __cdecl prefix_destroy(BIO *b)
 {
     PREFIX_CTX *ctx = BIO_get_data(b);
 
@@ -73,12 +73,12 @@ static int prefix_destroy(BIO *b)
     return 1;
 }
 
-static int prefix_read(BIO *b, char *in, size_t size, size_t *numread)
+static int __cdecl prefix_read(BIO *b, char *in, size_t size, size_t *numread)
 {
     return BIO_read_ex(BIO_next(b), in, size, numread);
 }
 
-static int prefix_write(BIO *b, const char *out, size_t outl,
+static int __cdecl prefix_write(BIO *b, const char *out, size_t outl,
                         size_t *numwritten)
 {
     PREFIX_CTX *ctx = BIO_get_data(b);
@@ -136,7 +136,7 @@ static int prefix_write(BIO *b, const char *out, size_t outl,
     return 1;
 }
 
-static long prefix_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl prefix_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 0;
 
@@ -161,17 +161,17 @@ static long prefix_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long prefix_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl prefix_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     return BIO_callback_ctrl(BIO_next(b), cmd, fp);
 }
 
-static int prefix_gets(BIO *b, char *buf, int size)
+static int __cdecl prefix_gets(BIO *b, char *buf, int size)
 {
     return BIO_gets(BIO_next(b), buf, size);
 }
 
-static int prefix_puts(BIO *b, const char *str)
+static int __cdecl prefix_puts(BIO *b, const char *str)
 {
     return BIO_write(b, str, strlen(str));
 }

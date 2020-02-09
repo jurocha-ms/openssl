@@ -12,14 +12,14 @@
 #include "bio_lcl.h"
 #include "internal/cryptlib.h"
 
-static int buffer_write(BIO *h, const char *buf, int num);
-static int buffer_read(BIO *h, char *buf, int size);
-static int buffer_puts(BIO *h, const char *str);
-static int buffer_gets(BIO *h, char *str, int size);
-static long buffer_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int buffer_new(BIO *h);
-static int buffer_free(BIO *data);
-static long buffer_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl buffer_write(BIO *h, const char *buf, int num);
+static int __cdecl buffer_read(BIO *h, char *buf, int size);
+static int __cdecl buffer_puts(BIO *h, const char *str);
+static int __cdecl buffer_gets(BIO *h, char *str, int size);
+static long __cdecl buffer_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl buffer_new(BIO *h);
+static int __cdecl buffer_free(BIO *data);
+static long __cdecl buffer_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 #define DEFAULT_BUFFER_SIZE     4096
 
 static const BIO_METHOD methods_buffer = {
@@ -44,7 +44,7 @@ const BIO_METHOD * __cdecl BIO_f_buffer(void)
     return &methods_buffer;
 }
 
-static int buffer_new(BIO *bi)
+static int __cdecl buffer_new(BIO *bi)
 {
     BIO_F_BUFFER_CTX *ctx = OPENSSL_zalloc(sizeof(*ctx));
 
@@ -70,7 +70,7 @@ static int buffer_new(BIO *bi)
     return 1;
 }
 
-static int buffer_free(BIO *a)
+static int __cdecl buffer_free(BIO *a)
 {
     BIO_F_BUFFER_CTX *b;
 
@@ -86,7 +86,7 @@ static int buffer_free(BIO *a)
     return 1;
 }
 
-static int buffer_read(BIO *b, char *out, int outl)
+static int __cdecl buffer_read(BIO *b, char *out, int outl)
 {
     int i, num = 0;
     BIO_F_BUFFER_CTX *ctx;
@@ -157,7 +157,7 @@ static int buffer_read(BIO *b, char *out, int outl)
     goto start;
 }
 
-static int buffer_write(BIO *b, const char *in, int inl)
+static int __cdecl buffer_write(BIO *b, const char *in, int inl)
 {
     int i, num = 0;
     BIO_F_BUFFER_CTX *ctx;
@@ -234,7 +234,7 @@ static int buffer_write(BIO *b, const char *in, int inl)
     goto start;
 }
 
-static long buffer_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl buffer_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO *dbio;
     BIO_F_BUFFER_CTX *ctx;
@@ -408,7 +408,7 @@ static long buffer_ctrl(BIO *b, int cmd, long num, void *ptr)
     return 0;
 }
 
-static long buffer_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl buffer_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
 
@@ -422,7 +422,7 @@ static long buffer_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int buffer_gets(BIO *b, char *buf, int size)
+static int __cdecl buffer_gets(BIO *b, char *buf, int size)
 {
     BIO_F_BUFFER_CTX *ctx;
     int num = 0, i, flag;
@@ -469,7 +469,7 @@ static int buffer_gets(BIO *b, char *buf, int size)
     }
 }
 
-static int buffer_puts(BIO *b, const char *str)
+static int __cdecl buffer_puts(BIO *b, const char *str)
 {
     return buffer_write(b, str, strlen(str));
 }

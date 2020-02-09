@@ -24,7 +24,7 @@ void OPENSSL_cpuid_setup(void)
 {
 }
 
-uint32_t OPENSSL_rdtsc(void)
+uint32_t __cdecl OPENSSL_rdtsc(void)
 {
     return 0;
 }
@@ -51,7 +51,7 @@ void _armv8_sha512_probe(void);
 # endif
 uint32_t _armv7_tick(void);
 
-uint32_t OPENSSL_rdtsc(void)
+uint32_t __cdecl OPENSSL_rdtsc(void)
 {
     if (OPENSSL_armcap_P & ARMV7_TICK)
         return _armv7_tick();

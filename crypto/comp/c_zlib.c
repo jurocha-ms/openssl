@@ -259,7 +259,7 @@ COMP_METHOD * __cdecl COMP_zlib(void)
     return meth;
 }
 
-void comp_zlib_cleanup_int(void)
+void __cdecl comp_zlib_cleanup_int(void)
 {
 #ifdef ZLIB_SHARED
     DSO_free(zlib_dso);

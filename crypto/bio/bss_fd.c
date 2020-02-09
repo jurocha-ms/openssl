@@ -48,13 +48,13 @@ const BIO_METHOD * __cdecl BIO_s_fd(void)
  * file descriptors can only be provided by application. Therefore
  * "UPLINK" calls are due...
  */
-static int fd_write(BIO *h, const char *buf, int num);
-static int fd_read(BIO *h, char *buf, int size);
-static int fd_puts(BIO *h, const char *str);
-static int fd_gets(BIO *h, char *buf, int size);
-static long fd_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int fd_new(BIO *h);
-static int fd_free(BIO *data);
+static int __cdecl fd_write(BIO *h, const char *buf, int num);
+static int __cdecl fd_read(BIO *h, char *buf, int size);
+static int __cdecl fd_puts(BIO *h, const char *str);
+static int __cdecl fd_gets(BIO *h, char *buf, int size);
+static long __cdecl fd_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl fd_new(BIO *h);
+static int __cdecl fd_free(BIO *data);
 int __cdecl BIO_fd_should_retry(int s);
 
 static const BIO_METHOD methods_fdp = {
@@ -89,7 +89,7 @@ BIO * __cdecl BIO_new_fd(int fd, int close_flag)
     return ret;
 }
 
-static int fd_new(BIO *bi)
+static int __cdecl fd_new(BIO *bi)
 {
     bi->init = 0;
     bi->num = -1;
@@ -98,7 +98,7 @@ static int fd_new(BIO *bi)
     return 1;
 }
 
-static int fd_free(BIO *a)
+static int __cdecl fd_free(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -112,7 +112,7 @@ static int fd_free(BIO *a)
     return 1;
 }
 
-static int fd_read(BIO *b, char *out, int outl)
+static int __cdecl fd_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
 
@@ -128,7 +128,7 @@ static int fd_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int fd_write(BIO *b, const char *in, int inl)
+static int __cdecl fd_write(BIO *b, const char *in, int inl)
 {
     int ret;
     clear_sys_error();
@@ -141,7 +141,7 @@ static int fd_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long fd_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl fd_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     int *ip;
@@ -193,7 +193,7 @@ static long fd_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int fd_puts(BIO *bp, const char *str)
+static int __cdecl fd_puts(BIO *bp, const char *str)
 {
     int n, ret;
 
@@ -202,7 +202,7 @@ static int fd_puts(BIO *bp, const char *str)
     return ret;
 }
 
-static int fd_gets(BIO *bp, char *buf, int size)
+static int __cdecl fd_gets(BIO *bp, char *buf, int size)
 {
     int ret = 0;
     char *ptr = buf;

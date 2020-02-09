@@ -134,7 +134,7 @@ static int ssl_module_init(CONF_IMODULE *md, const CONF *cnf)
  * conf_ssl_name_find. Also stores the name of the set of commands in |*name|
  * and the number of commands in the set in |*cnt|.
  */
-const SSL_CONF_CMD *conf_ssl_get(size_t idx, const char **name, size_t *cnt)
+const SSL_CONF_CMD * __cdecl conf_ssl_get(size_t idx, const char **name, size_t *cnt)
 {
     *name = ssl_names[idx].name;
     *cnt = ssl_names[idx].cmd_count;
@@ -146,7 +146,7 @@ const SSL_CONF_CMD *conf_ssl_get(size_t idx, const char **name, size_t *cnt)
  * index for the command set in |*idx|.
  * Returns 1 on success or 0 on failure.
  */
-int conf_ssl_name_find(const char *name, size_t *idx)
+int __cdecl conf_ssl_name_find(const char *name, size_t *idx)
 {
     size_t i;
     const struct ssl_conf_name_st *nm;
@@ -168,7 +168,7 @@ int conf_ssl_name_find(const char *name, size_t *idx)
  * conf_ssl_get). The name of the command will be returned in |*cmdstr| and the
  * argument is returned in |*arg|.
  */
-void conf_ssl_get_cmd(const SSL_CONF_CMD *cmd, size_t idx, char **cmdstr,
+void __cdecl conf_ssl_get_cmd(const SSL_CONF_CMD *cmd, size_t idx, char **cmdstr,
                       char **arg)
 {
     *cmdstr = cmd[idx].cmd;

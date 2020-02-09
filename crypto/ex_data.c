@@ -90,7 +90,7 @@ static void __cdecl cleanup_cb(EX_CALLBACK *funcs)
  * called under potential race-conditions anyway (it's for program shutdown
  * after all).
  */
-void crypto_cleanup_all_ex_data_int(void)
+void __cdecl crypto_cleanup_all_ex_data_int(void)
 {
     int i;
 

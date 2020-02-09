@@ -171,7 +171,7 @@ void OPENSSL_madd300_probe(void);
 long OPENSSL_rdtsc_mftb(void);
 long OPENSSL_rdtsc_mfspr268(void);
 
-uint32_t OPENSSL_rdtsc(void)
+uint32_t __cdecl OPENSSL_rdtsc(void)
 {
     if (OPENSSL_ppccap_P & PPC_MFTB)
         return OPENSSL_rdtsc_mftb();
@@ -184,7 +184,7 @@ uint32_t OPENSSL_rdtsc(void)
 size_t OPENSSL_instrument_bus_mftb(unsigned int *, size_t);
 size_t OPENSSL_instrument_bus_mfspr268(unsigned int *, size_t);
 
-size_t OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
+size_t __cdecl OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
 {
     if (OPENSSL_ppccap_P & PPC_MFTB)
         return OPENSSL_instrument_bus_mftb(out, cnt);
@@ -197,7 +197,7 @@ size_t OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
 size_t OPENSSL_instrument_bus2_mftb(unsigned int *, size_t, size_t);
 size_t OPENSSL_instrument_bus2_mfspr268(unsigned int *, size_t, size_t);
 
-size_t OPENSSL_instrument_bus2(unsigned int *out, size_t cnt, size_t max)
+size_t __cdecl OPENSSL_instrument_bus2(unsigned int *out, size_t cnt, size_t max)
 {
     if (OPENSSL_ppccap_P & PPC_MFTB)
         return OPENSSL_instrument_bus2_mftb(out, cnt, max);

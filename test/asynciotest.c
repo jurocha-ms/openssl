@@ -24,13 +24,13 @@ static int fragment = 0;
 static char *cert = NULL;
 static char *privkey = NULL;
 
-static int async_new(BIO *bi);
-static int async_free(BIO *a);
-static int async_read(BIO *b, char *out, int outl);
-static int async_write(BIO *b, const char *in, int inl);
-static long async_ctrl(BIO *b, int cmd, long num, void *ptr);
-static int async_gets(BIO *bp, char *buf, int size);
-static int async_puts(BIO *bp, const char *str);
+static int __cdecl async_new(BIO *bi);
+static int __cdecl async_free(BIO *a);
+static int __cdecl async_read(BIO *b, char *out, int outl);
+static int __cdecl async_write(BIO *b, const char *in, int inl);
+static long __cdecl async_ctrl(BIO *b, int cmd, long num, void *ptr);
+static int __cdecl async_gets(BIO *bp, char *buf, int size);
+static int __cdecl async_puts(BIO *bp, const char *str);
 
 /* Choose a sufficiently large type likely to be unused for this custom BIO */
 # define BIO_TYPE_ASYNC_FILTER  (0x80 | BIO_TYPE_FILTER)
@@ -59,7 +59,7 @@ static const BIO_METHOD *bio_f_async_filter(void)
     return methods_async;
 }
 
-static int async_new(BIO *bio)
+static int __cdecl async_new(BIO *bio)
 {
     struct async_ctrs *ctrs;
 
@@ -72,7 +72,7 @@ static int async_new(BIO *bio)
     return 1;
 }
 
-static int async_free(BIO *bio)
+static int __cdecl async_free(BIO *bio)
 {
     struct async_ctrs *ctrs;
 
@@ -86,7 +86,7 @@ static int async_free(BIO *bio)
     return 1;
 }
 
-static int async_read(BIO *bio, char *out, int outl)
+static int __cdecl async_read(BIO *bio, char *out, int outl)
 {
     struct async_ctrs *ctrs;
     int ret = 0;
@@ -121,7 +121,7 @@ static int async_read(BIO *bio, char *out, int outl)
 #define VERSIONLOPOS    2
 #define DATAPOS         5
 
-static int async_write(BIO *bio, const char *in, int inl)
+static int __cdecl async_write(BIO *bio, const char *in, int inl)
 {
     struct async_ctrs *ctrs;
     int ret = 0;
@@ -254,7 +254,7 @@ static int async_write(BIO *bio, const char *in, int inl)
     return ret;
 }
 
-static long async_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl async_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret;
     BIO *next = BIO_next(bio);
@@ -273,13 +273,13 @@ static long async_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int async_gets(BIO *bio, char *buf, int size)
+static int __cdecl async_gets(BIO *bio, char *buf, int size)
 {
     /* We don't support this - not needed anyway */
     return -1;
 }
 
-static int async_puts(BIO *bio, const char *str)
+static int __cdecl async_puts(BIO *bio, const char *str)
 {
     return async_write(bio, str, strlen(str));
 }

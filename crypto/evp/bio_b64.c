@@ -14,13 +14,13 @@
 #include <openssl/evp.h>
 #include "internal/bio.h"
 
-static int b64_write(BIO *h, const char *buf, int num);
-static int b64_read(BIO *h, char *buf, int size);
-static int b64_puts(BIO *h, const char *str);
-static long b64_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int b64_new(BIO *h);
-static int b64_free(BIO *data);
-static long b64_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl b64_write(BIO *h, const char *buf, int num);
+static int __cdecl b64_read(BIO *h, char *buf, int size);
+static int __cdecl b64_puts(BIO *h, const char *str);
+static long __cdecl b64_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl b64_new(BIO *h);
+static int __cdecl b64_free(BIO *data);
+static long __cdecl b64_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 #define B64_BLOCK_SIZE  1024
 #define B64_BLOCK_SIZE2 768
 #define B64_NONE        0
@@ -66,7 +66,7 @@ const BIO_METHOD * __cdecl BIO_f_base64(void)
     return &methods_b64;
 }
 
-static int b64_new(BIO *bi)
+static int __cdecl b64_new(BIO *bi)
 {
     BIO_B64_CTX *ctx;
 
@@ -89,7 +89,7 @@ static int b64_new(BIO *bi)
     return 1;
 }
 
-static int b64_free(BIO *a)
+static int __cdecl b64_free(BIO *a)
 {
     BIO_B64_CTX *ctx;
     if (a == NULL)
@@ -107,7 +107,7 @@ static int b64_free(BIO *a)
     return 1;
 }
 
-static int b64_read(BIO *b, char *out, int outl)
+static int __cdecl b64_read(BIO *b, char *out, int outl)
 {
     int ret = 0, i, ii, j, k, x, n, num, ret_code = 0;
     BIO_B64_CTX *ctx;
@@ -325,7 +325,7 @@ static int b64_read(BIO *b, char *out, int outl)
     return ((ret == 0) ? ret_code : ret);
 }
 
-static int b64_write(BIO *b, const char *in, int inl)
+static int __cdecl b64_write(BIO *b, const char *in, int inl)
 {
     int ret = 0;
     int n;
@@ -445,7 +445,7 @@ static int b64_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long b64_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl b64_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO_B64_CTX *ctx;
     long ret = 1;
@@ -532,7 +532,7 @@ static long b64_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long b64_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl b64_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
     BIO *next = BIO_next(b);
@@ -547,7 +547,7 @@ static long b64_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int b64_puts(BIO *b, const char *str)
+static int __cdecl b64_puts(BIO *b, const char *str)
 {
     return b64_write(b, str, strlen(str));
 }

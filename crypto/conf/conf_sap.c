@@ -40,7 +40,7 @@ void OPENSSL_config(const char *appname)
 }
 #endif
 
-int openssl_config_int(const OPENSSL_INIT_SETTINGS *settings)
+int __cdecl openssl_config_int(const OPENSSL_INIT_SETTINGS *settings)
 {
     int ret = 0;
     const char *filename;
@@ -72,7 +72,7 @@ int openssl_config_int(const OPENSSL_INIT_SETTINGS *settings)
     return ret;
 }
 
-void openssl_no_config_int(void)
+void __cdecl openssl_no_config_int(void)
 {
     openssl_configured = 1;
 }

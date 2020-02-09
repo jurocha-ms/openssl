@@ -159,12 +159,12 @@ int __cdecl CRYPTO_atomic_add(int *val, int amount, int *ret, CRYPTO_RWLOCK *loc
     return 1;
 }
 
-int openssl_init_fork_handlers(void)
+int __cdecl openssl_init_fork_handlers(void)
 {
     return 0;
 }
 
-int openssl_get_fork_id(void)
+int __cdecl openssl_get_fork_id(void)
 {
     return 0;
 }

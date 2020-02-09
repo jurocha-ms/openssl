@@ -28,7 +28,7 @@
 #ifdef NDEBUG
 # define ossl_assert(x) ((x) != 0)
 #else
-__owur static ossl_inline int ossl_assert_int(int expr, const char *exprstr,
+__owur static ossl_inline int __cdecl ossl_assert_int(int expr, const char *exprstr,
                                               const char *file, int line)
 {
     if (!expr)
@@ -75,25 +75,25 @@ DEFINE_LHASH_OF(MEM);
 # define DECIMAL_SIZE(type)      ((sizeof(type)*8+2)/3+1)
 # define HEX_SIZE(type)          (sizeof(type)*2)
 
-void OPENSSL_cpuid_setup(void);
+void __cdecl OPENSSL_cpuid_setup(void);
 extern unsigned int OPENSSL_ia32cap_P[];
-void OPENSSL_showfatal(const char *fmta, ...);
-void crypto_cleanup_all_ex_data_int(void);
-int openssl_init_fork_handlers(void);
-int openssl_get_fork_id(void);
+void __cdecl OPENSSL_showfatal(const char *fmta, ...);
+void __cdecl crypto_cleanup_all_ex_data_int(void);
+int __cdecl openssl_init_fork_handlers(void);
+int __cdecl openssl_get_fork_id(void);
 
-char *ossl_safe_getenv(const char *name);
+char * __cdecl ossl_safe_getenv(const char *name);
 
 extern CRYPTO_RWLOCK *memdbg_lock;
-int openssl_strerror_r(int errnum, char *buf, size_t buflen);
+int __cdecl openssl_strerror_r(int errnum, char *buf, size_t buflen);
 # if !defined(OPENSSL_NO_STDIO)
-FILE *openssl_fopen(const char *filename, const char *mode);
+FILE * __cdecl openssl_fopen(const char *filename, const char *mode);
 # else
-void *openssl_fopen(const char *filename, const char *mode);
+void * __cdecl openssl_fopen(const char *filename, const char *mode);
 # endif
 
-uint32_t OPENSSL_rdtsc(void);
-size_t OPENSSL_instrument_bus(unsigned int *, size_t);
-size_t OPENSSL_instrument_bus2(unsigned int *, size_t, size_t);
+uint32_t __cdecl OPENSSL_rdtsc(void);
+size_t __cdecl OPENSSL_instrument_bus(unsigned int *, size_t);
+size_t __cdecl OPENSSL_instrument_bus2(unsigned int *, size_t, size_t);
 
 #endif

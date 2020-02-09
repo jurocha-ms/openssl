@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "internal/cryptlib.h"
 
-char *ossl_safe_getenv(const char *name)
+char * __cdecl ossl_safe_getenv(const char *name)
 {
 #if defined(__GLIBC__) && defined(__GLIBC_PREREQ)
 # if __GLIBC_PREREQ(2, 17)

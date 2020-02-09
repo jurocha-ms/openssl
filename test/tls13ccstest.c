@@ -24,13 +24,13 @@ static int badvers = 0, badsessid = 0;
 static unsigned char chsessid[SSL_MAX_SSL_SESSION_ID_LENGTH];
 static size_t chsessidlen = 0;
 
-static int watchccs_new(BIO *bi);
-static int watchccs_free(BIO *a);
-static int watchccs_read(BIO *b, char *out, int outl);
-static int watchccs_write(BIO *b, const char *in, int inl);
-static long watchccs_ctrl(BIO *b, int cmd, long num, void *ptr);
-static int watchccs_gets(BIO *bp, char *buf, int size);
-static int watchccs_puts(BIO *bp, const char *str);
+static int __cdecl watchccs_new(BIO *bi);
+static int __cdecl watchccs_free(BIO *a);
+static int __cdecl watchccs_read(BIO *b, char *out, int outl);
+static int __cdecl watchccs_write(BIO *b, const char *in, int inl);
+static long __cdecl watchccs_ctrl(BIO *b, int cmd, long num, void *ptr);
+static int __cdecl watchccs_gets(BIO *bp, char *buf, int size);
+static int __cdecl watchccs_puts(BIO *bp, const char *str);
 
 /* Choose a sufficiently large type likely to be unused for this custom BIO */
 # define BIO_TYPE_WATCHCCS_FILTER  (0x80 | BIO_TYPE_FILTER)
@@ -55,19 +55,19 @@ static const BIO_METHOD *bio_f_watchccs_filter(void)
     return method_watchccs;
 }
 
-static int watchccs_new(BIO *bio)
+static int __cdecl watchccs_new(BIO *bio)
 {
     BIO_set_init(bio, 1);
     return 1;
 }
 
-static int watchccs_free(BIO *bio)
+static int __cdecl watchccs_free(BIO *bio)
 {
     BIO_set_init(bio, 0);
     return 1;
 }
 
-static int watchccs_read(BIO *bio, char *out, int outl)
+static int __cdecl watchccs_read(BIO *bio, char *out, int outl)
 {
     int ret = 0;
     BIO *next = BIO_next(bio);
@@ -86,7 +86,7 @@ static int watchccs_read(BIO *bio, char *out, int outl)
     return ret;
 }
 
-static int watchccs_write(BIO *bio, const char *in, int inl)
+static int __cdecl watchccs_write(BIO *bio, const char *in, int inl)
 {
     int ret = 0;
     BIO *next = BIO_next(bio);
@@ -210,7 +210,7 @@ static int watchccs_write(BIO *bio, const char *in, int inl)
     return ret;
 }
 
-static long watchccs_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl watchccs_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret;
     BIO *next = BIO_next(bio);
@@ -229,13 +229,13 @@ static long watchccs_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int watchccs_gets(BIO *bio, char *buf, int size)
+static int __cdecl watchccs_gets(BIO *bio, char *buf, int size)
 {
     /* We don't support this - not needed anyway */
     return -1;
 }
 
-static int watchccs_puts(BIO *bio, const char *str)
+static int __cdecl watchccs_puts(BIO *bio, const char *str)
 {
     return watchccs_write(bio, str, strlen(str));
 }

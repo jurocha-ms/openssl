@@ -71,7 +71,7 @@ struct LP_dir_context_st {
     char entry_name[NAME_MAX + 1];
 };
 
-const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
+const char * __cdecl LP_find_file(LP_DIR_CTX **ctx, const char *directory)
 {
     if (ctx == NULL || directory == NULL) {
         errno = EINVAL;
@@ -201,7 +201,7 @@ const char *LP_find_file(LP_DIR_CTX **ctx, const char *directory)
     return (*ctx)->entry_name;
 }
 
-int LP_find_file_end(LP_DIR_CTX **ctx)
+int __cdecl LP_find_file_end(LP_DIR_CTX **ctx)
 {
     if (ctx != NULL && *ctx != NULL) {
         FindClose((*ctx)->handle);

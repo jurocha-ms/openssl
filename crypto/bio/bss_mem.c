@@ -12,16 +12,16 @@
 #include "bio_lcl.h"
 #include "internal/cryptlib.h"
 
-static int mem_write(BIO *h, const char *buf, int num);
-static int mem_read(BIO *h, char *buf, int size);
-static int mem_puts(BIO *h, const char *str);
-static int mem_gets(BIO *h, char *str, int size);
-static long mem_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int mem_new(BIO *h);
-static int secmem_new(BIO *h);
-static int mem_free(BIO *data);
-static int mem_buf_free(BIO *data);
-static int mem_buf_sync(BIO *h);
+static int __cdecl mem_write(BIO *h, const char *buf, int num);
+static int __cdecl mem_read(BIO *h, char *buf, int size);
+static int __cdecl mem_puts(BIO *h, const char *str);
+static int __cdecl mem_gets(BIO *h, char *str, int size);
+static long __cdecl mem_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl mem_new(BIO *h);
+static int __cdecl secmem_new(BIO *h);
+static int __cdecl mem_free(BIO *data);
+static int __cdecl mem_buf_free(BIO *data);
+static int __cdecl mem_buf_sync(BIO *h);
 
 static const BIO_METHOD mem_method = {
     BIO_TYPE_MEM,
@@ -133,17 +133,17 @@ static int mem_init(BIO *bi, unsigned long flags)
     return 1;
 }
 
-static int mem_new(BIO *bi)
+static int __cdecl mem_new(BIO *bi)
 {
     return mem_init(bi, 0L);
 }
 
-static int secmem_new(BIO *bi)
+static int __cdecl secmem_new(BIO *bi)
 {
     return mem_init(bi, BUF_MEM_FLAG_SECURE);
 }
 
-static int mem_free(BIO *a)
+static int __cdecl mem_free(BIO *a)
 {
     BIO_BUF_MEM *bb;
 
@@ -158,7 +158,7 @@ static int mem_free(BIO *a)
     return 1;
 }
 
-static int mem_buf_free(BIO *a)
+static int __cdecl mem_buf_free(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -177,7 +177,7 @@ static int mem_buf_free(BIO *a)
 /*
  * Reallocate memory buffer if read pointer differs
  */
-static int mem_buf_sync(BIO *b)
+static int __cdecl mem_buf_sync(BIO *b)
 {
     if (b != NULL && b->init != 0 && b->ptr != NULL) {
         BIO_BUF_MEM *bbm = (BIO_BUF_MEM *)b->ptr;
@@ -191,7 +191,7 @@ static int mem_buf_sync(BIO *b)
     return 0;
 }
 
-static int mem_read(BIO *b, char *out, int outl)
+static int __cdecl mem_read(BIO *b, char *out, int outl)
 {
     int ret = -1;
     BIO_BUF_MEM *bbm = (BIO_BUF_MEM *)b->ptr;
@@ -214,7 +214,7 @@ static int mem_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int mem_write(BIO *b, const char *in, int inl)
+static int __cdecl mem_write(BIO *b, const char *in, int inl)
 {
     int ret = -1;
     int blen;
@@ -242,7 +242,7 @@ static int mem_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl mem_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     char **pptr;
@@ -323,7 +323,7 @@ static long mem_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int mem_gets(BIO *bp, char *buf, int size)
+static int __cdecl mem_gets(BIO *bp, char *buf, int size)
 {
     int i, j;
     int ret = -1;
@@ -361,7 +361,7 @@ static int mem_gets(BIO *bp, char *buf, int size)
     return ret;
 }
 
-static int mem_puts(BIO *bp, const char *str)
+static int __cdecl mem_puts(BIO *bp, const char *str)
 {
     int n, ret;
 

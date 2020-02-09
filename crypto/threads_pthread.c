@@ -190,7 +190,7 @@ static void fork_once_func(void)
 }
 # endif
 
-int openssl_init_fork_handlers(void)
+int __cdecl openssl_init_fork_handlers(void)
 {
 # ifdef OPENSSL_SYS_UNIX
     if (pthread_once(&fork_once_control, fork_once_func) == 0)
@@ -199,7 +199,7 @@ int openssl_init_fork_handlers(void)
     return 0;
 }
 
-int openssl_get_fork_id(void)
+int __cdecl openssl_get_fork_id(void)
 {
     return getpid();
 }

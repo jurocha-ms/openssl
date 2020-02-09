@@ -94,7 +94,7 @@ static variant_char *ossl_strchr(const variant_char *str, char srch)
 #  define OPENSSL_CPUID_SETUP
 typedef uint64_t IA32CAP;
 
-void OPENSSL_cpuid_setup(void)
+void __cdecl OPENSSL_cpuid_setup(void)
 {
     static int trigger = 0;
     IA32CAP OPENSSL_ia32_cpuid(unsigned int *);
@@ -162,7 +162,7 @@ unsigned int OPENSSL_ia32cap_P[4];
 # endif
 #endif
 #if !defined(OPENSSL_CPUID_SETUP) && !defined(OPENSSL_CPUID_OBJ)
-void OPENSSL_cpuid_setup(void)
+void __cdecl OPENSSL_cpuid_setup(void)
 {
 }
 #endif
@@ -258,7 +258,7 @@ int __cdecl OPENSSL_isservice(void)
 }
 # endif
 
-void OPENSSL_showfatal(const char *fmta, ...)
+void __cdecl OPENSSL_showfatal(const char *fmta, ...)
 {
     va_list ap;
     TCHAR buf[256];
@@ -396,7 +396,7 @@ void OPENSSL_showfatal(const char *fmta, ...)
 # endif
 }
 #else
-void OPENSSL_showfatal(const char *fmta, ...)
+void __cdecl OPENSSL_showfatal(const char *fmta, ...)
 {
 #ifndef OPENSSL_NO_STDIO
     va_list ap;
@@ -456,17 +456,17 @@ int __cdecl CRYPTO_memcmp(const void * in_a, const void * in_b, size_t len)
 /*
  * For systems that don't provide an instruction counter register or equivalent.
  */
-uint32_t OPENSSL_rdtsc(void)
+uint32_t __cdecl OPENSSL_rdtsc(void)
 {
     return 0;
 }
 
-size_t OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
+size_t __cdecl OPENSSL_instrument_bus(unsigned int *out, size_t cnt)
 {
     return 0;
 }
 
-size_t OPENSSL_instrument_bus2(unsigned int *out, size_t cnt, size_t max)
+size_t __cdecl OPENSSL_instrument_bus2(unsigned int *out, size_t cnt, size_t max)
 {
     return 0;
 }

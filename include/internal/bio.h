@@ -12,22 +12,22 @@
 struct bio_method_st {
     int type;
     char *name;
-    int (*bwrite) (BIO *, const char *, size_t, size_t *);
-    int (*bwrite_old) (BIO *, const char *, int);
-    int (*bread) (BIO *, char *, size_t, size_t *);
-    int (*bread_old) (BIO *, char *, int);
-    int (*bputs) (BIO *, const char *);
-    int (*bgets) (BIO *, char *, int);
-    long (*ctrl) (BIO *, int, long, void *);
-    int (*create) (BIO *);
-    int (*destroy) (BIO *);
-    long (*callback_ctrl) (BIO *, int, BIO_info_cb *);
+    int (__cdecl *bwrite) (BIO *, const char *, size_t, size_t *);
+    int (__cdecl *bwrite_old) (BIO *, const char *, int);
+    int (__cdecl *bread) (BIO *, char *, size_t, size_t *);
+    int (__cdecl *bread_old) (BIO *, char *, int);
+    int (__cdecl *bputs) (BIO *, const char *);
+    int (__cdecl *bgets) (BIO *, char *, int);
+    long (__cdecl *ctrl) (BIO *, int, long, void *);
+    int (__cdecl *create) (BIO *);
+    int (__cdecl *destroy) (BIO *);
+    long (__cdecl *callback_ctrl) (BIO *, int, BIO_info_cb *);
 };
 
-void bio_free_ex_data(BIO *bio);
-void bio_cleanup(void);
+void __cdecl bio_free_ex_data(BIO *bio);
+void __cdecl bio_cleanup(void);
 
 
 /* Old style to new style BIO_METHOD conversion functions */
-int bwrite_conv(BIO *bio, const char *data, size_t datal, size_t *written);
-int bread_conv(BIO *bio, char *data, size_t datal, size_t *read);
+int __cdecl bwrite_conv(BIO *bio, const char *data, size_t datal, size_t *written);
+int __cdecl bread_conv(BIO *bio, char *data, size_t datal, size_t *read);

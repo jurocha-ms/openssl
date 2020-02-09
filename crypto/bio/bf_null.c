@@ -16,12 +16,12 @@
  * BIO_put and BIO_get both add to the digest, BIO_gets returns the digest
  */
 
-static int nullf_write(BIO *h, const char *buf, int num);
-static int nullf_read(BIO *h, char *buf, int size);
-static int nullf_puts(BIO *h, const char *str);
-static int nullf_gets(BIO *h, char *str, int size);
-static long nullf_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static long nullf_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl nullf_write(BIO *h, const char *buf, int num);
+static int __cdecl nullf_read(BIO *h, char *buf, int size);
+static int __cdecl nullf_puts(BIO *h, const char *str);
+static int __cdecl nullf_gets(BIO *h, char *str, int size);
+static long __cdecl nullf_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static long __cdecl nullf_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 static const BIO_METHOD methods_nullf = {
     BIO_TYPE_NULL_FILTER,
     "NULL filter",
@@ -44,7 +44,7 @@ const BIO_METHOD * __cdecl BIO_f_null(void)
     return &methods_nullf;
 }
 
-static int nullf_read(BIO *b, char *out, int outl)
+static int __cdecl nullf_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
 
@@ -58,7 +58,7 @@ static int nullf_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int nullf_write(BIO *b, const char *in, int inl)
+static int __cdecl nullf_write(BIO *b, const char *in, int inl)
 {
     int ret = 0;
 
@@ -72,7 +72,7 @@ static int nullf_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long nullf_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl nullf_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret;
 
@@ -93,7 +93,7 @@ static long nullf_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long nullf_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl nullf_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
 
@@ -107,14 +107,14 @@ static long nullf_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int nullf_gets(BIO *bp, char *buf, int size)
+static int __cdecl nullf_gets(BIO *bp, char *buf, int size)
 {
     if (bp->next_bio == NULL)
         return 0;
     return BIO_gets(bp->next_bio, buf, size);
 }
 
-static int nullf_puts(BIO *bp, const char *str)
+static int __cdecl nullf_puts(BIO *bp, const char *str)
 {
     if (bp->next_bio == NULL)
         return 0;

@@ -237,10 +237,10 @@ typedef long (__cdecl *BIO_callback_fn)(BIO *b, int oper, const char *argp, int 
 typedef long (__cdecl *BIO_callback_fn_ex)(BIO *b, int oper, const char *argp,
                                    size_t len, int argi,
                                    long argl, int ret, size_t *processed);
-BIO_callback_fn __cdecl BIO_get_callback(const BIO *b);
+BIO_callback_fn BIO_get_callback(const BIO *b);
 void __cdecl BIO_set_callback(BIO *b, BIO_callback_fn callback);
 
-BIO_callback_fn_ex __cdecl BIO_get_callback_ex(const BIO *b);
+BIO_callback_fn_ex BIO_get_callback_ex(const BIO *b);
 void __cdecl BIO_set_callback_ex(BIO *b, BIO_callback_fn_ex callback);
 
 char * __cdecl BIO_get_callback_arg(const BIO *b);
@@ -251,13 +251,13 @@ typedef struct bio_method_st BIO_METHOD;
 const char * __cdecl BIO_method_name(const BIO *b);
 int __cdecl BIO_method_type(const BIO *b);
 
-typedef int BIO_info_cb(BIO *, int, int);
+typedef int __cdecl BIO_info_cb(BIO *, int, int);
 typedef BIO_info_cb bio_info_cb;  /* backward compatibility */
 
 DEFINE_STACK_OF(BIO)
 
 /* Prefix and suffix callback in ASN1 BIO */
-typedef int asn1_ps_func (BIO *b, unsigned char **pbuf, int *plen,
+typedef int __cdecl asn1_ps_func (BIO *b, unsigned char **pbuf, int *plen,
                           void *parg);
 
 # ifndef OPENSSL_NO_SCTP
@@ -762,36 +762,36 @@ ossl_bio__attr__((__format__(ossl_bio__printf__, 3, 0)));
 
 BIO_METHOD *__cdecl BIO_meth_new(int type, const char *name);
 void __cdecl BIO_meth_free(BIO_METHOD *biom);
-int (* __cdecl BIO_meth_get_write(const BIO_METHOD *biom)) (BIO *, const char *, int);
-int (* __cdecl BIO_meth_get_write_ex(const BIO_METHOD *biom)) (BIO *, const char *, size_t,
+int (__cdecl * BIO_meth_get_write(const BIO_METHOD *biom)) (BIO *, const char *, int);
+int (__cdecl * BIO_meth_get_write_ex(const BIO_METHOD *biom)) (BIO *, const char *, size_t,
                                                 size_t *);
 int __cdecl BIO_meth_set_write(BIO_METHOD *biom,
-                       int (*write) (BIO *, const char *, int));
+                       int (__cdecl *write) (BIO *, const char *, int));
 int __cdecl BIO_meth_set_write_ex(BIO_METHOD *biom,
-                       int (*bwrite) (BIO *, const char *, size_t, size_t *));
-int (* __cdecl BIO_meth_get_read(const BIO_METHOD *biom)) (BIO *, char *, int);
-int (* __cdecl BIO_meth_get_read_ex(const BIO_METHOD *biom)) (BIO *, char *, size_t, size_t *);
+                       int (__cdecl *bwrite) (BIO *, const char *, size_t, size_t *));
+int (__cdecl * BIO_meth_get_read(const BIO_METHOD *biom)) (BIO *, char *, int);
+int (__cdecl * BIO_meth_get_read_ex(const BIO_METHOD *biom)) (BIO *, char *, size_t, size_t *);
 int __cdecl BIO_meth_set_read(BIO_METHOD *biom,
-                      int (*read) (BIO *, char *, int));
+                      int (__cdecl *read) (BIO *, char *, int));
 int __cdecl BIO_meth_set_read_ex(BIO_METHOD *biom,
-                         int (*bread) (BIO *, char *, size_t, size_t *));
-int (* __cdecl BIO_meth_get_puts(const BIO_METHOD *biom)) (BIO *, const char *);
+                         int (__cdecl *bread) (BIO *, char *, size_t, size_t *));
+int (__cdecl * BIO_meth_get_puts(const BIO_METHOD *biom)) (BIO *, const char *);
 int __cdecl BIO_meth_set_puts(BIO_METHOD *biom,
-                      int (*puts) (BIO *, const char *));
-int (* __cdecl BIO_meth_get_gets(const BIO_METHOD *biom)) (BIO *, char *, int);
+                      int (__cdecl *puts) (BIO *, const char *));
+int (__cdecl * BIO_meth_get_gets(const BIO_METHOD *biom)) (BIO *, char *, int);
 int __cdecl BIO_meth_set_gets(BIO_METHOD *biom,
-                      int (*gets) (BIO *, char *, int));
-long (* __cdecl BIO_meth_get_ctrl(const BIO_METHOD *biom)) (BIO *, int, long, void *);
+                      int (__cdecl *gets) (BIO *, char *, int));
+long (__cdecl * BIO_meth_get_ctrl(const BIO_METHOD *biom)) (BIO *, int, long, void *);
 int __cdecl BIO_meth_set_ctrl(BIO_METHOD *biom,
-                      long (*ctrl) (BIO *, int, long, void *));
-int (* __cdecl BIO_meth_get_create(const BIO_METHOD *bion)) (BIO *);
-int __cdecl BIO_meth_set_create(BIO_METHOD *biom, int (*create) (BIO *));
-int (* __cdecl BIO_meth_get_destroy(const BIO_METHOD *biom)) (BIO *);
-int __cdecl BIO_meth_set_destroy(BIO_METHOD *biom, int (*destroy) (BIO *));
-long (* __cdecl BIO_meth_get_callback_ctrl(const BIO_METHOD *biom))
+                      long (__cdecl *ctrl) (BIO *, int, long, void *));
+int (__cdecl * BIO_meth_get_create(const BIO_METHOD *bion)) (BIO *);
+int __cdecl BIO_meth_set_create(BIO_METHOD *biom, int (__cdecl *create) (BIO *));
+int (__cdecl * BIO_meth_get_destroy(const BIO_METHOD *biom)) (BIO *);
+int __cdecl BIO_meth_set_destroy(BIO_METHOD *biom, int (__cdecl *destroy) (BIO *));
+long (__cdecl * BIO_meth_get_callback_ctrl(const BIO_METHOD *biom))
                                  (BIO *, int, BIO_info_cb *);
 int __cdecl BIO_meth_set_callback_ctrl(BIO_METHOD *biom,
-                               long (*callback_ctrl) (BIO *, int,
+                               long (__cdecl *callback_ctrl) (BIO *, int,
                                                       BIO_info_cb *));
 
 # ifdef  __cplusplus

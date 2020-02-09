@@ -16,13 +16,13 @@
 #include <openssl/err.h>
 #include "ssl_locl.h"
 
-static int ssl_write(BIO *h, const char *buf, size_t size, size_t *written);
-static int ssl_read(BIO *b, char *buf, size_t size, size_t *readbytes);
-static int ssl_puts(BIO *h, const char *str);
-static long ssl_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int ssl_new(BIO *h);
-static int ssl_free(BIO *data);
-static long ssl_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl ssl_write(BIO *h, const char *buf, size_t size, size_t *written);
+static int __cdecl ssl_read(BIO *b, char *buf, size_t size, size_t *readbytes);
+static int __cdecl ssl_puts(BIO *h, const char *str);
+static long __cdecl ssl_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl ssl_new(BIO *h);
+static int __cdecl ssl_free(BIO *data);
+static long __cdecl ssl_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 typedef struct bio_ssl_st {
     SSL *ssl;                   /* The ssl handle :-) */
     /* re-negotiate every time the total number of bytes is this size */
@@ -53,7 +53,7 @@ const BIO_METHOD * __cdecl BIO_f_ssl(void)
     return &methods_sslp;
 }
 
-static int ssl_new(BIO *bi)
+static int __cdecl ssl_new(BIO *bi)
 {
     BIO_SSL *bs = OPENSSL_zalloc(sizeof(*bs));
 
@@ -69,7 +69,7 @@ static int ssl_new(BIO *bi)
     return 1;
 }
 
-static int ssl_free(BIO *a)
+static int __cdecl ssl_free(BIO *a)
 {
     BIO_SSL *bs;
 
@@ -89,7 +89,7 @@ static int ssl_free(BIO *a)
     return 1;
 }
 
-static int ssl_read(BIO *b, char *buf, size_t size, size_t *readbytes)
+static int __cdecl ssl_read(BIO *b, char *buf, size_t size, size_t *readbytes)
 {
     int ret = 1;
     BIO_SSL *sb;
@@ -159,7 +159,7 @@ static int ssl_read(BIO *b, char *buf, size_t size, size_t *readbytes)
     return ret;
 }
 
-static int ssl_write(BIO *b, const char *buf, size_t size, size_t *written)
+static int __cdecl ssl_write(BIO *b, const char *buf, size_t size, size_t *written)
 {
     int ret, r = 0;
     int retry_reason = 0;
@@ -221,7 +221,7 @@ static int ssl_write(BIO *b, const char *buf, size_t size, size_t *written)
     return ret;
 }
 
-static long ssl_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl ssl_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     SSL **sslp, *ssl;
     BIO_SSL *bs, *dbs;
@@ -390,7 +390,7 @@ static long ssl_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long ssl_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl ssl_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     SSL *ssl;
     BIO_SSL *bs;
@@ -409,7 +409,7 @@ static long ssl_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int ssl_puts(BIO *bp, const char *str)
+static int __cdecl ssl_puts(BIO *bp, const char *str)
 {
     int n, ret;
 

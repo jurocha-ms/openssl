@@ -29,7 +29,7 @@
 
 typedef _Atomic int CRYPTO_REF_COUNT;
 
-static inline int CRYPTO_UP_REF(_Atomic int *val, int *ret, void *lock)
+static inline int __cdecl CRYPTO_UP_REF(_Atomic int *val, int *ret, void *lock)
 {
     *ret = atomic_fetch_add_explicit(val, 1, memory_order_relaxed) + 1;
     return 1;
@@ -45,7 +45,7 @@ static inline int CRYPTO_UP_REF(_Atomic int *val, int *ret, void *lock)
  * to mutable members doesn't have to be serialized anymore, which would
  * otherwise imply an acquire fence. Hence conditional acquire fence...
  */
-static inline int CRYPTO_DOWN_REF(_Atomic int *val, int *ret, void *lock)
+static inline int __cdecl CRYPTO_DOWN_REF(_Atomic int *val, int *ret, void *lock)
 {
     *ret = atomic_fetch_sub_explicit(val, 1, memory_order_relaxed) - 1;
     if (*ret == 0)
@@ -59,13 +59,13 @@ static inline int CRYPTO_DOWN_REF(_Atomic int *val, int *ret, void *lock)
 
 typedef int CRYPTO_REF_COUNT;
 
-static __inline__ int CRYPTO_UP_REF(int *val, int *ret, void *lock)
+static __inline__ int __cdecl CRYPTO_UP_REF(int *val, int *ret, void *lock)
 {
     *ret = __atomic_fetch_add(val, 1, __ATOMIC_RELAXED) + 1;
     return 1;
 }
 
-static __inline__ int CRYPTO_DOWN_REF(int *val, int *ret, void *lock)
+static __inline__ int __cdecl CRYPTO_DOWN_REF(int *val, int *ret, void *lock)
 {
     *ret = __atomic_fetch_sub(val, 1, __ATOMIC_RELAXED) - 1;
     if (*ret == 0)
@@ -85,13 +85,13 @@ typedef volatile int CRYPTO_REF_COUNT;
 #    define _ARM_BARRIER_ISH _ARM64_BARRIER_ISH
 #   endif
 
-static __inline int CRYPTO_UP_REF(volatile int *val, int *ret, void *lock)
+static __inline int __cdecl CRYPTO_UP_REF(volatile int *val, int *ret, void *lock)
 {
     *ret = _InterlockedExchangeAdd_nf(val, 1) + 1;
     return 1;
 }
 
-static __inline int CRYPTO_DOWN_REF(volatile int *val, int *ret, void *lock)
+static __inline int __cdecl CRYPTO_DOWN_REF(volatile int *val, int *ret, void *lock)
 {
     *ret = _InterlockedExchangeAdd_nf(val, -1) - 1;
     if (*ret == 0)
@@ -111,13 +111,13 @@ static __inline int CRYPTO_DOWN_REF(volatile int *val, int *ret, void *lock)
 #    endif
 #   endif
 
-static __inline int CRYPTO_UP_REF(volatile int *val, int *ret, void *lock)
+static __inline int __cdecl CRYPTO_UP_REF(volatile int *val, int *ret, void *lock)
 {
     *ret = _InterlockedExchangeAdd(val, 1) + 1;
     return 1;
 }
 
-static __inline int CRYPTO_DOWN_REF(volatile int *val, int *ret, void *lock)
+static __inline int __cdecl CRYPTO_DOWN_REF(volatile int *val, int *ret, void *lock)
 {
     *ret = _InterlockedExchangeAdd(val, -1) - 1;
     return 1;

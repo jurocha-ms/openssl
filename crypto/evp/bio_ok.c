@@ -78,12 +78,12 @@
 #include <openssl/rand.h>
 #include "internal/evp_int.h"
 
-static int ok_write(BIO *h, const char *buf, int num);
-static int ok_read(BIO *h, char *buf, int size);
-static long ok_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int ok_new(BIO *h);
-static int ok_free(BIO *data);
-static long ok_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl ok_write(BIO *h, const char *buf, int num);
+static int __cdecl ok_read(BIO *h, char *buf, int size);
+static long __cdecl ok_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl ok_new(BIO *h);
+static int __cdecl ok_free(BIO *data);
+static long __cdecl ok_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 
 static __owur int sig_out(BIO *b);
 static __owur int sig_in(BIO *b);
@@ -129,7 +129,7 @@ const BIO_METHOD * __cdecl BIO_f_reliable(void)
     return &methods_ok;
 }
 
-static int ok_new(BIO *bi)
+static int __cdecl ok_new(BIO *bi)
 {
     BIO_OK_CTX *ctx;
 
@@ -151,7 +151,7 @@ static int ok_new(BIO *bi)
     return 1;
 }
 
-static int ok_free(BIO *a)
+static int __cdecl ok_free(BIO *a)
 {
     BIO_OK_CTX *ctx;
 
@@ -168,7 +168,7 @@ static int ok_free(BIO *a)
     return 1;
 }
 
-static int ok_read(BIO *b, char *out, int outl)
+static int __cdecl ok_read(BIO *b, char *out, int outl)
 {
     int ret = 0, i, n;
     BIO_OK_CTX *ctx;
@@ -254,7 +254,7 @@ static int ok_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int ok_write(BIO *b, const char *in, int inl)
+static int __cdecl ok_write(BIO *b, const char *in, int inl)
 {
     int ret = 0, n, i;
     BIO_OK_CTX *ctx;
@@ -319,7 +319,7 @@ static int ok_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long ok_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl ok_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO_OK_CTX *ctx;
     EVP_MD *md;
@@ -404,7 +404,7 @@ static long ok_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long ok_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl ok_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
     BIO *next;

@@ -13,14 +13,14 @@
 #include "internal/cryptlib.h"
 #include <openssl/evp.h>
 
-static int linebuffer_write(BIO *h, const char *buf, int num);
-static int linebuffer_read(BIO *h, char *buf, int size);
-static int linebuffer_puts(BIO *h, const char *str);
-static int linebuffer_gets(BIO *h, char *str, int size);
-static long linebuffer_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int linebuffer_new(BIO *h);
-static int linebuffer_free(BIO *data);
-static long linebuffer_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl linebuffer_write(BIO *h, const char *buf, int num);
+static int __cdecl linebuffer_read(BIO *h, char *buf, int size);
+static int __cdecl linebuffer_puts(BIO *h, const char *str);
+static int __cdecl linebuffer_gets(BIO *h, char *str, int size);
+static long __cdecl linebuffer_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl linebuffer_new(BIO *h);
+static int __cdecl linebuffer_free(BIO *data);
+static long __cdecl linebuffer_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 
 /* A 10k maximum should be enough for most purposes */
 #define DEFAULT_LINEBUFFER_SIZE 1024*10
@@ -55,7 +55,7 @@ typedef struct bio_linebuffer_ctx_struct {
     int obuf_len;               /* how many bytes are in it */
 } BIO_LINEBUFFER_CTX;
 
-static int linebuffer_new(BIO *bi)
+static int __cdecl linebuffer_new(BIO *bi)
 {
     BIO_LINEBUFFER_CTX *ctx;
 
@@ -78,7 +78,7 @@ static int linebuffer_new(BIO *bi)
     return 1;
 }
 
-static int linebuffer_free(BIO *a)
+static int __cdecl linebuffer_free(BIO *a)
 {
     BIO_LINEBUFFER_CTX *b;
 
@@ -93,7 +93,7 @@ static int linebuffer_free(BIO *a)
     return 1;
 }
 
-static int linebuffer_read(BIO *b, char *out, int outl)
+static int __cdecl linebuffer_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
 
@@ -107,7 +107,7 @@ static int linebuffer_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int linebuffer_write(BIO *b, const char *in, int inl)
+static int __cdecl linebuffer_write(BIO *b, const char *in, int inl)
 {
     int i, num = 0, foundnl;
     BIO_LINEBUFFER_CTX *ctx;
@@ -202,7 +202,7 @@ static int linebuffer_write(BIO *b, const char *in, int inl)
     return num;
 }
 
-static long linebuffer_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl linebuffer_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO *dbio;
     BIO_LINEBUFFER_CTX *ctx;
@@ -299,7 +299,7 @@ static long linebuffer_ctrl(BIO *b, int cmd, long num, void *ptr)
     return 0;
 }
 
-static long linebuffer_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl linebuffer_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
 
@@ -313,14 +313,14 @@ static long linebuffer_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int linebuffer_gets(BIO *b, char *buf, int size)
+static int __cdecl linebuffer_gets(BIO *b, char *buf, int size)
 {
     if (b->next_bio == NULL)
         return 0;
     return BIO_gets(b->next_bio, buf, size);
 }
 
-static int linebuffer_puts(BIO *b, const char *str)
+static int __cdecl linebuffer_puts(BIO *b, const char *str)
 {
     return linebuffer_write(b, str, strlen(str));
 }

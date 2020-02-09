@@ -59,19 +59,19 @@ typedef struct BIO_ASN1_BUF_CTX_t {
     void *ex_arg;
 } BIO_ASN1_BUF_CTX;
 
-static int asn1_bio_write(BIO *h, const char *buf, int num);
-static int asn1_bio_read(BIO *h, char *buf, int size);
-static int asn1_bio_puts(BIO *h, const char *str);
-static int asn1_bio_gets(BIO *h, char *str, int size);
-static long asn1_bio_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int asn1_bio_new(BIO *h);
-static int asn1_bio_free(BIO *data);
-static long asn1_bio_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl asn1_bio_write(BIO *h, const char *buf, int num);
+static int __cdecl asn1_bio_read(BIO *h, char *buf, int size);
+static int __cdecl asn1_bio_puts(BIO *h, const char *str);
+static int __cdecl asn1_bio_gets(BIO *h, char *str, int size);
+static long __cdecl asn1_bio_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl asn1_bio_new(BIO *h);
+static int __cdecl asn1_bio_free(BIO *data);
+static long __cdecl asn1_bio_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 
-static int asn1_bio_init(BIO_ASN1_BUF_CTX *ctx, int size);
-static int asn1_bio_flush_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
+static int __cdecl asn1_bio_init(BIO_ASN1_BUF_CTX *ctx, int size);
+static int __cdecl asn1_bio_flush_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
                              asn1_ps_func *cleanup, asn1_bio_state_t next);
-static int asn1_bio_setup_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
+static int __cdecl asn1_bio_setup_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
                              asn1_ps_func *setup,
                              asn1_bio_state_t ex_state,
                              asn1_bio_state_t other_state);
@@ -98,7 +98,7 @@ const BIO_METHOD * __cdecl BIO_f_asn1(void)
     return &methods_asn1;
 }
 
-static int asn1_bio_new(BIO *b)
+static int __cdecl asn1_bio_new(BIO *b)
 {
     BIO_ASN1_BUF_CTX *ctx = OPENSSL_zalloc(sizeof(*ctx));
 
@@ -114,7 +114,7 @@ static int asn1_bio_new(BIO *b)
     return 1;
 }
 
-static int asn1_bio_init(BIO_ASN1_BUF_CTX *ctx, int size)
+static int __cdecl asn1_bio_init(BIO_ASN1_BUF_CTX *ctx, int size)
 {
     if ((ctx->buf = OPENSSL_malloc(size)) == NULL) {
         ASN1err(ASN1_F_ASN1_BIO_INIT, ERR_R_MALLOC_FAILURE);
@@ -127,7 +127,7 @@ static int asn1_bio_init(BIO_ASN1_BUF_CTX *ctx, int size)
     return 1;
 }
 
-static int asn1_bio_free(BIO *b)
+static int __cdecl asn1_bio_free(BIO *b)
 {
     BIO_ASN1_BUF_CTX *ctx;
 
@@ -146,7 +146,7 @@ static int asn1_bio_free(BIO *b)
     return 1;
 }
 
-static int asn1_bio_write(BIO *b, const char *in, int inl)
+static int __cdecl asn1_bio_write(BIO *b, const char *in, int inl)
 {
     BIO_ASN1_BUF_CTX *ctx;
     int wrmax, wrlen, ret;
@@ -246,7 +246,7 @@ static int asn1_bio_write(BIO *b, const char *in, int inl)
 
 }
 
-static int asn1_bio_flush_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
+static int __cdecl asn1_bio_flush_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
                              asn1_ps_func *cleanup, asn1_bio_state_t next)
 {
     int ret;
@@ -271,7 +271,7 @@ static int asn1_bio_flush_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
     return ret;
 }
 
-static int asn1_bio_setup_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
+static int __cdecl asn1_bio_setup_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
                              asn1_ps_func *setup,
                              asn1_bio_state_t ex_state,
                              asn1_bio_state_t other_state)
@@ -287,7 +287,7 @@ static int asn1_bio_setup_ex(BIO *b, BIO_ASN1_BUF_CTX *ctx,
     return 1;
 }
 
-static int asn1_bio_read(BIO *b, char *in, int inl)
+static int __cdecl asn1_bio_read(BIO *b, char *in, int inl)
 {
     BIO *next = BIO_next(b);
     if (next == NULL)
@@ -295,12 +295,12 @@ static int asn1_bio_read(BIO *b, char *in, int inl)
     return BIO_read(next, in, inl);
 }
 
-static int asn1_bio_puts(BIO *b, const char *str)
+static int __cdecl asn1_bio_puts(BIO *b, const char *str)
 {
     return asn1_bio_write(b, str, strlen(str));
 }
 
-static int asn1_bio_gets(BIO *b, char *str, int size)
+static int __cdecl asn1_bio_gets(BIO *b, char *str, int size)
 {
     BIO *next = BIO_next(b);
     if (next == NULL)
@@ -308,7 +308,7 @@ static int asn1_bio_gets(BIO *b, char *str, int size)
     return BIO_gets(next, str, size);
 }
 
-static long asn1_bio_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl asn1_bio_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     BIO *next = BIO_next(b);
     if (next == NULL)
@@ -316,7 +316,7 @@ static long asn1_bio_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return BIO_callback_ctrl(next, cmd, fp);
 }
 
-static long asn1_bio_ctrl(BIO *b, int cmd, long arg1, void *arg2)
+static long __cdecl asn1_bio_ctrl(BIO *b, int cmd, long arg1, void *arg2)
 {
     BIO_ASN1_BUF_CTX *ctx;
     BIO_ASN1_EX_FUNCS *ex_func;

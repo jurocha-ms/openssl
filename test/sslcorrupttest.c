@@ -23,7 +23,7 @@ static void copy_flags(BIO *bio)
     BIO_set_flags(bio, flags);
 }
 
-static int tls_corrupt_read(BIO *bio, char *out, int outl)
+static int __cdecl tls_corrupt_read(BIO *bio, char *out, int outl)
 {
     int ret;
     BIO *next = BIO_next(bio);
@@ -34,7 +34,7 @@ static int tls_corrupt_read(BIO *bio, char *out, int outl)
     return ret;
 }
 
-static int tls_corrupt_write(BIO *bio, const char *in, int inl)
+static int __cdecl tls_corrupt_write(BIO *bio, const char *in, int inl)
 {
     int ret;
     BIO *next = BIO_next(bio);
@@ -55,7 +55,7 @@ static int tls_corrupt_write(BIO *bio, const char *in, int inl)
     return ret;
 }
 
-static long tls_corrupt_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl tls_corrupt_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret;
     BIO *next = BIO_next(bio);
@@ -74,26 +74,26 @@ static long tls_corrupt_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int tls_corrupt_gets(BIO *bio, char *buf, int size)
+static int __cdecl tls_corrupt_gets(BIO *bio, char *buf, int size)
 {
     /* We don't support this - not needed anyway */
     return -1;
 }
 
-static int tls_corrupt_puts(BIO *bio, const char *str)
+static int __cdecl tls_corrupt_puts(BIO *bio, const char *str)
 {
     /* We don't support this - not needed anyway */
     return -1;
 }
 
-static int tls_corrupt_new(BIO *bio)
+static int __cdecl tls_corrupt_new(BIO *bio)
 {
     BIO_set_init(bio, 1);
 
     return 1;
 }
 
-static int tls_corrupt_free(BIO *bio)
+static int __cdecl tls_corrupt_free(BIO *bio)
 {
     BIO_set_init(bio, 0);
 

@@ -51,13 +51,13 @@ static ossl_inline void ossl_sleep(unsigned int millis)
 }
 #endif
 
-static int tls_dump_new(BIO *bi);
-static int tls_dump_free(BIO *a);
-static int tls_dump_read(BIO *b, char *out, int outl);
-static int tls_dump_write(BIO *b, const char *in, int inl);
-static long tls_dump_ctrl(BIO *b, int cmd, long num, void *ptr);
-static int tls_dump_gets(BIO *bp, char *buf, int size);
-static int tls_dump_puts(BIO *bp, const char *str);
+static int __cdecl tls_dump_new(BIO *bi);
+static int __cdecl tls_dump_free(BIO *a);
+static int __cdecl tls_dump_read(BIO *b, char *out, int outl);
+static int __cdecl tls_dump_write(BIO *b, const char *in, int inl);
+static long __cdecl tls_dump_ctrl(BIO *b, int cmd, long num, void *ptr);
+static int __cdecl tls_dump_gets(BIO *bp, char *buf, int size);
+static int __cdecl tls_dump_puts(BIO *bp, const char *str);
 
 /* Choose a sufficiently large type likely to be unused for this custom BIO */
 #define BIO_TYPE_TLS_DUMP_FILTER  (0x80 | BIO_TYPE_FILTER)
@@ -92,13 +92,13 @@ void bio_f_tls_dump_filter_free(void)
     BIO_meth_free(method_tls_dump);
 }
 
-static int tls_dump_new(BIO *bio)
+static int __cdecl tls_dump_new(BIO *bio)
 {
     BIO_set_init(bio, 1);
     return 1;
 }
 
-static int tls_dump_free(BIO *bio)
+static int __cdecl tls_dump_free(BIO *bio)
 {
     BIO_set_init(bio, 0);
 
@@ -215,7 +215,7 @@ static void dump_data(const char *data, int len)
     fflush(stdout);
 }
 
-static int tls_dump_read(BIO *bio, char *out, int outl)
+static int __cdecl tls_dump_read(BIO *bio, char *out, int outl)
 {
     int ret;
     BIO *next = BIO_next(bio);
@@ -230,7 +230,7 @@ static int tls_dump_read(BIO *bio, char *out, int outl)
     return ret;
 }
 
-static int tls_dump_write(BIO *bio, const char *in, int inl)
+static int __cdecl tls_dump_write(BIO *bio, const char *in, int inl)
 {
     int ret;
     BIO *next = BIO_next(bio);
@@ -241,7 +241,7 @@ static int tls_dump_write(BIO *bio, const char *in, int inl)
     return ret;
 }
 
-static long tls_dump_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl tls_dump_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret;
     BIO *next = BIO_next(bio);
@@ -260,13 +260,13 @@ static long tls_dump_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int tls_dump_gets(BIO *bio, char *buf, int size)
+static int __cdecl tls_dump_gets(BIO *bio, char *buf, int size)
 {
     /* We don't support this - not needed anyway */
     return -1;
 }
 
-static int tls_dump_puts(BIO *bio, const char *str)
+static int __cdecl tls_dump_puts(BIO *bio, const char *str)
 {
     return tls_dump_write(bio, str, strlen(str));
 }
@@ -299,13 +299,13 @@ typedef struct mempacket_test_ctx_st {
     int duprec;
 } MEMPACKET_TEST_CTX;
 
-static int mempacket_test_new(BIO *bi);
-static int mempacket_test_free(BIO *a);
-static int mempacket_test_read(BIO *b, char *out, int outl);
-static int mempacket_test_write(BIO *b, const char *in, int inl);
-static long mempacket_test_ctrl(BIO *b, int cmd, long num, void *ptr);
-static int mempacket_test_gets(BIO *bp, char *buf, int size);
-static int mempacket_test_puts(BIO *bp, const char *str);
+static int __cdecl mempacket_test_new(BIO *bi);
+static int __cdecl mempacket_test_free(BIO *a);
+static int __cdecl mempacket_test_read(BIO *b, char *out, int outl);
+static int __cdecl mempacket_test_write(BIO *b, const char *in, int inl);
+static long __cdecl mempacket_test_ctrl(BIO *b, int cmd, long num, void *ptr);
+static int __cdecl mempacket_test_gets(BIO *bp, char *buf, int size);
+static int __cdecl mempacket_test_puts(BIO *bp, const char *str);
 
 const BIO_METHOD *bio_s_mempacket_test(void)
 {
@@ -329,7 +329,7 @@ void bio_s_mempacket_test_free(void)
     BIO_meth_free(meth_mem);
 }
 
-static int mempacket_test_new(BIO *bio)
+static int __cdecl mempacket_test_new(BIO *bio)
 {
     MEMPACKET_TEST_CTX *ctx;
 
@@ -346,7 +346,7 @@ static int mempacket_test_new(BIO *bio)
     return 1;
 }
 
-static int mempacket_test_free(BIO *bio)
+static int __cdecl mempacket_test_free(BIO *bio)
 {
     MEMPACKET_TEST_CTX *ctx = BIO_get_data(bio);
 
@@ -366,7 +366,7 @@ static int mempacket_test_free(BIO *bio)
 
 #define STANDARD_PACKET                 0
 
-static int mempacket_test_read(BIO *bio, char *out, int outl)
+static int __cdecl mempacket_test_read(BIO *bio, char *out, int outl)
 {
     MEMPACKET_TEST_CTX *ctx = BIO_get_data(bio);
     MEMPACKET *thispkt;
@@ -546,12 +546,12 @@ int mempacket_test_inject(BIO *bio, const char *in, int inl, int pktnum,
     return -1;
 }
 
-static int mempacket_test_write(BIO *bio, const char *in, int inl)
+static int __cdecl mempacket_test_write(BIO *bio, const char *in, int inl)
 {
     return mempacket_test_inject(bio, in, inl, -1, STANDARD_PACKET);
 }
 
-static long mempacket_test_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl mempacket_test_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret = 1;
     MEMPACKET_TEST_CTX *ctx = BIO_get_data(bio);
@@ -603,24 +603,24 @@ static long mempacket_test_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int mempacket_test_gets(BIO *bio, char *buf, int size)
+static int __cdecl mempacket_test_gets(BIO *bio, char *buf, int size)
 {
     /* We don't support this - not needed anyway */
     return -1;
 }
 
-static int mempacket_test_puts(BIO *bio, const char *str)
+static int __cdecl mempacket_test_puts(BIO *bio, const char *str)
 {
     return mempacket_test_write(bio, str, strlen(str));
 }
 
-static int always_retry_new(BIO *bi);
-static int always_retry_free(BIO *a);
-static int always_retry_read(BIO *b, char *out, int outl);
-static int always_retry_write(BIO *b, const char *in, int inl);
-static long always_retry_ctrl(BIO *b, int cmd, long num, void *ptr);
-static int always_retry_gets(BIO *bp, char *buf, int size);
-static int always_retry_puts(BIO *bp, const char *str);
+static int __cdecl always_retry_new(BIO *bi);
+static int __cdecl always_retry_free(BIO *a);
+static int __cdecl always_retry_read(BIO *b, char *out, int outl);
+static int __cdecl always_retry_write(BIO *b, const char *in, int inl);
+static long __cdecl always_retry_ctrl(BIO *b, int cmd, long num, void *ptr);
+static int __cdecl always_retry_gets(BIO *bp, char *buf, int size);
+static int __cdecl always_retry_puts(BIO *bp, const char *str);
 
 const BIO_METHOD *bio_s_always_retry(void)
 {
@@ -651,32 +651,32 @@ void bio_s_always_retry_free(void)
     BIO_meth_free(meth_always_retry);
 }
 
-static int always_retry_new(BIO *bio)
+static int __cdecl always_retry_new(BIO *bio)
 {
     BIO_set_init(bio, 1);
     return 1;
 }
 
-static int always_retry_free(BIO *bio)
+static int __cdecl always_retry_free(BIO *bio)
 {
     BIO_set_data(bio, NULL);
     BIO_set_init(bio, 0);
     return 1;
 }
 
-static int always_retry_read(BIO *bio, char *out, int outl)
+static int __cdecl always_retry_read(BIO *bio, char *out, int outl)
 {
     BIO_set_retry_read(bio);
     return -1;
 }
 
-static int always_retry_write(BIO *bio, const char *in, int inl)
+static int __cdecl always_retry_write(BIO *bio, const char *in, int inl)
 {
     BIO_set_retry_write(bio);
     return -1;
 }
 
-static long always_retry_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl always_retry_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret = 1;
 
@@ -696,13 +696,13 @@ static long always_retry_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int always_retry_gets(BIO *bio, char *buf, int size)
+static int __cdecl always_retry_gets(BIO *bio, char *buf, int size)
 {
     BIO_set_retry_read(bio);
     return -1;
 }
 
-static int always_retry_puts(BIO *bio, const char *str)
+static int __cdecl always_retry_puts(BIO *bio, const char *str)
 {
     BIO_set_retry_write(bio);
     return -1;

@@ -35,18 +35,18 @@ typedef struct bio_connect_st {
     BIO_info_cb *info_callback;
 } BIO_CONNECT;
 
-static int conn_write(BIO *h, const char *buf, int num);
-static int conn_read(BIO *h, char *buf, int size);
-static int conn_puts(BIO *h, const char *str);
-static long conn_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int conn_new(BIO *h);
-static int conn_free(BIO *data);
-static long conn_callback_ctrl(BIO *h, int cmd, BIO_info_cb *);
+static int __cdecl conn_write(BIO *h, const char *buf, int num);
+static int __cdecl conn_read(BIO *h, char *buf, int size);
+static int __cdecl conn_puts(BIO *h, const char *str);
+static long __cdecl conn_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl conn_new(BIO *h);
+static int __cdecl conn_free(BIO *data);
+static long __cdecl conn_callback_ctrl(BIO *h, int cmd, BIO_info_cb *);
 
-static int conn_state(BIO *b, BIO_CONNECT *c);
-static void conn_close_socket(BIO *data);
-BIO_CONNECT *BIO_CONNECT_new(void);
-void BIO_CONNECT_free(BIO_CONNECT *a);
+static int __cdecl conn_state(BIO *b, BIO_CONNECT *c);
+static void __cdecl conn_close_socket(BIO *data);
+BIO_CONNECT * __cdecl BIO_CONNECT_new(void);
+void __cdecl BIO_CONNECT_free(BIO_CONNECT *a);
 
 #define BIO_CONN_S_BEFORE                1
 #define BIO_CONN_S_GET_ADDR              2
@@ -72,7 +72,7 @@ static const BIO_METHOD methods_connectp = {
     conn_callback_ctrl,
 };
 
-static int conn_state(BIO *b, BIO_CONNECT *c)
+static int __cdecl conn_state(BIO *b, BIO_CONNECT *c)
 {
     int ret = -1, i;
     BIO_info_cb *cb = NULL;
@@ -219,7 +219,7 @@ static int conn_state(BIO *b, BIO_CONNECT *c)
     return ret;
 }
 
-BIO_CONNECT *BIO_CONNECT_new(void)
+BIO_CONNECT * __cdecl BIO_CONNECT_new(void)
 {
     BIO_CONNECT *ret;
 
@@ -232,7 +232,7 @@ BIO_CONNECT *BIO_CONNECT_new(void)
     return ret;
 }
 
-void BIO_CONNECT_free(BIO_CONNECT *a)
+void __cdecl BIO_CONNECT_free(BIO_CONNECT *a)
 {
     if (a == NULL)
         return;
@@ -247,7 +247,7 @@ const BIO_METHOD * __cdecl BIO_s_connect(void)
     return &methods_connectp;
 }
 
-static int conn_new(BIO *bi)
+static int __cdecl conn_new(BIO *bi)
 {
     bi->init = 0;
     bi->num = (int)INVALID_SOCKET;
@@ -258,7 +258,7 @@ static int conn_new(BIO *bi)
         return 1;
 }
 
-static void conn_close_socket(BIO *bio)
+static void __cdecl conn_close_socket(BIO *bio)
 {
     BIO_CONNECT *c;
 
@@ -272,7 +272,7 @@ static void conn_close_socket(BIO *bio)
     }
 }
 
-static int conn_free(BIO *a)
+static int __cdecl conn_free(BIO *a)
 {
     BIO_CONNECT *data;
 
@@ -290,7 +290,7 @@ static int conn_free(BIO *a)
     return 1;
 }
 
-static int conn_read(BIO *b, char *out, int outl)
+static int __cdecl conn_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
     BIO_CONNECT *data;
@@ -314,7 +314,7 @@ static int conn_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int conn_write(BIO *b, const char *in, int inl)
+static int __cdecl conn_write(BIO *b, const char *in, int inl)
 {
     int ret;
     BIO_CONNECT *data;
@@ -336,7 +336,7 @@ static int conn_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long conn_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl conn_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO *dbio;
     int *ip;
@@ -495,7 +495,7 @@ static long conn_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long conn_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl conn_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
     BIO_CONNECT *data;
@@ -515,7 +515,7 @@ static long conn_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
     return ret;
 }
 
-static int conn_puts(BIO *bp, const char *str)
+static int __cdecl conn_puts(BIO *bp, const char *str)
 {
     int n, ret;
 

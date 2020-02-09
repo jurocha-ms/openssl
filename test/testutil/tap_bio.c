@@ -11,14 +11,14 @@
 #include <string.h>
 #include "tu_local.h"
 
-static int tap_write_ex(BIO *b, const char *buf, size_t size, size_t *in_size);
-static int tap_read_ex(BIO *b, char *buf, size_t size, size_t *out_size);
-static int tap_puts(BIO *b, const char *str);
-static int tap_gets(BIO *b, char *str, int size);
-static long tap_ctrl(BIO *b, int cmd, long arg1, void *arg2);
-static int tap_new(BIO *b);
-static int tap_free(BIO *b);
-static long tap_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
+static int __cdecl tap_write_ex(BIO *b, const char *buf, size_t size, size_t *in_size);
+static int __cdecl tap_read_ex(BIO *b, char *buf, size_t size, size_t *out_size);
+static int __cdecl tap_puts(BIO *b, const char *str);
+static int __cdecl tap_gets(BIO *b, char *str, int size);
+static long __cdecl tap_ctrl(BIO *b, int cmd, long arg1, void *arg2);
+static int __cdecl tap_new(BIO *b);
+static int __cdecl tap_free(BIO *b);
+static long __cdecl tap_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fp);
 
 const BIO_METHOD *BIO_f_tap(void)
 {
@@ -40,14 +40,14 @@ const BIO_METHOD *BIO_f_tap(void)
     return tap;
 }
 
-static int tap_new(BIO *b)
+static int __cdecl tap_new(BIO *b)
 {
     BIO_set_data(b, NULL);
     BIO_set_init(b, 1);
     return 1;
 }
 
-static int tap_free(BIO *b)
+static int __cdecl tap_free(BIO *b)
 {
     if (b == NULL)
         return 0;
@@ -56,7 +56,7 @@ static int tap_free(BIO *b)
     return 1;
 }
 
-static int tap_read_ex(BIO *b, char *buf, size_t size, size_t *out_size)
+static int __cdecl tap_read_ex(BIO *b, char *buf, size_t size, size_t *out_size)
 {
     BIO *next = BIO_next(b);
     int ret = 0;
@@ -91,7 +91,7 @@ static int write_string(BIO *b, const char *buf, size_t n)
  * The BIO_data field is used as our state.  If it is NULL, we've just
  * seen a new line.  If it is not NULL, we're processing characters in a line.
  */
-static int tap_write_ex(BIO *b, const char *buf, size_t size, size_t *in_size)
+static int __cdecl tap_write_ex(BIO *b, const char *buf, size_t size, size_t *in_size)
 {
     BIO *next = BIO_next(b);
     size_t i;
@@ -119,7 +119,7 @@ err:
     return 0;
 }
 
-static long tap_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl tap_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO *next = BIO_next(b);
 
@@ -134,17 +134,17 @@ static long tap_ctrl(BIO *b, int cmd, long num, void *ptr)
     return BIO_ctrl(next, cmd, num, ptr);
 }
 
-static long tap_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl tap_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     return BIO_callback_ctrl(BIO_next(b), cmd, fp);
 }
 
-static int tap_gets(BIO *b, char *buf, int size)
+static int __cdecl tap_gets(BIO *b, char *buf, int size)
 {
     return BIO_gets(BIO_next(b), buf, size);
 }
 
-static int tap_puts(BIO *b, const char *str)
+static int __cdecl tap_puts(BIO *b, const char *str)
 {
     size_t m;
 

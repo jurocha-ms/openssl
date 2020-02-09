@@ -14,12 +14,12 @@
 #include <openssl/evp.h>
 #include "internal/bio.h"
 
-static int enc_write(BIO *h, const char *buf, int num);
-static int enc_read(BIO *h, char *buf, int size);
-static long enc_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int enc_new(BIO *h);
-static int enc_free(BIO *data);
-static long enc_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fps);
+static int __cdecl enc_write(BIO *h, const char *buf, int num);
+static int __cdecl enc_read(BIO *h, char *buf, int size);
+static long __cdecl enc_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl enc_new(BIO *h);
+static int __cdecl enc_free(BIO *data);
+static long __cdecl enc_callback_ctrl(BIO *h, int cmd, BIO_info_cb *fps);
 #define ENC_BLOCK_SIZE  (1024*4)
 #define ENC_MIN_CHUNK   (256)
 #define BUF_OFFSET      (ENC_MIN_CHUNK + EVP_MAX_BLOCK_LENGTH)
@@ -61,7 +61,7 @@ const BIO_METHOD * __cdecl BIO_f_cipher(void)
     return &methods_enc;
 }
 
-static int enc_new(BIO *bi)
+static int __cdecl enc_new(BIO *bi)
 {
     BIO_ENC_CTX *ctx;
 
@@ -84,7 +84,7 @@ static int enc_new(BIO *bi)
     return 1;
 }
 
-static int enc_free(BIO *a)
+static int __cdecl enc_free(BIO *a)
 {
     BIO_ENC_CTX *b;
 
@@ -103,7 +103,7 @@ static int enc_free(BIO *a)
     return 1;
 }
 
-static int enc_read(BIO *b, char *out, int outl)
+static int __cdecl enc_read(BIO *b, char *out, int outl)
 {
     int ret = 0, i, blocksize;
     BIO_ENC_CTX *ctx;
@@ -231,7 +231,7 @@ static int enc_read(BIO *b, char *out, int outl)
     return ((ret == 0) ? ctx->cont : ret);
 }
 
-static int enc_write(BIO *b, const char *in, int inl)
+static int __cdecl enc_write(BIO *b, const char *in, int inl)
 {
     int ret = 0, n, i;
     BIO_ENC_CTX *ctx;
@@ -291,7 +291,7 @@ static int enc_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long enc_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl enc_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     BIO *dbio;
     BIO_ENC_CTX *ctx, *dctx;
@@ -386,7 +386,7 @@ static long enc_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static long enc_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
+static long __cdecl enc_callback_ctrl(BIO *b, int cmd, BIO_info_cb *fp)
 {
     long ret = 1;
     BIO *next = BIO_next(b);

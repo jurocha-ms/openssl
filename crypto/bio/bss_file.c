@@ -32,13 +32,13 @@
 
 #if !defined(OPENSSL_NO_STDIO)
 
-static int file_write(BIO *h, const char *buf, int num);
-static int file_read(BIO *h, char *buf, int size);
-static int file_puts(BIO *h, const char *str);
-static int file_gets(BIO *h, char *str, int size);
-static long file_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int file_new(BIO *h);
-static int file_free(BIO *data);
+static int __cdecl file_write(BIO *h, const char *buf, int num);
+static int __cdecl file_read(BIO *h, char *buf, int size);
+static int __cdecl file_puts(BIO *h, const char *str);
+static int __cdecl file_gets(BIO *h, char *str, int size);
+static long __cdecl file_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl file_new(BIO *h);
+static int __cdecl file_free(BIO *data);
 static const BIO_METHOD methods_filep = {
     BIO_TYPE_FILE,
     "FILE pointer",
@@ -107,7 +107,7 @@ const BIO_METHOD * __cdecl BIO_s_file(void)
     return &methods_filep;
 }
 
-static int file_new(BIO *bi)
+static int __cdecl file_new(BIO *bi)
 {
     bi->init = 0;
     bi->num = 0;
@@ -116,7 +116,7 @@ static int file_new(BIO *bi)
     return 1;
 }
 
-static int file_free(BIO *a)
+static int __cdecl file_free(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -134,7 +134,7 @@ static int file_free(BIO *a)
     return 1;
 }
 
-static int file_read(BIO *b, char *out, int outl)
+static int __cdecl file_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
 
@@ -154,7 +154,7 @@ static int file_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int file_write(BIO *b, const char *in, int inl)
+static int __cdecl file_write(BIO *b, const char *in, int inl)
 {
     int ret = 0;
 
@@ -175,7 +175,7 @@ static int file_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long file_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl file_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     FILE *fp = (FILE *)b->ptr;
@@ -334,7 +334,7 @@ static long file_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int file_gets(BIO *bp, char *buf, int size)
+static int __cdecl file_gets(BIO *bp, char *buf, int size)
 {
     int ret = 0;
 
@@ -352,7 +352,7 @@ static int file_gets(BIO *bp, char *buf, int size)
     return ret;
 }
 
-static int file_puts(BIO *bp, const char *str)
+static int __cdecl file_puts(BIO *bp, const char *str)
 {
     int n, ret;
 

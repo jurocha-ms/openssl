@@ -35,7 +35,7 @@
 #  include <unistd.h>
 # endif
 
-FILE *openssl_fopen(const char *filename, const char *mode)
+FILE * __cdecl openssl_fopen(const char *filename, const char *mode)
 {
     FILE *file = NULL;
 # if defined(_WIN32) && defined(CP_UTF8)
@@ -118,7 +118,7 @@ FILE *openssl_fopen(const char *filename, const char *mode)
 
 #else
 
-void *openssl_fopen(const char *filename, const char *mode)
+void * __cdecl openssl_fopen(const char *filename, const char *mode)
 {
     return NULL;
 }

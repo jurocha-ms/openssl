@@ -931,7 +931,7 @@ int __cdecl ERR_clear_last_mark(void)
     return 1;
 }
 
-void err_clear_last_constant_time(int clear)
+void __cdecl err_clear_last_constant_time(int clear)
 {
     ERR_STATE *es;
     int top;

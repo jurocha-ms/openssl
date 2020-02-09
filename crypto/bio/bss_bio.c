@@ -25,15 +25,15 @@
 #include <openssl/err.h>
 #include <openssl/crypto.h>
 
-static int bio_new(BIO *bio);
-static int bio_free(BIO *bio);
-static int bio_read(BIO *bio, char *buf, int size);
-static int bio_write(BIO *bio, const char *buf, int num);
-static long bio_ctrl(BIO *bio, int cmd, long num, void *ptr);
-static int bio_puts(BIO *bio, const char *str);
+static int __cdecl bio_new(BIO *bio);
+static int __cdecl bio_free(BIO *bio);
+static int __cdecl bio_read(BIO *bio, char *buf, int size);
+static int __cdecl bio_write(BIO *bio, const char *buf, int num);
+static long __cdecl bio_ctrl(BIO *bio, int cmd, long num, void *ptr);
+static int __cdecl bio_puts(BIO *bio, const char *str);
 
-static int bio_make_pair(BIO *bio1, BIO *bio2);
-static void bio_destroy_pair(BIO *bio);
+static int __cdecl bio_make_pair(BIO *bio1, BIO *bio2);
+static void __cdecl bio_destroy_pair(BIO *bio);
 
 static const BIO_METHOD methods_biop = {
     BIO_TYPE_BIO,
@@ -75,7 +75,7 @@ struct bio_bio_st {
                                  * warrants. */
 };
 
-static int bio_new(BIO *bio)
+static int __cdecl bio_new(BIO *bio)
 {
     struct bio_bio_st *b = OPENSSL_zalloc(sizeof(*b));
 
@@ -89,7 +89,7 @@ static int bio_new(BIO *bio)
     return 1;
 }
 
-static int bio_free(BIO *bio)
+static int __cdecl bio_free(BIO *bio)
 {
     struct bio_bio_st *b;
 
@@ -108,7 +108,7 @@ static int bio_free(BIO *bio)
     return 1;
 }
 
-static int bio_read(BIO *bio, char *buf, int size_)
+static int __cdecl bio_read(BIO *bio, char *buf, int size_)
 {
     size_t size = size_;
     size_t rest;
@@ -267,7 +267,7 @@ static ossl_ssize_t bio_nread(BIO *bio, char **buf, size_t num_)
     return num;
 }
 
-static int bio_write(BIO *bio, const char *buf, int num_)
+static int __cdecl bio_write(BIO *bio, const char *buf, int num_)
 {
     size_t num = num_;
     size_t rest;
@@ -415,7 +415,7 @@ static ossl_ssize_t bio_nwrite(BIO *bio, char **buf, size_t num_)
     return num;
 }
 
-static long bio_ctrl(BIO *bio, int cmd, long num, void *ptr)
+static long __cdecl bio_ctrl(BIO *bio, int cmd, long num, void *ptr)
 {
     long ret;
     struct bio_bio_st *b = bio->ptr;
@@ -600,12 +600,12 @@ static long bio_ctrl(BIO *bio, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int bio_puts(BIO *bio, const char *str)
+static int __cdecl bio_puts(BIO *bio, const char *str)
 {
     return bio_write(bio, str, strlen(str));
 }
 
-static int bio_make_pair(BIO *bio1, BIO *bio2)
+static int __cdecl bio_make_pair(BIO *bio1, BIO *bio2)
 {
     struct bio_bio_st *b1, *b2;
 
@@ -653,7 +653,7 @@ static int bio_make_pair(BIO *bio1, BIO *bio2)
     return 1;
 }
 
-static void bio_destroy_pair(BIO *bio)
+static void __cdecl bio_destroy_pair(BIO *bio)
 {
     struct bio_bio_st *b = bio->ptr;
 

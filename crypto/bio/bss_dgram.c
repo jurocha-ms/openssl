@@ -38,30 +38,30 @@
          ((a)->s6_addr32[2] == htonl(0x0000ffff)))
 # endif
 
-static int dgram_write(BIO *h, const char *buf, int num);
-static int dgram_read(BIO *h, char *buf, int size);
-static int dgram_puts(BIO *h, const char *str);
-static long dgram_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int dgram_new(BIO *h);
-static int dgram_free(BIO *data);
-static int dgram_clear(BIO *bio);
+static int __cdecl dgram_write(BIO *h, const char *buf, int num);
+static int __cdecl dgram_read(BIO *h, char *buf, int size);
+static int __cdecl dgram_puts(BIO *h, const char *str);
+static long __cdecl dgram_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl dgram_new(BIO *h);
+static int __cdecl dgram_free(BIO *data);
+static int __cdecl dgram_clear(BIO *bio);
 
 # ifndef OPENSSL_NO_SCTP
-static int dgram_sctp_write(BIO *h, const char *buf, int num);
-static int dgram_sctp_read(BIO *h, char *buf, int size);
-static int dgram_sctp_puts(BIO *h, const char *str);
-static long dgram_sctp_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int dgram_sctp_new(BIO *h);
-static int dgram_sctp_free(BIO *data);
+static int __cdecl dgram_sctp_write(BIO *h, const char *buf, int num);
+static int __cdecl dgram_sctp_read(BIO *h, char *buf, int size);
+static int __cdecl dgram_sctp_puts(BIO *h, const char *str);
+static long __cdecl dgram_sctp_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl dgram_sctp_new(BIO *h);
+static int __cdecl dgram_sctp_free(BIO *data);
 #  ifdef SCTP_AUTHENTICATION_EVENT
 static void dgram_sctp_handle_auth_free_key_event(BIO *b, union sctp_notification
                                                   *snp);
 #  endif
 # endif
 
-static int BIO_dgram_should_retry(int s);
+static int __cdecl BIO_dgram_should_retry(int s);
 
-static void get_current_time(struct timeval *t);
+static void __cdecl get_current_time(struct timeval *t);
 
 static const BIO_METHOD methods_dgramp = {
     BIO_TYPE_DGRAM,
@@ -150,7 +150,7 @@ BIO * __cdecl BIO_new_dgram(int fd, int close_flag)
     return ret;
 }
 
-static int dgram_new(BIO *bi)
+static int __cdecl dgram_new(BIO *bi)
 {
     bio_dgram_data *data = OPENSSL_zalloc(sizeof(*data));
 
@@ -160,7 +160,7 @@ static int dgram_new(BIO *bi)
     return 1;
 }
 
-static int dgram_free(BIO *a)
+static int __cdecl dgram_free(BIO *a)
 {
     bio_dgram_data *data;
 
@@ -175,7 +175,7 @@ static int dgram_free(BIO *a)
     return 1;
 }
 
-static int dgram_clear(BIO *a)
+static int __cdecl dgram_clear(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -294,7 +294,7 @@ static void dgram_reset_rcv_timeout(BIO *b)
 # endif
 }
 
-static int dgram_read(BIO *b, char *out, int outl)
+static int __cdecl dgram_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
     bio_dgram_data *data = (bio_dgram_data *)b->ptr;
@@ -328,7 +328,7 @@ static int dgram_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int dgram_write(BIO *b, const char *in, int inl)
+static int __cdecl dgram_write(BIO *b, const char *in, int inl)
 {
     int ret;
     bio_dgram_data *data = (bio_dgram_data *)b->ptr;
@@ -392,7 +392,7 @@ static long dgram_get_mtu_overhead(bio_dgram_data *data)
     return ret;
 }
 
-static long dgram_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl dgram_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     int *ip;
@@ -797,7 +797,7 @@ static long dgram_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int dgram_puts(BIO *bp, const char *str)
+static int __cdecl dgram_puts(BIO *bp, const char *str)
 {
     int n, ret;
 
@@ -949,7 +949,7 @@ int __cdecl BIO_dgram_is_sctp(BIO *bio)
     return (BIO_method_type(bio) == BIO_TYPE_DGRAM_SCTP);
 }
 
-static int dgram_sctp_new(BIO *bi)
+static int __cdecl dgram_sctp_new(BIO *bi)
 {
     bio_dgram_sctp_data *data = NULL;
 
@@ -968,7 +968,7 @@ static int dgram_sctp_new(BIO *bi)
     return 1;
 }
 
-static int dgram_sctp_free(BIO *a)
+static int __cdecl dgram_sctp_free(BIO *a)
 {
     bio_dgram_sctp_data *data;
 
@@ -1002,7 +1002,7 @@ void dgram_sctp_handle_auth_free_key_event(BIO *b,
 }
 #  endif
 
-static int dgram_sctp_read(BIO *b, char *out, int outl)
+static int __cdecl dgram_sctp_read(BIO *b, char *out, int outl)
 {
     int ret = 0, n = 0, i, optval;
     socklen_t optlen;
@@ -1229,7 +1229,7 @@ static int dgram_sctp_read(BIO *b, char *out, int outl)
  *
  * Returns -1 on error or the sent amount of bytes on success
  */
-static int dgram_sctp_write(BIO *b, const char *in, int inl)
+static int __cdecl dgram_sctp_write(BIO *b, const char *in, int inl)
 {
     int ret;
     bio_dgram_sctp_data *data = (bio_dgram_sctp_data *) b->ptr;
@@ -1337,7 +1337,7 @@ static int dgram_sctp_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long dgram_sctp_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl dgram_sctp_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     bio_dgram_sctp_data *data = NULL;
@@ -1821,7 +1821,7 @@ int __cdecl BIO_dgram_sctp_msg_waiting(BIO *b)
         return 0;
 }
 
-static int dgram_sctp_puts(BIO *bp, const char *str)
+static int __cdecl dgram_sctp_puts(BIO *bp, const char *str)
 {
     int n, ret;
 
@@ -1831,7 +1831,7 @@ static int dgram_sctp_puts(BIO *bp, const char *str)
 }
 # endif
 
-static int BIO_dgram_should_retry(int i)
+static int __cdecl BIO_dgram_should_retry(int i)
 {
     int err;
 
@@ -1899,7 +1899,7 @@ int __cdecl BIO_dgram_non_fatal_error(int err)
     return 0;
 }
 
-static void get_current_time(struct timeval *t)
+static void __cdecl get_current_time(struct timeval *t)
 {
 # if defined(_WIN32)
     SYSTEMTIME st;

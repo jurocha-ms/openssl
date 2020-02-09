@@ -26,12 +26,12 @@
 #  define sock_puts  SockPuts
 # endif
 
-static int sock_write(BIO *h, const char *buf, int num);
-static int sock_read(BIO *h, char *buf, int size);
-static int sock_puts(BIO *h, const char *str);
-static long sock_ctrl(BIO *h, int cmd, long arg1, void *arg2);
-static int sock_new(BIO *h);
-static int sock_free(BIO *data);
+static int __cdecl sock_write(BIO *h, const char *buf, int num);
+static int __cdecl sock_read(BIO *h, char *buf, int size);
+static int __cdecl sock_puts(BIO *h, const char *str);
+static long __cdecl sock_ctrl(BIO *h, int cmd, long arg1, void *arg2);
+static int __cdecl sock_new(BIO *h);
+static int __cdecl sock_free(BIO *data);
 int __cdecl BIO_sock_should_retry(int s);
 
 static const BIO_METHOD methods_sockp = {
@@ -67,7 +67,7 @@ BIO * __cdecl BIO_new_socket(int fd, int close_flag)
     return ret;
 }
 
-static int sock_new(BIO *bi)
+static int __cdecl sock_new(BIO *bi)
 {
     bi->init = 0;
     bi->num = 0;
@@ -76,7 +76,7 @@ static int sock_new(BIO *bi)
     return 1;
 }
 
-static int sock_free(BIO *a)
+static int __cdecl sock_free(BIO *a)
 {
     if (a == NULL)
         return 0;
@@ -90,7 +90,7 @@ static int sock_free(BIO *a)
     return 1;
 }
 
-static int sock_read(BIO *b, char *out, int outl)
+static int __cdecl sock_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
 
@@ -106,7 +106,7 @@ static int sock_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int sock_write(BIO *b, const char *in, int inl)
+static int __cdecl sock_write(BIO *b, const char *in, int inl)
 {
     int ret;
 
@@ -120,7 +120,7 @@ static int sock_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long sock_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl sock_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret = 1;
     int *ip;
@@ -158,7 +158,7 @@ static long sock_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int sock_puts(BIO *bp, const char *str)
+static int __cdecl sock_puts(BIO *bp, const char *str)
 {
     int n, ret;
 

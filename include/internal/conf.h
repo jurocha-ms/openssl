@@ -23,8 +23,8 @@ struct ossl_init_settings_st {
     unsigned long flags;
 };
 
-int openssl_config_int(const OPENSSL_INIT_SETTINGS *);
-void openssl_no_config_int(void);
-void conf_modules_free_int(void);
+int __cdecl openssl_config_int(const OPENSSL_INIT_SETTINGS *);
+void __cdecl openssl_no_config_int(void);
+void __cdecl conf_modules_free_int(void);
 
 #endif
