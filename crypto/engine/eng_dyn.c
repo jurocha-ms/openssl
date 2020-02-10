@@ -18,14 +18,14 @@
  */
 
 /* Our ENGINE handlers */
-static int dynamic_init(ENGINE *e);
-static int dynamic_finish(ENGINE *e);
-static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p,
-                        void (*f) (void));
+static int __cdecl dynamic_init(ENGINE *e);
+static int __cdecl dynamic_finish(ENGINE *e);
+static int __cdecl dynamic_ctrl(ENGINE *e, int cmd, long i, void *p,
+                        void (__cdecl *f) (void));
 /* Predeclare our context type */
 typedef struct st_dynamic_data_ctx dynamic_data_ctx;
 /* The implementation for the important control command */
-static int dynamic_load(ENGINE *e, dynamic_data_ctx *ctx);
+static int __cdecl dynamic_load(ENGINE *e, dynamic_data_ctx *ctx);
 
 #define DYNAMIC_CMD_SO_PATH             ENGINE_CMD_BASE
 #define DYNAMIC_CMD_NO_VCHECK           (ENGINE_CMD_BASE + 1)
@@ -151,7 +151,7 @@ static void dynamic_data_ctx_free_func(void *parent, void *ptr,
  * wasted their time. The alternative involves creating everything inside the
  * lock which is far worse.
  */
-static int dynamic_set_data_ctx(ENGINE *e, dynamic_data_ctx **ctx)
+static int __cdecl dynamic_set_data_ctx(ENGINE *e, dynamic_data_ctx **ctx)
 {
     dynamic_data_ctx *c = OPENSSL_zalloc(sizeof(*c));
     int ret = 1;
@@ -268,7 +268,7 @@ void engine_load_dynamic_int(void)
     ERR_clear_error();
 }
 
-static int dynamic_init(ENGINE *e)
+static int __cdecl dynamic_init(ENGINE *e)
 {
     /*
      * We always return failure - the "dynamic" engine itself can't be used
@@ -277,7 +277,7 @@ static int dynamic_init(ENGINE *e)
     return 0;
 }
 
-static int dynamic_finish(ENGINE *e)
+static int __cdecl dynamic_finish(ENGINE *e)
 {
     /*
      * This should never be called on account of "dynamic_init" always
@@ -286,7 +286,7 @@ static int dynamic_finish(ENGINE *e)
     return 0;
 }
 
-static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
+static int __cdecl dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (__cdecl *f) (void))
 {
     dynamic_data_ctx *ctx = dynamic_get_data_ctx(e);
     int initialised;
@@ -367,7 +367,7 @@ static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
     return 0;
 }
 
-static int int_load(dynamic_data_ctx *ctx)
+static int __cdecl int_load(dynamic_data_ctx *ctx)
 {
     int num, loop;
     /* Unless told not to, try a direct load */
@@ -393,7 +393,7 @@ static int int_load(dynamic_data_ctx *ctx)
     return 0;
 }
 
-static int dynamic_load(ENGINE *e, dynamic_data_ctx *ctx)
+static int __cdecl dynamic_load(ENGINE *e, dynamic_data_ctx *ctx)
 {
     ENGINE cpy;
     dynamic_fns fns;

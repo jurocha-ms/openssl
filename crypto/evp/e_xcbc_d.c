@@ -17,9 +17,9 @@
 # include "internal/evp_int.h"
 # include <openssl/des.h>
 
-static int desx_cbc_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl desx_cbc_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                              const unsigned char *iv, int enc);
-static int desx_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl desx_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                            const unsigned char *in, size_t inl);
 
 typedef struct {
@@ -49,7 +49,7 @@ const EVP_CIPHER * __cdecl EVP_desx_cbc(void)
     return &d_xcbc_cipher;
 }
 
-static int desx_cbc_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl desx_cbc_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                              const unsigned char *iv, int enc)
 {
     DES_cblock *deskey = (DES_cblock *)key;
@@ -61,7 +61,7 @@ static int desx_cbc_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
     return 1;
 }
 
-static int desx_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl desx_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                            const unsigned char *in, size_t inl)
 {
     while (inl >= EVP_MAXCHUNK) {

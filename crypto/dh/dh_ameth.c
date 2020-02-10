@@ -30,19 +30,19 @@ static DH *d2i_dhp(const EVP_PKEY *pkey, const unsigned char **pp,
     return d2i_DHparams(NULL, pp, length);
 }
 
-static int i2d_dhp(const EVP_PKEY *pkey, const DH *a, unsigned char **pp)
+static int __cdecl i2d_dhp(const EVP_PKEY *pkey, const DH *a, unsigned char **pp)
 {
     if (pkey->ameth == &dhx_asn1_meth)
         return i2d_DHxparams(a, pp);
     return i2d_DHparams(a, pp);
 }
 
-static void int_dh_free(EVP_PKEY *pkey)
+static void __cdecl int_dh_free(EVP_PKEY *pkey)
 {
     DH_free(pkey->pkey.dh);
 }
 
-static int dh_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
+static int __cdecl dh_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
 {
     const unsigned char *p, *pm;
     int pklen, pmlen;
@@ -94,7 +94,7 @@ static int dh_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
 
 }
 
-static int dh_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
+static int __cdecl dh_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
 {
     DH *dh;
     int ptype;
@@ -147,7 +147,7 @@ static int dh_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
  * explicitly included and the pubkey must be recalculated.
  */
 
-static int dh_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
+static int __cdecl dh_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
 {
     const unsigned char *p, *pm;
     int pklen, pmlen;
@@ -199,7 +199,7 @@ static int dh_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
     return 0;
 }
 
-static int dh_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
+static int __cdecl dh_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
 {
     ASN1_STRING *params = NULL;
     ASN1_INTEGER *prkey = NULL;
@@ -246,7 +246,7 @@ static int dh_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
     return 0;
 }
 
-static int dh_param_decode(EVP_PKEY *pkey,
+static int __cdecl dh_param_decode(EVP_PKEY *pkey,
                            const unsigned char **pder, int derlen)
 {
     DH *dh;
@@ -259,12 +259,12 @@ static int dh_param_decode(EVP_PKEY *pkey,
     return 1;
 }
 
-static int dh_param_encode(const EVP_PKEY *pkey, unsigned char **pder)
+static int __cdecl dh_param_encode(const EVP_PKEY *pkey, unsigned char **pder)
 {
     return i2d_dhp(pkey, pkey->pkey.dh, pder);
 }
 
-static int do_dh_print(BIO *bp, const DH *x, int indent, int ptype)
+static int __cdecl do_dh_print(BIO *bp, const DH *x, int indent, int ptype)
 {
     int reason = ERR_R_BUF_LIB;
     const char *ktype = NULL;
@@ -344,22 +344,22 @@ static int do_dh_print(BIO *bp, const DH *x, int indent, int ptype)
     return 0;
 }
 
-static int int_dh_size(const EVP_PKEY *pkey)
+static int __cdecl int_dh_size(const EVP_PKEY *pkey)
 {
     return DH_size(pkey->pkey.dh);
 }
 
-static int dh_bits(const EVP_PKEY *pkey)
+static int __cdecl dh_bits(const EVP_PKEY *pkey)
 {
     return BN_num_bits(pkey->pkey.dh->p);
 }
 
-static int dh_security_bits(const EVP_PKEY *pkey)
+static int __cdecl dh_security_bits(const EVP_PKEY *pkey)
 {
     return DH_security_bits(pkey->pkey.dh);
 }
 
-static int dh_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
+static int __cdecl dh_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     if (BN_cmp(a->pkey.dh->p, b->pkey.dh->p) ||
         BN_cmp(a->pkey.dh->g, b->pkey.dh->g))
@@ -371,7 +371,7 @@ static int dh_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
     return 1;
 }
 
-static int int_dh_bn_cpy(BIGNUM **dst, const BIGNUM *src)
+static int __cdecl int_dh_bn_cpy(BIGNUM **dst, const BIGNUM *src)
 {
     BIGNUM *a;
 
@@ -391,7 +391,7 @@ static int int_dh_bn_cpy(BIGNUM **dst, const BIGNUM *src)
     return 1;
 }
 
-static int int_dh_param_copy(DH *to, const DH *from, int is_x942)
+static int __cdecl int_dh_param_copy(DH *to, const DH *from, int is_x942)
 {
     if (is_x942 == -1)
         is_x942 = ! !from->q;
@@ -431,7 +431,7 @@ DH * __cdecl DHparams_dup(DH *dh)
     return ret;
 }
 
-static int dh_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
+static int __cdecl dh_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
 {
     if (to->pkey.dh == NULL) {
         to->pkey.dh = DH_new();
@@ -442,14 +442,14 @@ static int dh_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
                              from->ameth == &dhx_asn1_meth);
 }
 
-static int dh_missing_parameters(const EVP_PKEY *a)
+static int __cdecl dh_missing_parameters(const EVP_PKEY *a)
 {
     if (a->pkey.dh == NULL || a->pkey.dh->p == NULL || a->pkey.dh->g == NULL)
         return 1;
     return 0;
 }
 
-static int dh_pub_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
+static int __cdecl dh_pub_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     if (dh_cmp_parameters(a, b) == 0)
         return 0;
@@ -459,19 +459,19 @@ static int dh_pub_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
         return 1;
 }
 
-static int dh_param_print(BIO *bp, const EVP_PKEY *pkey, int indent,
+static int __cdecl dh_param_print(BIO *bp, const EVP_PKEY *pkey, int indent,
                           ASN1_PCTX *ctx)
 {
     return do_dh_print(bp, pkey->pkey.dh, indent, 0);
 }
 
-static int dh_public_print(BIO *bp, const EVP_PKEY *pkey, int indent,
+static int __cdecl dh_public_print(BIO *bp, const EVP_PKEY *pkey, int indent,
                            ASN1_PCTX *ctx)
 {
     return do_dh_print(bp, pkey->pkey.dh, indent, 1);
 }
 
-static int dh_private_print(BIO *bp, const EVP_PKEY *pkey, int indent,
+static int __cdecl dh_private_print(BIO *bp, const EVP_PKEY *pkey, int indent,
                             ASN1_PCTX *ctx)
 {
     return do_dh_print(bp, pkey->pkey.dh, indent, 2);
@@ -483,11 +483,11 @@ int __cdecl DHparams_print(BIO *bp, const DH *x)
 }
 
 #ifndef OPENSSL_NO_CMS
-static int dh_cms_decrypt(CMS_RecipientInfo *ri);
-static int dh_cms_encrypt(CMS_RecipientInfo *ri);
+static int __cdecl dh_cms_decrypt(CMS_RecipientInfo *ri);
+static int __cdecl dh_cms_encrypt(CMS_RecipientInfo *ri);
 #endif
 
-static int dh_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
+static int __cdecl dh_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 {
     switch (op) {
 #ifndef OPENSSL_NO_CMS
@@ -509,7 +509,7 @@ static int dh_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 
 }
 
-static int dh_pkey_public_check(const EVP_PKEY *pkey)
+static int __cdecl dh_pkey_public_check(const EVP_PKEY *pkey)
 {
     DH *dh = pkey->pkey.dh;
 
@@ -521,7 +521,7 @@ static int dh_pkey_public_check(const EVP_PKEY *pkey)
     return DH_check_pub_key_ex(dh, dh->pub_key);
 }
 
-static int dh_pkey_param_check(const EVP_PKEY *pkey)
+static int __cdecl dh_pkey_param_check(const EVP_PKEY *pkey)
 {
     DH *dh = pkey->pkey.dh;
 
@@ -608,7 +608,7 @@ const EVP_PKEY_ASN1_METHOD dhx_asn1_meth = {
 
 #ifndef OPENSSL_NO_CMS
 
-static int dh_cms_set_peerkey(EVP_PKEY_CTX *pctx,
+static int __cdecl dh_cms_set_peerkey(EVP_PKEY_CTX *pctx,
                               X509_ALGOR *alg, ASN1_BIT_STRING *pubkey)
 {
     const ASN1_OBJECT *aoid;
@@ -666,7 +666,7 @@ static int dh_cms_set_peerkey(EVP_PKEY_CTX *pctx,
     return rv;
 }
 
-static int dh_cms_set_shared_info(EVP_PKEY_CTX *pctx, CMS_RecipientInfo *ri)
+static int __cdecl dh_cms_set_shared_info(EVP_PKEY_CTX *pctx, CMS_RecipientInfo *ri)
 {
     int rv = 0;
 
@@ -743,7 +743,7 @@ static int dh_cms_set_shared_info(EVP_PKEY_CTX *pctx, CMS_RecipientInfo *ri)
     return rv;
 }
 
-static int dh_cms_decrypt(CMS_RecipientInfo *ri)
+static int __cdecl dh_cms_decrypt(CMS_RecipientInfo *ri)
 {
     EVP_PKEY_CTX *pctx;
     pctx = CMS_RecipientInfo_get0_pkey_ctx(ri);
@@ -771,7 +771,7 @@ static int dh_cms_decrypt(CMS_RecipientInfo *ri)
     return 1;
 }
 
-static int dh_cms_encrypt(CMS_RecipientInfo *ri)
+static int __cdecl dh_cms_encrypt(CMS_RecipientInfo *ri)
 {
     EVP_PKEY_CTX *pctx;
     EVP_PKEY *pkey;

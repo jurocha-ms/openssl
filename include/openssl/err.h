@@ -257,8 +257,8 @@ int __cdecl ERR_load_ERR_strings(void);
 # define ERR_free_strings() while(0) continue
 #endif
 
-DEPRECATEDIN_1_1_0(void ERR_remove_thread_state(void *))
-DEPRECATEDIN_1_0_0(void ERR_remove_state(unsigned long pid))
+DEPRECATEDIN_1_1_0(void __cdecl ERR_remove_thread_state(void *))
+DEPRECATEDIN_1_0_0(void __cdecl ERR_remove_state(unsigned long pid))
 ERR_STATE * __cdecl ERR_get_state(void);
 
 int __cdecl ERR_get_next_error_library(void);

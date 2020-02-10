@@ -17,13 +17,13 @@
 # include "internal/evp_int.h"
 # include <openssl/rc2.h>
 
-static int rc2_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl rc2_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                         const unsigned char *iv, int enc);
-static int rc2_meth_to_magic(EVP_CIPHER_CTX *ctx);
-static int rc2_magic_to_meth(int i);
+static int __cdecl rc2_meth_to_magic(EVP_CIPHER_CTX *ctx);
+static int __cdecl rc2_magic_to_meth(int i);
 static int __cdecl rc2_set_asn1_type_and_iv(EVP_CIPHER_CTX *c, ASN1_TYPE *type);
 static int __cdecl rc2_get_asn1_type_and_iv(EVP_CIPHER_CTX *c, ASN1_TYPE *type);
-static int rc2_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr);
+static int __cdecl rc2_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr);
 
 typedef struct {
     int key_bits;               /* effective key bits */
@@ -80,7 +80,7 @@ const EVP_CIPHER * __cdecl EVP_rc2_40_cbc(void)
     return &r2_40_cbc_cipher;
 }
 
-static int rc2_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl rc2_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                         const unsigned char *iv, int enc)
 {
     RC2_set_key(&data(ctx)->ks, EVP_CIPHER_CTX_key_length(ctx),
@@ -88,7 +88,7 @@ static int rc2_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
     return 1;
 }
 
-static int rc2_meth_to_magic(EVP_CIPHER_CTX *e)
+static int __cdecl rc2_meth_to_magic(EVP_CIPHER_CTX *e)
 {
     int i;
 
@@ -104,7 +104,7 @@ static int rc2_meth_to_magic(EVP_CIPHER_CTX *e)
         return 0;
 }
 
-static int rc2_magic_to_meth(int i)
+static int __cdecl rc2_magic_to_meth(int i)
 {
     if (i == RC2_128_MAGIC)
         return 128;
@@ -160,7 +160,7 @@ static int __cdecl rc2_set_asn1_type_and_iv(EVP_CIPHER_CTX *c, ASN1_TYPE *type)
     return i;
 }
 
-static int rc2_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
+static int __cdecl rc2_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
 {
     switch (type) {
     case EVP_CTRL_INIT:

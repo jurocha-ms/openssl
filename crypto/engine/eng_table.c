@@ -51,7 +51,7 @@ void __cdecl ENGINE_set_table_flags(unsigned int flags)
 }
 
 /* Internal functions for the "piles" hash table */
-static unsigned long engine_pile_hash(const ENGINE_PILE *c)
+static unsigned long __cdecl engine_pile_hash(const ENGINE_PILE *c)
 {
     return c->nid;
 }

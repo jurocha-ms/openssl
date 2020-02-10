@@ -57,7 +57,7 @@ typedef struct {
 } EVP_ARIA_CCM_CTX;
 
 /* The subkey for ARIA is generated. */
-static int aria_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl aria_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                             const unsigned char *iv, int enc)
 {
     int ret;
@@ -168,7 +168,7 @@ static const EVP_CIPHER aria_##keylen##_##mode = { \
 const EVP_CIPHER * __cdecl EVP_aria_##keylen##_##mode(void) \
 { return &aria_##keylen##_##mode; }
 
-static int aria_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl aria_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     unsigned int num = EVP_CIPHER_CTX_num(ctx);
@@ -204,7 +204,7 @@ static void ctr64_inc(unsigned char *counter)
     } while (n);
 }
 
-static int aria_gcm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl aria_gcm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                                  const unsigned char *iv, int enc)
 {
     int ret;
@@ -244,7 +244,7 @@ static int aria_gcm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
     return 1;
 }
 
-static int aria_gcm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
+static int __cdecl aria_gcm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
 {
     EVP_ARIA_GCM_CTX *gctx = EVP_C_DATA(EVP_ARIA_GCM_CTX,c);
 
@@ -390,7 +390,7 @@ static int aria_gcm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
     }
 }
 
-static int aria_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl aria_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len)
 {
     EVP_ARIA_GCM_CTX *gctx = EVP_C_DATA(EVP_ARIA_GCM_CTX,ctx);
@@ -446,7 +446,7 @@ static int aria_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return rv;
 }
 
-static int aria_gcm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl aria_gcm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t len)
 {
     EVP_ARIA_GCM_CTX *gctx = EVP_C_DATA(EVP_ARIA_GCM_CTX,ctx);
@@ -490,7 +490,7 @@ static int aria_gcm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 0;
 }
 
-static int aria_gcm_cleanup(EVP_CIPHER_CTX *ctx)
+static int __cdecl aria_gcm_cleanup(EVP_CIPHER_CTX *ctx)
 {
     EVP_ARIA_GCM_CTX *gctx = EVP_C_DATA(EVP_ARIA_GCM_CTX, ctx);
 
@@ -500,7 +500,7 @@ static int aria_gcm_cleanup(EVP_CIPHER_CTX *ctx)
     return 1;
 }
 
-static int aria_ccm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl aria_ccm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                             const unsigned char *iv, int enc)
 {
     int ret;
@@ -528,7 +528,7 @@ static int aria_ccm_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
     return 1;
 }
 
-static int aria_ccm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
+static int __cdecl aria_ccm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
 {
     EVP_ARIA_CCM_CTX *cctx = EVP_C_DATA(EVP_ARIA_CCM_CTX,c);
 
@@ -628,7 +628,7 @@ static int aria_ccm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr)
     }
 }
 
-static int aria_ccm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl aria_ccm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len)
 {
     EVP_ARIA_CCM_CTX *cctx = EVP_C_DATA(EVP_ARIA_CCM_CTX,ctx);
@@ -675,7 +675,7 @@ static int aria_ccm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     }
 }
 
-static int aria_ccm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl aria_ccm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t len)
 {
     EVP_ARIA_CCM_CTX *cctx = EVP_C_DATA(EVP_ARIA_CCM_CTX,ctx);
@@ -763,7 +763,7 @@ static const EVP_CIPHER aria_##keylen##_##mode = { \
         aria_##mode##_cleanup,                     \
         sizeof(EVP_ARIA_##MODE##_CTX),             \
         NULL,NULL,aria_##mode##_ctrl,NULL };       \
-const EVP_CIPHER *__cdecl EVP_aria_##keylen##_##mode(void) \
+const EVP_CIPHER * __cdecl EVP_aria_##keylen##_##mode(void) \
 { return (EVP_CIPHER*)&aria_##keylen##_##mode; }
 
 BLOCK_CIPHER_aead(NID_aria, 128, 1, 12, gcm, gcm, GCM, 0)

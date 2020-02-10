@@ -373,36 +373,36 @@ int __cdecl EVP_MD_meth_set_flags(EVP_MD *md, unsigned long flags)
     md->flags = flags;
     return 1;
 }
-int __cdecl EVP_MD_meth_set_init(EVP_MD *md, int (*init)(EVP_MD_CTX *ctx))
+int __cdecl EVP_MD_meth_set_init(EVP_MD *md, int (__cdecl *init)(EVP_MD_CTX *ctx))
 {
     md->init = init;
     return 1;
 }
-int __cdecl EVP_MD_meth_set_update(EVP_MD *md, int (*update)(EVP_MD_CTX *ctx,
+int __cdecl EVP_MD_meth_set_update(EVP_MD *md, int (__cdecl *update)(EVP_MD_CTX *ctx,
                                                      const void *data,
                                                      size_t count))
 {
     md->update = update;
     return 1;
 }
-int __cdecl EVP_MD_meth_set_final(EVP_MD *md, int (*final)(EVP_MD_CTX *ctx,
+int __cdecl EVP_MD_meth_set_final(EVP_MD *md, int (__cdecl *final)(EVP_MD_CTX *ctx,
                                                    unsigned char *md))
 {
     md->final = final;
     return 1;
 }
-int __cdecl EVP_MD_meth_set_copy(EVP_MD *md, int (*copy)(EVP_MD_CTX *to,
+int __cdecl EVP_MD_meth_set_copy(EVP_MD *md, int (__cdecl *copy)(EVP_MD_CTX *to,
                                                  const EVP_MD_CTX *from))
 {
     md->copy = copy;
     return 1;
 }
-int __cdecl EVP_MD_meth_set_cleanup(EVP_MD *md, int (*cleanup)(EVP_MD_CTX *ctx))
+int __cdecl EVP_MD_meth_set_cleanup(EVP_MD *md, int (__cdecl *cleanup)(EVP_MD_CTX *ctx))
 {
     md->cleanup = cleanup;
     return 1;
 }
-int __cdecl EVP_MD_meth_set_ctrl(EVP_MD *md, int (*ctrl)(EVP_MD_CTX *ctx, int cmd,
+int __cdecl EVP_MD_meth_set_ctrl(EVP_MD *md, int (__cdecl *ctrl)(EVP_MD_CTX *ctx, int cmd,
                                                  int p1, void *p2))
 {
     md->md_ctrl = ctrl;
@@ -425,31 +425,31 @@ unsigned long __cdecl EVP_MD_meth_get_flags(const EVP_MD *md)
 {
     return md->flags;
 }
-int (* __cdecl EVP_MD_meth_get_init(const EVP_MD *md))(EVP_MD_CTX *ctx)
+int (__cdecl * EVP_MD_meth_get_init(const EVP_MD *md))(EVP_MD_CTX *ctx)
 {
     return md->init;
 }
-int (* __cdecl EVP_MD_meth_get_update(const EVP_MD *md))(EVP_MD_CTX *ctx,
+int (__cdecl * EVP_MD_meth_get_update(const EVP_MD *md))(EVP_MD_CTX *ctx,
                                                 const void *data,
                                                 size_t count)
 {
     return md->update;
 }
-int (* __cdecl EVP_MD_meth_get_final(const EVP_MD *md))(EVP_MD_CTX *ctx,
+int (__cdecl * EVP_MD_meth_get_final(const EVP_MD *md))(EVP_MD_CTX *ctx,
                                                unsigned char *md)
 {
     return md->final;
 }
-int (* __cdecl EVP_MD_meth_get_copy(const EVP_MD *md))(EVP_MD_CTX *to,
+int (__cdecl * EVP_MD_meth_get_copy(const EVP_MD *md))(EVP_MD_CTX *to,
                                               const EVP_MD_CTX *from)
 {
     return md->copy;
 }
-int (* __cdecl EVP_MD_meth_get_cleanup(const EVP_MD *md))(EVP_MD_CTX *ctx)
+int (__cdecl * EVP_MD_meth_get_cleanup(const EVP_MD *md))(EVP_MD_CTX *ctx)
 {
     return md->cleanup;
 }
-int (* __cdecl EVP_MD_meth_get_ctrl(const EVP_MD *md))(EVP_MD_CTX *ctx, int cmd,
+int (__cdecl * EVP_MD_meth_get_ctrl(const EVP_MD *md))(EVP_MD_CTX *ctx, int cmd,
                                               int p1, void *p2)
 {
     return md->md_ctrl;
@@ -491,14 +491,14 @@ void * __cdecl EVP_MD_CTX_md_data(const EVP_MD_CTX *ctx)
     return ctx->md_data;
 }
 
-int (* __cdecl EVP_MD_CTX_update_fn(EVP_MD_CTX *ctx))(EVP_MD_CTX *ctx,
+int (__cdecl * EVP_MD_CTX_update_fn(EVP_MD_CTX *ctx))(EVP_MD_CTX *ctx,
                                              const void *data, size_t count)
 {
     return ctx->update;
 }
 
 void __cdecl EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
-                              int (*update) (EVP_MD_CTX *ctx,
+                              int (__cdecl *update) (EVP_MD_CTX *ctx,
                                              const void *data, size_t count))
 {
     ctx->update = update;

@@ -96,7 +96,7 @@ static int test_lock(void)
 static CRYPTO_ONCE once_run = CRYPTO_ONCE_STATIC_INIT;
 static unsigned once_run_count = 0;
 
-static void once_do_run(void)
+static void __cdecl once_do_run(void)
 {
     once_run_count++;
 }

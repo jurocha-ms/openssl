@@ -52,7 +52,7 @@ static int __cdecl ln_cmp(const ASN1_OBJECT *const *a, const unsigned int *b)
 
 IMPLEMENT_OBJ_BSEARCH_CMP_FN(const ASN1_OBJECT *, unsigned int, ln);
 
-static unsigned long added_obj_hash(const ADDED_OBJ *ca)
+static unsigned long __cdecl added_obj_hash(const ADDED_OBJ *ca)
 {
     const ASN1_OBJECT *a;
     int i;

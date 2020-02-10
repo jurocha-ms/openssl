@@ -129,7 +129,7 @@ void __cdecl OSSL_STORE_LOADER_free(OSSL_STORE_LOADER *loader)
  *  Functions for registering OSSL_STORE_LOADERs
  */
 
-static unsigned long store_loader_hash(const OSSL_STORE_LOADER *v)
+static unsigned long __cdecl store_loader_hash(const OSSL_STORE_LOADER *v)
 {
     return OPENSSL_LH_strhash(v->scheme);
 }

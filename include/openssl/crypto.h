@@ -428,7 +428,7 @@ typedef unsigned int CRYPTO_THREAD_ID;
 #  define CRYPTO_ONCE_STATIC_INIT 0
 # endif
 
-int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (*init)(void));
+int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (__cdecl *init)(void));
 
 int __cdecl CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *));
 void * __cdecl CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key);

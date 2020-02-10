@@ -19,11 +19,11 @@
 #include "ec_lcl.h"
 
 #ifndef OPENSSL_NO_CMS
-static int ecdh_cms_decrypt(CMS_RecipientInfo *ri);
-static int ecdh_cms_encrypt(CMS_RecipientInfo *ri);
+static int __cdecl ecdh_cms_decrypt(CMS_RecipientInfo *ri);
+static int __cdecl ecdh_cms_encrypt(CMS_RecipientInfo *ri);
 #endif
 
-static int eckey_param2type(int *pptype, void **ppval, EC_KEY *ec_key)
+static int __cdecl eckey_param2type(int *pptype, void **ppval, EC_KEY *ec_key)
 {
     const EC_GROUP *group;
     int nid;
@@ -55,7 +55,7 @@ static int eckey_param2type(int *pptype, void **ppval, EC_KEY *ec_key)
     return 1;
 }
 
-static int eckey_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
+static int __cdecl eckey_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
 {
     EC_KEY *ec_key = pkey->pkey.ec;
     void *pval = NULL;
@@ -133,7 +133,7 @@ static EC_KEY *eckey_type2param(int ptype, const void *pval)
     return NULL;
 }
 
-static int eckey_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
+static int __cdecl eckey_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
 {
     const unsigned char *p = NULL;
     const void *pval;
@@ -166,7 +166,7 @@ static int eckey_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
     return 0;
 }
 
-static int eckey_pub_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
+static int __cdecl eckey_pub_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     int r;
     const EC_GROUP *group = EC_KEY_get0_group(b->pkey.ec);
@@ -182,7 +182,7 @@ static int eckey_pub_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
     return -2;
 }
 
-static int eckey_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
+static int __cdecl eckey_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
 {
     const unsigned char *p = NULL;
     const void *pval;
@@ -215,7 +215,7 @@ static int eckey_priv_decode(EVP_PKEY *pkey, const PKCS8_PRIV_KEY_INFO *p8)
     return 0;
 }
 
-static int eckey_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
+static int __cdecl eckey_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
 {
     EC_KEY ec_key = *(pkey->pkey.ec);
     unsigned char *ep, *p;
@@ -263,17 +263,17 @@ static int eckey_priv_encode(PKCS8_PRIV_KEY_INFO *p8, const EVP_PKEY *pkey)
     return 1;
 }
 
-static int int_ec_size(const EVP_PKEY *pkey)
+static int __cdecl int_ec_size(const EVP_PKEY *pkey)
 {
     return ECDSA_size(pkey->pkey.ec);
 }
 
-static int ec_bits(const EVP_PKEY *pkey)
+static int __cdecl ec_bits(const EVP_PKEY *pkey)
 {
     return EC_GROUP_order_bits(EC_KEY_get0_group(pkey->pkey.ec));
 }
 
-static int ec_security_bits(const EVP_PKEY *pkey)
+static int __cdecl ec_security_bits(const EVP_PKEY *pkey)
 {
     int ecbits = ec_bits(pkey);
     if (ecbits >= 512)
@@ -289,14 +289,14 @@ static int ec_security_bits(const EVP_PKEY *pkey)
     return ecbits / 2;
 }
 
-static int ec_missing_parameters(const EVP_PKEY *pkey)
+static int __cdecl ec_missing_parameters(const EVP_PKEY *pkey)
 {
     if (pkey->pkey.ec == NULL || EC_KEY_get0_group(pkey->pkey.ec) == NULL)
         return 1;
     return 0;
 }
 
-static int ec_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
+static int __cdecl ec_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
 {
     EC_GROUP *group = EC_GROUP_dup(EC_KEY_get0_group(from->pkey.ec));
 
@@ -316,7 +316,7 @@ static int ec_copy_parameters(EVP_PKEY *to, const EVP_PKEY *from)
     return 0;
 }
 
-static int ec_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
+static int __cdecl ec_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     const EC_GROUP *group_a = EC_KEY_get0_group(a->pkey.ec),
         *group_b = EC_KEY_get0_group(b->pkey.ec);
@@ -328,7 +328,7 @@ static int ec_cmp_parameters(const EVP_PKEY *a, const EVP_PKEY *b)
         return 1;
 }
 
-static void int_ec_free(EVP_PKEY *pkey)
+static void __cdecl int_ec_free(EVP_PKEY *pkey)
 {
     EC_KEY_free(pkey->pkey.ec);
 }
@@ -339,7 +339,7 @@ typedef enum {
     EC_KEY_PRINT_PARAM
 } ec_print_t;
 
-static int do_EC_KEY_print(BIO *bp, const EC_KEY *x, int off, ec_print_t ktype)
+static int __cdecl do_EC_KEY_print(BIO *bp, const EC_KEY *x, int off, ec_print_t ktype)
 {
     const char *ecstr;
     unsigned char *priv = NULL, *pub = NULL;
@@ -402,7 +402,7 @@ static int do_EC_KEY_print(BIO *bp, const EC_KEY *x, int off, ec_print_t ktype)
     return ret;
 }
 
-static int eckey_param_decode(EVP_PKEY *pkey,
+static int __cdecl eckey_param_decode(EVP_PKEY *pkey,
                               const unsigned char **pder, int derlen)
 {
     EC_KEY *eckey;
@@ -415,30 +415,30 @@ static int eckey_param_decode(EVP_PKEY *pkey,
     return 1;
 }
 
-static int eckey_param_encode(const EVP_PKEY *pkey, unsigned char **pder)
+static int __cdecl eckey_param_encode(const EVP_PKEY *pkey, unsigned char **pder)
 {
     return i2d_ECParameters(pkey->pkey.ec, pder);
 }
 
-static int eckey_param_print(BIO *bp, const EVP_PKEY *pkey, int indent,
+static int __cdecl eckey_param_print(BIO *bp, const EVP_PKEY *pkey, int indent,
                              ASN1_PCTX *ctx)
 {
     return do_EC_KEY_print(bp, pkey->pkey.ec, indent, EC_KEY_PRINT_PARAM);
 }
 
-static int eckey_pub_print(BIO *bp, const EVP_PKEY *pkey, int indent,
+static int __cdecl eckey_pub_print(BIO *bp, const EVP_PKEY *pkey, int indent,
                            ASN1_PCTX *ctx)
 {
     return do_EC_KEY_print(bp, pkey->pkey.ec, indent, EC_KEY_PRINT_PUBLIC);
 }
 
-static int eckey_priv_print(BIO *bp, const EVP_PKEY *pkey, int indent,
+static int __cdecl eckey_priv_print(BIO *bp, const EVP_PKEY *pkey, int indent,
                             ASN1_PCTX *ctx)
 {
     return do_EC_KEY_print(bp, pkey->pkey.ec, indent, EC_KEY_PRINT_PRIVATE);
 }
 
-static int old_ec_priv_decode(EVP_PKEY *pkey,
+static int __cdecl old_ec_priv_decode(EVP_PKEY *pkey,
                               const unsigned char **pder, int derlen)
 {
     EC_KEY *ec;
@@ -451,12 +451,12 @@ static int old_ec_priv_decode(EVP_PKEY *pkey,
     return 1;
 }
 
-static int old_ec_priv_encode(const EVP_PKEY *pkey, unsigned char **pder)
+static int __cdecl old_ec_priv_encode(const EVP_PKEY *pkey, unsigned char **pder)
 {
     return i2d_ECPrivateKey(pkey->pkey.ec, pder);
 }
 
-static int ec_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
+static int __cdecl ec_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 {
     switch (op) {
     case ASN1_PKEY_CTRL_PKCS7_SIGN:
@@ -526,7 +526,7 @@ static int ec_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 
 }
 
-static int ec_pkey_check(const EVP_PKEY *pkey)
+static int __cdecl ec_pkey_check(const EVP_PKEY *pkey)
 {
     EC_KEY *eckey = pkey->pkey.ec;
 
@@ -539,7 +539,7 @@ static int ec_pkey_check(const EVP_PKEY *pkey)
     return EC_KEY_check_key(eckey);
 }
 
-static int ec_pkey_public_check(const EVP_PKEY *pkey)
+static int __cdecl ec_pkey_public_check(const EVP_PKEY *pkey)
 {
     EC_KEY *eckey = pkey->pkey.ec;
 
@@ -555,7 +555,7 @@ static int ec_pkey_public_check(const EVP_PKEY *pkey)
     return EC_KEY_check_key(eckey);
 }
 
-static int ec_pkey_param_check(const EVP_PKEY *pkey)
+static int __cdecl ec_pkey_param_check(const EVP_PKEY *pkey)
 {
     EC_KEY *eckey = pkey->pkey.ec;
 
@@ -631,7 +631,7 @@ int __cdecl ECParameters_print(BIO *bp, const EC_KEY *x)
 
 #ifndef OPENSSL_NO_CMS
 
-static int ecdh_cms_set_peerkey(EVP_PKEY_CTX *pctx,
+static int __cdecl ecdh_cms_set_peerkey(EVP_PKEY_CTX *pctx,
                                 X509_ALGOR *alg, ASN1_BIT_STRING *pubkey)
 {
     const ASN1_OBJECT *aoid;
@@ -683,7 +683,7 @@ static int ecdh_cms_set_peerkey(EVP_PKEY_CTX *pctx,
 }
 
 /* Set KDF parameters based on KDF NID */
-static int ecdh_cms_set_kdf_param(EVP_PKEY_CTX *pctx, int eckdf_nid)
+static int __cdecl ecdh_cms_set_kdf_param(EVP_PKEY_CTX *pctx, int eckdf_nid)
 {
     int kdf_nid, kdfmd_nid, cofactor;
     const EVP_MD *kdf_md;
@@ -716,7 +716,7 @@ static int ecdh_cms_set_kdf_param(EVP_PKEY_CTX *pctx, int eckdf_nid)
     return 1;
 }
 
-static int ecdh_cms_set_shared_info(EVP_PKEY_CTX *pctx, CMS_RecipientInfo *ri)
+static int __cdecl ecdh_cms_set_shared_info(EVP_PKEY_CTX *pctx, CMS_RecipientInfo *ri)
 {
     int rv = 0;
 
@@ -775,7 +775,7 @@ static int ecdh_cms_set_shared_info(EVP_PKEY_CTX *pctx, CMS_RecipientInfo *ri)
     return rv;
 }
 
-static int ecdh_cms_decrypt(CMS_RecipientInfo *ri)
+static int __cdecl ecdh_cms_decrypt(CMS_RecipientInfo *ri)
 {
     EVP_PKEY_CTX *pctx;
     pctx = CMS_RecipientInfo_get0_pkey_ctx(ri);
@@ -803,7 +803,7 @@ static int ecdh_cms_decrypt(CMS_RecipientInfo *ri)
     return 1;
 }
 
-static int ecdh_cms_encrypt(CMS_RecipientInfo *ri)
+static int __cdecl ecdh_cms_encrypt(CMS_RecipientInfo *ri)
 {
     EVP_PKEY_CTX *pctx;
     EVP_PKEY *pkey;

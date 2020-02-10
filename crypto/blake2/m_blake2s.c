@@ -23,17 +23,17 @@
 # include "blake2_locl.h"
 # include "internal/evp_int.h"
 
-static int init(EVP_MD_CTX *ctx)
+static int __cdecl init(EVP_MD_CTX *ctx)
 {
     return BLAKE2s_Init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int update(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     return BLAKE2s_Update(EVP_MD_CTX_md_data(ctx), data, count);
 }
 
-static int final(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final(EVP_MD_CTX *ctx, unsigned char *md)
 {
     return BLAKE2s_Final(md, EVP_MD_CTX_md_data(ctx));
 }

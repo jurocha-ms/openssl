@@ -32,7 +32,7 @@ typedef struct {
 
 #define CHACHA20_POLY1305_MAX_IVLEN     12
 
-static int chacha_init_key(EVP_CIPHER_CTX *ctx,
+static int __cdecl chacha_init_key(EVP_CIPHER_CTX *ctx,
                            const unsigned char user_key[CHACHA_KEY_SIZE],
                            const unsigned char iv[CHACHA_CTR_SIZE], int enc)
 {
@@ -54,7 +54,7 @@ static int chacha_init_key(EVP_CIPHER_CTX *ctx,
     return 1;
 }
 
-static int chacha_cipher(EVP_CIPHER_CTX * ctx, unsigned char *out,
+static int __cdecl chacha_cipher(EVP_CIPHER_CTX * ctx, unsigned char *out,
                          const unsigned char *inp, size_t len)
 {
     EVP_CHACHA_KEY *key = data(ctx);
@@ -162,7 +162,7 @@ typedef struct {
 #  define aead_data(ctx)        ((EVP_CHACHA_AEAD_CTX *)(ctx)->cipher_data)
 #  define POLY1305_ctx(actx)    ((POLY1305 *)(actx + 1))
 
-static int chacha20_poly1305_init_key(EVP_CIPHER_CTX *ctx,
+static int __cdecl chacha20_poly1305_init_key(EVP_CIPHER_CTX *ctx,
                                       const unsigned char *inkey,
                                       const unsigned char *iv, int enc)
 {
@@ -362,7 +362,7 @@ static int chacha20_poly1305_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 static const unsigned char zero[CHACHA_BLK_SIZE] = { 0 };
 #  endif
 
-static int chacha20_poly1305_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl chacha20_poly1305_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                     const unsigned char *in, size_t len)
 {
     EVP_CHACHA_AEAD_CTX *actx = aead_data(ctx);
@@ -489,7 +489,7 @@ static int chacha20_poly1305_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return len;
 }
 
-static int chacha20_poly1305_cleanup(EVP_CIPHER_CTX *ctx)
+static int __cdecl chacha20_poly1305_cleanup(EVP_CIPHER_CTX *ctx)
 {
     EVP_CHACHA_AEAD_CTX *actx = aead_data(ctx);
     if (actx)
@@ -497,7 +497,7 @@ static int chacha20_poly1305_cleanup(EVP_CIPHER_CTX *ctx)
     return 1;
 }
 
-static int chacha20_poly1305_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
+static int __cdecl chacha20_poly1305_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
                                   void *ptr)
 {
     EVP_CHACHA_AEAD_CTX *actx = aead_data(ctx);

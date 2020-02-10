@@ -18,7 +18,7 @@ struct evp_md_ctx_st {
     /* Public key context for sign/verify */
     EVP_PKEY_CTX *pctx;
     /* Update function: usually copied from EVP_MD */
-    int (*update) (EVP_MD_CTX *ctx, const void *data, size_t count);
+    int (__cdecl *update) (EVP_MD_CTX *ctx, const void *data, size_t count);
 } /* EVP_MD_CTX */ ;
 
 struct evp_cipher_ctx_st {
@@ -65,4 +65,4 @@ struct evp_Encode_Ctx_st {
 typedef struct evp_pbe_st EVP_PBE_CTL;
 DEFINE_STACK_OF(EVP_PBE_CTL)
 
-int is_partially_overlapping(const void *ptr1, const void *ptr2, int len);
+int __cdecl is_partially_overlapping(const void *ptr1, const void *ptr2, int len);

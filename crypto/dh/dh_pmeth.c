@@ -46,7 +46,7 @@ typedef struct {
     size_t kdf_outlen;
 } DH_PKEY_CTX;
 
-static int pkey_dh_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_dh_init(EVP_PKEY_CTX *ctx)
 {
     DH_PKEY_CTX *dctx;
 
@@ -66,7 +66,7 @@ static int pkey_dh_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_dh_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_dh_cleanup(EVP_PKEY_CTX *ctx)
 {
     DH_PKEY_CTX *dctx = ctx->data;
     if (dctx != NULL) {
@@ -77,7 +77,7 @@ static void pkey_dh_cleanup(EVP_PKEY_CTX *ctx)
 }
 
 
-static int pkey_dh_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_dh_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     DH_PKEY_CTX *dctx, *sctx;
     if (!pkey_dh_init(dst))
@@ -108,7 +108,7 @@ static int pkey_dh_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
     return 1;
 }
 
-static int pkey_dh_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_dh_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     DH_PKEY_CTX *dctx = ctx->data;
     switch (type) {
@@ -219,7 +219,7 @@ static int pkey_dh_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_dh_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_dh_ctrl_str(EVP_PKEY_CTX *ctx,
                             const char *type, const char *value)
 {
     if (strcmp(type, "dh_paramgen_prime_len") == 0) {
@@ -324,7 +324,7 @@ static DSA *dsa_dh_generate(DH_PKEY_CTX *dctx, BN_GENCB *pcb)
 
 #endif
 
-static int pkey_dh_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_dh_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     DH *dh = NULL;
     DH_PKEY_CTX *dctx = ctx->data;
@@ -395,7 +395,7 @@ static int pkey_dh_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     return ret;
 }
 
-static int pkey_dh_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_dh_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     DH_PKEY_CTX *dctx = ctx->data;
     DH *dh = NULL;
@@ -417,7 +417,7 @@ static int pkey_dh_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     return DH_generate_key(pkey->pkey.dh);
 }
 
-static int pkey_dh_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
+static int __cdecl pkey_dh_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
                           size_t *keylen)
 {
     int ret;

@@ -99,7 +99,7 @@ char * __cdecl _CONF_get_string(const CONF *conf, const char *section,
         return ossl_safe_getenv(name);
 }
 
-static unsigned long conf_value_hash(const CONF_VALUE *v)
+static unsigned long __cdecl conf_value_hash(const CONF_VALUE *v)
 {
     return (OPENSSL_LH_strhash(v->section) << 2) ^ OPENSSL_LH_strhash(v->name);
 }

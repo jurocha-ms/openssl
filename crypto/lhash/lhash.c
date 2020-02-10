@@ -42,7 +42,7 @@
 
 static int expand(OPENSSL_LHASH *lh);
 static void contract(OPENSSL_LHASH *lh);
-static OPENSSL_LH_NODE **getrn(OPENSSL_LHASH *lh, const void *data, unsigned long *rhash);
+static OPENSSL_LH_NODE ** __cdecl getrn(OPENSSL_LHASH *lh, const void *data, unsigned long *rhash);
 
 OPENSSL_LHASH * __cdecl OPENSSL_LH_new(OPENSSL_LH_HASHFUNC h, OPENSSL_LH_COMPFUNC c)
 {
@@ -292,7 +292,7 @@ static void contract(OPENSSL_LHASH *lh)
     }
 }
 
-static OPENSSL_LH_NODE **getrn(OPENSSL_LHASH *lh,
+static OPENSSL_LH_NODE ** __cdecl getrn(OPENSSL_LHASH *lh,
                                const void *data, unsigned long *rhash)
 {
     OPENSSL_LH_NODE **ret, *n1;

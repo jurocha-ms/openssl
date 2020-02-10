@@ -16,7 +16,7 @@
 # include "internal/evp_int.h"
 # include <openssl/cast.h>
 
-static int cast_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl cast_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                          const unsigned char *iv, int enc);
 
 typedef struct {
@@ -30,7 +30,7 @@ IMPLEMENT_BLOCK_CIPHER(cast5, ks, CAST, EVP_CAST_KEY,
                        EVP_CIPH_VARIABLE_LENGTH, cast_init_key, NULL,
                        EVP_CIPHER_set_asn1_iv, EVP_CIPHER_get_asn1_iv, NULL)
 
-static int cast_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl cast_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                          const unsigned char *iv, int enc)
 {
     CAST_set_key(&data(ctx)->ks, EVP_CIPHER_CTX_key_length(ctx), key);

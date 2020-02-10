@@ -20,7 +20,7 @@ NON_EMPTY_TRANSLATION_UNIT
 # include "internal/evp_int.h"
 # include "modes_lcl.h"
 
-static int camellia_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl camellia_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                              const unsigned char *iv, int enc);
 
 /* Camellia subkey Structure */
@@ -72,7 +72,7 @@ void cmll256_t4_ctr32_encrypt(const unsigned char *in, unsigned char *out,
                               size_t blocks, const CAMELLIA_KEY *key,
                               unsigned char *ivec);
 
-static int cmll_t4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl cmll_t4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                             const unsigned char *iv, int enc)
 {
     int ret, mode, bits;
@@ -136,31 +136,31 @@ static int cmll_t4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 }
 
 #  define cmll_t4_cbc_cipher camellia_cbc_cipher
-static int cmll_t4_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len);
 
 #  define cmll_t4_ecb_cipher camellia_ecb_cipher
-static int cmll_t4_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len);
 
 #  define cmll_t4_ofb_cipher camellia_ofb_cipher
-static int cmll_t4_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len);
 
 #  define cmll_t4_cfb_cipher camellia_cfb_cipher
-static int cmll_t4_cfb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_cfb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len);
 
 #  define cmll_t4_cfb8_cipher camellia_cfb8_cipher
-static int cmll_t4_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len);
 
 #  define cmll_t4_cfb1_cipher camellia_cfb1_cipher
-static int cmll_t4_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len);
 
 #  define cmll_t4_ctr_cipher camellia_ctr_cipher
-static int cmll_t4_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl cmll_t4_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len);
 
 #  define BLOCK_CIPHER_generic(nid,keylen,blocksize,ivlen,nmode,mode,MODE,flags) \
@@ -210,7 +210,7 @@ const EVP_CIPHER * __cdecl EVP_camellia_##keylen##_##mode(void) \
         BLOCK_CIPHER_generic(nid, keylen, 1, 16, ctr, ctr, CTR, flags)
 
 /* The subkey for Camellia is generated. */
-static int camellia_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
+static int __cdecl camellia_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                              const unsigned char *iv, int enc)
 {
     int ret, mode;
@@ -237,7 +237,7 @@ static int camellia_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
     return 1;
 }
 
-static int camellia_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     EVP_CAMELLIA_KEY *dat = EVP_C_DATA(EVP_CAMELLIA_KEY,ctx);
@@ -256,7 +256,7 @@ static int camellia_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int camellia_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     size_t bl = EVP_CIPHER_CTX_block_size(ctx);
@@ -272,7 +272,7 @@ static int camellia_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int camellia_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     EVP_CAMELLIA_KEY *dat = EVP_C_DATA(EVP_CAMELLIA_KEY,ctx);
@@ -284,7 +284,7 @@ static int camellia_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int camellia_cfb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_cfb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     EVP_CAMELLIA_KEY *dat = EVP_C_DATA(EVP_CAMELLIA_KEY,ctx);
@@ -296,7 +296,7 @@ static int camellia_cfb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int camellia_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                 const unsigned char *in, size_t len)
 {
     EVP_CAMELLIA_KEY *dat = EVP_C_DATA(EVP_CAMELLIA_KEY,ctx);
@@ -308,7 +308,7 @@ static int camellia_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int camellia_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                 const unsigned char *in, size_t len)
 {
     EVP_CAMELLIA_KEY *dat = EVP_C_DATA(EVP_CAMELLIA_KEY,ctx);
@@ -340,7 +340,7 @@ static int camellia_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int camellia_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl camellia_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     unsigned int num = EVP_CIPHER_CTX_num(ctx);

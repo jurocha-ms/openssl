@@ -256,17 +256,17 @@ typedef struct ENGINE_CMD_DEFN_st {
 } ENGINE_CMD_DEFN;
 
 /* Generic function pointer */
-typedef int (*ENGINE_GEN_FUNC_PTR) (void);
+typedef int (__cdecl *ENGINE_GEN_FUNC_PTR) (void);
 /* Generic function pointer taking no arguments */
-typedef int (*ENGINE_GEN_INT_FUNC_PTR) (ENGINE *);
+typedef int (__cdecl *ENGINE_GEN_INT_FUNC_PTR) (ENGINE *);
 /* Specific control function pointer */
-typedef int (*ENGINE_CTRL_FUNC_PTR) (ENGINE *, int, long, void *,
-                                     void (*f) (void));
+typedef int (__cdecl *ENGINE_CTRL_FUNC_PTR) (ENGINE *, int, long, void *,
+                                     void (__cdecl *f) (void));
 /* Generic load_key function pointer */
-typedef EVP_PKEY *(*ENGINE_LOAD_KEY_PTR)(ENGINE *, const char *,
+typedef EVP_PKEY *(__cdecl *ENGINE_LOAD_KEY_PTR)(ENGINE *, const char *,
                                          UI_METHOD *ui_method,
                                          void *callback_data);
-typedef int (*ENGINE_SSL_CLIENT_CERT_PTR) (ENGINE *, SSL *ssl,
+typedef int (__cdecl *ENGINE_SSL_CLIENT_CERT_PTR) (ENGINE *, SSL *ssl,
                                            STACK_OF(X509_NAME) *ca_dn,
                                            X509 **pcert, EVP_PKEY **pkey,
                                            STACK_OF(X509) **pother,
@@ -287,13 +287,13 @@ typedef int (*ENGINE_SSL_CLIENT_CERT_PTR) (ENGINE *, SSL *ssl,
  * Returns to a pointer to the array of supported cipher 'nid's. If the
  * second parameter is non-NULL it is set to the size of the returned array.
  */
-typedef int (*ENGINE_CIPHERS_PTR) (ENGINE *, const EVP_CIPHER **,
+typedef int (__cdecl *ENGINE_CIPHERS_PTR) (ENGINE *, const EVP_CIPHER **,
                                    const int **, int);
-typedef int (*ENGINE_DIGESTS_PTR) (ENGINE *, const EVP_MD **, const int **,
+typedef int (__cdecl *ENGINE_DIGESTS_PTR) (ENGINE *, const EVP_MD **, const int **,
                                    int);
-typedef int (*ENGINE_PKEY_METHS_PTR) (ENGINE *, EVP_PKEY_METHOD **,
+typedef int (__cdecl *ENGINE_PKEY_METHS_PTR) (ENGINE *, EVP_PKEY_METHOD **,
                                       const int **, int);
-typedef int (*ENGINE_PKEY_ASN1_METHS_PTR) (ENGINE *, EVP_PKEY_ASN1_METHOD **,
+typedef int (__cdecl *ENGINE_PKEY_ASN1_METHS_PTR) (ENGINE *, EVP_PKEY_ASN1_METHOD **,
                                            const int **, int);
 /*
  * STRUCTURE functions ... all of these functions deal with pointers to
@@ -410,7 +410,7 @@ int __cdecl ENGINE_register_all_complete(void);
  * commands that require an operational ENGINE, and only use functional
  * references in such situations.
  */
-int __cdecl ENGINE_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void));
+int __cdecl ENGINE_ctrl(ENGINE *e, int cmd, long i, void *p, void (__cdecl *f) (void));
 
 /*
  * This function tests if an ENGINE-specific command is usable as a
@@ -427,7 +427,7 @@ int __cdecl ENGINE_cmd_is_executable(ENGINE *e, int cmd);
  * on how to use the cmd_name and cmd_optional.
  */
 int __cdecl ENGINE_ctrl_cmd(ENGINE *e, const char *cmd_name,
-                    long i, void *p, void (*f) (void), int cmd_optional);
+                    long i, void *p, void (__cdecl *f) (void), int cmd_optional);
 
 /*
  * This function passes a command-name and argument to an ENGINE. The
@@ -686,7 +686,7 @@ typedef struct st_dynamic_fns {
  * implementation can be fully instantiated with
  * IMPLEMENT_DYNAMIC_CHECK_FN().
  */
-typedef unsigned long (*dynamic_v_check_fn) (unsigned long ossl_version);
+typedef unsigned long (__cdecl *dynamic_v_check_fn) (unsigned long ossl_version);
 # define IMPLEMENT_DYNAMIC_CHECK_FN() \
         OPENSSL_EXPORT unsigned long v_check(unsigned long v); \
         OPENSSL_EXPORT unsigned long v_check(unsigned long v) { \
@@ -711,7 +711,7 @@ typedef unsigned long (*dynamic_v_check_fn) (unsigned long ossl_version);
  * returns an int value (zero for failure). 'fn' should have prototype;
  * [static] int fn(ENGINE *e, const char *id);
  */
-typedef int (*dynamic_bind_engine) (ENGINE *e, const char *id,
+typedef int (__cdecl *dynamic_bind_engine) (ENGINE *e, const char *id,
                                     const dynamic_fns *fns);
 # define IMPLEMENT_DYNAMIC_BIND_FN(fn) \
         OPENSSL_EXPORT \

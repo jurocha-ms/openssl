@@ -34,7 +34,7 @@ static int int_tests[] = { 65537, 13, 1, 3, -5, 6, 7, 4, -10, -12, -14, 22, 9,
 static const unsigned int n_int_tests = OSSL_NELEM(int_tests);
 static short int_found[OSSL_NELEM(int_tests)];
 
-static unsigned long int int_hash(const int *p)
+static unsigned long int __cdecl int_hash(const int *p)
 {
     return 3 & *p;      /* To force collisions */
 }
@@ -159,7 +159,7 @@ end:
     return testresult;
 }
 
-static unsigned long int stress_hash(const int *p)
+static unsigned long int __cdecl stress_hash(const int *p)
 {
     return *p;
 }

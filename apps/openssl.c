@@ -635,7 +635,7 @@ static int __cdecl function_cmp(const FUNCTION * a, const FUNCTION * b)
     return strncmp(a->name, b->name, 8);
 }
 
-static unsigned long function_hash(const FUNCTION * a)
+static unsigned long __cdecl function_hash(const FUNCTION * a)
 {
     return OPENSSL_LH_strhash(a->name);
 }

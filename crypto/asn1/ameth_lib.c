@@ -294,17 +294,17 @@ void __cdecl EVP_PKEY_asn1_free(EVP_PKEY_ASN1_METHOD *ameth)
 }
 
 void __cdecl EVP_PKEY_asn1_set_public(EVP_PKEY_ASN1_METHOD *ameth,
-                              int (*pub_decode) (EVP_PKEY *pk,
+                              int (__cdecl *pub_decode) (EVP_PKEY *pk,
                                                  X509_PUBKEY *pub),
-                              int (*pub_encode) (X509_PUBKEY *pub,
+                              int (__cdecl *pub_encode) (X509_PUBKEY *pub,
                                                  const EVP_PKEY *pk),
-                              int (*pub_cmp) (const EVP_PKEY *a,
+                              int (__cdecl *pub_cmp) (const EVP_PKEY *a,
                                               const EVP_PKEY *b),
-                              int (*pub_print) (BIO *out,
+                              int (__cdecl *pub_print) (BIO *out,
                                                 const EVP_PKEY *pkey,
                                                 int indent, ASN1_PCTX *pctx),
-                              int (*pkey_size) (const EVP_PKEY *pk),
-                              int (*pkey_bits) (const EVP_PKEY *pk))
+                              int (__cdecl *pkey_size) (const EVP_PKEY *pk),
+                              int (__cdecl *pkey_bits) (const EVP_PKEY *pk))
 {
     ameth->pub_decode = pub_decode;
     ameth->pub_encode = pub_encode;
@@ -315,12 +315,12 @@ void __cdecl EVP_PKEY_asn1_set_public(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_private(EVP_PKEY_ASN1_METHOD *ameth,
-                               int (*priv_decode) (EVP_PKEY *pk,
+                               int (__cdecl *priv_decode) (EVP_PKEY *pk,
                                                    const PKCS8_PRIV_KEY_INFO
                                                    *p8inf),
-                               int (*priv_encode) (PKCS8_PRIV_KEY_INFO *p8,
+                               int (__cdecl *priv_encode) (PKCS8_PRIV_KEY_INFO *p8,
                                                    const EVP_PKEY *pk),
-                               int (*priv_print) (BIO *out,
+                               int (__cdecl *priv_print) (BIO *out,
                                                   const EVP_PKEY *pkey,
                                                   int indent,
                                                   ASN1_PCTX *pctx))
@@ -331,17 +331,17 @@ void __cdecl EVP_PKEY_asn1_set_private(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_param(EVP_PKEY_ASN1_METHOD *ameth,
-                             int (*param_decode) (EVP_PKEY *pkey,
+                             int (__cdecl *param_decode) (EVP_PKEY *pkey,
                                                   const unsigned char **pder,
                                                   int derlen),
-                             int (*param_encode) (const EVP_PKEY *pkey,
+                             int (__cdecl *param_encode) (const EVP_PKEY *pkey,
                                                   unsigned char **pder),
-                             int (*param_missing) (const EVP_PKEY *pk),
-                             int (*param_copy) (EVP_PKEY *to,
+                             int (__cdecl *param_missing) (const EVP_PKEY *pk),
+                             int (__cdecl *param_copy) (EVP_PKEY *to,
                                                 const EVP_PKEY *from),
-                             int (*param_cmp) (const EVP_PKEY *a,
+                             int (__cdecl *param_cmp) (const EVP_PKEY *a,
                                                const EVP_PKEY *b),
-                             int (*param_print) (BIO *out,
+                             int (__cdecl *param_print) (BIO *out,
                                                  const EVP_PKEY *pkey,
                                                  int indent, ASN1_PCTX *pctx))
 {
@@ -354,33 +354,33 @@ void __cdecl EVP_PKEY_asn1_set_param(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_free(EVP_PKEY_ASN1_METHOD *ameth,
-                            void (*pkey_free) (EVP_PKEY *pkey))
+                            void (__cdecl *pkey_free) (EVP_PKEY *pkey))
 {
     ameth->pkey_free = pkey_free;
 }
 
 void __cdecl EVP_PKEY_asn1_set_ctrl(EVP_PKEY_ASN1_METHOD *ameth,
-                            int (*pkey_ctrl) (EVP_PKEY *pkey, int op,
+                            int (__cdecl *pkey_ctrl) (EVP_PKEY *pkey, int op,
                                               long arg1, void *arg2))
 {
     ameth->pkey_ctrl = pkey_ctrl;
 }
 
 void __cdecl EVP_PKEY_asn1_set_security_bits(EVP_PKEY_ASN1_METHOD *ameth,
-                                     int (*pkey_security_bits) (const EVP_PKEY
+                                     int (__cdecl *pkey_security_bits) (const EVP_PKEY
                                                                 *pk))
 {
     ameth->pkey_security_bits = pkey_security_bits;
 }
 
 void __cdecl EVP_PKEY_asn1_set_item(EVP_PKEY_ASN1_METHOD *ameth,
-                            int (*item_verify) (EVP_MD_CTX *ctx,
+                            int (__cdecl *item_verify) (EVP_MD_CTX *ctx,
                                                 const ASN1_ITEM *it,
                                                 void *asn,
                                                 X509_ALGOR *a,
                                                 ASN1_BIT_STRING *sig,
                                                 EVP_PKEY *pkey),
-                            int (*item_sign) (EVP_MD_CTX *ctx,
+                            int (__cdecl *item_sign) (EVP_MD_CTX *ctx,
                                               const ASN1_ITEM *it,
                                               void *asn,
                                               X509_ALGOR *alg1,
@@ -392,7 +392,7 @@ void __cdecl EVP_PKEY_asn1_set_item(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_siginf(EVP_PKEY_ASN1_METHOD *ameth,
-                              int (*siginf_set) (X509_SIG_INFO *siginf,
+                              int (__cdecl *siginf_set) (X509_SIG_INFO *siginf,
                                                  const X509_ALGOR *alg,
                                                  const ASN1_STRING *sig))
 {
@@ -400,25 +400,25 @@ void __cdecl EVP_PKEY_asn1_set_siginf(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_check(EVP_PKEY_ASN1_METHOD *ameth,
-                             int (*pkey_check) (const EVP_PKEY *pk))
+                             int (__cdecl *pkey_check) (const EVP_PKEY *pk))
 {
     ameth->pkey_check = pkey_check;
 }
 
 void __cdecl EVP_PKEY_asn1_set_public_check(EVP_PKEY_ASN1_METHOD *ameth,
-                                    int (*pkey_pub_check) (const EVP_PKEY *pk))
+                                    int (__cdecl *pkey_pub_check) (const EVP_PKEY *pk))
 {
     ameth->pkey_public_check = pkey_pub_check;
 }
 
 void __cdecl EVP_PKEY_asn1_set_param_check(EVP_PKEY_ASN1_METHOD *ameth,
-                                   int (*pkey_param_check) (const EVP_PKEY *pk))
+                                   int (__cdecl *pkey_param_check) (const EVP_PKEY *pk))
 {
     ameth->pkey_param_check = pkey_param_check;
 }
 
 void __cdecl EVP_PKEY_asn1_set_set_priv_key(EVP_PKEY_ASN1_METHOD *ameth,
-                                    int (*set_priv_key) (EVP_PKEY *pk,
+                                    int (__cdecl *set_priv_key) (EVP_PKEY *pk,
                                                          const unsigned char
                                                             *priv,
                                                          size_t len))
@@ -427,7 +427,7 @@ void __cdecl EVP_PKEY_asn1_set_set_priv_key(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_set_pub_key(EVP_PKEY_ASN1_METHOD *ameth,
-                                   int (*set_pub_key) (EVP_PKEY *pk,
+                                   int (__cdecl *set_pub_key) (EVP_PKEY *pk,
                                                        const unsigned char *pub,
                                                        size_t len))
 {
@@ -435,7 +435,7 @@ void __cdecl EVP_PKEY_asn1_set_set_pub_key(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_get_priv_key(EVP_PKEY_ASN1_METHOD *ameth,
-                                    int (*get_priv_key) (const EVP_PKEY *pk,
+                                    int (__cdecl *get_priv_key) (const EVP_PKEY *pk,
                                                          unsigned char *priv,
                                                          size_t *len))
 {
@@ -443,7 +443,7 @@ void __cdecl EVP_PKEY_asn1_set_get_priv_key(EVP_PKEY_ASN1_METHOD *ameth,
 }
 
 void __cdecl EVP_PKEY_asn1_set_get_pub_key(EVP_PKEY_ASN1_METHOD *ameth,
-                                   int (*get_pub_key) (const EVP_PKEY *pk,
+                                   int (__cdecl *get_pub_key) (const EVP_PKEY *pk,
                                                        unsigned char *pub,
                                                        size_t *len))
 {

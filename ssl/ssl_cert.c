@@ -596,7 +596,7 @@ static int __cdecl xname_sk_cmp(const X509_NAME *const *a, const X509_NAME *cons
     return xname_cmp(*a, *b);
 }
 
-static unsigned long xname_hash(const X509_NAME *a)
+static unsigned long __cdecl xname_hash(const X509_NAME *a)
 {
     return X509_NAME_hash((X509_NAME *)a);
 }

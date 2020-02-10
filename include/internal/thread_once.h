@@ -24,13 +24,13 @@
  * }
  */
 #define DEFINE_RUN_ONCE(init)                   \
-    static int init(void);                     \
+    static int __cdecl init(void);                     \
     int init##_ossl_ret_ = 0;                   \
-    void init##_ossl_(void)                     \
+    void __cdecl init##_ossl_(void)                     \
     {                                           \
         init##_ossl_ret_ = init();              \
     }                                           \
-    static int init(void)
+    static int __cdecl init(void)
 
 /*
  * DECLARE_RUN_ONCE: Declare an initialiser function that should be run exactly
@@ -38,7 +38,7 @@
  */
 #define DECLARE_RUN_ONCE(init)                  \
     extern int init##_ossl_ret_;                \
-    void init##_ossl_(void);
+    void __cdecl init##_ossl_(void);
 
 /*
  * DEFINE_RUN_ONCE_STATIC: Define an initialiser function that should be run
@@ -56,13 +56,13 @@
  * }
  */
 #define DEFINE_RUN_ONCE_STATIC(init)            \
-    static int init(void);                     \
+    static int __cdecl init(void);                     \
     static int init##_ossl_ret_ = 0;            \
-    static void init##_ossl_(void)              \
+    static void __cdecl init##_ossl_(void)              \
     {                                           \
         init##_ossl_ret_ = init();              \
     }                                           \
-    static int init(void)
+    static int __cdecl init(void)
 
 /*
  * DEFINE_RUN_ONCE_STATIC_ALT: Define an alternative initialiser function. This
@@ -97,12 +97,12 @@
  * }
  */
 #define DEFINE_RUN_ONCE_STATIC_ALT(initalt, init) \
-    static int initalt(void);                     \
-    static void initalt##_ossl_(void)             \
+    static int __cdecl initalt(void);                     \
+    static void __cdecl initalt##_ossl_(void)             \
     {                                             \
         init##_ossl_ret_ = initalt();             \
     }                                             \
-    static int initalt(void)
+    static int __cdecl initalt(void)
 
 /*
  * RUN_ONCE - use CRYPTO_THREAD_run_once, and check if the init succeeded

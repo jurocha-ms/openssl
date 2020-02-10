@@ -468,7 +468,7 @@ static const uint32_t X2[256] = {
         (Y) = (TMP2) ^ rotr32((TMP) ^ (TMP2), 16);  \
     } while(0)
 
-void aria_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl aria_encrypt(const unsigned char *in, unsigned char *out,
                   const ARIA_KEY *key)
 {
     register uint32_t reg0, reg1, reg2, reg3;
@@ -535,7 +535,7 @@ void aria_encrypt(const unsigned char *in, unsigned char *out,
     PUT_U32_BE(out, 3, reg3);
 }
 
-int aria_set_encrypt_key(const unsigned char *userKey, const int bits,
+int __cdecl aria_set_encrypt_key(const unsigned char *userKey, const int bits,
                          ARIA_KEY *key)
 {
     register uint32_t reg0, reg1, reg2, reg3;
@@ -667,7 +667,7 @@ int aria_set_encrypt_key(const unsigned char *userKey, const int bits,
     return 0;
 }
 
-int aria_set_decrypt_key(const unsigned char *userKey, const int bits,
+int __cdecl aria_set_decrypt_key(const unsigned char *userKey, const int bits,
                          ARIA_KEY *key)
 {
     ARIA_u128 *rk_head;
@@ -1106,7 +1106,7 @@ static void do_encrypt(unsigned char *o, const unsigned char *pin,
  * Encrypt a single block
  * in and out can overlap
  */
-void aria_encrypt(const unsigned char *in, unsigned char *out,
+void __cdecl aria_encrypt(const unsigned char *in, unsigned char *out,
                   const ARIA_KEY *key)
 {
     assert(in != NULL && out != NULL && key != NULL);
@@ -1119,7 +1119,7 @@ void aria_encrypt(const unsigned char *in, unsigned char *out,
  * We short circuit execution of the last two
  * or four rotations based on the key size.
  */
-int aria_set_encrypt_key(const unsigned char *userKey, const int bits,
+int __cdecl aria_set_encrypt_key(const unsigned char *userKey, const int bits,
                          ARIA_KEY *key)
 {
     const ARIA_u128 *ck1, *ck2, *ck3;
@@ -1192,7 +1192,7 @@ int aria_set_encrypt_key(const unsigned char *userKey, const int bits,
 /*
  * Expand the cipher key into the decryption key schedule.
  */
-int aria_set_decrypt_key(const unsigned char *userKey, const int bits,
+int __cdecl aria_set_decrypt_key(const unsigned char *userKey, const int bits,
                          ARIA_KEY *key)
 {
     ARIA_KEY ek;

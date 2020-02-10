@@ -29,7 +29,7 @@ typedef struct {
     const EVP_MD *md;           /* MD for the signature */
 } DSA_PKEY_CTX;
 
-static int pkey_dsa_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_dsa_init(EVP_PKEY_CTX *ctx)
 {
     DSA_PKEY_CTX *dctx = OPENSSL_malloc(sizeof(*dctx));
 
@@ -47,7 +47,7 @@ static int pkey_dsa_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static int pkey_dsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_dsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     DSA_PKEY_CTX *dctx, *sctx;
 
@@ -62,13 +62,13 @@ static int pkey_dsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
     return 1;
 }
 
-static void pkey_dsa_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_dsa_cleanup(EVP_PKEY_CTX *ctx)
 {
     DSA_PKEY_CTX *dctx = ctx->data;
     OPENSSL_free(dctx);
 }
 
-static int pkey_dsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
+static int __cdecl pkey_dsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
                          size_t *siglen, const unsigned char *tbs,
                          size_t tbslen)
 {
@@ -88,7 +88,7 @@ static int pkey_dsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
     return 1;
 }
 
-static int pkey_dsa_verify(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_dsa_verify(EVP_PKEY_CTX *ctx,
                            const unsigned char *sig, size_t siglen,
                            const unsigned char *tbs, size_t tbslen)
 {
@@ -104,7 +104,7 @@ static int pkey_dsa_verify(EVP_PKEY_CTX *ctx,
     return ret;
 }
 
-static int pkey_dsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_dsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     DSA_PKEY_CTX *dctx = ctx->data;
 
@@ -168,7 +168,7 @@ static int pkey_dsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_dsa_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_dsa_ctrl_str(EVP_PKEY_CTX *ctx,
                              const char *type, const char *value)
 {
     if (strcmp(type, "dsa_paramgen_bits") == 0) {
@@ -196,7 +196,7 @@ static int pkey_dsa_ctrl_str(EVP_PKEY_CTX *ctx,
     return -2;
 }
 
-static int pkey_dsa_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_dsa_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     DSA *dsa = NULL;
     DSA_PKEY_CTX *dctx = ctx->data;
@@ -225,7 +225,7 @@ static int pkey_dsa_paramgen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     return ret;
 }
 
-static int pkey_dsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_dsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     DSA *dsa = NULL;
 

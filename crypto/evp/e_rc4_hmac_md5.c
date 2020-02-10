@@ -29,12 +29,12 @@ typedef struct {
 
 # define NO_PAYLOAD_LENGTH       ((size_t)-1)
 
-void rc4_md5_enc(RC4_KEY *key, const void *in0, void *out,
+void __cdecl rc4_md5_enc(RC4_KEY *key, const void *in0, void *out,
                  MD5_CTX *ctx, const void *inp, size_t blocks);
 
 # define data(ctx) ((EVP_RC4_HMAC_MD5 *)EVP_CIPHER_CTX_get_cipher_data(ctx))
 
-static int rc4_hmac_md5_init_key(EVP_CIPHER_CTX *ctx,
+static int __cdecl rc4_hmac_md5_init_key(EVP_CIPHER_CTX *ctx,
                                  const unsigned char *inkey,
                                  const unsigned char *iv, int enc)
 {
@@ -62,7 +62,7 @@ static int rc4_hmac_md5_init_key(EVP_CIPHER_CTX *ctx,
 #  define md5_off 0
 # endif
 
-static int rc4_hmac_md5_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int __cdecl rc4_hmac_md5_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     EVP_RC4_HMAC_MD5 *key = data(ctx);
@@ -173,7 +173,7 @@ static int rc4_hmac_md5_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int rc4_hmac_md5_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
+static int __cdecl rc4_hmac_md5_ctrl(EVP_CIPHER_CTX *ctx, int type, int arg,
                              void *ptr)
 {
     EVP_RC4_HMAC_MD5 *key = data(ctx);

@@ -99,7 +99,7 @@ typedef enum drbg_status_e {
 
 
 /* instantiate */
-typedef int (*RAND_DRBG_instantiate_fn)(RAND_DRBG *ctx,
+typedef int (__cdecl *RAND_DRBG_instantiate_fn)(RAND_DRBG *ctx,
                                         const unsigned char *ent,
                                         size_t entlen,
                                         const unsigned char *nonce,
@@ -107,19 +107,19 @@ typedef int (*RAND_DRBG_instantiate_fn)(RAND_DRBG *ctx,
                                         const unsigned char *pers,
                                         size_t perslen);
 /* reseed */
-typedef int (*RAND_DRBG_reseed_fn)(RAND_DRBG *ctx,
+typedef int (__cdecl *RAND_DRBG_reseed_fn)(RAND_DRBG *ctx,
                                    const unsigned char *ent,
                                    size_t entlen,
                                    const unsigned char *adin,
                                    size_t adinlen);
 /* generate output */
-typedef int (*RAND_DRBG_generate_fn)(RAND_DRBG *ctx,
+typedef int (__cdecl *RAND_DRBG_generate_fn)(RAND_DRBG *ctx,
                                      unsigned char *out,
                                      size_t outlen,
                                      const unsigned char *adin,
                                      size_t adinlen);
 /* uninstantiate */
-typedef int (*RAND_DRBG_uninstantiate_fn)(RAND_DRBG *ctx);
+typedef int (__cdecl *RAND_DRBG_uninstantiate_fn)(RAND_DRBG *ctx);
 
 
 /*

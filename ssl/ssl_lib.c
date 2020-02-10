@@ -2861,7 +2861,7 @@ int __cdecl SSL_export_keying_material_early(SSL *s, unsigned char *out, size_t 
                                               context, contextlen);
 }
 
-static unsigned long ssl_session_hash(const SSL_SESSION *a)
+static unsigned long __cdecl ssl_session_hash(const SSL_SESSION *a)
 {
     const unsigned char *session_id = a->session_id;
     unsigned long l;

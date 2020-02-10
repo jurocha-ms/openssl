@@ -225,7 +225,7 @@ __owur static int ctr_df(RAND_DRBG_CTR *ctr,
  * zeroes if necessary and have up to two parameters XORed together,
  * so we handle both cases in this function instead.
  */
-__owur static int ctr_update(RAND_DRBG *drbg,
+__owur static int __cdecl ctr_update(RAND_DRBG *drbg,
                              const unsigned char *in1, size_t in1len,
                              const unsigned char *in2, size_t in2len,
                              const unsigned char *nonce, size_t noncelen)
@@ -276,7 +276,7 @@ __owur static int ctr_update(RAND_DRBG *drbg,
     return 1;
 }
 
-__owur static int drbg_ctr_instantiate(RAND_DRBG *drbg,
+__owur static int __cdecl drbg_ctr_instantiate(RAND_DRBG *drbg,
                                        const unsigned char *entropy, size_t entropylen,
                                        const unsigned char *nonce, size_t noncelen,
                                        const unsigned char *pers, size_t perslen)
@@ -295,7 +295,7 @@ __owur static int drbg_ctr_instantiate(RAND_DRBG *drbg,
     return 1;
 }
 
-__owur static int drbg_ctr_reseed(RAND_DRBG *drbg,
+__owur static int __cdecl drbg_ctr_reseed(RAND_DRBG *drbg,
                                   const unsigned char *entropy, size_t entropylen,
                                   const unsigned char *adin, size_t adinlen)
 {
@@ -306,7 +306,7 @@ __owur static int drbg_ctr_reseed(RAND_DRBG *drbg,
     return 1;
 }
 
-__owur static int drbg_ctr_generate(RAND_DRBG *drbg,
+__owur static int __cdecl drbg_ctr_generate(RAND_DRBG *drbg,
                                     unsigned char *out, size_t outlen,
                                     const unsigned char *adin, size_t adinlen)
 {
@@ -351,7 +351,7 @@ __owur static int drbg_ctr_generate(RAND_DRBG *drbg,
     return 1;
 }
 
-static int drbg_ctr_uninstantiate(RAND_DRBG *drbg)
+static int __cdecl drbg_ctr_uninstantiate(RAND_DRBG *drbg)
 {
     EVP_CIPHER_CTX_free(drbg->data.ctr.ctx);
     EVP_CIPHER_CTX_free(drbg->data.ctr.ctx_df);

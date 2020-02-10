@@ -153,7 +153,7 @@ const OPTIONS req_options[] = {
 /*
  * An LHASH of strings, where each string is an extension name.
  */
-static unsigned long ext_name_hash(const OPENSSL_STRING *a)
+static unsigned long __cdecl ext_name_hash(const OPENSSL_STRING *a)
 {
     return OPENSSL_LH_strhash((const char *)a);
 }

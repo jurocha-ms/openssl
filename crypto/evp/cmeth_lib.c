@@ -59,7 +59,7 @@ int __cdecl EVP_CIPHER_meth_set_impl_ctx_size(EVP_CIPHER *cipher, int ctx_size)
 }
 
 int __cdecl EVP_CIPHER_meth_set_init(EVP_CIPHER *cipher,
-                             int (*init) (EVP_CIPHER_CTX *ctx,
+                             int (__cdecl *init) (EVP_CIPHER_CTX *ctx,
                                           const unsigned char *key,
                                           const unsigned char *iv,
                                           int enc))
@@ -69,7 +69,7 @@ int __cdecl EVP_CIPHER_meth_set_init(EVP_CIPHER *cipher,
 }
 
 int __cdecl EVP_CIPHER_meth_set_do_cipher(EVP_CIPHER *cipher,
-                                  int (*do_cipher) (EVP_CIPHER_CTX *ctx,
+                                  int (__cdecl *do_cipher) (EVP_CIPHER_CTX *ctx,
                                                     unsigned char *out,
                                                     const unsigned char *in,
                                                     size_t inl))
@@ -79,7 +79,7 @@ int __cdecl EVP_CIPHER_meth_set_do_cipher(EVP_CIPHER *cipher,
 }
 
 int __cdecl EVP_CIPHER_meth_set_cleanup(EVP_CIPHER *cipher,
-                                int (*cleanup) (EVP_CIPHER_CTX *))
+                                int (__cdecl *cleanup) (EVP_CIPHER_CTX *))
 {
     cipher->cleanup = cleanup;
     return 1;
@@ -102,7 +102,7 @@ int __cdecl EVP_CIPHER_meth_set_get_asn1_params(EVP_CIPHER *cipher,
 }
 
 int __cdecl EVP_CIPHER_meth_set_ctrl(EVP_CIPHER *cipher,
-                             int (*ctrl) (EVP_CIPHER_CTX *, int type,
+                             int (__cdecl *ctrl) (EVP_CIPHER_CTX *, int type,
                                           int arg, void *ptr))
 {
     cipher->ctrl = ctrl;
@@ -110,14 +110,14 @@ int __cdecl EVP_CIPHER_meth_set_ctrl(EVP_CIPHER *cipher,
 }
 
 
-int (* __cdecl EVP_CIPHER_meth_get_init(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *ctx,
+int (__cdecl *EVP_CIPHER_meth_get_init(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *ctx,
                                                           const unsigned char *key,
                                                           const unsigned char *iv,
                                                           int enc)
 {
     return cipher->init;
 }
-int (* __cdecl EVP_CIPHER_meth_get_do_cipher(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *ctx,
+int (__cdecl *EVP_CIPHER_meth_get_do_cipher(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *ctx,
                                                                unsigned char *out,
                                                                const unsigned char *in,
                                                                size_t inl)
@@ -125,24 +125,24 @@ int (* __cdecl EVP_CIPHER_meth_get_do_cipher(const EVP_CIPHER *cipher))(EVP_CIPH
     return cipher->do_cipher;
 }
 
-int (* __cdecl EVP_CIPHER_meth_get_cleanup(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *)
+int (__cdecl *EVP_CIPHER_meth_get_cleanup(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *)
 {
     return cipher->cleanup;
 }
 
-int (__cdecl * EVP_CIPHER_meth_get_set_asn1_params(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *,
+int (__cdecl *EVP_CIPHER_meth_get_set_asn1_params(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *,
                                                                      ASN1_TYPE *)
 {
     return cipher->set_asn1_parameters;
 }
 
-int (__cdecl * EVP_CIPHER_meth_get_get_asn1_params(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *,
+int (__cdecl *EVP_CIPHER_meth_get_get_asn1_params(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *,
                                                                ASN1_TYPE *)
 {
     return cipher->get_asn1_parameters;
 }
 
-int (* __cdecl EVP_CIPHER_meth_get_ctrl(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *,
+int (__cdecl *EVP_CIPHER_meth_get_ctrl(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *,
                                                           int type, int arg,
                                                           void *ptr)
 {

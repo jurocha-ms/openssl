@@ -23,9 +23,9 @@
 #include "internal/constant_time_locl.h"
 #include "e_os.h"
 
-static int err_load_strings(const ERR_STRING_DATA *str);
+static int __cdecl err_load_strings(const ERR_STRING_DATA *str);
 
-static void ERR_STATE_free(ERR_STATE *s);
+static void __cdecl ERR_STATE_free(ERR_STATE *s);
 #ifndef OPENSSL_NO_ERR
 static ERR_STRING_DATA ERR_str_libraries[] = {
     {ERR_PACK(ERR_LIB_NONE, 0, 0), "unknown library"},
@@ -142,7 +142,7 @@ static CRYPTO_THREAD_LOCAL err_thread_local;
 static CRYPTO_ONCE err_string_init = CRYPTO_ONCE_STATIC_INIT;
 static CRYPTO_RWLOCK *err_string_lock;
 
-static ERR_STRING_DATA *int_err_get_item(const ERR_STRING_DATA *);
+static ERR_STRING_DATA * __cdecl int_err_get_item(const ERR_STRING_DATA *);
 
 /*
  * The internal state
@@ -151,11 +151,11 @@ static ERR_STRING_DATA *int_err_get_item(const ERR_STRING_DATA *);
 static LHASH_OF(ERR_STRING_DATA) *int_error_hash = NULL;
 static int int_err_library_number = ERR_LIB_USER;
 
-static unsigned long get_error_values(int inc, int top, const char **file,
+static unsigned long __cdecl get_error_values(int inc, int top, const char **file,
                                       int *line, const char **data,
                                       int *flags);
 
-static unsigned long err_string_data_hash(const ERR_STRING_DATA *a)
+static unsigned long __cdecl err_string_data_hash(const ERR_STRING_DATA *a)
 {
     unsigned long ret, l;
 
@@ -172,7 +172,7 @@ static int __cdecl err_string_data_cmp(const ERR_STRING_DATA *a,
     return a->error > b->error ? 1 : -1;
 }
 
-static ERR_STRING_DATA *int_err_get_item(const ERR_STRING_DATA *d)
+static ERR_STRING_DATA * __cdecl int_err_get_item(const ERR_STRING_DATA *d)
 {
     ERR_STRING_DATA *p = NULL;
 
@@ -199,7 +199,7 @@ static ERR_STRING_DATA SYS_str_reasons[NUM_SYS_STR_REASONS + 1];
  * codes.
  */
 
-static void build_SYS_str_reasons(void)
+static void __cdecl build_SYS_str_reasons(void)
 {
     /* OPENSSL_malloc cannot be used here, use static storage instead */
     static char strerror_pool[SPACE_SYS_STR_REASONS];
@@ -279,7 +279,7 @@ static void build_SYS_str_reasons(void)
             (p)->err_line[i] = -1; \
         } while (0)
 
-static void ERR_STATE_free(ERR_STATE *s)
+static void __cdecl ERR_STATE_free(ERR_STATE *s)
 {
     int i;
 
@@ -308,7 +308,7 @@ DEFINE_RUN_ONCE_STATIC(do_err_strings_init)
     return 1;
 }
 
-void err_cleanup(void)
+void __cdecl err_cleanup(void)
 {
     if (set_err_thread_local != 0)
         CRYPTO_THREAD_cleanup_local(&err_thread_local);
@@ -321,7 +321,7 @@ void err_cleanup(void)
 /*
  * Legacy; pack in the library.
  */
-static void err_patch(int lib, ERR_STRING_DATA *str)
+static void __cdecl err_patch(int lib, ERR_STRING_DATA *str)
 {
     unsigned long plib = ERR_PACK(lib, 0, 0);
 
@@ -332,7 +332,7 @@ static void err_patch(int lib, ERR_STRING_DATA *str)
 /*
  * Hash in |str| error strings. Assumes the URN_ONCE was done.
  */
-static int err_load_strings(const ERR_STRING_DATA *str)
+static int __cdecl err_load_strings(const ERR_STRING_DATA *str)
 {
     CRYPTO_THREAD_write_lock(err_string_lock);
     for (; str->error; str++)
@@ -500,7 +500,7 @@ unsigned long __cdecl ERR_peek_last_error_line_data(const char **file, int *line
     return get_error_values(0, 1, file, line, data, flags);
 }
 
-static unsigned long get_error_values(int inc, int top, const char **file,
+static unsigned long __cdecl get_error_values(int inc, int top, const char **file,
                                       int *line, const char **data,
                                       int *flags)
 {
@@ -684,7 +684,7 @@ const char * __cdecl ERR_reason_error_string(unsigned long e)
     return ((p == NULL) ? NULL : p->string);
 }
 
-void err_delete_thread_state(void)
+void __cdecl err_delete_thread_state(void)
 {
     ERR_STATE *state = CRYPTO_THREAD_get_local(&err_thread_local);
     if (state == NULL)
@@ -695,13 +695,13 @@ void err_delete_thread_state(void)
 }
 
 #if OPENSSL_API_COMPAT < 0x10100000L
-void ERR_remove_thread_state(void *dummy)
+void __cdecl ERR_remove_thread_state(void *dummy)
 {
 }
 #endif
 
 #if OPENSSL_API_COMPAT < 0x10000000L
-void ERR_remove_state(unsigned long pid)
+void __cdecl ERR_remove_state(unsigned long pid)
 {
 }
 #endif
@@ -755,7 +755,7 @@ ERR_STATE *__cdecl ERR_get_state(void)
  * err_shelve_state returns the current thread local error state
  * and freezes the error module until err_unshelve_state is called.
  */
-int err_shelve_state(void **state)
+int __cdecl err_shelve_state(void **state)
 {
     int saveerrno = get_last_sys_error();
 
@@ -789,7 +789,7 @@ int err_shelve_state(void **state)
  * err_unshelve_state restores the error state that was returned
  * by err_shelve_state previously.
  */
-void err_unshelve_state(void* state)
+void __cdecl err_unshelve_state(void* state)
 {
     if (state != (void*)-1)
         CRYPTO_THREAD_set_local(&err_thread_local, (ERR_STATE*)state);
@@ -808,7 +808,7 @@ int __cdecl ERR_get_next_error_library(void)
     return ret;
 }
 
-static int err_set_error_data_int(char *data, int flags)
+static int __cdecl err_set_error_data_int(char *data, int flags)
 {
     ERR_STATE *es;
     int i;

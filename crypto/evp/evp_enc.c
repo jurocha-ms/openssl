@@ -280,7 +280,7 @@ int __cdecl EVP_DecryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *cipher,
 # define PTRDIFF_T size_t
 #endif
 
-int is_partially_overlapping(const void *ptr1, const void *ptr2, int len)
+int __cdecl is_partially_overlapping(const void *ptr1, const void *ptr2, int len)
 {
     PTRDIFF_T diff = (PTRDIFF_T)ptr1-(PTRDIFF_T)ptr2;
     /*
