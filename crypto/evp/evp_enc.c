@@ -294,7 +294,7 @@ int __cdecl is_partially_overlapping(const void *ptr1, const void *ptr2, int len
     return overlapped;
 }
 
-static int evp_EncryptDecryptUpdate(EVP_CIPHER_CTX *ctx,
+static int __cdecl evp_EncryptDecryptUpdate(EVP_CIPHER_CTX *ctx,
                                     unsigned char *out, int *outl,
                                     const unsigned char *in, int inl)
 {
