@@ -28,7 +28,7 @@
  * Test that r == 0 in test_exp_mod_zero(). Returns one on success,
  * returns zero and prints debug output otherwise.
  */
-static int a_is_zero_mod_one(const char *method, const BIGNUM *r,
+static int __cdecl a_is_zero_mod_one(const char *method, const BIGNUM *r,
                              const BIGNUM *a)
 {
     if (!BN_is_zero(r)) {
@@ -43,7 +43,7 @@ static int a_is_zero_mod_one(const char *method, const BIGNUM *r,
 /*
  * test_mod_exp_zero tests that x**0 mod 1 == 0. It returns zero on success.
  */
-static int test_mod_exp_zero(void)
+static int __cdecl test_mod_exp_zero(void)
 {
     BIGNUM *a = NULL, *p = NULL, *m = NULL;
     BIGNUM *r = NULL;
@@ -119,7 +119,7 @@ static int test_mod_exp_zero(void)
     return ret;
 }
 
-static int test_mod_exp(int round)
+static int __cdecl test_mod_exp(int round)
 {
     BN_CTX *ctx;
     unsigned char c;

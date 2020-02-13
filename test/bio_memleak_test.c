@@ -13,7 +13,7 @@
 
 #include "testutil.h"
 
-static int test_bio_memleak(void)
+static int __cdecl test_bio_memleak(void)
 {
     int ok = 0;
     BIO *bio;
@@ -40,7 +40,7 @@ finish:
     return ok;
 }
 
-static int test_bio_get_mem(void)
+static int __cdecl test_bio_get_mem(void)
 {
     int ok = 0;
     BIO *bio = NULL;
@@ -68,7 +68,7 @@ finish:
     return ok;
 }
 
-static int test_bio_new_mem_buf(void)
+static int __cdecl test_bio_new_mem_buf(void)
 {
     int ok = 0;
     BIO *bio;
@@ -103,7 +103,7 @@ finish:
     return ok;
 }
 
-static int test_bio_rdonly_mem_buf(void)
+static int __cdecl test_bio_rdonly_mem_buf(void)
 {
     int ok = 0;
     BIO *bio, *bio2 = NULL;
@@ -145,7 +145,7 @@ finish:
     return ok;
 }
 
-static int test_bio_rdwr_rdonly(void)
+static int __cdecl test_bio_rdwr_rdonly(void)
 {
     int ok = 0;
     BIO *bio = NULL;
@@ -181,7 +181,7 @@ finish:
     return ok;
 }
 
-static int test_bio_nonclear_rst(void)
+static int __cdecl test_bio_nonclear_rst(void)
 {
     int ok = 0;
     BIO *bio = NULL;

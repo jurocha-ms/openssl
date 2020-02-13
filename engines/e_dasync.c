@@ -313,7 +313,7 @@ static ENGINE *engine_dasync(void)
     return ret;
 }
 
-void engine_load_dasync_int(void)
+void __cdecl engine_load_dasync_int(void)
 {
     ENGINE *toadd = engine_dasync();
     if (!toadd)

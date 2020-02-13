@@ -254,7 +254,7 @@ unsigned int __cdecl SSL_SESSION_get_compress_id(const SSL_SESSION *s)
  */
 
 #define MAX_SESS_ID_ATTEMPTS 10
-static int def_generate_session_id(SSL *ssl, unsigned char *id,
+static int __cdecl def_generate_session_id(SSL *ssl, unsigned char *id,
                                    unsigned int *id_len)
 {
     unsigned int retry = 0;
@@ -1221,7 +1221,7 @@ int __cdecl SSL_CTX_set_client_cert_engine(SSL_CTX *ctx, ENGINE *e)
 #endif
 
 void __cdecl SSL_CTX_set_cookie_generate_cb(SSL_CTX *ctx,
-                                    int (*cb) (SSL *ssl,
+                                    int (__cdecl *cb) (SSL *ssl,
                                                unsigned char *cookie,
                                                unsigned int *cookie_len))
 {
@@ -1229,7 +1229,7 @@ void __cdecl SSL_CTX_set_cookie_generate_cb(SSL_CTX *ctx,
 }
 
 void __cdecl SSL_CTX_set_cookie_verify_cb(SSL_CTX *ctx,
-                                  int (*cb) (SSL *ssl,
+                                  int (__cdecl *cb) (SSL *ssl,
                                              const unsigned char *cookie,
                                              unsigned int cookie_len))
 {
@@ -1261,7 +1261,7 @@ int __cdecl SSL_SESSION_get0_ticket_appdata(SSL_SESSION *ss, void **data, size_t
 
 void __cdecl SSL_CTX_set_stateless_cookie_generate_cb(
     SSL_CTX *ctx,
-    int (*cb) (SSL *ssl,
+    int (__cdecl *cb) (SSL *ssl,
                unsigned char *cookie,
                size_t *cookie_len))
 {
@@ -1270,7 +1270,7 @@ void __cdecl SSL_CTX_set_stateless_cookie_generate_cb(
 
 void __cdecl SSL_CTX_set_stateless_cookie_verify_cb(
     SSL_CTX *ctx,
-    int (*cb) (SSL *ssl,
+    int (__cdecl *cb) (SSL *ssl,
                const unsigned char *cookie,
                size_t cookie_len))
 {

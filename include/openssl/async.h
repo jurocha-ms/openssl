@@ -46,7 +46,7 @@ void __cdecl ASYNC_WAIT_CTX_free(ASYNC_WAIT_CTX *ctx);
 int __cdecl ASYNC_WAIT_CTX_set_wait_fd(ASYNC_WAIT_CTX *ctx, const void *key,
                                OSSL_ASYNC_FD fd,
                                void *custom_data,
-                               void (*cleanup)(ASYNC_WAIT_CTX *, const void *,
+                               void (__cdecl *cleanup)(ASYNC_WAIT_CTX *, const void *,
                                                OSSL_ASYNC_FD, void *));
 int __cdecl ASYNC_WAIT_CTX_get_fd(ASYNC_WAIT_CTX *ctx, const void *key,
                         OSSL_ASYNC_FD *fd, void **custom_data);
@@ -61,7 +61,7 @@ int __cdecl ASYNC_WAIT_CTX_clear_fd(ASYNC_WAIT_CTX *ctx, const void *key);
 int __cdecl ASYNC_is_capable(void);
 
 int __cdecl ASYNC_start_job(ASYNC_JOB **job, ASYNC_WAIT_CTX *ctx, int *ret,
-                    int (*func)(void *), void *args, size_t size);
+                    int (__cdecl *func)(void *), void *args, size_t size);
 int __cdecl ASYNC_pause_job(void);
 
 ASYNC_JOB * __cdecl ASYNC_get_current_job(void);

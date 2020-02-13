@@ -960,7 +960,7 @@ void drbg_delete_thread_state(void)
 }
 
 /* Implements the default OpenSSL RAND_bytes() method */
-static int drbg_bytes(unsigned char *out, int count)
+static int __cdecl drbg_bytes(unsigned char *out, int count)
 {
     int ret;
     RAND_DRBG *drbg = RAND_DRBG_get0_public();
@@ -1010,7 +1010,7 @@ size_t rand_drbg_seedlen(RAND_DRBG *drbg)
 }
 
 /* Implements the default OpenSSL RAND_add() method */
-static int drbg_add(const void *buf, int num, double randomness)
+static int __cdecl drbg_add(const void *buf, int num, double randomness)
 {
     int ret = 0;
     RAND_DRBG *drbg = RAND_DRBG_get0_master();
@@ -1072,13 +1072,13 @@ static int drbg_add(const void *buf, int num, double randomness)
 }
 
 /* Implements the default OpenSSL RAND_seed() method */
-static int drbg_seed(const void *buf, int num)
+static int __cdecl drbg_seed(const void *buf, int num)
 {
     return drbg_add(buf, num, num);
 }
 
 /* Implements the default OpenSSL RAND_status() method */
-static int drbg_status(void)
+static int __cdecl drbg_status(void)
 {
     int ret;
     RAND_DRBG *drbg = RAND_DRBG_get0_master();

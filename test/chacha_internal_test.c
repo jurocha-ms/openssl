@@ -157,7 +157,7 @@ static const unsigned char ref[] = {
     0xd3, 0x3e, 0xa2, 0x15, 0x5d, 0x10, 0x5d, 0x4e
 };
 
-static int test_cha_cha_internal(int n)
+static int __cdecl test_cha_cha_internal(int n)
 {
     unsigned char buf[sizeof(ref)];
     unsigned int i = n + 1, j;

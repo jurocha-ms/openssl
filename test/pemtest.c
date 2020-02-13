@@ -28,7 +28,7 @@ static TESTDATA b64_pem_data[] = {
 
 static const char *pemtype = "PEMTESTDATA";
 
-static int test_b64(int idx)
+static int __cdecl test_b64(int idx)
 {
     BIO *b = BIO_new(BIO_s_mem());
     char *name = NULL, *header = NULL;
@@ -58,7 +58,7 @@ static int test_b64(int idx)
     return ret;
 }
 
-static int test_invalid(void)
+static int __cdecl test_invalid(void)
 {
     BIO *b = BIO_new(BIO_s_mem());
     char *name = NULL, *header = NULL;

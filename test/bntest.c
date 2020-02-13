@@ -32,7 +32,7 @@
 
 typedef struct filetest_st {
     const char *name;
-    int (*func)(STANZA *s);
+    int (__cdecl *func)(STANZA *s);
 } FILETEST;
 
 typedef struct mpitest_st {
@@ -70,7 +70,7 @@ static const char *findattr(STANZA *s, const char *key)
 /*
  * Parse BIGNUM from sparse hex-strings, return |BN_hex2bn| result.
  */
-static int parse_bigBN(BIGNUM **out, const char *bn_strings[])
+static int __cdecl parse_bigBN(BIGNUM **out, const char *bn_strings[])
 {
     char *bigstring = glue_strings(bn_strings, NULL);
     int ret = BN_hex2bn(out, bigstring);
@@ -82,13 +82,13 @@ static int parse_bigBN(BIGNUM **out, const char *bn_strings[])
 /*
  * Parse BIGNUM, return number of bytes parsed.
  */
-static int parseBN(BIGNUM **out, const char *in)
+static int __cdecl parseBN(BIGNUM **out, const char *in)
 {
     *out = NULL;
     return BN_hex2bn(out, in);
 }
 
-static int parsedecBN(BIGNUM **out, const char *in)
+static int __cdecl parsedecBN(BIGNUM **out, const char *in)
 {
     *out = NULL;
     return BN_dec2bn(out, in);
@@ -111,7 +111,7 @@ static BIGNUM *getBN(STANZA *s, const char *attribute)
     return ret;
 }
 
-static int getint(STANZA *s, int *out, const char *attribute)
+static int __cdecl getint(STANZA *s, int *out, const char *attribute)
 {
     BIGNUM *ret;
     BN_ULONG word;
@@ -128,7 +128,7 @@ static int getint(STANZA *s, int *out, const char *attribute)
     return st;
 }
 
-static int equalBN(const char *op, const BIGNUM *expected, const BIGNUM *actual)
+static int __cdecl equalBN(const char *op, const BIGNUM *expected, const BIGNUM *actual)
 {
     if (BN_cmp(expected, actual) == 0)
         return 1;
@@ -141,7 +141,7 @@ static int equalBN(const char *op, const BIGNUM *expected, const BIGNUM *actual)
 /*
  * Return a "random" flag for if a BN should be negated.
  */
-static int rand_neg(void)
+static int __cdecl rand_neg(void)
 {
     static unsigned int neg = 0;
     static int sign[8] = { 0, 0, 0, 1, 1, 0, 1, 1 };
@@ -149,7 +149,7 @@ static int rand_neg(void)
     return sign[(neg++) % 8];
 }
 
-static int test_swap(void)
+static int __cdecl test_swap(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL, *d = NULL;
     int top, cond, st = 0;
@@ -222,7 +222,7 @@ static int test_swap(void)
     return st;
 }
 
-static int test_sub(void)
+static int __cdecl test_sub(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL;
     int i, st = 0;
@@ -259,7 +259,7 @@ static int test_sub(void)
     return st;
 }
 
-static int test_div_recip(void)
+static int __cdecl test_div_recip(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL, *d = NULL, *e = NULL;
     BN_RECP_CTX *recp = NULL;
@@ -305,7 +305,7 @@ static int test_div_recip(void)
     return st;
 }
 
-static int test_mod(void)
+static int __cdecl test_mod(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL, *d = NULL, *e = NULL;
     int st = 0, i;
@@ -384,7 +384,7 @@ static const char *bn2strings[] = {
  * Test constant-time modular exponentiation with 1024-bit inputs, which on
  * x86_64 cause a different code branch to be taken.
  */
-static int test_modexp_mont5(void)
+static int __cdecl test_modexp_mont5(void)
 {
     BIGNUM *a = NULL, *p = NULL, *m = NULL, *d = NULL, *e = NULL;
     BIGNUM *b = NULL, *n = NULL, *c = NULL;
@@ -602,7 +602,7 @@ static int test_modexp_mont5(void)
 }
 
 #ifndef OPENSSL_NO_EC2M
-static int test_gf2m_add(void)
+static int __cdecl test_gf2m_add(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL;
     int i, st = 0;
@@ -636,7 +636,7 @@ static int test_gf2m_add(void)
     return st;
 }
 
-static int test_gf2m_mod(void)
+static int __cdecl test_gf2m_mod(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL, *e = NULL;
     int i, j, st = 0;
@@ -676,7 +676,7 @@ static int test_gf2m_mod(void)
     return st;
 }
 
-static int test_gf2m_mul(void)
+static int __cdecl test_gf2m_mul(void)
 {
     BIGNUM *a, *b[2] = {NULL, NULL}, *c = NULL, *d = NULL;
     BIGNUM *e = NULL, *f = NULL, *g = NULL, *h = NULL;
@@ -729,7 +729,7 @@ static int test_gf2m_mul(void)
     return st;
 }
 
-static int test_gf2m_sqr(void)
+static int __cdecl test_gf2m_sqr(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL;
     int i, j, st = 0;
@@ -768,7 +768,7 @@ static int test_gf2m_sqr(void)
     return st;
 }
 
-static int test_gf2m_modinv(void)
+static int __cdecl test_gf2m_modinv(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL;
     int i, j, st = 0;
@@ -805,7 +805,7 @@ static int test_gf2m_modinv(void)
     return st;
 }
 
-static int test_gf2m_moddiv(void)
+static int __cdecl test_gf2m_moddiv(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL;
     BIGNUM *e = NULL, *f = NULL;
@@ -849,7 +849,7 @@ static int test_gf2m_moddiv(void)
     return st;
 }
 
-static int test_gf2m_modexp(void)
+static int __cdecl test_gf2m_modexp(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL;
     BIGNUM *e = NULL, *f = NULL;
@@ -897,7 +897,7 @@ static int test_gf2m_modexp(void)
     return st;
 }
 
-static int test_gf2m_modsqrt(void)
+static int __cdecl test_gf2m_modsqrt(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL;
     BIGNUM *e = NULL, *f = NULL;
@@ -942,7 +942,7 @@ static int test_gf2m_modsqrt(void)
     return st;
 }
 
-static int test_gf2m_modsolvequad(void)
+static int __cdecl test_gf2m_modsolvequad(void)
 {
     BIGNUM *a = NULL, *b[2] = {NULL,NULL}, *c = NULL, *d = NULL;
     BIGNUM *e = NULL;
@@ -996,7 +996,7 @@ static int test_gf2m_modsolvequad(void)
 }
 #endif
 
-static int test_kronecker(void)
+static int __cdecl test_kronecker(void)
 {
     BIGNUM *a = NULL, *b = NULL, *r = NULL, *t = NULL;
     int i, legendre, kronecker, st = 0;
@@ -1074,7 +1074,7 @@ static int test_kronecker(void)
     return st;
 }
 
-static int file_sum(STANZA *s)
+static int __cdecl file_sum(STANZA *s)
 {
     BIGNUM *a = NULL, *b = NULL, *sum = NULL, *ret = NULL;
     BN_ULONG b_word;
@@ -1183,7 +1183,7 @@ static int file_sum(STANZA *s)
     return st;
 }
 
-static int file_lshift1(STANZA *s)
+static int __cdecl file_lshift1(STANZA *s)
 {
     BIGNUM *a = NULL, *lshift1 = NULL, *zero = NULL, *ret = NULL;
     BIGNUM *two = NULL, *remainder = NULL;
@@ -1235,7 +1235,7 @@ static int file_lshift1(STANZA *s)
     return st;
 }
 
-static int file_lshift(STANZA *s)
+static int __cdecl file_lshift(STANZA *s)
 {
     BIGNUM *a = NULL, *lshift = NULL, *ret = NULL;
     int n = 0, st = 0;
@@ -1260,7 +1260,7 @@ static int file_lshift(STANZA *s)
     return st;
 }
 
-static int file_rshift(STANZA *s)
+static int __cdecl file_rshift(STANZA *s)
 {
     BIGNUM *a = NULL, *rshift = NULL, *ret = NULL;
     int n = 0, st = 0;
@@ -1290,7 +1290,7 @@ static int file_rshift(STANZA *s)
     return st;
 }
 
-static int file_square(STANZA *s)
+static int __cdecl file_square(STANZA *s)
 {
     BIGNUM *a = NULL, *square = NULL, *zero = NULL, *ret = NULL;
     BIGNUM *remainder = NULL, *tmp = NULL;
@@ -1350,7 +1350,7 @@ static int file_square(STANZA *s)
     return st;
 }
 
-static int file_product(STANZA *s)
+static int __cdecl file_product(STANZA *s)
 {
     BIGNUM *a = NULL, *b = NULL, *product = NULL, *ret = NULL;
     BIGNUM *remainder = NULL, *zero = NULL;
@@ -1387,7 +1387,7 @@ static int file_product(STANZA *s)
     return st;
 }
 
-static int file_quotient(STANZA *s)
+static int __cdecl file_quotient(STANZA *s)
 {
     BIGNUM *a = NULL, *b = NULL, *quotient = NULL, *remainder = NULL;
     BIGNUM *ret = NULL, *ret2 = NULL, *nnmod = NULL;
@@ -1471,7 +1471,7 @@ static int file_quotient(STANZA *s)
     return st;
 }
 
-static int file_modmul(STANZA *s)
+static int __cdecl file_modmul(STANZA *s)
 {
     BIGNUM *a = NULL, *b = NULL, *m = NULL, *mod_mul = NULL, *ret = NULL;
     int st = 0;
@@ -1523,7 +1523,7 @@ static int file_modmul(STANZA *s)
     return st;
 }
 
-static int file_modexp(STANZA *s)
+static int __cdecl file_modexp(STANZA *s)
 {
     BIGNUM *a = NULL, *e = NULL, *m = NULL, *mod_exp = NULL, *ret = NULL;
     BIGNUM *b = NULL, *c = NULL, *d = NULL;
@@ -1578,7 +1578,7 @@ static int file_modexp(STANZA *s)
     return st;
 }
 
-static int file_exp(STANZA *s)
+static int __cdecl file_exp(STANZA *s)
 {
     BIGNUM *a = NULL, *e = NULL, *exp = NULL, *ret = NULL;
     int st = 0;
@@ -1602,7 +1602,7 @@ static int file_exp(STANZA *s)
     return st;
 }
 
-static int file_modsqrt(STANZA *s)
+static int __cdecl file_modsqrt(STANZA *s)
 {
     BIGNUM *a = NULL, *p = NULL, *mod_sqrt = NULL, *ret = NULL, *ret2 = NULL;
     int st = 0;
@@ -1634,7 +1634,7 @@ static int file_modsqrt(STANZA *s)
     return st;
 }
 
-static int test_bn2padded(void)
+static int __cdecl test_bn2padded(void)
 {
 #if HAVE_BN_PADDED
     uint8_t zeros[256], out[256], reference[128];
@@ -1695,7 +1695,7 @@ static int test_bn2padded(void)
 #endif
 }
 
-static int test_dec2bn(void)
+static int __cdecl test_dec2bn(void)
 {
     BIGNUM *bn = NULL;
     int st = 0;
@@ -1764,7 +1764,7 @@ static int test_dec2bn(void)
     return st;
 }
 
-static int test_hex2bn(void)
+static int __cdecl test_hex2bn(void)
 {
     BIGNUM *bn = NULL;
     int st = 0;
@@ -1830,7 +1830,7 @@ static int test_hex2bn(void)
     return st;
 }
 
-static int test_asc2bn(void)
+static int __cdecl test_asc2bn(void)
 {
     BIGNUM *bn = NULL;
     int st = 0;
@@ -1893,7 +1893,7 @@ static const MPITEST kMPITests[] = {
     {"-256", "\x00\x00\x00\x02\x81\x00", 6},
 };
 
-static int test_mpi(int i)
+static int __cdecl test_mpi(int i)
 {
     uint8_t scratch[8];
     const MPITEST *test = &kMPITests[i];
@@ -1928,7 +1928,7 @@ static int test_mpi(int i)
     return st;
 }
 
-static int test_rand(void)
+static int __cdecl test_rand(void)
 {
     BIGNUM *bn = NULL;
     int st = 0;
@@ -1954,7 +1954,7 @@ static int test_rand(void)
     return st;
 }
 
-static int test_negzero(void)
+static int __cdecl test_negzero(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL, *d = NULL;
     BIGNUM *numerator = NULL, *denominator = NULL;
@@ -2023,7 +2023,7 @@ static int test_negzero(void)
     return st;
 }
 
-static int test_badmod(void)
+static int __cdecl test_badmod(void)
 {
     BIGNUM *a = NULL, *b = NULL, *zero = NULL;
     BN_MONT_CTX *mont = NULL;
@@ -2089,7 +2089,7 @@ static int test_badmod(void)
     return st;
 }
 
-static int test_expmodzero(void)
+static int __cdecl test_expmodzero(void)
 {
     BIGNUM *a = NULL, *r = NULL, *zero = NULL;
     int st = 0;
@@ -2122,7 +2122,7 @@ static int test_expmodzero(void)
     return st;
 }
 
-static int test_expmodone(void)
+static int __cdecl test_expmodone(void)
 {
     int ret = 0, i;
     BIGNUM *r = BN_new();
@@ -2169,7 +2169,7 @@ static int test_expmodone(void)
     return ret;
 }
 
-static int test_smallprime(int kBits)
+static int __cdecl test_smallprime(int kBits)
 {
     BIGNUM *r;
     int st = 0;
@@ -2194,7 +2194,7 @@ static int test_smallprime(int kBits)
     return st;
 }
 
-static int test_smallsafeprime(int kBits)
+static int __cdecl test_smallsafeprime(int kBits)
 {
     BIGNUM *r;
     int st = 0;
@@ -2221,7 +2221,7 @@ static int test_smallsafeprime(int kBits)
 
 static int primes[] = { 2, 3, 5, 7, 17863 };
 
-static int test_is_prime(int i)
+static int __cdecl test_is_prime(int i)
 {
     int ret = 0;
     BIGNUM *r = NULL;
@@ -2245,7 +2245,7 @@ static int test_is_prime(int i)
 
 static int not_primes[] = { -1, 0, 1, 4 };
 
-static int test_not_prime(int i)
+static int __cdecl test_not_prime(int i)
 {
     int ret = 0;
     BIGNUM *r = NULL;
@@ -2266,7 +2266,7 @@ static int test_not_prime(int i)
     return ret;
 }
 
-static int test_ctx_set_ct_flag(BN_CTX *c)
+static int __cdecl test_ctx_set_ct_flag(BN_CTX *c)
 {
     int st = 0;
     size_t i;
@@ -2286,7 +2286,7 @@ static int test_ctx_set_ct_flag(BN_CTX *c)
     return st;
 }
 
-static int test_ctx_check_ct_flag(BN_CTX *c)
+static int __cdecl test_ctx_check_ct_flag(BN_CTX *c)
 {
     int st = 0;
     size_t i;
@@ -2306,7 +2306,7 @@ static int test_ctx_check_ct_flag(BN_CTX *c)
     return st;
 }
 
-static int test_ctx_consttime_flag(void)
+static int __cdecl test_ctx_consttime_flag(void)
 {
     /*-
      * The constant-time flag should not "leak" among BN_CTX frames:
@@ -2352,7 +2352,7 @@ static int test_ctx_consttime_flag(void)
     return st;
 }
 
-static int file_test_run(STANZA *s)
+static int __cdecl file_test_run(STANZA *s)
 {
     static const FILETEST filetests[] = {
         {"Sum", file_sum},
@@ -2384,7 +2384,7 @@ static int file_test_run(STANZA *s)
     return 0;
 }
 
-static int run_file_tests(int i)
+static int __cdecl run_file_tests(int i)
 {
     STANZA *s = NULL;
     char *testfile = test_get_argument(i);

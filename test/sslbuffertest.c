@@ -43,7 +43,7 @@ static SSL_CTX *clientctx = NULL;
  * 7 = + allocate buffers after free
  * 8 = + free buffers after allocation
  */
-static int test_func(int test)
+static int __cdecl test_func(int test)
 {
     int result = 0;
     SSL *serverssl = NULL, *clientssl = NULL;

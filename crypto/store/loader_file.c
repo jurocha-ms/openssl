@@ -94,7 +94,7 @@ struct pem_pass_data {
     const char *prompt_info;
 };
 
-static int file_fill_pem_pass_data(struct pem_pass_data *pass_data,
+static int __cdecl file_fill_pem_pass_data(struct pem_pass_data *pass_data,
                                    const char *prompt_info,
                                    const UI_METHOD *ui_method, void *ui_data)
 {
@@ -107,7 +107,7 @@ static int file_fill_pem_pass_data(struct pem_pass_data *pass_data,
 }
 
 /* This is used anywhere a pem_password_cb is needed */
-static int file_get_pem_pass(char *buf, int num, int w, void *data)
+static int __cdecl file_get_pem_pass(char *buf, int num, int w, void *data)
 {
     struct pem_pass_data *pass_data = data;
     char *pass = file_get_pass(pass_data->ui_method, buf, num,
@@ -157,7 +157,7 @@ static int file_get_pem_pass(char *buf, int num, int w, void *data)
  * Output:
  *    a OSSL_STORE_INFO
  */
-typedef OSSL_STORE_INFO *(*file_try_decode_fn)(const char *pem_name,
+typedef OSSL_STORE_INFO *(__cdecl *file_try_decode_fn)(const char *pem_name,
                                                const char *pem_header,
                                                const unsigned char *blob,
                                                size_t len, void **handler_ctx,
@@ -169,13 +169,13 @@ typedef OSSL_STORE_INFO *(*file_try_decode_fn)(const char *pem_name,
  * with the handler_ctx, otherwise 0.  This is only used when the handler is
  * marked repeatable.
  */
-typedef int (*file_eof_fn)(void *handler_ctx);
+typedef int (__cdecl *file_eof_fn)(void *handler_ctx);
 /*
  * The destroy_ctx function is used to destroy the handler_ctx that was
  * initiated by a repeatable try_decode function.  This is only used when
  * the handler is marked repeatable.
  */
-typedef void (*file_destroy_ctx_fn)(void **handler_ctx);
+typedef void (__cdecl *file_destroy_ctx_fn)(void **handler_ctx);
 
 typedef struct file_handler_st {
     const char *name;
@@ -192,7 +192,7 @@ typedef struct file_handler_st {
  * extracting all the interesting data from it and storing them internally,
  * then serving them one piece at a time.
  */
-static OSSL_STORE_INFO *try_decode_PKCS12(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_PKCS12(const char *pem_name,
                                           const char *pem_header,
                                           const unsigned char *blob,
                                           size_t len, void **pctx,
@@ -292,14 +292,14 @@ static OSSL_STORE_INFO *try_decode_PKCS12(const char *pem_name,
     return store_info;
 }
 
-static int eof_PKCS12(void *ctx_)
+static int __cdecl eof_PKCS12(void *ctx_)
 {
     STACK_OF(OSSL_STORE_INFO) *ctx = ctx_;
 
     return ctx == NULL || sk_OSSL_STORE_INFO_num(ctx) == 0;
 }
 
-static void destroy_ctx_PKCS12(void **pctx)
+static void __cdecl destroy_ctx_PKCS12(void **pctx)
 {
     STACK_OF(OSSL_STORE_INFO) *ctx = *pctx;
 
@@ -320,7 +320,7 @@ static FILE_HANDLER PKCS12_handler = {
  * into a new blob, which is returned as an EMBEDDED STORE_INFO.  The whole
  * decoding process will then start over with the new blob.
  */
-static OSSL_STORE_INFO *try_decode_PKCS8Encrypted(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_PKCS8Encrypted(const char *pem_name,
                                                   const char *pem_header,
                                                   const unsigned char *blob,
                                                   size_t len, void **pctx,
@@ -396,7 +396,7 @@ static FILE_HANDLER PKCS8Encrypted_handler = {
  * the PEM name).
  */
 int pem_check_suffix(const char *pem_str, const char *suffix);
-static OSSL_STORE_INFO *try_decode_PrivateKey(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_PrivateKey(const char *pem_name,
                                               const char *pem_header,
                                               const unsigned char *blob,
                                               size_t len, void **pctx,
@@ -472,7 +472,7 @@ static FILE_HANDLER PrivateKey_handler = {
 /*
  * Public key decoder.  Only supports SubjectPublicKeyInfo formatted keys.
  */
-static OSSL_STORE_INFO *try_decode_PUBKEY(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_PUBKEY(const char *pem_name,
                                           const char *pem_header,
                                           const unsigned char *blob,
                                           size_t len, void **pctx,
@@ -506,7 +506,7 @@ static FILE_HANDLER PUBKEY_handler = {
 /*
  * Key parameter decoder.
  */
-static OSSL_STORE_INFO *try_decode_params(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_params(const char *pem_name,
                                           const char *pem_header,
                                           const unsigned char *blob,
                                           size_t len, void **pctx,
@@ -589,7 +589,7 @@ static FILE_HANDLER params_handler = {
 /*
  * X.509 certificate decoder.
  */
-static OSSL_STORE_INFO *try_decode_X509Certificate(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_X509Certificate(const char *pem_name,
                                                    const char *pem_header,
                                                    const unsigned char *blob,
                                                    size_t len, void **pctx,
@@ -639,7 +639,7 @@ static FILE_HANDLER X509Certificate_handler = {
 /*
  * X.509 CRL decoder.
  */
-static OSSL_STORE_INFO *try_decode_X509CRL(const char *pem_name,
+static OSSL_STORE_INFO * __cdecl try_decode_X509CRL(const char *pem_name,
                                            const char *pem_header,
                                            const unsigned char *blob,
                                            size_t len, void **pctx,
@@ -738,7 +738,7 @@ struct ossl_store_loader_ctx_st {
     int expected_type;
 };
 
-static void OSSL_STORE_LOADER_CTX_free(OSSL_STORE_LOADER_CTX *ctx)
+static void __cdecl OSSL_STORE_LOADER_CTX_free(OSSL_STORE_LOADER_CTX *ctx)
 {
     if (ctx->type == is_dir) {
         OPENSSL_free(ctx->_.dir.uri);
@@ -977,7 +977,7 @@ OSSL_STORE_LOADER_CTX *ossl_store_file_attach_pem_bio_int(BIO *bp)
     return ctx;
 }
 
-static OSSL_STORE_INFO *file_load_try_decode(OSSL_STORE_LOADER_CTX *ctx,
+static OSSL_STORE_INFO * __cdecl file_load_try_decode(OSSL_STORE_LOADER_CTX *ctx,
                                              const char *pem_name,
                                              const char *pem_header,
                                              unsigned char *data, size_t len,
@@ -1066,7 +1066,7 @@ static OSSL_STORE_INFO *file_load_try_decode(OSSL_STORE_LOADER_CTX *ctx,
     return result;
 }
 
-static OSSL_STORE_INFO *file_load_try_repeat(OSSL_STORE_LOADER_CTX *ctx,
+static OSSL_STORE_INFO * __cdecl file_load_try_repeat(OSSL_STORE_LOADER_CTX *ctx,
                                              const UI_METHOD *ui_method,
                                              void *ui_data)
 {
@@ -1089,14 +1089,14 @@ static OSSL_STORE_INFO *file_load_try_repeat(OSSL_STORE_LOADER_CTX *ctx,
     return result;
 }
 
-static void pem_free_flag(void *pem_data, int secure, size_t num)
+static void __cdecl pem_free_flag(void *pem_data, int secure, size_t num)
 {
     if (secure)
         OPENSSL_secure_clear_free(pem_data, num);
     else
         OPENSSL_free(pem_data);
 }
-static int file_read_pem(BIO *bp, char **pem_name, char **pem_header,
+static int __cdecl file_read_pem(BIO *bp, char **pem_name, char **pem_header,
                          unsigned char **data, long *len,
                          const UI_METHOD *ui_method,
                          void *ui_data, int secure)
@@ -1129,7 +1129,7 @@ static int file_read_pem(BIO *bp, char **pem_name, char **pem_header,
     return 1;
 }
 
-static int file_read_asn1(BIO *bp, unsigned char **data, long *len)
+static int __cdecl file_read_asn1(BIO *bp, unsigned char **data, long *len)
 {
     BUF_MEM *mem = NULL;
 
@@ -1143,7 +1143,7 @@ static int file_read_asn1(BIO *bp, unsigned char **data, long *len)
     return 1;
 }
 
-static int ends_with_dirsep(const char *uri)
+static int __cdecl ends_with_dirsep(const char *uri)
 {
     if (*uri != '\0')
         uri += strlen(uri) - 1;
@@ -1157,7 +1157,7 @@ static int ends_with_dirsep(const char *uri)
     return *uri == '/';
 }
 
-static int file_name_to_uri(OSSL_STORE_LOADER_CTX *ctx, const char *name,
+static int __cdecl file_name_to_uri(OSSL_STORE_LOADER_CTX *ctx, const char *name,
                             char **data)
 {
     assert(name != NULL);
@@ -1180,7 +1180,7 @@ static int file_name_to_uri(OSSL_STORE_LOADER_CTX *ctx, const char *name,
     return 1;
 }
 
-static int file_name_check(OSSL_STORE_LOADER_CTX *ctx, const char *name)
+static int __cdecl file_name_check(OSSL_STORE_LOADER_CTX *ctx, const char *name)
 {
     const char *p = NULL;
 
@@ -1426,7 +1426,7 @@ static OSSL_STORE_LOADER file_loader =
         file_close
     };
 
-static void store_file_loader_deinit(void)
+static void __cdecl store_file_loader_deinit(void)
 {
     ossl_store_unregister_loader_int(file_loader.scheme);
 }

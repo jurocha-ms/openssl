@@ -24,7 +24,7 @@ typedef struct {
     HMAC_CTX *ctx;
 } HMAC_PKEY_CTX;
 
-static int pkey_hmac_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_hmac_init(EVP_PKEY_CTX *ctx)
 {
     HMAC_PKEY_CTX *hctx;
 
@@ -45,9 +45,9 @@ static int pkey_hmac_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_hmac_cleanup(EVP_PKEY_CTX *ctx);
+static void __cdecl pkey_hmac_cleanup(EVP_PKEY_CTX *ctx);
 
-static int pkey_hmac_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_hmac_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     HMAC_PKEY_CTX *sctx, *dctx;
 
@@ -71,7 +71,7 @@ err:
     return 0;
 }
 
-static void pkey_hmac_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_hmac_cleanup(EVP_PKEY_CTX *ctx)
 {
     HMAC_PKEY_CTX *hctx = EVP_PKEY_CTX_get_data(ctx);
 
@@ -83,7 +83,7 @@ static void pkey_hmac_cleanup(EVP_PKEY_CTX *ctx)
     }
 }
 
-static int pkey_hmac_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_hmac_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     ASN1_OCTET_STRING *hkey = NULL;
     HMAC_PKEY_CTX *hctx = ctx->data;
@@ -97,7 +97,7 @@ static int pkey_hmac_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     return 1;
 }
 
-static int int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     HMAC_PKEY_CTX *hctx = EVP_MD_CTX_pkey_ctx(ctx)->data;
     if (!HMAC_Update(hctx->ctx, data, count))
@@ -105,7 +105,7 @@ static int int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
     return 1;
 }
 
-static int hmac_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
+static int __cdecl hmac_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
 {
     HMAC_PKEY_CTX *hctx = ctx->data;
     HMAC_CTX_set_flags(hctx->ctx,
@@ -115,7 +115,7 @@ static int hmac_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
     return 1;
 }
 
-static int hmac_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
+static int __cdecl hmac_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
                         EVP_MD_CTX *mctx)
 {
     unsigned int hlen;
@@ -134,7 +134,7 @@ static int hmac_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
     return 1;
 }
 
-static int pkey_hmac_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_hmac_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     HMAC_PKEY_CTX *hctx = ctx->data;
     ASN1_OCTET_STRING *key;
@@ -165,7 +165,7 @@ static int pkey_hmac_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     return 1;
 }
 
-static int pkey_hmac_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_hmac_ctrl_str(EVP_PKEY_CTX *ctx,
                               const char *type, const char *value)
 {
     if (!value) {

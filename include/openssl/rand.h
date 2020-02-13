@@ -20,12 +20,12 @@ extern "C" {
 #endif
 
 struct rand_meth_st {
-    int (*seed) (const void *buf, int num);
-    int (*bytes) (unsigned char *buf, int num);
-    void (*cleanup) (void);
-    int (*add) (const void *buf, int num, double randomness);
-    int (*pseudorand) (unsigned char *buf, int num);
-    int (*status) (void);
+    int (__cdecl *seed) (const void *buf, int num);
+    int (__cdecl *bytes) (unsigned char *buf, int num);
+    void (__cdecl *cleanup) (void);
+    int (__cdecl *add) (const void *buf, int num, double randomness);
+    int (__cdecl *pseudorand) (unsigned char *buf, int num);
+    int (__cdecl *status) (void);
 };
 
 int __cdecl RAND_set_rand_method(const RAND_METHOD *meth);

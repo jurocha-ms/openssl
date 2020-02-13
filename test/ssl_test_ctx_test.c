@@ -33,7 +33,7 @@ typedef struct ssl_test_ctx_test_fixture {
 } SSL_TEST_CTX_TEST_FIXTURE;
 
 
-static int clientconf_eq(SSL_TEST_CLIENT_CONF *conf1,
+static int __cdecl clientconf_eq(SSL_TEST_CLIENT_CONF *conf1,
                          SSL_TEST_CLIENT_CONF *conf2)
 {
     if (!TEST_int_eq(conf1->verify_callback, conf2->verify_callback)
@@ -47,7 +47,7 @@ static int clientconf_eq(SSL_TEST_CLIENT_CONF *conf1,
     return 1;
 }
 
-static int serverconf_eq(SSL_TEST_SERVER_CONF *serv,
+static int __cdecl serverconf_eq(SSL_TEST_SERVER_CONF *serv,
                          SSL_TEST_SERVER_CONF *serv2)
 {
     if (!TEST_int_eq(serv->servername_callback, serv2->servername_callback)
@@ -62,7 +62,7 @@ static int serverconf_eq(SSL_TEST_SERVER_CONF *serv,
     return 1;
 }
 
-static int extraconf_eq(SSL_TEST_EXTRA_CONF *extra,
+static int __cdecl extraconf_eq(SSL_TEST_EXTRA_CONF *extra,
                         SSL_TEST_EXTRA_CONF *extra2)
 {
     if (!TEST_true(clientconf_eq(&extra->client, &extra2->client))
@@ -72,7 +72,7 @@ static int extraconf_eq(SSL_TEST_EXTRA_CONF *extra,
     return 1;
 }
 
-static int testctx_eq(SSL_TEST_CTX *ctx, SSL_TEST_CTX *ctx2)
+static int __cdecl testctx_eq(SSL_TEST_CTX *ctx, SSL_TEST_CTX *ctx2)
 {
     if (!TEST_int_eq(ctx->method, ctx2->method)
             || !TEST_int_eq(ctx->handshake_mode, ctx2->handshake_mode)
@@ -121,7 +121,7 @@ static SSL_TEST_CTX_TEST_FIXTURE *set_up(const char *const test_case_name)
     return fixture;
 }
 
-static int execute_test(SSL_TEST_CTX_TEST_FIXTURE *fixture)
+static int __cdecl execute_test(SSL_TEST_CTX_TEST_FIXTURE *fixture)
 {
     int success = 0;
     SSL_TEST_CTX *ctx;
@@ -147,7 +147,7 @@ static void tear_down(SSL_TEST_CTX_TEST_FIXTURE *fixture)
 #define EXECUTE_SSL_TEST_CTX_TEST() \
     EXECUTE_TEST(execute_test, tear_down)
 
-static int test_empty_configuration(void)
+static int __cdecl test_empty_configuration(void)
 {
     SETUP_SSL_TEST_CTX_TEST_FIXTURE();
     if (fixture == NULL)
@@ -158,7 +158,7 @@ static int test_empty_configuration(void)
     return result;
 }
 
-static int test_good_configuration(void)
+static int __cdecl test_good_configuration(void)
 {
     SETUP_SSL_TEST_CTX_TEST_FIXTURE();
     if (fixture == NULL)
@@ -227,7 +227,7 @@ static const char *bad_configurations[] = {
     "ssltest_invalid_max_fragment_len",
 };
 
-static int test_bad_configuration(int idx)
+static int __cdecl test_bad_configuration(int idx)
 {
     SSL_TEST_CTX *ctx;
 

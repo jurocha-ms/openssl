@@ -49,8 +49,8 @@ static ENGINE *ENGINE_padlock(void);
 #  endif
 
 #  ifdef OPENSSL_NO_DYNAMIC_ENGINE
-void engine_load_padlock_int(void);
-void engine_load_padlock_int(void)
+void __cdecl engine_load_padlock_int(void);
+void __cdecl engine_load_padlock_int(void)
 {
 /* On non-x86 CPUs it just returns. */
 #   ifdef COMPILE_HW_PADLOCK

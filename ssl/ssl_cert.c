@@ -354,7 +354,7 @@ int __cdecl ssl_cert_set_current(CERT *c, long op)
     return 0;
 }
 
-void __cdecl ssl_cert_set_cert_cb(CERT *c, int (*cb) (SSL *ssl, void *arg), void *arg)
+void __cdecl ssl_cert_set_cert_cb(CERT *c, int (__cdecl *cb) (SSL *ssl, void *arg), void *arg)
 {
     c->cert_cb = cb;
     c->cert_cb_arg = arg;

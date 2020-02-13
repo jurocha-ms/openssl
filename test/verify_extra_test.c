@@ -87,7 +87,7 @@ static STACK_OF(X509) *load_certs_from_file(const char *filename)
  * CA=FALSE, and will therefore incorrectly verify bad
  *
  */
-static int test_alt_chains_cert_forgery(void)
+static int __cdecl test_alt_chains_cert_forgery(void)
 {
     int ret = 0;
     int i;
@@ -138,7 +138,7 @@ static int test_alt_chains_cert_forgery(void)
     return ret;
 }
 
-static int test_store_ctx(void)
+static int __cdecl test_store_ctx(void)
 {
     X509_STORE_CTX *sctx = NULL;
     X509 *x = NULL;

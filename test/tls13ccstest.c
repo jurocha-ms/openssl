@@ -240,7 +240,7 @@ static int __cdecl watchccs_puts(BIO *bio, const char *str)
     return watchccs_write(bio, str, strlen(str));
 }
 
-static int test_tls13ccs(int tst)
+static int __cdecl test_tls13ccs(int tst)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *sssl = NULL, *cssl = NULL;

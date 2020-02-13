@@ -12,7 +12,7 @@
 #include "testutil.h"
 #include "../e_os.h"
 
-static int test_sec_mem(void)
+static int __cdecl test_sec_mem(void)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     int testresult = 0;
@@ -133,7 +133,7 @@ static int test_sec_mem(void)
 #endif
 }
 
-static int test_sec_mem_clear(void)
+static int __cdecl test_sec_mem_clear(void)
 {
 #ifdef OPENSSL_SECURE_MEMORY
     const int size = 64;

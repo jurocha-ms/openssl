@@ -17,7 +17,7 @@
 
 #ifndef OPENSSL_NO_SCRYPT
 
-static int atou64(const char *nptr, uint64_t *result);
+static int __cdecl atou64(const char *nptr, uint64_t *result);
 
 typedef struct {
     unsigned char *pass;
@@ -29,7 +29,7 @@ typedef struct {
 } SCRYPT_PKEY_CTX;
 
 /* Custom uint64_t parser since we do not have strtoull */
-static int atou64(const char *nptr, uint64_t *result)
+static int __cdecl atou64(const char *nptr, uint64_t *result)
 {
     uint64_t value = 0;
 
@@ -53,7 +53,7 @@ static int atou64(const char *nptr, uint64_t *result)
     return 1;
 }
 
-static int pkey_scrypt_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_scrypt_init(EVP_PKEY_CTX *ctx)
 {
     SCRYPT_PKEY_CTX *kctx;
 
@@ -77,7 +77,7 @@ static int pkey_scrypt_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_scrypt_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_scrypt_cleanup(EVP_PKEY_CTX *ctx)
 {
     SCRYPT_PKEY_CTX *kctx = ctx->data;
 
@@ -86,7 +86,7 @@ static void pkey_scrypt_cleanup(EVP_PKEY_CTX *ctx)
     OPENSSL_free(kctx);
 }
 
-static int pkey_scrypt_set_membuf(unsigned char **buffer, size_t *buflen,
+static int __cdecl pkey_scrypt_set_membuf(unsigned char **buffer, size_t *buflen,
                                   const unsigned char *new_buffer,
                                   const int new_buflen)
 {
@@ -113,12 +113,12 @@ static int pkey_scrypt_set_membuf(unsigned char **buffer, size_t *buflen,
     return 1;
 }
 
-static int is_power_of_two(uint64_t value)
+static int __cdecl is_power_of_two(uint64_t value)
 {
     return (value != 0) && ((value & (value - 1)) == 0);
 }
 
-static int pkey_scrypt_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_scrypt_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     SCRYPT_PKEY_CTX *kctx = ctx->data;
     uint64_t u64_value;
@@ -164,7 +164,7 @@ static int pkey_scrypt_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_scrypt_ctrl_uint64(EVP_PKEY_CTX *ctx, int type,
+static int __cdecl pkey_scrypt_ctrl_uint64(EVP_PKEY_CTX *ctx, int type,
                                    const char *value)
 {
     uint64_t int_value;
@@ -176,7 +176,7 @@ static int pkey_scrypt_ctrl_uint64(EVP_PKEY_CTX *ctx, int type,
     return pkey_scrypt_ctrl(ctx, type, 0, &int_value);
 }
 
-static int pkey_scrypt_ctrl_str(EVP_PKEY_CTX *ctx, const char *type,
+static int __cdecl pkey_scrypt_ctrl_str(EVP_PKEY_CTX *ctx, const char *type,
                                 const char *value)
 {
     if (value == NULL) {
@@ -213,7 +213,7 @@ static int pkey_scrypt_ctrl_str(EVP_PKEY_CTX *ctx, const char *type,
     return -2;
 }
 
-static int pkey_scrypt_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
+static int __cdecl pkey_scrypt_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
                               size_t *keylen)
 {
     SCRYPT_PKEY_CTX *kctx = ctx->data;

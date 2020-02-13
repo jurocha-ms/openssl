@@ -50,7 +50,7 @@ static int __cdecl int_compare(const int *const *a, const int *const *b)
     return 0;
 }
 
-static int test_int_stack(int reserve)
+static int __cdecl test_int_stack(int reserve)
 {
     static int v[] = { 1, 2, -4, 16, 999, 1, -173, 1, 9 };
     static int notpresent = -1;
@@ -171,7 +171,7 @@ static int __cdecl uchar_compare(const unsigned char *const *a,
     return **a - (signed int)**b;
 }
 
-static int test_uchar_stack(int reserve)
+static int __cdecl test_uchar_stack(int reserve)
 {
     static const unsigned char v[] = { 1, 3, 7, 5, 255, 0 };
     const int n = OSSL_NELEM(v);
@@ -264,7 +264,7 @@ static void __cdecl SS_free(SS *p) {
     OPENSSL_free(p);
 }
 
-static int test_SS_stack(void)
+static int __cdecl test_SS_stack(void)
 {
     STACK_OF(SS) *s = sk_SS_new_null();
     STACK_OF(SS) *r = NULL;
@@ -334,7 +334,7 @@ end:
     return testresult;
 }
 
-static int test_SU_stack(void)
+static int __cdecl test_SU_stack(void)
 {
     STACK_OF(SU) *s = sk_SU_new_null();
     SU v[10];

@@ -16,7 +16,7 @@
 #include <openssl/kdf.h>
 #include "testutil.h"
 
-static int test_kdf_tls1_prf(void)
+static int __cdecl test_kdf_tls1_prf(void)
 {
     EVP_PKEY_CTX *pctx;
     unsigned char out[16];
@@ -57,7 +57,7 @@ static int test_kdf_tls1_prf(void)
     return 1;
 }
 
-static int test_kdf_hkdf(void)
+static int __cdecl test_kdf_hkdf(void)
 {
     EVP_PKEY_CTX *pctx;
     unsigned char out[10];
@@ -102,7 +102,7 @@ static int test_kdf_hkdf(void)
 }
 
 #ifndef OPENSSL_NO_SCRYPT
-static int test_kdf_scrypt(void)
+static int __cdecl test_kdf_scrypt(void)
 {
     EVP_PKEY_CTX *pctx;
     unsigned char out[64];

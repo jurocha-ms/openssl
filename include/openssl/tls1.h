@@ -259,7 +259,7 @@ __owur int __cdecl SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509)
 
 # define SSL_set_tlsext_debug_callback(ssl, cb) \
         SSL_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_DEBUG_CB,\
-                (void (*)(void))cb)
+                (void (__cdecl *)(void))cb)
 
 # define SSL_set_tlsext_debug_arg(ssl, arg) \
         SSL_ctrl(ssl,SSL_CTRL_SET_TLSEXT_DEBUG_ARG,0,arg)
@@ -290,7 +290,7 @@ __owur int __cdecl SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509)
 
 # define SSL_CTX_set_tlsext_servername_callback(ctx, cb) \
         SSL_CTX_callback_ctrl(ctx,SSL_CTRL_SET_TLSEXT_SERVERNAME_CB,\
-                (void (*)(void))cb)
+                (void (__cdecl *)(void))cb)
 
 # define SSL_TLSEXT_ERR_OK 0
 # define SSL_TLSEXT_ERR_ALERT_WARNING 1
@@ -309,7 +309,7 @@ __owur int __cdecl SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509)
         SSL_CTX_ctrl(ssl,SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB,0,(void *)cb)
 # define SSL_CTX_set_tlsext_status_cb(ssl, cb) \
         SSL_CTX_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_STATUS_REQ_CB,\
-                (void (*)(void))cb)
+                (void (__cdecl *)(void))cb)
 
 # define SSL_CTX_get_tlsext_status_arg(ssl, arg) \
         SSL_CTX_ctrl(ssl,SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB_ARG,0,arg)
@@ -324,7 +324,7 @@ __owur int __cdecl SSL_check_chain(SSL *s, X509 *x, EVP_PKEY *pk, STACK_OF(X509)
 
 # define SSL_CTX_set_tlsext_ticket_key_cb(ssl, cb) \
         SSL_CTX_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_TICKET_KEY_CB,\
-                (void (*)(void))cb)
+                (void (__cdecl *)(void))cb)
 
 # ifndef OPENSSL_NO_HEARTBEATS
 #  define SSL_DTLSEXT_HB_ENABLED                   0x01

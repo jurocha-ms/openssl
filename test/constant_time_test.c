@@ -58,7 +58,7 @@ static uint64_t test_values_64[] = {
     UINT64_MAX / 2 + 1, UINT64_MAX - 1, UINT64_MAX
 };
 
-static int test_binary_op(unsigned int (__cdecl *op) (unsigned int a, unsigned int b),
+static int __cdecl test_binary_op(unsigned int (__cdecl *op) (unsigned int a, unsigned int b),
                           const char *op_name, unsigned int a, unsigned int b,
                           int is_true)
 {
@@ -69,7 +69,7 @@ static int test_binary_op(unsigned int (__cdecl *op) (unsigned int a, unsigned i
     return 1;
 }
 
-static int test_binary_op_8(unsigned
+static int __cdecl test_binary_op_8(unsigned
                             char (__cdecl *op) (unsigned int a, unsigned int b),
                             const char *op_name, unsigned int a,
                             unsigned int b, int is_true)
@@ -81,7 +81,7 @@ static int test_binary_op_8(unsigned
     return 1;
 }
 
-static int test_binary_op_s(size_t (__cdecl *op) (size_t a, size_t b),
+static int __cdecl test_binary_op_s(size_t (__cdecl *op) (size_t a, size_t b),
                             const char *op_name, size_t a, size_t b,
                             int is_true)
 {
@@ -92,7 +92,7 @@ static int test_binary_op_s(size_t (__cdecl *op) (size_t a, size_t b),
     return 1;
 }
 
-static int test_binary_op_64(uint64_t (__cdecl *op)(uint64_t a, uint64_t b),
+static int __cdecl test_binary_op_64(uint64_t (__cdecl *op)(uint64_t a, uint64_t b),
                              const char *op_name, uint64_t a, uint64_t b,
                              int is_true)
 {
@@ -110,7 +110,7 @@ static int test_binary_op_64(uint64_t (__cdecl *op)(uint64_t a, uint64_t b),
     return 1;
 }
 
-static int test_is_zero(int i)
+static int __cdecl test_is_zero(int i)
 {
     unsigned int a = test_values[i];
 
@@ -121,7 +121,7 @@ static int test_is_zero(int i)
     return 1;
 }
 
-static int test_is_zero_8(int i)
+static int __cdecl test_is_zero_8(int i)
 {
     unsigned int a = test_values_8[i];
 
@@ -132,7 +132,7 @@ static int test_is_zero_8(int i)
     return 1;
 }
 
-static int test_is_zero_32(int i)
+static int __cdecl test_is_zero_32(int i)
 {
     uint32_t a = test_values_32[i];
 
@@ -143,7 +143,7 @@ static int test_is_zero_32(int i)
     return 1;
 }
 
-static int test_is_zero_s(int i)
+static int __cdecl test_is_zero_s(int i)
 {
     size_t a = test_values_s[i];
 
@@ -154,7 +154,7 @@ static int test_is_zero_s(int i)
     return 1;
 }
 
-static int test_select(unsigned int a, unsigned int b)
+static int __cdecl test_select(unsigned int a, unsigned int b)
 {
     if (!TEST_uint_eq(constant_time_select(CONSTTIME_TRUE, a, b), a))
         return 0;
@@ -163,7 +163,7 @@ static int test_select(unsigned int a, unsigned int b)
     return 1;
 }
 
-static int test_select_8(unsigned char a, unsigned char b)
+static int __cdecl test_select_8(unsigned char a, unsigned char b)
 {
     if (!TEST_uint_eq(constant_time_select_8(CONSTTIME_TRUE_8, a, b), a))
         return 0;
@@ -172,7 +172,7 @@ static int test_select_8(unsigned char a, unsigned char b)
     return 1;
 }
 
-static int test_select_32(uint32_t a, uint32_t b)
+static int __cdecl test_select_32(uint32_t a, uint32_t b)
 {
     if (!TEST_true(constant_time_select_32(CONSTTIME_TRUE_32, a, b) == a))
         return 0;
@@ -181,7 +181,7 @@ static int test_select_32(uint32_t a, uint32_t b)
     return 1;
 }
 
-static int test_select_s(size_t a, size_t b)
+static int __cdecl test_select_s(size_t a, size_t b)
 {
     if (!TEST_uint_eq(constant_time_select_s(CONSTTIME_TRUE_S, a, b), a))
         return 0;
@@ -190,7 +190,7 @@ static int test_select_s(size_t a, size_t b)
     return 1;
 }
 
-static int test_select_64(uint64_t a, uint64_t b)
+static int __cdecl test_select_64(uint64_t a, uint64_t b)
 {
     uint64_t selected = constant_time_select_64(CONSTTIME_TRUE_64, a, b);
 
@@ -207,7 +207,7 @@ static int test_select_64(uint64_t a, uint64_t b)
     return 1;
 }
 
-static int test_select_int(int a, int b)
+static int __cdecl test_select_int(int a, int b)
 {
     if (!TEST_int_eq(constant_time_select_int(CONSTTIME_TRUE, a, b), a))
         return 0;
@@ -216,7 +216,7 @@ static int test_select_int(int a, int b)
     return 1;
 }
 
-static int test_eq_int_8(int a, int b)
+static int __cdecl test_eq_int_8(int a, int b)
 {
     if (a == b && !TEST_int_eq(constant_time_eq_int_8(a, b), CONSTTIME_TRUE_8))
         return 0;
@@ -225,7 +225,7 @@ static int test_eq_int_8(int a, int b)
     return 1;
 }
 
-static int test_eq_s(size_t a, size_t b)
+static int __cdecl test_eq_s(size_t a, size_t b)
 {
     if (a == b && !TEST_size_t_eq(constant_time_eq_s(a, b), CONSTTIME_TRUE_S))
         return 0;
@@ -234,7 +234,7 @@ static int test_eq_s(size_t a, size_t b)
     return 1;
 }
 
-static int test_eq_int(int a, int b)
+static int __cdecl test_eq_int(int a, int b)
 {
     if (a == b && !TEST_uint_eq(constant_time_eq_int(a, b), CONSTTIME_TRUE))
         return 0;
@@ -243,14 +243,14 @@ static int test_eq_int(int a, int b)
     return 1;
 }
 
-static int test_sizeofs(void)
+static int __cdecl test_sizeofs(void)
 {
     if (!TEST_uint_eq(OSSL_NELEM(test_values), OSSL_NELEM(test_values_s)))
         return 0;
     return 1;
 }
 
-static int test_binops(int i)
+static int __cdecl test_binops(int i)
 {
     unsigned int a = test_values[i];
     int j;
@@ -277,7 +277,7 @@ static int test_binops(int i)
     return ret;
 }
 
-static int test_binops_8(int i)
+static int __cdecl test_binops_8(int i)
 {
     unsigned int a = test_values_8[i];
     int j;
@@ -303,7 +303,7 @@ static int test_binops_8(int i)
     return ret;
 }
 
-static int test_binops_s(int i)
+static int __cdecl test_binops_s(int i)
 {
     size_t a = test_values_s[i];
     int j;
@@ -331,7 +331,7 @@ static int test_binops_s(int i)
     return ret;
 }
 
-static int test_signed(int i)
+static int __cdecl test_signed(int i)
 {
     int c = signed_test_values[i];
     unsigned int j;
@@ -348,7 +348,7 @@ static int test_signed(int i)
     return ret;
 }
 
-static int test_8values(int i)
+static int __cdecl test_8values(int i)
 {
     unsigned char e = test_values_8[i];
     unsigned int j;
@@ -363,7 +363,7 @@ static int test_8values(int i)
     return ret;
 }
 
-static int test_32values(int i)
+static int __cdecl test_32values(int i)
 {
     uint32_t e = test_values_32[i];
     size_t j;
@@ -378,7 +378,7 @@ static int test_32values(int i)
     return ret;
 }
 
-static int test_64values(int i)
+static int __cdecl test_64values(int i)
 {
     uint64_t g = test_values_64[i];
     int j, ret = 1;

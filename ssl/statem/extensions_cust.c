@@ -28,7 +28,7 @@ typedef struct {
 /*
  * Provide thin wrapper callbacks which convert new style arguments to old style
  */
-static int custom_ext_add_old_cb_wrap(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_add_old_cb_wrap(SSL *s, unsigned int ext_type,
                                       unsigned int context,
                                       const unsigned char **out,
                                       size_t *outlen, X509 *x, size_t chainidx,
@@ -43,7 +43,7 @@ static int custom_ext_add_old_cb_wrap(SSL *s, unsigned int ext_type,
                                add_cb_wrap->add_arg);
 }
 
-static void custom_ext_free_old_cb_wrap(SSL *s, unsigned int ext_type,
+static void __cdecl custom_ext_free_old_cb_wrap(SSL *s, unsigned int ext_type,
                                         unsigned int context,
                                         const unsigned char *out, void *add_arg)
 {
@@ -55,7 +55,7 @@ static void custom_ext_free_old_cb_wrap(SSL *s, unsigned int ext_type,
     add_cb_wrap->free_cb(s, ext_type, out, add_cb_wrap->add_arg);
 }
 
-static int custom_ext_parse_old_cb_wrap(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_parse_old_cb_wrap(SSL *s, unsigned int ext_type,
                                         unsigned int context,
                                         const unsigned char *in,
                                         size_t inlen, X509 *x, size_t chainidx,
@@ -339,7 +339,7 @@ int __cdecl SSL_CTX_has_client_custom_ext(const SSL_CTX *ctx, unsigned int ext_t
                            NULL) != NULL;
 }
 
-static int add_custom_ext_intern(SSL_CTX *ctx, ENDPOINT role,
+static int __cdecl add_custom_ext_intern(SSL_CTX *ctx, ENDPOINT role,
                                  unsigned int ext_type,
                                  unsigned int context,
                                  SSL_custom_ext_add_cb_ex add_cb,
@@ -404,7 +404,7 @@ static int add_custom_ext_intern(SSL_CTX *ctx, ENDPOINT role,
     return 1;
 }
 
-static int add_old_custom_ext(SSL_CTX *ctx, ENDPOINT role,
+static int __cdecl add_old_custom_ext(SSL_CTX *ctx, ENDPOINT role,
                               unsigned int ext_type,
                               unsigned int context,
                               custom_ext_add_cb add_cb,

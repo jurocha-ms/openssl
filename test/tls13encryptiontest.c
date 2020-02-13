@@ -247,7 +247,7 @@ static unsigned char *multihexstr2buf(const char *str[3], size_t *len)
     return outbuf;
 }
 
-static int load_record(SSL3_RECORD *rec, RECORD_DATA *recd, unsigned char **key,
+static int __cdecl load_record(SSL3_RECORD *rec, RECORD_DATA *recd, unsigned char **key,
                        unsigned char *iv, size_t ivlen, unsigned char *seq)
 {
     unsigned char *pt = NULL, *sq = NULL, *ivtmp = NULL;
@@ -284,7 +284,7 @@ static int load_record(SSL3_RECORD *rec, RECORD_DATA *recd, unsigned char **key,
     return 0;
 }
 
-static int test_record(SSL3_RECORD *rec, RECORD_DATA *recd, int enc)
+static int __cdecl test_record(SSL3_RECORD *rec, RECORD_DATA *recd, int enc)
 {
     int ret = 0;
     unsigned char *refd;
@@ -312,7 +312,7 @@ static int test_record(SSL3_RECORD *rec, RECORD_DATA *recd, int enc)
 
 #define TLS13_AES_128_GCM_SHA256_BYTES  ((const unsigned char *)"\x13\x01")
 
-static int test_tls13_encryption(void)
+static int __cdecl test_tls13_encryption(void)
 {
     SSL_CTX *ctx = NULL;
     SSL *s = NULL;

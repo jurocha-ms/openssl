@@ -467,8 +467,8 @@ struct ssl_method_st {
     long (__cdecl *get_timeout) (void);
     const struct ssl3_enc_method *ssl3_enc; /* Extra SSLv3/TLS stuff */
     int (__cdecl *ssl_version) (void);
-    long (__cdecl *ssl_callback_ctrl) (SSL *s, int cb_id, void (*fp) (void));
-    long (__cdecl *ssl_ctx_callback_ctrl) (SSL_CTX *s, int cb_id, void (*fp) (void));
+    long (__cdecl *ssl_callback_ctrl) (SSL *s, int cb_id, void (__cdecl *fp) (void));
+    long (__cdecl *ssl_ctx_callback_ctrl) (SSL_CTX *s, int cb_id, void (__cdecl *fp) (void));
 };
 
 /*
@@ -598,11 +598,11 @@ typedef struct srp_ctx_st {
     /* param for all the callbacks */
     void *SRP_cb_arg;
     /* set client Hello login callback */
-    int (*TLS_ext_srp_username_callback) (SSL *, int *, void *);
+    int (__cdecl *TLS_ext_srp_username_callback) (SSL *, int *, void *);
     /* set SRP N/g param callback for verification */
-    int (*SRP_verify_param_callback) (SSL *, void *);
+    int (__cdecl *SRP_verify_param_callback) (SSL *, void *);
     /* set SRP client passwd callback */
-    char *(*SRP_give_srp_client_pwd_callback) (SSL *, void *);
+    char *(__cdecl *SRP_give_srp_client_pwd_callback) (SSL *, void *);
     char *login;
     BIGNUM *N, *g, *s, *B, *A;
     BIGNUM *a, *b, *v;
@@ -798,7 +798,7 @@ struct ssl_ctx_st {
     CRYPTO_REF_COUNT references;
 
     /* if defined, these override the X509_verify_cert() calls */
-    int (*app_verify_callback) (X509_STORE_CTX *, void *);
+    int (__cdecl *app_verify_callback) (X509_STORE_CTX *, void *);
     void *app_verify_arg;
     /*
      * before OpenSSL 0.9.7, 'app_verify_arg' was ignored
@@ -815,19 +815,19 @@ struct ssl_ctx_st {
     int (__cdecl *client_cert_cb) (SSL *ssl, X509 **x509, EVP_PKEY **pkey);
 
     /* cookie generate callback */
-    int (*app_gen_cookie_cb) (SSL *ssl, unsigned char *cookie,
+    int (__cdecl *app_gen_cookie_cb) (SSL *ssl, unsigned char *cookie,
                               unsigned int *cookie_len);
 
     /* verify cookie callback */
-    int (*app_verify_cookie_cb) (SSL *ssl, const unsigned char *cookie,
+    int (__cdecl *app_verify_cookie_cb) (SSL *ssl, const unsigned char *cookie,
                                  unsigned int cookie_len);
 
     /* TLS1.3 app-controlled cookie generate callback */
-    int (*gen_stateless_cookie_cb) (SSL *ssl, unsigned char *cookie,
+    int (__cdecl *gen_stateless_cookie_cb) (SSL *ssl, unsigned char *cookie,
                                     size_t *cookie_len);
 
     /* TLS1.3 verify app-controlled cookie callback */
-    int (*verify_stateless_cookie_cb) (SSL *ssl, const unsigned char *cookie,
+    int (__cdecl *verify_stateless_cookie_cb) (SSL *ssl, const unsigned char *cookie,
                                        size_t cookie_len);
 
     CRYPTO_EX_DATA ex_data;
@@ -867,7 +867,7 @@ struct ssl_ctx_st {
     int read_ahead;
 
     /* callback that allows applications to peek at protocol messages */
-    void (*msg_callback) (int write_p, int version, int content_type,
+    void (__cdecl *msg_callback) (int write_p, int version, int content_type,
                           const void *buf, size_t len, SSL *ssl, void *arg);
     void *msg_callback_arg;
 
@@ -925,19 +925,19 @@ struct ssl_ctx_st {
     /* TLS extensions. */
     struct {
         /* TLS extensions servername callback */
-        int (*servername_cb) (SSL *, int *, void *);
+        int (__cdecl *servername_cb) (SSL *, int *, void *);
         void *servername_arg;
         /* RFC 4507 session ticket keys */
         unsigned char tick_key_name[TLSEXT_KEYNAME_LENGTH];
         SSL_CTX_EXT_SECURE *secure;
         /* Callback to support customisation of ticket key setting */
-        int (*ticket_key_cb) (SSL *ssl,
+        int (__cdecl *ticket_key_cb) (SSL *ssl,
                               unsigned char *name, unsigned char *iv,
                               EVP_CIPHER_CTX *ectx, HMAC_CTX *hctx, int enc);
 
         /* certificate status request info */
         /* Callback for status request */
-        int (*status_cb) (SSL *ssl, void *arg);
+        int (__cdecl *status_cb) (SSL *ssl, void *arg);
         void *status_arg;
         /* ext status type used for CSR extension (OCSP Stapling) */
         int status_type;
@@ -967,7 +967,7 @@ struct ssl_ctx_st {
          *       wire-format.
          *   inlen: the length of |in|.
          */
-        int (*alpn_select_cb) (SSL *s,
+        int (__cdecl *alpn_select_cb) (SSL *s,
                                const unsigned char **out,
                                unsigned char *outlen,
                                const unsigned char *in,
@@ -1023,7 +1023,7 @@ struct ssl_ctx_st {
      * Callback for disabling session caching and ticket support on a session
      * basis, depending on the chosen cipher.
      */
-    int (*not_resumable_session_cb) (SSL *ssl, int is_forward_secure);
+    int (__cdecl *not_resumable_session_cb) (SSL *ssl, int is_forward_secure);
 
     CRYPTO_RWLOCK *lock;
 
@@ -1046,7 +1046,7 @@ struct ssl_ctx_st {
     uint32_t recv_max_early_data;
 
     /* TLS1.3 padding callback */
-    size_t (*record_padding_cb)(SSL *s, int type, size_t len, void *arg);
+    size_t (__cdecl *record_padding_cb)(SSL *s, int type, size_t len, void *arg);
     void *record_padding_arg;
     size_t block_padding;
 
@@ -1122,7 +1122,7 @@ struct ssl_st {
     struct ssl3_state_st *s3;   /* SSLv3 variables */
     struct dtls1_state_st *d1;  /* DTLSv1 variables */
     /* callback that allows applications to peek at protocol messages */
-    void (*msg_callback) (int write_p, int version, int content_type,
+    void (__cdecl *msg_callback) (int write_p, int version, int content_type,
                           const void *buf, size_t len, SSL *ssl, void *arg);
     void *msg_callback_arg;
     int hit;                    /* reusing a previous session */
@@ -1265,7 +1265,7 @@ struct ssl_st {
         /* Built-in extension flags */
         uint8_t extflags[TLSEXT_IDX_num_builtins];
         /* TLS extension debug callback */
-        void (*debug_cb)(SSL *s, int client_server, int type,
+        void (__cdecl *debug_cb)(SSL *s, int client_server, int type,
                          const unsigned char *data, int len, void *arg);
         void *debug_arg;
         char *hostname;
@@ -1427,7 +1427,7 @@ struct ssl_st {
      * Callback for disabling session caching and ticket support on a session
      * basis, depending on the chosen cipher.
      */
-    int (*not_resumable_session_cb) (SSL *ssl, int is_forward_secure);
+    int (__cdecl *not_resumable_session_cb) (SSL *ssl, int is_forward_secure);
     RECORD_LAYER rlayer;
     /* Default password callback. */
     pem_password_cb *default_passwd_callback;
@@ -1457,7 +1457,7 @@ struct ssl_st {
     uint32_t early_data_count;
 
     /* TLS1.3 padding callback */
-    size_t (*record_padding_cb)(SSL *s, int type, size_t len, void *arg);
+    size_t (__cdecl *record_padding_cb)(SSL *s, int type, size_t len, void *arg);
     void *record_padding_arg;
     size_t block_padding;
 
@@ -1886,7 +1886,7 @@ typedef struct cert_st {
     CERT_PKEY *key;
 # ifndef OPENSSL_NO_DH
     EVP_PKEY *dh_tmp;
-    DH *(*dh_tmp_cb) (SSL *ssl, int is_export, int keysize);
+    DH *(__cdecl *dh_tmp_cb) (SSL *ssl, int is_export, int keysize);
     int dh_tmp_auto;
 # endif
     /* Flags related to certificates */
@@ -1920,7 +1920,7 @@ typedef struct cert_st {
      * allows advanced applications to select certificates on the fly: for
      * example based on supported signature algorithms or curves.
      */
-    int (*cert_cb) (SSL *ssl, void *arg);
+    int (__cdecl *cert_cb) (SSL *ssl, void *arg);
     void *cert_cb_arg;
     /*
      * Optional X509_STORE for chain building or certificate validation If
@@ -2225,8 +2225,8 @@ const SSL_METHOD * __cdecl func_name(void)  \
         }
 
 struct openssl_ssl_test_functions {
-    int (*p_ssl_init_wbio_buffer) (SSL *s);
-    int (*p_ssl3_setup_buffers) (SSL *s);
+    int (__cdecl *p_ssl_init_wbio_buffer) (SSL *s);
+    int (__cdecl *p_ssl3_setup_buffers) (SSL *s);
 };
 
 const char * __cdecl ssl_protocol_to_string(int version);
@@ -2296,7 +2296,7 @@ __owur int __cdecl ssl_cert_add0_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x);
 __owur int __cdecl ssl_cert_add1_chain_cert(SSL *s, SSL_CTX *ctx, X509 *x);
 __owur int __cdecl ssl_cert_select_current(CERT *c, X509 *x);
 __owur int __cdecl ssl_cert_set_current(CERT *c, long arg);
-void __cdecl ssl_cert_set_cert_cb(CERT *c, int (*cb) (SSL *ssl, void *arg), void *arg);
+void __cdecl ssl_cert_set_cert_cb(CERT *c, int (__cdecl *cb) (SSL *ssl, void *arg), void *arg);
 
 __owur int __cdecl ssl_verify_cert_chain(SSL *s, STACK_OF(X509) *sk);
 __owur int __cdecl ssl_build_cert_chain(SSL *s, SSL_CTX *ctx, int flags);
@@ -2373,8 +2373,8 @@ __owur int __cdecl ssl3_shutdown(SSL *s);
 int __cdecl ssl3_clear(SSL *s);
 __owur long __cdecl ssl3_ctrl(SSL *s, int cmd, long larg, void *parg);
 __owur long __cdecl ssl3_ctx_ctrl(SSL_CTX *s, int cmd, long larg, void *parg);
-__owur long __cdecl ssl3_callback_ctrl(SSL *s, int cmd, void (*fp) (void));
-__owur long __cdecl ssl3_ctx_callback_ctrl(SSL_CTX *s, int cmd, void (*fp) (void));
+__owur long __cdecl ssl3_callback_ctrl(SSL *s, int cmd, void (__cdecl *fp) (void));
+__owur long __cdecl ssl3_ctx_callback_ctrl(SSL_CTX *s, int cmd, void (__cdecl *fp) (void));
 
 __owur int ssl3_do_change_cipher_spec(SSL *ssl);
 __owur long ssl3_default_timeout(void);

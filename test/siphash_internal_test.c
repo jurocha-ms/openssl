@@ -167,7 +167,7 @@ static TESTDATA tests[] = {
     { 63, { 16, { 0x51, 0x50, 0xd1, 0x77, 0x2f, 0x50, 0x83, 0x4a, 0x50, 0x3e, 0x06, 0x9a, 0x97, 0x3f, 0xbd, 0x7c, } } }
 };
 
-static int test_siphash(int idx)
+static int __cdecl test_siphash(int idx)
 {
     SIPHASH siphash = { 0, };
     TESTDATA test = tests[idx];
@@ -255,7 +255,7 @@ static int test_siphash(int idx)
     return 1;
 }
 
-static int test_siphash_basic(void)
+static int __cdecl test_siphash_basic(void)
 {
     SIPHASH siphash = { 0, };
     unsigned char key[SIPHASH_KEY_SIZE];

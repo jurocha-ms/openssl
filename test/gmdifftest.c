@@ -19,7 +19,7 @@
  * trigger the very errors the routines fix.
  */
 
-static int check_time(long offset)
+static int __cdecl check_time(long offset)
 {
     struct tm tm1, tm2, o1;
     int off_day, off_sec;
@@ -47,7 +47,7 @@ static int check_time(long offset)
     return 1;
 }
 
-static int test_gmtime(int offset)
+static int __cdecl test_gmtime(int offset)
 {
     return check_time(offset) &&
            check_time(-offset) &&

@@ -25,7 +25,7 @@ NON_EMPTY_TRANSLATION_UNIT
 # include <openssl/rsa.h>
 
 RSA *RSA_generate_key(int bits, unsigned long e_value,
-                      void (*callback) (int, int, void *), void *cb_arg)
+                      void (__cdecl *callback) (int, int, void *), void *cb_arg)
 {
     int i;
     BN_GENCB *cb = BN_GENCB_new();

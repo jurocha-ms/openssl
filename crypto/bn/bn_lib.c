@@ -956,7 +956,7 @@ int __cdecl BN_get_flags(const BIGNUM *b, int n)
 }
 
 /* Populate a BN_GENCB structure with an "old"-style callback */
-void __cdecl BN_GENCB_set_old(BN_GENCB *gencb, void (*callback) (int, int, void *),
+void __cdecl BN_GENCB_set_old(BN_GENCB *gencb, void (__cdecl *callback) (int, int, void *),
                       void *cb_arg)
 {
     BN_GENCB *tmp_gencb = gencb;
@@ -966,7 +966,7 @@ void __cdecl BN_GENCB_set_old(BN_GENCB *gencb, void (*callback) (int, int, void 
 }
 
 /* Populate a BN_GENCB structure with a "new"-style callback */
-void __cdecl BN_GENCB_set(BN_GENCB *gencb, int (*callback) (int, int, BN_GENCB *),
+void __cdecl BN_GENCB_set(BN_GENCB *gencb, int (__cdecl *callback) (int, int, BN_GENCB *),
                   void *cb_arg)
 {
     BN_GENCB *tmp_gencb = gencb;

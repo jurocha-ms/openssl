@@ -94,7 +94,7 @@ int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (__cdecl *init)(void)
     return (*lock == ONCE_DONE);
 }
 
-int __cdecl CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *))
+int __cdecl CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (__cdecl *cleanup)(void *))
 {
     *key = TlsAlloc();
     if (*key == TLS_OUT_OF_INDEXES)

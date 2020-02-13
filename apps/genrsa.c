@@ -30,7 +30,7 @@ NON_EMPTY_TRANSLATION_UNIT
 # define DEFBITS 2048
 # define DEFPRIMES 2
 
-static int genrsa_cb(int p, int n, BN_GENCB *cb);
+static int __cdecl genrsa_cb(int p, int n, BN_GENCB *cb);
 
 typedef enum OPTION_choice {
     OPT_ERR = -1, OPT_EOF = 0, OPT_HELP,
@@ -182,7 +182,7 @@ opthelp:
     return ret;
 }
 
-static int genrsa_cb(int p, int n, BN_GENCB *cb)
+static int __cdecl genrsa_cb(int p, int n, BN_GENCB *cb)
 {
     char c = '*';
 

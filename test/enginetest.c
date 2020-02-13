@@ -21,7 +21,7 @@
 # include <openssl/rsa.h>
 # include <openssl/err.h>
 
-static void display_engine_list(void)
+static void __cdecl display_engine_list(void)
 {
     ENGINE *h;
     int loop;
@@ -41,7 +41,7 @@ static void display_engine_list(void)
 
 #define NUMTOADD 512
 
-static int test_engines(void)
+static int __cdecl test_engines(void)
 {
     ENGINE *block[NUMTOADD];
     char buf[256];
@@ -187,14 +187,14 @@ static EVP_PKEY_METHOD *test_rsa = NULL;
 static int called_encrypt = 0;
 
 /* Test function to check operation has been redirected */
-static int test_encrypt(EVP_PKEY_CTX *ctx, unsigned char *sig,
+static int __cdecl test_encrypt(EVP_PKEY_CTX *ctx, unsigned char *sig,
                         size_t *siglen, const unsigned char *tbs, size_t tbslen)
 {
     called_encrypt = 1;
     return 1;
 }
 
-static int test_pkey_meths(ENGINE *e, EVP_PKEY_METHOD **pmeth,
+static int __cdecl test_pkey_meths(ENGINE *e, EVP_PKEY_METHOD **pmeth,
                            const int **pnids, int nid)
 {
     static const int rnid = EVP_PKEY_RSA;
@@ -242,7 +242,7 @@ static EVP_PKEY *get_test_pkey(void)
     return pk;
 }
 
-static int test_redirect(void)
+static int __cdecl test_redirect(void)
 {
     const unsigned char pt[] = "Hello World\n";
     unsigned char *tmp = NULL;

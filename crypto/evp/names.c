@@ -96,7 +96,7 @@ void evp_cleanup_int(void)
 
 struct doall_cipher {
     void *arg;
-    void (*fn) (const EVP_CIPHER *ciph,
+    void (__cdecl *fn) (const EVP_CIPHER *ciph,
                 const char *from, const char *to, void *arg);
 };
 
@@ -109,7 +109,7 @@ static void do_all_cipher_fn(const OBJ_NAME *nm, void *arg)
         dc->fn((const EVP_CIPHER *)nm->data, nm->name, NULL, dc->arg);
 }
 
-void __cdecl EVP_CIPHER_do_all(void (*fn) (const EVP_CIPHER *ciph,
+void __cdecl EVP_CIPHER_do_all(void (__cdecl *fn) (const EVP_CIPHER *ciph,
                                    const char *from, const char *to, void *x),
                        void *arg)
 {
@@ -123,7 +123,7 @@ void __cdecl EVP_CIPHER_do_all(void (*fn) (const EVP_CIPHER *ciph,
     OBJ_NAME_do_all(OBJ_NAME_TYPE_CIPHER_METH, do_all_cipher_fn, &dc);
 }
 
-void __cdecl EVP_CIPHER_do_all_sorted(void (*fn) (const EVP_CIPHER *ciph,
+void __cdecl EVP_CIPHER_do_all_sorted(void (__cdecl *fn) (const EVP_CIPHER *ciph,
                                           const char *from, const char *to,
                                           void *x), void *arg)
 {
@@ -139,7 +139,7 @@ void __cdecl EVP_CIPHER_do_all_sorted(void (*fn) (const EVP_CIPHER *ciph,
 
 struct doall_md {
     void *arg;
-    void (*fn) (const EVP_MD *ciph,
+    void (__cdecl *fn) (const EVP_MD *ciph,
                 const char *from, const char *to, void *arg);
 };
 
@@ -152,7 +152,7 @@ static void do_all_md_fn(const OBJ_NAME *nm, void *arg)
         dc->fn((const EVP_MD *)nm->data, nm->name, NULL, dc->arg);
 }
 
-void __cdecl EVP_MD_do_all(void (*fn) (const EVP_MD *md,
+void __cdecl EVP_MD_do_all(void (__cdecl *fn) (const EVP_MD *md,
                                const char *from, const char *to, void *x),
                    void *arg)
 {
@@ -166,7 +166,7 @@ void __cdecl EVP_MD_do_all(void (*fn) (const EVP_MD *md,
     OBJ_NAME_do_all(OBJ_NAME_TYPE_MD_METH, do_all_md_fn, &dc);
 }
 
-void __cdecl EVP_MD_do_all_sorted(void (*fn) (const EVP_MD *md,
+void __cdecl EVP_MD_do_all_sorted(void (__cdecl *fn) (const EVP_MD *md,
                                       const char *from, const char *to,
                                       void *x), void *arg)
 {

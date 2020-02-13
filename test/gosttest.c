@@ -32,7 +32,7 @@ static struct {
 };
 
 /* Test that we never negotiate TLSv1.3 if using GOST */
-static int test_tls13(int idx)
+static int __cdecl test_tls13(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;

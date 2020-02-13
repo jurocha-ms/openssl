@@ -44,7 +44,7 @@ typedef struct {
     size_t info_len;
 } HKDF_PKEY_CTX;
 
-static int pkey_hkdf_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_hkdf_init(EVP_PKEY_CTX *ctx)
 {
     HKDF_PKEY_CTX *kctx;
 
@@ -58,7 +58,7 @@ static int pkey_hkdf_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_hkdf_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_hkdf_cleanup(EVP_PKEY_CTX *ctx)
 {
     HKDF_PKEY_CTX *kctx = ctx->data;
     OPENSSL_clear_free(kctx->salt, kctx->salt_len);
@@ -67,7 +67,7 @@ static void pkey_hkdf_cleanup(EVP_PKEY_CTX *ctx)
     OPENSSL_free(kctx);
 }
 
-static int pkey_hkdf_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_hkdf_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     HKDF_PKEY_CTX *kctx = ctx->data;
 
@@ -131,7 +131,7 @@ static int pkey_hkdf_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_hkdf_ctrl_str(EVP_PKEY_CTX *ctx, const char *type,
+static int __cdecl pkey_hkdf_ctrl_str(EVP_PKEY_CTX *ctx, const char *type,
                               const char *value)
 {
     if (strcmp(type, "mode") == 0) {
@@ -175,7 +175,7 @@ static int pkey_hkdf_ctrl_str(EVP_PKEY_CTX *ctx, const char *type,
     return -2;
 }
 
-static int pkey_hkdf_derive_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_hkdf_derive_init(EVP_PKEY_CTX *ctx)
 {
     HKDF_PKEY_CTX *kctx = ctx->data;
 
@@ -187,7 +187,7 @@ static int pkey_hkdf_derive_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static int pkey_hkdf_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
+static int __cdecl pkey_hkdf_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
                             size_t *keylen)
 {
     HKDF_PKEY_CTX *kctx = ctx->data;

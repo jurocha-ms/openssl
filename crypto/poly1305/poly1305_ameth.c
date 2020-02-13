@@ -20,12 +20,12 @@
  * POLY1305 output length and to free up a POLY1305 key.
  */
 
-static int poly1305_size(const EVP_PKEY *pkey)
+static int __cdecl poly1305_size(const EVP_PKEY *pkey)
 {
     return POLY1305_DIGEST_SIZE;
 }
 
-static void poly1305_key_free(EVP_PKEY *pkey)
+static void __cdecl poly1305_key_free(EVP_PKEY *pkey)
 {
     ASN1_OCTET_STRING *os = EVP_PKEY_get0(pkey);
     if (os != NULL) {
@@ -35,18 +35,18 @@ static void poly1305_key_free(EVP_PKEY *pkey)
     }
 }
 
-static int poly1305_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
+static int __cdecl poly1305_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 {
     /* nothing, (including ASN1_PKEY_CTRL_DEFAULT_MD_NID), is supported */
     return -2;
 }
 
-static int poly1305_pkey_public_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
+static int __cdecl poly1305_pkey_public_cmp(const EVP_PKEY *a, const EVP_PKEY *b)
 {
     return ASN1_OCTET_STRING_cmp(EVP_PKEY_get0(a), EVP_PKEY_get0(b));
 }
 
-static int poly1305_set_priv_key(EVP_PKEY *pkey, const unsigned char *priv,
+static int __cdecl poly1305_set_priv_key(EVP_PKEY *pkey, const unsigned char *priv,
                                  size_t len)
 {
     ASN1_OCTET_STRING *os;
@@ -67,7 +67,7 @@ static int poly1305_set_priv_key(EVP_PKEY *pkey, const unsigned char *priv,
     return 1;
 }
 
-static int poly1305_get_priv_key(const EVP_PKEY *pkey, unsigned char *priv,
+static int __cdecl poly1305_get_priv_key(const EVP_PKEY *pkey, unsigned char *priv,
                                  size_t *len)
 {
     ASN1_OCTET_STRING *os = (ASN1_OCTET_STRING *)pkey->pkey.ptr;

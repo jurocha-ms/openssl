@@ -27,7 +27,7 @@ static size_t crv_len = 0;
 static EC_builtin_curve *curves = NULL;
 
 /* test multiplication with group order, long and negative scalars */
-static int group_order_tests(EC_GROUP *group)
+static int __cdecl group_order_tests(EC_GROUP *group)
 {
     BIGNUM *n1 = NULL, *n2 = NULL, *order = NULL;
     EC_POINT *P = NULL, *Q = NULL, *R = NULL, *S = NULL;
@@ -142,7 +142,7 @@ err:
     return r;
 }
 
-static int prime_field_tests(void)
+static int __cdecl prime_field_tests(void)
 {
     BN_CTX *ctx = NULL;
     BIGNUM *p = NULL, *a = NULL, *b = NULL, *scalar3 = NULL;
@@ -803,7 +803,7 @@ static struct c2_curve_test {
     }
 };
 
-static int char2_curve_test(int n)
+static int __cdecl char2_curve_test(int n)
 {
     int r = 0;
     BN_CTX *ctx = NULL;
@@ -959,7 +959,7 @@ err:
     return r;
 }
 
-static int char2_field_tests(void)
+static int __cdecl char2_field_tests(void)
 {
     BN_CTX *ctx = NULL;
     BIGNUM *p = NULL, *a = NULL, *b = NULL;
@@ -1126,7 +1126,7 @@ err:
 }
 # endif
 
-static int internal_curve_test(int n)
+static int __cdecl internal_curve_test(int n)
 {
     EC_GROUP *group = NULL;
     int nid = curves[n].nid;
@@ -1145,7 +1145,7 @@ static int internal_curve_test(int n)
     return 1;
 }
 
-static int internal_curve_test_method(int n)
+static int __cdecl internal_curve_test_method(int n)
 {
     int r, nid = curves[n].nid;
     EC_GROUP *group;
@@ -1265,7 +1265,7 @@ static const struct nistp_test_params nistp_tests_params[] = {
      },
 };
 
-static int nistp_single_test(int idx)
+static int __cdecl nistp_single_test(int idx)
 {
     const struct nistp_test_params *test = nistp_tests_params + idx;
     BN_CTX *ctx = NULL;
@@ -1408,7 +1408,7 @@ err:
  * Tests a point known to cause an incorrect underflow in an old version of
  * ecp_nist521.c
  */
-static int underflow_test(void)
+static int __cdecl underflow_test(void)
 {
     BN_CTX *ctx = NULL;
     EC_GROUP *grp = NULL;
@@ -1592,7 +1592,7 @@ int are_ec_nids_compatible(int n1d, int n2d)
  *
  * Ensure that the OPENSSL_EC_EXPLICIT_CURVE ASN1 flag is set.
  */
-static int check_named_curve_from_ecparameters(int id)
+static int __cdecl check_named_curve_from_ecparameters(int id)
 {
     int ret = 0, nid, tnid;
     EC_GROUP *group = NULL, *tgroup = NULL, *tmpg = NULL;
@@ -1784,7 +1784,7 @@ err:
     return ret;
 }
 
-static int parameter_test(void)
+static int __cdecl parameter_test(void)
 {
     EC_GROUP *group = NULL, *group2 = NULL;
     ECPARAMETERS *ecparameters = NULL;
@@ -1895,7 +1895,7 @@ static const unsigned char params_cf_fail[] = {
  * will always succeed in computing the cofactor. Neither of these curves
  * conform to that -- this is just robustness testing.
  */
-static int cofactor_range_test(void)
+static int __cdecl cofactor_range_test(void)
 {
     EC_GROUP *group = NULL;
     BIGNUM *cf = NULL;
@@ -1923,7 +1923,7 @@ static int cofactor_range_test(void)
  * - a nonsensical cofactor throws an error (negative test)
  * - nonsensical orders throw errors (negative tests)
  */
-static int cardinality_test(int n)
+static int __cdecl cardinality_test(int n)
 {
     int ret = 0;
     int nid = curves[n].nid;

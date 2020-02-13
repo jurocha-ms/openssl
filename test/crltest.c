@@ -229,7 +229,7 @@ static X509 *X509_from_strings(const char **pem)
  * also free'd before returning, which is kinda yucky but convenient.
  * Returns a value from X509_V_ERR_xxx or X509_V_OK.
  */
-static int verify(X509 *leaf, X509 *root, STACK_OF(X509_CRL) *crls,
+static int __cdecl verify(X509 *leaf, X509 *root, STACK_OF(X509_CRL) *crls,
                   unsigned long flags)
 {
     X509_STORE_CTX *ctx = X509_STORE_CTX_new();
@@ -290,7 +290,7 @@ static STACK_OF(X509_CRL) *make_CRL_stack(X509_CRL *x1, X509_CRL *x2)
     return sk;
 }
 
-static int test_basic_crl(void)
+static int __cdecl test_basic_crl(void)
 {
     X509_CRL *basic_crl = CRL_from_strings(kBasicCRL);
     X509_CRL *revoked_crl = CRL_from_strings(kRevokedCRL);
@@ -309,14 +309,14 @@ static int test_basic_crl(void)
     return r;
 }
 
-static int test_no_crl(void)
+static int __cdecl test_no_crl(void)
 {
     return TEST_int_eq(verify(test_leaf, test_root, NULL,
                               X509_V_FLAG_CRL_CHECK),
                        X509_V_ERR_UNABLE_TO_GET_CRL);
 }
 
-static int test_bad_issuer_crl(void)
+static int __cdecl test_bad_issuer_crl(void)
 {
     X509_CRL *bad_issuer_crl = CRL_from_strings(kBadIssuerCRL);
     int r;
@@ -330,7 +330,7 @@ static int test_bad_issuer_crl(void)
     return r;
 }
 
-static int test_known_critical_crl(void)
+static int __cdecl test_known_critical_crl(void)
 {
     X509_CRL *known_critical_crl = CRL_from_strings(kKnownCriticalCRL);
     int r;
@@ -343,7 +343,7 @@ static int test_known_critical_crl(void)
     return r;
 }
 
-static int test_unknown_critical_crl(int n)
+static int __cdecl test_unknown_critical_crl(int n)
 {
     X509_CRL *unknown_critical_crl = CRL_from_strings(unknown_critical_crls[n]);
     int r;
@@ -357,7 +357,7 @@ static int test_unknown_critical_crl(int n)
     return r;
 }
 
-static int test_reuse_crl(void)
+static int __cdecl test_reuse_crl(void)
 {
     X509_CRL *reused_crl = CRL_from_strings(kBasicCRL);
     char *p;

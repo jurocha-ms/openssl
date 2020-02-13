@@ -35,7 +35,7 @@ NON_EMPTY_TRANSLATION_UNIT
 DSA *DSA_generate_parameters(int bits,
                              unsigned char *seed_in, int seed_len,
                              int *counter_ret, unsigned long *h_ret,
-                             void (*callback) (int, int, void *),
+                             void (__cdecl *callback) (int, int, void *),
                              void *cb_arg)
 {
     BN_GENCB *cb;

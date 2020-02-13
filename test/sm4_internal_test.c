@@ -19,7 +19,7 @@
 #ifndef OPENSSL_NO_SM4
 # include "internal/sm4.h"
 
-static int test_sm4_ecb(void)
+static int __cdecl test_sm4_ecb(void)
 {
     static const uint8_t k[SM4_BLOCK_SIZE] = {
         0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef,

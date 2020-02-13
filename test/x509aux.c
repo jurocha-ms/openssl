@@ -19,7 +19,7 @@
 #include "internal/nelem.h"
 #include "testutil.h"
 
-static int test_certs(int num)
+static int __cdecl test_certs(int num)
 {
     int c;
     char *name = 0;

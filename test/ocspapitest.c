@@ -22,7 +22,7 @@ static const char *certstr;
 static const char *privkeystr;
 
 #ifndef OPENSSL_NO_OCSP
-static int get_cert_and_key(X509 **cert_out, EVP_PKEY **key_out)
+static int __cdecl get_cert_and_key(X509 **cert_out, EVP_PKEY **key_out)
 {
     BIO *certbio, *keybio;
     X509 *cert = NULL;
@@ -47,7 +47,7 @@ static int get_cert_and_key(X509 **cert_out, EVP_PKEY **key_out)
     return 0;
 }
 
-static int get_cert(X509 **cert_out)
+static int __cdecl get_cert(X509 **cert_out)
 {
     BIO *certbio;
     X509 *cert = NULL;
@@ -105,7 +105,7 @@ static OCSP_BASICRESP *make_dummy_resp(void)
     return bs_out;
 }
 
-static int test_resp_signer(void)
+static int __cdecl test_resp_signer(void)
 {
     OCSP_BASICRESP *bs = NULL;
     X509 *signer = NULL, *tmp;
@@ -150,7 +150,7 @@ static int test_resp_signer(void)
     return ret;
 }
 
-static int test_access_description(int testcase)
+static int __cdecl test_access_description(int testcase)
 {
     ACCESS_DESCRIPTION *ad = ACCESS_DESCRIPTION_new();
     int ret = 0;
@@ -180,7 +180,7 @@ err:
     return ret;
 }
 
-static int test_ocsp_url_svcloc_new(void)
+static int __cdecl test_ocsp_url_svcloc_new(void)
 {
     static const char *  urls[] = {
         "www.openssl.org",

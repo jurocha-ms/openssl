@@ -128,7 +128,7 @@ static z_data zu_data[] = {
     { 0, "%zi", "0" },
 };
 
-static int test_zu(int i)
+static int __cdecl test_zu(int i)
 {
     char bio_buf[80];
     const z_data *data = &zu_data[i];
@@ -156,7 +156,7 @@ static j_data jf_data[] = {
     { 0x8000000000000000ULL, "%ji", "-9223372036854775808" },
 };
 
-static int test_j(int i)
+static int __cdecl test_j(int i)
 {
     const j_data *data = &jf_data[i];
     char bio_buf[80];
@@ -184,7 +184,7 @@ static pw pw_params[] = {
     { 4, "08" }
 };
 
-static int dofptest(int test, int sub, double val, const char *width, int prec)
+static int __cdecl dofptest(int test, int sub, double val, const char *width, int prec)
 {
     static const char *fspecs[] = {
         "e", "f", "g", "E", "G"
@@ -218,7 +218,7 @@ static int dofptest(int test, int sub, double val, const char *width, int prec)
     return ret;
 }
 
-static int test_fp(int i)
+static int __cdecl test_fp(int i)
 {
     int t = 0, r;
     const double frac = 2.0 / 3.0;
@@ -241,7 +241,7 @@ static int test_fp(int i)
     return r;
 }
 
-static int test_big(void)
+static int __cdecl test_big(void)
 {
     char buf[80];
 

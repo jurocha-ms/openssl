@@ -557,7 +557,7 @@ static STRINT_PAIR handshakes[] = {
     {NULL}
 };
 
-void msg_cb(int write_p, int version, int content_type, const void *buf,
+void __cdecl msg_cb(int write_p, int version, int content_type, const void *buf,
             size_t len, SSL *ssl, void *arg)
 {
     BIO *bio = arg;
@@ -730,7 +730,7 @@ static STRINT_PAIR signature_tls12_hash_list[] = {
     {NULL}
 };
 
-void tlsext_cb(SSL *s, int client_server, int type,
+void __cdecl tlsext_cb(SSL *s, int client_server, int type,
                const unsigned char *data, int len, void *arg)
 {
     BIO *bio = arg;
@@ -743,7 +743,7 @@ void tlsext_cb(SSL *s, int client_server, int type,
 }
 
 #ifndef OPENSSL_NO_SOCK
-int generate_cookie_callback(SSL *ssl, unsigned char *cookie,
+int __cdecl generate_cookie_callback(SSL *ssl, unsigned char *cookie,
                              unsigned int *cookie_len)
 {
     unsigned char *buffer;
@@ -796,7 +796,7 @@ int generate_cookie_callback(SSL *ssl, unsigned char *cookie,
     return 1;
 }
 
-int verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
+int __cdecl verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
                            unsigned int cookie_len)
 {
     unsigned char result[EVP_MAX_MD_SIZE];
@@ -813,7 +813,7 @@ int verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
     return 0;
 }
 
-int generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
+int __cdecl generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
                                        size_t *cookie_len)
 {
     unsigned int temp;
@@ -822,7 +822,7 @@ int generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
     return res;
 }
 
-int verify_stateless_cookie_callback(SSL *ssl, const unsigned char *cookie,
+int __cdecl verify_stateless_cookie_callback(SSL *ssl, const unsigned char *cookie,
                                      size_t cookie_len)
 {
     return verify_cookie_callback(ssl, cookie, cookie_len);
@@ -864,7 +864,7 @@ static STRINT_PAIR chain_flags[] = {
     {NULL}
 };
 
-static void print_chain_flags(SSL *s, int flags)
+static void __cdecl print_chain_flags(SSL *s, int flags)
 {
     STRINT_PAIR *pp;
 
@@ -883,7 +883,7 @@ static void print_chain_flags(SSL *s, int flags)
  * Very basic selection callback: just use any certificate chain reported as
  * valid. More sophisticated could prioritise according to local policy.
  */
-static int set_cert_cb(SSL *ssl, void *arg)
+static int __cdecl set_cert_cb(SSL *ssl, void *arg)
 {
     int i, rv;
     SSL_EXCERT *exc = arg;
@@ -1471,7 +1471,7 @@ void ssl_ctx_security_debug(SSL_CTX *ctx, int verbose)
     SSL_CTX_set0_security_ex_data(ctx, &sdb);
 }
 
-static void keylog_callback(const SSL *ssl, const char *line)
+static void __cdecl keylog_callback(const SSL *ssl, const char *line)
 {
     if (bio_keylog == NULL) {
         BIO_printf(bio_err, "Keylog callback is invoked without valid file!\n");

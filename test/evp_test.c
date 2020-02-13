@@ -46,13 +46,13 @@ struct evp_test_method_st {
     /* Name of test as it appears in file */
     const char *name;
     /* Initialise test for "alg" */
-    int (*init) (EVP_TEST * t, const char *alg);
+    int (__cdecl *init) (EVP_TEST * t, const char *alg);
     /* Clean up method */
-    void (*cleanup) (EVP_TEST * t);
+    void (__cdecl *cleanup) (EVP_TEST * t);
     /* Test specific name value pair processing */
-    int (*parse) (EVP_TEST * t, const char *name, const char *value);
+    int (__cdecl *parse) (EVP_TEST * t, const char *name, const char *value);
     /* Run the test itself */
-    int (*run_test) (EVP_TEST * t);
+    int (__cdecl *run_test) (EVP_TEST * t);
 };
 
 
@@ -70,9 +70,9 @@ typedef struct key_list_st {
  */
 static KEY_LIST *private_keys;
 static KEY_LIST *public_keys;
-static int find_key(EVP_PKEY **ppk, const char *name, KEY_LIST *lst);
+static int __cdecl find_key(EVP_PKEY **ppk, const char *name, KEY_LIST *lst);
 
-static int parse_bin(const char *value, unsigned char **buf, size_t *buflen);
+static int __cdecl parse_bin(const char *value, unsigned char **buf, size_t *buflen);
 
 /*
  * Compare two memory regions for equality, returning zero if they differ.
@@ -80,7 +80,7 @@ static int parse_bin(const char *value, unsigned char **buf, size_t *buflen);
  * matches then the memory is expected to be different so handle this
  * case without producing unnecessary test framework output.
  */
-static int memory_err_compare(EVP_TEST *t, const char *err,
+static int __cdecl memory_err_compare(EVP_TEST *t, const char *err,
                               const void *expected, size_t expected_len,
                               const void *got, size_t got_len)
 {
@@ -117,7 +117,7 @@ static void __cdecl evp_test_buffer_free(EVP_TEST_BUFFER *db)
 /*
  * append buffer to a list
  */
-static int evp_test_buffer_append(const char *value,
+static int __cdecl evp_test_buffer_append(const char *value,
                                   STACK_OF(EVP_TEST_BUFFER) **sk)
 {
     EVP_TEST_BUFFER *db = NULL;
@@ -145,7 +145,7 @@ err:
 /*
  * replace last buffer in list with copies of itself
  */
-static int evp_test_buffer_ncopy(const char *value,
+static int __cdecl evp_test_buffer_ncopy(const char *value,
                                  STACK_OF(EVP_TEST_BUFFER) *sk)
 {
     EVP_TEST_BUFFER *db;
@@ -175,7 +175,7 @@ static int evp_test_buffer_ncopy(const char *value,
 /*
  * set repeat count for last buffer in list
  */
-static int evp_test_buffer_set_count(const char *value,
+static int __cdecl evp_test_buffer_set_count(const char *value,
                                      STACK_OF(EVP_TEST_BUFFER) *sk)
 {
     EVP_TEST_BUFFER *db;
@@ -199,8 +199,8 @@ static int evp_test_buffer_set_count(const char *value,
 /*
  * call "fn" with each element of the list in turn
  */
-static int evp_test_buffer_do(STACK_OF(EVP_TEST_BUFFER) *sk,
-                              int (*fn)(void *ctx,
+static int __cdecl evp_test_buffer_do(STACK_OF(EVP_TEST_BUFFER) *sk,
+                              int (__cdecl *fn)(void *ctx,
                                         const unsigned char *buf,
                                         size_t buflen),
                               void *ctx)
@@ -265,7 +265,7 @@ static unsigned char* unescape(const char *input, size_t input_len,
  * For a hex string "value" convert to a binary allocated buffer.
  * Return 1 on success or 0 on failure.
  */
-static int parse_bin(const char *value, unsigned char **buf, size_t *buflen)
+static int __cdecl parse_bin(const char *value, unsigned char **buf, size_t *buflen)
 {
     long len;
 
@@ -328,7 +328,7 @@ typedef struct digest_data_st {
     size_t output_len;
 } DIGEST_DATA;
 
-static int digest_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl digest_test_init(EVP_TEST *t, const char *alg)
 {
     DIGEST_DATA *mdat;
     const EVP_MD *digest;
@@ -348,7 +348,7 @@ static int digest_test_init(EVP_TEST *t, const char *alg)
     return 1;
 }
 
-static void digest_test_cleanup(EVP_TEST *t)
+static void __cdecl digest_test_cleanup(EVP_TEST *t)
 {
     DIGEST_DATA *mdat = t->data;
 
@@ -356,7 +356,7 @@ static void digest_test_cleanup(EVP_TEST *t)
     OPENSSL_free(mdat->output);
 }
 
-static int digest_test_parse(EVP_TEST *t,
+static int __cdecl digest_test_parse(EVP_TEST *t,
                              const char *keyword, const char *value)
 {
     DIGEST_DATA *mdata = t->data;
@@ -372,12 +372,12 @@ static int digest_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int digest_update_fn(void *ctx, const unsigned char *buf, size_t buflen)
+static int __cdecl digest_update_fn(void *ctx, const unsigned char *buf, size_t buflen)
 {
     return EVP_DigestUpdate(ctx, buf, buflen);
 }
 
-static int digest_test_run(EVP_TEST *t)
+static int __cdecl digest_test_run(EVP_TEST *t)
 {
     DIGEST_DATA *expected = t->data;
     EVP_MD_CTX *mctx;
@@ -487,7 +487,7 @@ typedef struct cipher_data_st {
     int tag_late;
 } CIPHER_DATA;
 
-static int cipher_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl cipher_test_init(EVP_TEST *t, const char *alg)
 {
     const EVP_CIPHER *cipher;
     CIPHER_DATA *cdat;
@@ -518,7 +518,7 @@ static int cipher_test_init(EVP_TEST *t, const char *alg)
     return 1;
 }
 
-static void cipher_test_cleanup(EVP_TEST *t)
+static void __cdecl cipher_test_cleanup(EVP_TEST *t)
 {
     CIPHER_DATA *cdat = t->data;
 
@@ -530,7 +530,7 @@ static void cipher_test_cleanup(EVP_TEST *t)
     OPENSSL_free(cdat->tag);
 }
 
-static int cipher_test_parse(EVP_TEST *t, const char *keyword,
+static int __cdecl cipher_test_parse(EVP_TEST *t, const char *keyword,
                              const char *value)
 {
     CIPHER_DATA *cdat = t->data;
@@ -571,7 +571,7 @@ static int cipher_test_parse(EVP_TEST *t, const char *keyword,
     return 0;
 }
 
-static int cipher_test_enc(EVP_TEST *t, int enc,
+static int __cdecl cipher_test_enc(EVP_TEST *t, int enc,
                            size_t out_misalign, size_t inp_misalign, int frag)
 {
     CIPHER_DATA *expected = t->data;
@@ -771,7 +771,7 @@ static int cipher_test_enc(EVP_TEST *t, int enc,
     return ok;
 }
 
-static int cipher_test_run(EVP_TEST *t)
+static int __cdecl cipher_test_run(EVP_TEST *t)
 {
     CIPHER_DATA *cdat = t->data;
     int rv, frag = 0;
@@ -880,7 +880,7 @@ typedef struct mac_data_st {
     STACK_OF(OPENSSL_STRING) *controls;
 } MAC_DATA;
 
-static int mac_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl mac_test_init(EVP_TEST *t, const char *alg)
 {
     int type;
     MAC_DATA *mdat;
@@ -924,7 +924,7 @@ static void __cdecl openssl_free(char *m)
     OPENSSL_free(m);
 }
 
-static void mac_test_cleanup(EVP_TEST *t)
+static void __cdecl mac_test_cleanup(EVP_TEST *t)
 {
     MAC_DATA *mdat = t->data;
 
@@ -935,7 +935,7 @@ static void mac_test_cleanup(EVP_TEST *t)
     OPENSSL_free(mdat->output);
 }
 
-static int mac_test_parse(EVP_TEST *t,
+static int __cdecl mac_test_parse(EVP_TEST *t,
                           const char *keyword, const char *value)
 {
     MAC_DATA *mdata = t->data;
@@ -958,7 +958,7 @@ static int mac_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int mac_test_ctrl_pkey(EVP_TEST *t, EVP_PKEY_CTX *pctx,
+static int __cdecl mac_test_ctrl_pkey(EVP_TEST *t, EVP_PKEY_CTX *pctx,
                               const char *value)
 {
     int rv;
@@ -980,7 +980,7 @@ static int mac_test_ctrl_pkey(EVP_TEST *t, EVP_PKEY_CTX *pctx,
     return rv > 0;
 }
 
-static int mac_test_run(EVP_TEST *t)
+static int __cdecl mac_test_run(EVP_TEST *t)
 {
     MAC_DATA *expected = t->data;
     EVP_MD_CTX *mctx = NULL;
@@ -1092,7 +1092,7 @@ typedef struct pkey_data_st {
  * Perform public key operation setup: lookup key, allocated ctx and call
  * the appropriate initialisation function
  */
-static int pkey_test_init(EVP_TEST *t, const char *name,
+static int __cdecl pkey_test_init(EVP_TEST *t, const char *name,
                           int use_public,
                           int (__cdecl *keyopinit) (EVP_PKEY_CTX *ctx),
                           int (__cdecl *keyop)(EVP_PKEY_CTX *ctx,
@@ -1129,7 +1129,7 @@ static int pkey_test_init(EVP_TEST *t, const char *name,
     return 1;
 }
 
-static void pkey_test_cleanup(EVP_TEST *t)
+static void __cdecl pkey_test_cleanup(EVP_TEST *t)
 {
     PKEY_DATA *kdata = t->data;
 
@@ -1138,7 +1138,7 @@ static void pkey_test_cleanup(EVP_TEST *t)
     EVP_PKEY_CTX_free(kdata->ctx);
 }
 
-static int pkey_test_ctrl(EVP_TEST *t, EVP_PKEY_CTX *pctx,
+static int __cdecl pkey_test_ctrl(EVP_TEST *t, EVP_PKEY_CTX *pctx,
                           const char *value)
 {
     int rv;
@@ -1173,7 +1173,7 @@ static int pkey_test_ctrl(EVP_TEST *t, EVP_PKEY_CTX *pctx,
     return rv > 0;
 }
 
-static int pkey_test_parse(EVP_TEST *t,
+static int __cdecl pkey_test_parse(EVP_TEST *t,
                            const char *keyword, const char *value)
 {
     PKEY_DATA *kdata = t->data;
@@ -1186,7 +1186,7 @@ static int pkey_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int pkey_test_run(EVP_TEST *t)
+static int __cdecl pkey_test_run(EVP_TEST *t)
 {
     PKEY_DATA *expected = t->data;
     unsigned char *got = NULL;
@@ -1214,7 +1214,7 @@ static int pkey_test_run(EVP_TEST *t)
     return 1;
 }
 
-static int sign_test_init(EVP_TEST *t, const char *name)
+static int __cdecl sign_test_init(EVP_TEST *t, const char *name)
 {
     return pkey_test_init(t, name, 0, EVP_PKEY_sign_init, EVP_PKEY_sign);
 }
@@ -1227,7 +1227,7 @@ static const EVP_TEST_METHOD psign_test_method = {
     pkey_test_run
 };
 
-static int verify_recover_test_init(EVP_TEST *t, const char *name)
+static int __cdecl verify_recover_test_init(EVP_TEST *t, const char *name)
 {
     return pkey_test_init(t, name, 1, EVP_PKEY_verify_recover_init,
                           EVP_PKEY_verify_recover);
@@ -1241,7 +1241,7 @@ static const EVP_TEST_METHOD pverify_recover_test_method = {
     pkey_test_run
 };
 
-static int decrypt_test_init(EVP_TEST *t, const char *name)
+static int __cdecl decrypt_test_init(EVP_TEST *t, const char *name)
 {
     return pkey_test_init(t, name, 0, EVP_PKEY_decrypt_init,
                           EVP_PKEY_decrypt);
@@ -1255,12 +1255,12 @@ static const EVP_TEST_METHOD pdecrypt_test_method = {
     pkey_test_run
 };
 
-static int verify_test_init(EVP_TEST *t, const char *name)
+static int __cdecl verify_test_init(EVP_TEST *t, const char *name)
 {
     return pkey_test_init(t, name, 1, EVP_PKEY_verify_init, 0);
 }
 
-static int verify_test_run(EVP_TEST *t)
+static int __cdecl verify_test_run(EVP_TEST *t)
 {
     PKEY_DATA *kdata = t->data;
 
@@ -1279,12 +1279,12 @@ static const EVP_TEST_METHOD pverify_test_method = {
 };
 
 
-static int pderive_test_init(EVP_TEST *t, const char *name)
+static int __cdecl pderive_test_init(EVP_TEST *t, const char *name)
 {
     return pkey_test_init(t, name, 0, EVP_PKEY_derive_init, 0);
 }
 
-static int pderive_test_parse(EVP_TEST *t,
+static int __cdecl pderive_test_parse(EVP_TEST *t,
                               const char *keyword, const char *value)
 {
     PKEY_DATA *kdata = t->data;
@@ -1304,7 +1304,7 @@ static int pderive_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int pderive_test_run(EVP_TEST *t)
+static int __cdecl pderive_test_run(EVP_TEST *t)
 {
     PKEY_DATA *expected = t->data;
     unsigned char *got = NULL;
@@ -1373,7 +1373,7 @@ typedef struct pbe_data_st {
 /*
  * Parse unsigned decimal 64 bit integer value
  */
-static int parse_uint64(const char *value, uint64_t *pr)
+static int __cdecl parse_uint64(const char *value, uint64_t *pr)
 {
     const char *p = value;
 
@@ -1397,7 +1397,7 @@ static int parse_uint64(const char *value, uint64_t *pr)
     return 1;
 }
 
-static int scrypt_test_parse(EVP_TEST *t,
+static int __cdecl scrypt_test_parse(EVP_TEST *t,
                              const char *keyword, const char *value)
 {
     PBE_DATA *pdata = t->data;
@@ -1414,7 +1414,7 @@ static int scrypt_test_parse(EVP_TEST *t,
 }
 #endif
 
-static int pbkdf2_test_parse(EVP_TEST *t,
+static int __cdecl pbkdf2_test_parse(EVP_TEST *t,
                              const char *keyword, const char *value)
 {
     PBE_DATA *pdata = t->data;
@@ -1434,7 +1434,7 @@ static int pbkdf2_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int pkcs12_test_parse(EVP_TEST *t,
+static int __cdecl pkcs12_test_parse(EVP_TEST *t,
                              const char *keyword, const char *value)
 {
     PBE_DATA *pdata = t->data;
@@ -1448,7 +1448,7 @@ static int pkcs12_test_parse(EVP_TEST *t,
     return pbkdf2_test_parse(t, keyword, value);
 }
 
-static int pbe_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl pbe_test_init(EVP_TEST *t, const char *alg)
 {
     PBE_DATA *pdat;
     PBE_TYPE pbe_type = PBE_TYPE_INVALID;
@@ -1473,7 +1473,7 @@ static int pbe_test_init(EVP_TEST *t, const char *alg)
     return 1;
 }
 
-static void pbe_test_cleanup(EVP_TEST *t)
+static void __cdecl pbe_test_cleanup(EVP_TEST *t)
 {
     PBE_DATA *pdat = t->data;
 
@@ -1482,7 +1482,7 @@ static void pbe_test_cleanup(EVP_TEST *t)
     OPENSSL_free(pdat->key);
 }
 
-static int pbe_test_parse(EVP_TEST *t,
+static int __cdecl pbe_test_parse(EVP_TEST *t,
                           const char *keyword, const char *value)
 {
     PBE_DATA *pdata = t->data;
@@ -1504,7 +1504,7 @@ static int pbe_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int pbe_test_run(EVP_TEST *t)
+static int __cdecl pbe_test_run(EVP_TEST *t)
 {
     PBE_DATA *expected = t->data;
     unsigned char *key;
@@ -1579,7 +1579,7 @@ typedef struct encode_data_st {
     base64_encoding_type encoding;
 } ENCODE_DATA;
 
-static int encode_test_init(EVP_TEST *t, const char *encoding)
+static int __cdecl encode_test_init(EVP_TEST *t, const char *encoding)
 {
     ENCODE_DATA *edata;
 
@@ -1606,7 +1606,7 @@ err:
     return 0;
 }
 
-static void encode_test_cleanup(EVP_TEST *t)
+static void __cdecl encode_test_cleanup(EVP_TEST *t)
 {
     ENCODE_DATA *edata = t->data;
 
@@ -1615,7 +1615,7 @@ static void encode_test_cleanup(EVP_TEST *t)
     memset(edata, 0, sizeof(*edata));
 }
 
-static int encode_test_parse(EVP_TEST *t,
+static int __cdecl encode_test_parse(EVP_TEST *t,
                              const char *keyword, const char *value)
 {
     ENCODE_DATA *edata = t->data;
@@ -1627,7 +1627,7 @@ static int encode_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int encode_test_run(EVP_TEST *t)
+static int __cdecl encode_test_run(EVP_TEST *t)
 {
     ENCODE_DATA *expected = t->data;
     unsigned char *encode_out = NULL, *decode_out = NULL;
@@ -1721,7 +1721,7 @@ typedef struct kdf_data_st {
  * Perform public key operation setup: lookup key, allocated ctx and call
  * the appropriate initialisation function
  */
-static int kdf_test_init(EVP_TEST *t, const char *name)
+static int __cdecl kdf_test_init(EVP_TEST *t, const char *name)
 {
     KDF_DATA *kdata;
     int kdf_nid = OBJ_sn2nid(name);
@@ -1752,14 +1752,14 @@ static int kdf_test_init(EVP_TEST *t, const char *name)
     return 1;
 }
 
-static void kdf_test_cleanup(EVP_TEST *t)
+static void __cdecl kdf_test_cleanup(EVP_TEST *t)
 {
     KDF_DATA *kdata = t->data;
     OPENSSL_free(kdata->output);
     EVP_PKEY_CTX_free(kdata->ctx);
 }
 
-static int kdf_test_parse(EVP_TEST *t,
+static int __cdecl kdf_test_parse(EVP_TEST *t,
                           const char *keyword, const char *value)
 {
     KDF_DATA *kdata = t->data;
@@ -1771,7 +1771,7 @@ static int kdf_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int kdf_test_run(EVP_TEST *t)
+static int __cdecl kdf_test_run(EVP_TEST *t)
 {
     KDF_DATA *expected = t->data;
     unsigned char *got = NULL;
@@ -1815,7 +1815,7 @@ typedef struct keypair_test_data_st {
     EVP_PKEY *pubk;
 } KEYPAIR_TEST_DATA;
 
-static int keypair_test_init(EVP_TEST *t, const char *pair)
+static int __cdecl keypair_test_init(EVP_TEST *t, const char *pair)
 {
     KEYPAIR_TEST_DATA *data;
     int rv = 0;
@@ -1861,7 +1861,7 @@ end:
     return rv;
 }
 
-static void keypair_test_cleanup(EVP_TEST *t)
+static void __cdecl keypair_test_cleanup(EVP_TEST *t)
 {
     OPENSSL_free(t->data);
     t->data = NULL;
@@ -1870,12 +1870,12 @@ static void keypair_test_cleanup(EVP_TEST *t)
 /*
  * For tests that do not accept any custom keywords.
  */
-static int void_test_parse(EVP_TEST *t, const char *keyword, const char *value)
+static int __cdecl void_test_parse(EVP_TEST *t, const char *keyword, const char *value)
 {
     return 0;
 }
 
-static int keypair_test_run(EVP_TEST *t)
+static int __cdecl keypair_test_run(EVP_TEST *t)
 {
     int rv = 0;
     const KEYPAIR_TEST_DATA *pair = t->data;
@@ -1931,7 +1931,7 @@ typedef struct keygen_test_data_st {
     char *keyname; /* Key name to store key or NULL */
 } KEYGEN_TEST_DATA;
 
-static int keygen_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl keygen_test_init(EVP_TEST *t, const char *alg)
 {
     KEYGEN_TEST_DATA *data;
     EVP_PKEY_CTX *genctx;
@@ -1967,7 +1967,7 @@ err:
     return 0;
 }
 
-static void keygen_test_cleanup(EVP_TEST *t)
+static void __cdecl keygen_test_cleanup(EVP_TEST *t)
 {
     KEYGEN_TEST_DATA *keygen = t->data;
 
@@ -1977,7 +1977,7 @@ static void keygen_test_cleanup(EVP_TEST *t)
     t->data = NULL;
 }
 
-static int keygen_test_parse(EVP_TEST *t,
+static int __cdecl keygen_test_parse(EVP_TEST *t,
                              const char *keyword, const char *value)
 {
     KEYGEN_TEST_DATA *keygen = t->data;
@@ -1989,7 +1989,7 @@ static int keygen_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int keygen_test_run(EVP_TEST *t)
+static int __cdecl keygen_test_run(EVP_TEST *t)
 {
     KEYGEN_TEST_DATA *keygen = t->data;
     EVP_PKEY *pkey = NULL;
@@ -2051,7 +2051,7 @@ typedef struct {
     size_t output_len; /* Expected output length */
 } DIGESTSIGN_DATA;
 
-static int digestsigver_test_init(EVP_TEST *t, const char *alg, int is_verify,
+static int __cdecl digestsigver_test_init(EVP_TEST *t, const char *alg, int is_verify,
                                   int is_oneshot)
 {
     const EVP_MD *md = NULL;
@@ -2080,12 +2080,12 @@ static int digestsigver_test_init(EVP_TEST *t, const char *alg, int is_verify,
     return 1;
 }
 
-static int digestsign_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl digestsign_test_init(EVP_TEST *t, const char *alg)
 {
     return digestsigver_test_init(t, alg, 0, 0);
 }
 
-static void digestsigver_test_cleanup(EVP_TEST *t)
+static void __cdecl digestsigver_test_cleanup(EVP_TEST *t)
 {
     DIGESTSIGN_DATA *mdata = t->data;
 
@@ -2097,7 +2097,7 @@ static void digestsigver_test_cleanup(EVP_TEST *t)
     t->data = NULL;
 }
 
-static int digestsigver_test_parse(EVP_TEST *t,
+static int __cdecl digestsigver_test_parse(EVP_TEST *t,
                                    const char *keyword, const char *value)
 {
     DIGESTSIGN_DATA *mdata = t->data;
@@ -2148,13 +2148,13 @@ static int digestsigver_test_parse(EVP_TEST *t,
     return 0;
 }
 
-static int digestsign_update_fn(void *ctx, const unsigned char *buf,
+static int __cdecl digestsign_update_fn(void *ctx, const unsigned char *buf,
                                 size_t buflen)
 {
     return EVP_DigestSignUpdate(ctx, buf, buflen);
 }
 
-static int digestsign_test_run(EVP_TEST *t)
+static int __cdecl digestsign_test_run(EVP_TEST *t)
 {
     DIGESTSIGN_DATA *expected = t->data;
     unsigned char *got = NULL;
@@ -2197,18 +2197,18 @@ static const EVP_TEST_METHOD digestsign_test_method = {
     digestsign_test_run
 };
 
-static int digestverify_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl digestverify_test_init(EVP_TEST *t, const char *alg)
 {
     return digestsigver_test_init(t, alg, 1, 0);
 }
 
-static int digestverify_update_fn(void *ctx, const unsigned char *buf,
+static int __cdecl digestverify_update_fn(void *ctx, const unsigned char *buf,
                                   size_t buflen)
 {
     return EVP_DigestVerifyUpdate(ctx, buf, buflen);
 }
 
-static int digestverify_test_run(EVP_TEST *t)
+static int __cdecl digestverify_test_run(EVP_TEST *t)
 {
     DIGESTSIGN_DATA *mdata = t->data;
 
@@ -2231,12 +2231,12 @@ static const EVP_TEST_METHOD digestverify_test_method = {
     digestverify_test_run
 };
 
-static int oneshot_digestsign_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl oneshot_digestsign_test_init(EVP_TEST *t, const char *alg)
 {
     return digestsigver_test_init(t, alg, 0, 1);
 }
 
-static int oneshot_digestsign_test_run(EVP_TEST *t)
+static int __cdecl oneshot_digestsign_test_run(EVP_TEST *t)
 {
     DIGESTSIGN_DATA *expected = t->data;
     unsigned char *got = NULL;
@@ -2275,12 +2275,12 @@ static const EVP_TEST_METHOD oneshot_digestsign_test_method = {
     oneshot_digestsign_test_run
 };
 
-static int oneshot_digestverify_test_init(EVP_TEST *t, const char *alg)
+static int __cdecl oneshot_digestverify_test_init(EVP_TEST *t, const char *alg)
 {
     return digestsigver_test_init(t, alg, 1, 1);
 }
 
-static int oneshot_digestverify_test_run(EVP_TEST *t)
+static int __cdecl oneshot_digestverify_test_run(EVP_TEST *t)
 {
     DIGESTSIGN_DATA *mdata = t->data;
 
@@ -2335,7 +2335,7 @@ static const EVP_TEST_METHOD *find_test(const char *name)
     return NULL;
 }
 
-static void clear_test(EVP_TEST *t)
+static void __cdecl clear_test(EVP_TEST *t)
 {
     test_clearstanza(&t->s);
     ERR_clear_error();
@@ -2361,7 +2361,7 @@ static void clear_test(EVP_TEST *t)
 /*
  * Check for errors in the test structure; return 1 if okay, else 0.
  */
-static int check_test_error(EVP_TEST *t)
+static int __cdecl check_test_error(EVP_TEST *t)
 {
     unsigned long err;
     const char *func;
@@ -2428,7 +2428,7 @@ static int check_test_error(EVP_TEST *t)
 /*
  * Run a parsed test. Log a message and return 0 on error.
  */
-static int run_test(EVP_TEST *t)
+static int __cdecl run_test(EVP_TEST *t)
 {
     if (t->meth == NULL)
         return 1;
@@ -2452,7 +2452,7 @@ static int run_test(EVP_TEST *t)
     return 1;
 }
 
-static int find_key(EVP_PKEY **ppk, const char *name, KEY_LIST *lst)
+static int __cdecl find_key(EVP_PKEY **ppk, const char *name, KEY_LIST *lst)
 {
     for (; lst != NULL; lst = lst->next) {
         if (strcmp(lst->name, name) == 0) {
@@ -2464,7 +2464,7 @@ static int find_key(EVP_PKEY **ppk, const char *name, KEY_LIST *lst)
     return 0;
 }
 
-static void free_key_list(KEY_LIST *lst)
+static void __cdecl free_key_list(KEY_LIST *lst)
 {
     while (lst != NULL) {
         KEY_LIST *next = lst->next;
@@ -2479,7 +2479,7 @@ static void free_key_list(KEY_LIST *lst)
 /*
  * Is the key type an unsupported algorithm?
  */
-static int key_unsupported(void)
+static int __cdecl key_unsupported(void)
 {
     long err = ERR_peek_error();
 
@@ -2517,7 +2517,7 @@ static char *take_value(PAIR *pp)
 /*
  * Read and parse one test.  Return 0 if failure, 1 if okay.
  */
-static int parse(EVP_TEST *t)
+static int __cdecl parse(EVP_TEST *t)
 {
     KEY_LIST *key, **klist;
     EVP_PKEY *pkey;
@@ -2681,7 +2681,7 @@ top:
     return 1;
 }
 
-static int run_file_tests(int i)
+static int __cdecl run_file_tests(int i)
 {
     EVP_TEST *t;
     const char *testfile = test_get_argument(i);

@@ -218,7 +218,7 @@ int ossl_statem_export_early_allowed(SSL *s)
 
 /* End of mocked out code */
 
-static int test_secret(SSL *s, unsigned char *prk,
+static int __cdecl test_secret(SSL *s, unsigned char *prk,
                        const unsigned char *label, size_t labellen,
                        const unsigned char *ref_secret,
                        const unsigned char *ref_key, const unsigned char *ref_iv)
@@ -263,7 +263,7 @@ static int test_secret(SSL *s, unsigned char *prk,
     return 1;
 }
 
-static int test_handshake_secrets(void)
+static int __cdecl test_handshake_secrets(void)
 {
     SSL_CTX *ctx = NULL;
     SSL *s = NULL;

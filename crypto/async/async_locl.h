@@ -38,7 +38,7 @@ struct async_ctx_st {
 
 struct async_job_st {
     async_fibre fibrectx;
-    int (*func) (void *);
+    int (__cdecl *func) (void *);
     void *funcargs;
     int ret;
     int status;
@@ -49,7 +49,7 @@ struct fd_lookup_st {
     const void *key;
     OSSL_ASYNC_FD fd;
     void *custom_data;
-    void (*cleanup)(ASYNC_WAIT_CTX *, const void *, OSSL_ASYNC_FD, void *);
+    void (__cdecl *cleanup)(ASYNC_WAIT_CTX *, const void *, OSSL_ASYNC_FD, void *);
     int add;
     int del;
     struct fd_lookup_st *next;

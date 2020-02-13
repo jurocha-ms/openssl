@@ -36,7 +36,7 @@ static long __cdecl my_bio_callback(BIO *b, int oper, const char *argp, int argi
     return ret;
 }
 
-static int test_bio_callback(void)
+static int __cdecl test_bio_callback(void)
 {
     int ok = 0;
     BIO *bio;

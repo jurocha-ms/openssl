@@ -13,7 +13,7 @@
 #include <openssl/evp.h>
 #include "internal/evp_int.h"
 
-static int tls1_prf_alg(const EVP_MD *md,
+static int __cdecl tls1_prf_alg(const EVP_MD *md,
                         const unsigned char *sec, size_t slen,
                         const unsigned char *seed, size_t seed_len,
                         unsigned char *out, size_t olen);
@@ -33,7 +33,7 @@ typedef struct {
     size_t seedlen;
 } TLS1_PRF_PKEY_CTX;
 
-static int pkey_tls1_prf_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_tls1_prf_init(EVP_PKEY_CTX *ctx)
 {
     TLS1_PRF_PKEY_CTX *kctx;
 
@@ -46,7 +46,7 @@ static int pkey_tls1_prf_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_tls1_prf_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_tls1_prf_cleanup(EVP_PKEY_CTX *ctx)
 {
     TLS1_PRF_PKEY_CTX *kctx = ctx->data;
     OPENSSL_clear_free(kctx->sec, kctx->seclen);
@@ -54,7 +54,7 @@ static void pkey_tls1_prf_cleanup(EVP_PKEY_CTX *ctx)
     OPENSSL_free(kctx);
 }
 
-static int pkey_tls1_prf_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_tls1_prf_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     TLS1_PRF_PKEY_CTX *kctx = ctx->data;
     switch (type) {
@@ -90,7 +90,7 @@ static int pkey_tls1_prf_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_tls1_prf_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_tls1_prf_ctrl_str(EVP_PKEY_CTX *ctx,
                                   const char *type, const char *value)
 {
     if (value == NULL) {
@@ -121,7 +121,7 @@ static int pkey_tls1_prf_ctrl_str(EVP_PKEY_CTX *ctx,
     return -2;
 }
 
-static int pkey_tls1_prf_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
+static int __cdecl pkey_tls1_prf_derive(EVP_PKEY_CTX *ctx, unsigned char *key,
                                 size_t *keylen)
 {
     TLS1_PRF_PKEY_CTX *kctx = ctx->data;
@@ -172,7 +172,7 @@ const EVP_PKEY_METHOD tls1_prf_pkey_meth = {
     pkey_tls1_prf_ctrl_str
 };
 
-static int tls1_prf_P_hash(const EVP_MD *md,
+static int __cdecl tls1_prf_P_hash(const EVP_MD *md,
                            const unsigned char *sec, size_t sec_len,
                            const unsigned char *seed, size_t seed_len,
                            unsigned char *out, size_t olen)
@@ -244,7 +244,7 @@ static int tls1_prf_P_hash(const EVP_MD *md,
     return ret;
 }
 
-static int tls1_prf_alg(const EVP_MD *md,
+static int __cdecl tls1_prf_alg(const EVP_MD *md,
                         const unsigned char *sec, size_t slen,
                         const unsigned char *seed, size_t seed_len,
                         unsigned char *out, size_t olen)

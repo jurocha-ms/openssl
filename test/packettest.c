@@ -14,7 +14,7 @@
 
 static unsigned char smbuf[BUF_LEN];
 
-static int test_PACKET_remaining(void)
+static int __cdecl test_PACKET_remaining(void)
 {
     PACKET pkt;
 
@@ -29,7 +29,7 @@ static int test_PACKET_remaining(void)
     return 1;
 }
 
-static int test_PACKET_end(void)
+static int __cdecl test_PACKET_end(void)
 {
     PACKET pkt;
 
@@ -45,7 +45,7 @@ static int test_PACKET_end(void)
     return 1;
 }
 
-static int test_PACKET_get_1(void)
+static int __cdecl test_PACKET_get_1(void)
 {
     unsigned int i = 0;
     PACKET pkt;
@@ -62,7 +62,7 @@ static int test_PACKET_get_1(void)
     return 1;
 }
 
-static int test_PACKET_get_4(void)
+static int __cdecl test_PACKET_get_4(void)
 {
     unsigned long i = 0;
     PACKET pkt;
@@ -79,7 +79,7 @@ static int test_PACKET_get_4(void)
     return 1;
 }
 
-static int test_PACKET_get_net_2(void)
+static int __cdecl test_PACKET_get_net_2(void)
 {
     unsigned int i = 0;
     PACKET pkt;
@@ -96,7 +96,7 @@ static int test_PACKET_get_net_2(void)
     return 1;
 }
 
-static int test_PACKET_get_net_3(void)
+static int __cdecl test_PACKET_get_net_3(void)
 {
     unsigned long i = 0;
     PACKET pkt;
@@ -113,7 +113,7 @@ static int test_PACKET_get_net_3(void)
     return 1;
 }
 
-static int test_PACKET_get_net_4(void)
+static int __cdecl test_PACKET_get_net_4(void)
 {
     unsigned long i = 0;
     PACKET pkt;
@@ -130,7 +130,7 @@ static int test_PACKET_get_net_4(void)
     return 1;
 }
 
-static int test_PACKET_get_sub_packet(void)
+static int __cdecl test_PACKET_get_sub_packet(void)
 {
     PACKET pkt, subpkt;
     unsigned long i = 0;
@@ -151,7 +151,7 @@ static int test_PACKET_get_sub_packet(void)
     return 1;
 }
 
-static int test_PACKET_get_bytes(void)
+static int __cdecl test_PACKET_get_bytes(void)
 {
     const unsigned char *bytes = NULL;
     PACKET pkt;
@@ -175,7 +175,7 @@ static int test_PACKET_get_bytes(void)
     return 1;
 }
 
-static int test_PACKET_copy_bytes(void)
+static int __cdecl test_PACKET_copy_bytes(void)
 {
     unsigned char bytes[4];
     PACKET pkt;
@@ -199,7 +199,7 @@ static int test_PACKET_copy_bytes(void)
     return 1;
 }
 
-static int test_PACKET_copy_all(void)
+static int __cdecl test_PACKET_copy_all(void)
 {
     unsigned char tmp[BUF_LEN];
     PACKET pkt;
@@ -216,7 +216,7 @@ static int test_PACKET_copy_all(void)
     return 1;
 }
 
-static int test_PACKET_memdup(void)
+static int __cdecl test_PACKET_memdup(void)
 {
     unsigned char *data = NULL;
     size_t len;
@@ -238,7 +238,7 @@ end:
     return result;
 }
 
-static int test_PACKET_strndup(void)
+static int __cdecl test_PACKET_strndup(void)
 {
     char buf1[10], buf2[10];
     char *data = NULL;
@@ -265,7 +265,7 @@ end:
     return result;
 }
 
-static int test_PACKET_contains_zero_byte(void)
+static int __cdecl test_PACKET_contains_zero_byte(void)
 {
     char buf1[10], buf2[10];
     PACKET pkt;
@@ -283,7 +283,7 @@ static int test_PACKET_contains_zero_byte(void)
     return 1;
 }
 
-static int test_PACKET_forward(void)
+static int __cdecl test_PACKET_forward(void)
 {
     const unsigned char *byte = NULL;
     PACKET pkt;
@@ -300,7 +300,7 @@ static int test_PACKET_forward(void)
     return 1;
 }
 
-static int test_PACKET_buf_init(void)
+static int __cdecl test_PACKET_buf_init(void)
 {
     unsigned char buf1[BUF_LEN];
     PACKET pkt;
@@ -316,7 +316,7 @@ static int test_PACKET_buf_init(void)
     return 1;
 }
 
-static int test_PACKET_null_init(void)
+static int __cdecl test_PACKET_null_init(void)
 {
     PACKET pkt;
 
@@ -328,7 +328,7 @@ static int test_PACKET_null_init(void)
     return 1;
 }
 
-static int test_PACKET_equal(void)
+static int __cdecl test_PACKET_equal(void)
 {
     PACKET pkt;
 
@@ -345,7 +345,7 @@ static int test_PACKET_equal(void)
     return 1;
 }
 
-static int test_PACKET_get_length_prefixed_1(void)
+static int __cdecl test_PACKET_get_length_prefixed_1(void)
 {
     unsigned char buf1[BUF_LEN];
     const size_t len = 16;
@@ -369,7 +369,7 @@ static int test_PACKET_get_length_prefixed_1(void)
     return 1;
 }
 
-static int test_PACKET_get_length_prefixed_2(void)
+static int __cdecl test_PACKET_get_length_prefixed_2(void)
 {
     unsigned char buf1[1024];
     const size_t len = 516;  /* 0x0204 */
@@ -392,7 +392,7 @@ static int test_PACKET_get_length_prefixed_2(void)
     return 1;
 }
 
-static int test_PACKET_get_length_prefixed_3(void)
+static int __cdecl test_PACKET_get_length_prefixed_3(void)
 {
     unsigned char buf1[1024];
     const size_t len = 516;  /* 0x000204 */
@@ -415,7 +415,7 @@ static int test_PACKET_get_length_prefixed_3(void)
     return 1;
 }
 
-static int test_PACKET_as_length_prefixed_1(void)
+static int __cdecl test_PACKET_as_length_prefixed_1(void)
 {
     unsigned char buf1[BUF_LEN];
     const size_t len = 16;
@@ -438,7 +438,7 @@ static int test_PACKET_as_length_prefixed_1(void)
     return 1;
 }
 
-static int test_PACKET_as_length_prefixed_2(void)
+static int __cdecl test_PACKET_as_length_prefixed_2(void)
 {
     unsigned char buf[1024];
     const size_t len = 516;  /* 0x0204 */

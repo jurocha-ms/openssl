@@ -226,9 +226,9 @@ typedef struct srtp_protection_profile_st {
 
 DEFINE_STACK_OF(SRTP_PROTECTION_PROFILE)
 
-typedef int (*tls_session_ticket_ext_cb_fn)(SSL *s, const unsigned char *data,
+typedef int (__cdecl *tls_session_ticket_ext_cb_fn)(SSL *s, const unsigned char *data,
                                             int len, void *arg);
-typedef int (*tls_session_secret_cb_fn)(SSL *s, void *secret, int *secret_len,
+typedef int (__cdecl *tls_session_secret_cb_fn)(SSL *s, void *secret, int *secret_len,
                                         STACK_OF(SSL_CIPHER) *peer_ciphers,
                                         const SSL_CIPHER **cipher, void *arg);
 
@@ -259,31 +259,31 @@ typedef int (*tls_session_secret_cb_fn)(SSL *s, void *secret, int *secret_len,
 
 /* Typedefs for handling custom extensions */
 
-typedef int (*custom_ext_add_cb)(SSL *s, unsigned int ext_type,
+typedef int (__cdecl *custom_ext_add_cb)(SSL *s, unsigned int ext_type,
                                  const unsigned char **out, size_t *outlen,
                                  int *al, void *add_arg);
 
-typedef void (*custom_ext_free_cb)(SSL *s, unsigned int ext_type,
+typedef void (__cdecl *custom_ext_free_cb)(SSL *s, unsigned int ext_type,
                                    const unsigned char *out, void *add_arg);
 
-typedef int (*custom_ext_parse_cb)(SSL *s, unsigned int ext_type,
+typedef int (__cdecl *custom_ext_parse_cb)(SSL *s, unsigned int ext_type,
                                    const unsigned char *in, size_t inlen,
                                    int *al, void *parse_arg);
 
 
-typedef int (*SSL_custom_ext_add_cb_ex)(SSL *s, unsigned int ext_type,
+typedef int (__cdecl *SSL_custom_ext_add_cb_ex)(SSL *s, unsigned int ext_type,
                                         unsigned int context,
                                         const unsigned char **out,
                                         size_t *outlen, X509 *x,
                                         size_t chainidx,
                                         int *al, void *add_arg);
 
-typedef void (*SSL_custom_ext_free_cb_ex)(SSL *s, unsigned int ext_type,
+typedef void (__cdecl *SSL_custom_ext_free_cb_ex)(SSL *s, unsigned int ext_type,
                                           unsigned int context,
                                           const unsigned char *out,
                                           void *add_arg);
 
-typedef int (*SSL_custom_ext_parse_cb_ex)(SSL *s, unsigned int ext_type,
+typedef int (__cdecl *SSL_custom_ext_parse_cb_ex)(SSL *s, unsigned int ext_type,
                                           unsigned int context,
                                           const unsigned char *in,
                                           size_t inlen, X509 *x,
@@ -624,11 +624,11 @@ unsigned long __cdecl SSL_set_options(SSL *s, unsigned long op);
         SSL_ctrl((s),SSL_CTRL_CLEAR_CERT_FLAGS,(op),NULL)
 
 void __cdecl SSL_CTX_set_msg_callback(SSL_CTX *ctx,
-                              void (*cb) (int write_p, int version,
+                              void (__cdecl *cb) (int write_p, int version,
                                           int content_type, const void *buf,
                                           size_t len, SSL *ssl, void *arg));
 void __cdecl SSL_set_msg_callback(SSL *ssl,
-                          void (*cb) (int write_p, int version,
+                          void (__cdecl *cb) (int write_p, int version,
                                       int content_type, const void *buf,
                                       size_t len, SSL *ssl, void *arg));
 # define SSL_CTX_set_msg_callback_arg(ctx, arg) SSL_CTX_ctrl((ctx), SSL_CTRL_SET_MSG_CALLBACK_ARG, 0, (arg))
@@ -666,7 +666,7 @@ __owur int __cdecl SRP_Calc_A_param(SSL *s);
  * bytes. The callback can alter this length to be less if desired. It is
  * also an error for the callback to set the size to zero.
  */
-typedef int (*GEN_SESSION_CB) (SSL *ssl, unsigned char *id,
+typedef int (__cdecl *GEN_SESSION_CB) (SSL *ssl, unsigned char *id,
                                unsigned int *id_len);
 
 # define SSL_SESS_CACHE_OFF                      0x0000
@@ -739,13 +739,13 @@ int (__cdecl *SSL_CTX_get_client_cert_cb(SSL_CTX *ctx)) (SSL *ssl, X509 **x509,
 __owur int __cdecl SSL_CTX_set_client_cert_engine(SSL_CTX *ctx, ENGINE *e);
 # endif
 void __cdecl SSL_CTX_set_cookie_generate_cb(SSL_CTX *ctx,
-                                    int (*app_gen_cookie_cb) (SSL *ssl,
+                                    int (__cdecl *app_gen_cookie_cb) (SSL *ssl,
                                                               unsigned char
                                                               *cookie,
                                                               unsigned int
                                                               *cookie_len));
 void __cdecl SSL_CTX_set_cookie_verify_cb(SSL_CTX *ctx,
-                                  int (*app_verify_cookie_cb) (SSL *ssl,
+                                  int (__cdecl *app_verify_cookie_cb) (SSL *ssl,
                                                                const unsigned
                                                                char *cookie,
                                                                unsigned int
@@ -753,17 +753,17 @@ void __cdecl SSL_CTX_set_cookie_verify_cb(SSL_CTX *ctx,
 
 void __cdecl SSL_CTX_set_stateless_cookie_generate_cb(
     SSL_CTX *ctx,
-    int (*gen_stateless_cookie_cb) (SSL *ssl,
+    int (__cdecl *gen_stateless_cookie_cb) (SSL *ssl,
                                     unsigned char *cookie,
                                     size_t *cookie_len));
 void __cdecl SSL_CTX_set_stateless_cookie_verify_cb(
     SSL_CTX *ctx,
-    int (*verify_stateless_cookie_cb) (SSL *ssl,
+    int (__cdecl *verify_stateless_cookie_cb) (SSL *ssl,
                                        const unsigned char *cookie,
                                        size_t cookie_len));
 # ifndef OPENSSL_NO_NEXTPROTONEG
 
-typedef int (*SSL_CTX_npn_advertised_cb_func)(SSL *ssl,
+typedef int (__cdecl *SSL_CTX_npn_advertised_cb_func)(SSL *ssl,
                                               const unsigned char **out,
                                               unsigned int *outlen,
                                               void *arg);
@@ -772,7 +772,7 @@ void __cdecl SSL_CTX_set_next_protos_advertised_cb(SSL_CTX *s,
                                            void *arg);
 #  define SSL_CTX_set_npn_advertised_cb SSL_CTX_set_next_protos_advertised_cb
 
-typedef int (*SSL_CTX_npn_select_cb_func)(SSL *s,
+typedef int (__cdecl *SSL_CTX_npn_select_cb_func)(SSL *s,
                                           unsigned char **out,
                                           unsigned char *outlen,
                                           const unsigned char *in,
@@ -801,7 +801,7 @@ __owur int __cdecl SSL_CTX_set_alpn_protos(SSL_CTX *ctx, const unsigned char *pr
                                    unsigned int protos_len);
 __owur int __cdecl SSL_set_alpn_protos(SSL *ssl, const unsigned char *protos,
                                unsigned int protos_len);
-typedef int (*SSL_CTX_alpn_select_cb_func)(SSL *ssl,
+typedef int (__cdecl *SSL_CTX_alpn_select_cb_func)(SSL *ssl,
                                            const unsigned char **out,
                                            unsigned char *outlen,
                                            const unsigned char *in,
@@ -820,7 +820,7 @@ void __cdecl SSL_get0_alpn_selected(const SSL *ssl, const unsigned char **data,
  */
 #  define PSK_MAX_IDENTITY_LEN 128
 #  define PSK_MAX_PSK_LEN 256
-typedef unsigned int (*SSL_psk_client_cb_func)(SSL *ssl,
+typedef unsigned int (__cdecl *SSL_psk_client_cb_func)(SSL *ssl,
                                                const char *hint,
                                                char *identity,
                                                unsigned int max_identity_len,
@@ -829,7 +829,7 @@ typedef unsigned int (*SSL_psk_client_cb_func)(SSL *ssl,
 void __cdecl SSL_CTX_set_psk_client_callback(SSL_CTX *ctx, SSL_psk_client_cb_func cb);
 void __cdecl SSL_set_psk_client_callback(SSL *ssl, SSL_psk_client_cb_func cb);
 
-typedef unsigned int (*SSL_psk_server_cb_func)(SSL *ssl,
+typedef unsigned int (__cdecl *SSL_psk_server_cb_func)(SSL *ssl,
                                                const char *identity,
                                                unsigned char *psk,
                                                unsigned int max_psk_len);
@@ -842,11 +842,11 @@ const char * __cdecl SSL_get_psk_identity_hint(const SSL *s);
 const char * __cdecl SSL_get_psk_identity(const SSL *s);
 # endif
 
-typedef int (*SSL_psk_find_session_cb_func)(SSL *ssl,
+typedef int (__cdecl *SSL_psk_find_session_cb_func)(SSL *ssl,
                                             const unsigned char *identity,
                                             size_t identity_len,
                                             SSL_SESSION **sess);
-typedef int (*SSL_psk_use_session_cb_func)(SSL *ssl, const EVP_MD *md,
+typedef int (__cdecl *SSL_psk_use_session_cb_func)(SSL *ssl, const EVP_MD *md,
                                            const unsigned char **id,
                                            size_t *idlen,
                                            SSL_SESSION **sess);
@@ -913,7 +913,7 @@ __owur int __cdecl SSL_extension_supported(unsigned int ext_type);
  * A callback for logging out TLS key material. This callback should log out
  * |line| followed by a newline.
  */
-typedef void (*SSL_CTX_keylog_cb_func)(const SSL *ssl, const char *line);
+typedef void (__cdecl *SSL_CTX_keylog_cb_func)(const SSL *ssl, const char *line);
 
 /*
  * SSL_CTX_set_keylog_callback configures a callback to log key material. This
@@ -1554,7 +1554,7 @@ __owur int __cdecl SSL_get_verify_depth(const SSL *s);
 __owur SSL_verify_cb SSL_get_verify_callback(const SSL *s);
 void __cdecl SSL_set_verify(SSL *s, int mode, SSL_verify_cb callback);
 void __cdecl SSL_set_verify_depth(SSL *s, int depth);
-void __cdecl SSL_set_cert_cb(SSL *s, int (*cb) (SSL *ssl, void *arg), void *arg);
+void __cdecl SSL_set_cert_cb(SSL *s, int (__cdecl *cb) (SSL *ssl, void *arg), void *arg);
 # ifndef OPENSSL_NO_RSA
 __owur int __cdecl SSL_use_RSAPrivateKey(SSL *ssl, RSA *rsa);
 __owur int __cdecl SSL_use_RSAPrivateKey_ASN1(SSL *ssl, const unsigned char *d,
@@ -1686,9 +1686,9 @@ __owur SSL_verify_cb SSL_CTX_get_verify_callback(const SSL_CTX *ctx);
 void __cdecl SSL_CTX_set_verify(SSL_CTX *ctx, int mode, SSL_verify_cb callback);
 void __cdecl SSL_CTX_set_verify_depth(SSL_CTX *ctx, int depth);
 void __cdecl SSL_CTX_set_cert_verify_callback(SSL_CTX *ctx,
-                                      int (*cb) (X509_STORE_CTX *, void *),
+                                      int (__cdecl *cb) (X509_STORE_CTX *, void *),
                                       void *arg);
-void __cdecl SSL_CTX_set_cert_cb(SSL_CTX *c, int (*cb) (SSL *ssl, void *arg),
+void __cdecl SSL_CTX_set_cert_cb(SSL_CTX *c, int (__cdecl *cb) (SSL *ssl, void *arg),
                          void *arg);
 # ifndef OPENSSL_NO_RSA
 __owur int __cdecl SSL_CTX_use_RSAPrivateKey(SSL_CTX *ctx, RSA *rsa);
@@ -1770,11 +1770,11 @@ int __cdecl SSL_CTX_set_srp_username(SSL_CTX *ctx, char *name);
 int __cdecl SSL_CTX_set_srp_password(SSL_CTX *ctx, char *password);
 int __cdecl SSL_CTX_set_srp_strength(SSL_CTX *ctx, int strength);
 int __cdecl SSL_CTX_set_srp_client_pwd_callback(SSL_CTX *ctx,
-                                        char *(*cb) (SSL *, void *));
+                                        char *(__cdecl *cb) (SSL *, void *));
 int __cdecl SSL_CTX_set_srp_verify_param_callback(SSL_CTX *ctx,
-                                          int (*cb) (SSL *, void *));
+                                          int (__cdecl *cb) (SSL *, void *));
 int __cdecl SSL_CTX_set_srp_username_callback(SSL_CTX *ctx,
-                                      int (*cb) (SSL *, int *, void *));
+                                      int (__cdecl *cb) (SSL *, int *, void *));
 int __cdecl SSL_CTX_set_srp_cb_arg(SSL_CTX *ctx, void *arg);
 
 int __cdecl SSL_set_srp_server_param(SSL *s, const BIGNUM *N, const BIGNUM *g,
@@ -1797,7 +1797,7 @@ __owur char * __cdecl SSL_get_srp_userinfo(SSL *s);
 # define SSL_CLIENT_HELLO_ERROR   0
 # define SSL_CLIENT_HELLO_RETRY   (-1)
 
-typedef int (*SSL_client_hello_cb_fn) (SSL *s, int *al, void *arg);
+typedef int (__cdecl *SSL_client_hello_cb_fn) (SSL *s, int *al, void *arg);
 void __cdecl SSL_CTX_set_client_hello_cb(SSL_CTX *c, SSL_client_hello_cb_fn cb,
                                  void *arg);
 int __cdecl SSL_client_hello_isv2(SSL *s);
@@ -1842,9 +1842,9 @@ __owur int __cdecl SSL_write_ex(SSL *s, const void *buf, size_t num, size_t *wri
 __owur int __cdecl SSL_write_early_data(SSL *s, const void *buf, size_t num,
                                 size_t *written);
 long __cdecl SSL_ctrl(SSL *ssl, int cmd, long larg, void *parg);
-long __cdecl SSL_callback_ctrl(SSL *, int, void (*)(void));
+long __cdecl SSL_callback_ctrl(SSL *, int, void (__cdecl *)(void));
 long __cdecl SSL_CTX_ctrl(SSL_CTX *ctx, int cmd, long larg, void *parg);
-long __cdecl SSL_CTX_callback_ctrl(SSL_CTX *, int, void (*)(void));
+long __cdecl SSL_CTX_callback_ctrl(SSL_CTX *, int, void (__cdecl *)(void));
 
 # define SSL_EARLY_DATA_NOT_SENT    0
 # define SSL_EARLY_DATA_REJECTED    1
@@ -2068,10 +2068,10 @@ void __cdecl SSL_set_default_read_buffer_len(SSL *s, size_t len);
 # ifndef OPENSSL_NO_DH
 /* NB: the |keylength| is only applicable when is_export is true */
 void __cdecl SSL_CTX_set_tmp_dh_callback(SSL_CTX *ctx,
-                                 DH *(*dh) (SSL *ssl, int is_export,
+                                 DH *(__cdecl *dh) (SSL *ssl, int is_export,
                                             int keylength));
 void __cdecl SSL_set_tmp_dh_callback(SSL *ssl,
-                             DH *(*dh) (SSL *ssl, int is_export,
+                             DH *(__cdecl *dh) (SSL *ssl, int is_export,
                                         int keylength));
 # endif
 
@@ -2108,23 +2108,23 @@ __owur int __cdecl SSL_set_session_secret_cb(SSL *s,
                                      void *arg);
 
 void __cdecl SSL_CTX_set_not_resumable_session_callback(SSL_CTX *ctx,
-                                                int (*cb) (SSL *ssl,
+                                                int (__cdecl *cb) (SSL *ssl,
                                                            int
                                                            is_forward_secure));
 
 void __cdecl SSL_set_not_resumable_session_callback(SSL *ssl,
-                                            int (*cb) (SSL *ssl,
+                                            int (__cdecl *cb) (SSL *ssl,
                                                        int is_forward_secure));
 
 void __cdecl SSL_CTX_set_record_padding_callback(SSL_CTX *ctx,
-                                         size_t (*cb) (SSL *ssl, int type,
+                                         size_t (__cdecl *cb) (SSL *ssl, int type,
                                                        size_t len, void *arg));
 void __cdecl SSL_CTX_set_record_padding_callback_arg(SSL_CTX *ctx, void *arg);
 void * __cdecl SSL_CTX_get_record_padding_callback_arg(const SSL_CTX *ctx);
 int __cdecl SSL_CTX_set_block_padding(SSL_CTX *ctx, size_t block_size);
 
 void __cdecl SSL_set_record_padding_callback(SSL *ssl,
-                                    size_t (*cb) (SSL *ssl, int type,
+                                    size_t (__cdecl *cb) (SSL *ssl, int type,
                                                   size_t len, void *arg));
 void __cdecl SSL_set_record_padding_callback_arg(SSL *ssl, void *arg);
 void * __cdecl SSL_get_record_padding_callback_arg(const SSL *ssl);
@@ -2178,7 +2178,7 @@ int __cdecl DTLSv1_listen(SSL *s, BIO_ADDR *client);
  * May return a negative integer if an error occurs.
  * A connection should be aborted if the SCTs are deemed insufficient.
  */
-typedef int (*ssl_ct_validation_cb)(const CT_POLICY_EVAL_CTX *ctx,
+typedef int (__cdecl *ssl_ct_validation_cb)(const CT_POLICY_EVAL_CTX *ctx,
                                     const STACK_OF(SCT) *scts, void *arg);
 
 /*
@@ -2404,8 +2404,8 @@ typedef int SSL_TICKET_RETURN;
 /* Use the ticket, send a renewed ticket to the client */
 #define SSL_TICKET_RETURN_USE_RENEW         4
 
-typedef int (*SSL_CTX_generate_session_ticket_fn)(SSL *s, void *arg);
-typedef SSL_TICKET_RETURN (*SSL_CTX_decrypt_session_ticket_fn)(SSL *s, SSL_SESSION *ss,
+typedef int (__cdecl *SSL_CTX_generate_session_ticket_fn)(SSL *s, void *arg);
+typedef SSL_TICKET_RETURN (__cdecl *SSL_CTX_decrypt_session_ticket_fn)(SSL *s, SSL_SESSION *ss,
                                                                const unsigned char *keyname,
                                                                size_t keyname_length,
                                                                SSL_TICKET_STATUS status,
@@ -2419,12 +2419,12 @@ int __cdecl SSL_SESSION_get0_ticket_appdata(SSL_SESSION *ss, void **data, size_t
 
 extern const char SSL_version_str[];
 
-typedef unsigned int (*DTLS_timer_cb)(SSL *s, unsigned int timer_us);
+typedef unsigned int (__cdecl *DTLS_timer_cb)(SSL *s, unsigned int timer_us);
 
 void __cdecl DTLS_set_timer_cb(SSL *s, DTLS_timer_cb cb);
 
 
-typedef int (*SSL_allow_early_data_cb_fn)(SSL *s, void *arg);
+typedef int (__cdecl *SSL_allow_early_data_cb_fn)(SSL *s, void *arg);
 void __cdecl SSL_CTX_set_allow_early_data_cb(SSL_CTX *ctx,
                                      SSL_allow_early_data_cb_fn cb,
                                      void *arg);

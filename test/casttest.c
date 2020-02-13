@@ -54,7 +54,7 @@ static unsigned char c_b[16] = {
     0x80, 0xAC, 0x05, 0xB8, 0xE8, 0x3D, 0x69, 0x6E
 };
 
-static int cast_test_vector(int z)
+static int __cdecl cast_test_vector(int z)
 {
     int testresult = 1;
     CAST_KEY key;
@@ -75,7 +75,7 @@ static int cast_test_vector(int z)
     return testresult;
 }
 
-static int cast_test_iterations(void)
+static int __cdecl cast_test_iterations(void)
 {
     long l;
     int testresult = 1;

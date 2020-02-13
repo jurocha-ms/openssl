@@ -24,7 +24,7 @@ static char *privkey = NULL;
 
 #define TOTAL_RECORD_OVERFLOW_TESTS 6
 
-static int write_record(BIO *b, size_t len, int rectype, int recversion)
+static int __cdecl write_record(BIO *b, size_t len, int rectype, int recversion)
 {
     unsigned char header[SSL3_RT_HEADER_LENGTH];
     size_t written;
@@ -60,7 +60,7 @@ static int write_record(BIO *b, size_t len, int rectype, int recversion)
     return 1;
 }
 
-static int fail_due_to_record_overflow(int enc)
+static int __cdecl fail_due_to_record_overflow(int enc)
 {
     long err = ERR_peek_error();
     int reason;
@@ -77,7 +77,7 @@ static int fail_due_to_record_overflow(int enc)
     return 0;
 }
 
-static int test_record_overflow(int idx)
+static int __cdecl test_record_overflow(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;

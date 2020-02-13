@@ -259,7 +259,7 @@ static tests testpackets[9] = {
 
 # define COOKIE_LEN  20
 
-static int cookie_gen(SSL *ssl, unsigned char *cookie, unsigned int *cookie_len)
+static int __cdecl cookie_gen(SSL *ssl, unsigned char *cookie, unsigned int *cookie_len)
 {
     unsigned int i;
 
@@ -270,7 +270,7 @@ static int cookie_gen(SSL *ssl, unsigned char *cookie, unsigned int *cookie_len)
     return 1;
 }
 
-static int cookie_verify(SSL *ssl, const unsigned char *cookie,
+static int __cdecl cookie_verify(SSL *ssl, const unsigned char *cookie,
                          unsigned int cookie_len)
 {
     unsigned int i;
@@ -286,7 +286,7 @@ static int cookie_verify(SSL *ssl, const unsigned char *cookie,
     return 1;
 }
 
-static int dtls_listen_test(int i)
+static int __cdecl dtls_listen_test(int i)
 {
     SSL_CTX *ctx = NULL;
     SSL *ssl = NULL;

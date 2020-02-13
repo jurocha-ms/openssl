@@ -20,7 +20,7 @@ NON_EMPTY_TRANSLATION_UNIT
 # include <openssl/dh.h>
 
 DH *DH_generate_parameters(int prime_len, int generator,
-                           void (*callback) (int, int, void *), void *cb_arg)
+                           void (__cdecl *callback) (int, int, void *), void *cb_arg)
 {
     BN_GENCB *cb;
     DH *ret = NULL;

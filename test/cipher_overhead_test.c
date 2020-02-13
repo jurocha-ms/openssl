@@ -21,7 +21,7 @@
 # pragma names restore
 #endif
 
-static int cipher_overhead(void)
+static int __cdecl cipher_overhead(void)
 {
     int ret = 1, i, n = ssl3_num_ciphers();
     const SSL_CIPHER *ciph;

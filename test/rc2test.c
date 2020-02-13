@@ -38,7 +38,7 @@ static unsigned char RC2cipher[4][8] = {
     {0x50, 0xDC, 0x01, 0x62, 0xBD, 0x75, 0x7F, 0x31},
 };
 
-static int test_rc2(const int n)
+static int __cdecl test_rc2(const int n)
 {
     int testresult = 1;
     RC2_KEY key;

@@ -42,7 +42,7 @@ void __cdecl ASYNC_WAIT_CTX_free(ASYNC_WAIT_CTX *ctx)
 }
 int __cdecl ASYNC_WAIT_CTX_set_wait_fd(ASYNC_WAIT_CTX *ctx, const void *key,
                                OSSL_ASYNC_FD fd, void *custom_data,
-                               void (*cleanup)(ASYNC_WAIT_CTX *, const void *,
+                               void (__cdecl *cleanup)(ASYNC_WAIT_CTX *, const void *,
                                                OSSL_ASYNC_FD, void *))
 {
     struct fd_lookup_st *fdlookup;

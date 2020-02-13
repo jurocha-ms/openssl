@@ -17,7 +17,7 @@
 
 static const char *infile;
 
-static int test_pathlen(void)
+static int __cdecl test_pathlen(void)
 {
     X509 *x = NULL;
     BIO *b = NULL;

@@ -174,7 +174,7 @@ static size_t last_blocks_correction_nist(const unsigned char *in,
     return tail;
 }
 
-static int execute_cts128(const CTS128_FIXTURE *fixture, int num)
+static int __cdecl execute_cts128(const CTS128_FIXTURE *fixture, int num)
 {
     const unsigned char *test_iv = cts128_test_iv;
     size_t test_iv_len = sizeof(cts128_test_iv);
@@ -234,7 +234,7 @@ static int execute_cts128(const CTS128_FIXTURE *fixture, int num)
     return 1;
 }
 
-static int test_aes_cts128(int idx)
+static int __cdecl test_aes_cts128(int idx)
 {
     static const CTS128_FIXTURE fixture_cts128 = {
         "aes_cts128", last_blocks_correction,
@@ -245,7 +245,7 @@ static int test_aes_cts128(int idx)
     return execute_cts128(&fixture_cts128, idx);
 }
 
-static int test_aes_cts128_nist(int idx)
+static int __cdecl test_aes_cts128_nist(int idx)
 {
     static const CTS128_FIXTURE fixture_cts128_nist = {
         "aes_cts128_nist", last_blocks_correction_nist,
@@ -835,7 +835,7 @@ static struct gcm128_data {
     GCM128_TEST_VECTOR(20)
 };
 
-static int test_gcm128(int idx)
+static int __cdecl test_gcm128(int idx)
 {
     unsigned char out[512];
     SIZED_DATA K = gcm128_vectors[idx].K;

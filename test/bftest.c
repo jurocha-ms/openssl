@@ -224,7 +224,7 @@ static unsigned char key_out[KEY_TEST_NUM][8] = {
     {0x05, 0x04, 0x4B, 0x62, 0xFA, 0x52, 0xD0, 0x80},
 };
 
-static int print_test_data(void)
+static int __cdecl print_test_data(void)
 {
     unsigned int i, j;
 
@@ -289,7 +289,7 @@ static int print_test_data(void)
     return 0;
 }
 
-static int test_bf_ecb_raw(int n)
+static int __cdecl test_bf_ecb_raw(int n)
 {
     int ret = 1;
     BF_KEY key;
@@ -310,7 +310,7 @@ static int test_bf_ecb_raw(int n)
     return ret;
 }
 
-static int test_bf_ecb(int n)
+static int __cdecl test_bf_ecb(int n)
 {
     int ret = 1;
     BF_KEY key;
@@ -329,7 +329,7 @@ static int test_bf_ecb(int n)
     return ret;
 }
 
-static int test_bf_set_key(int n)
+static int __cdecl test_bf_set_key(int n)
 {
     int ret = 1;
     BF_KEY key;
@@ -344,7 +344,7 @@ static int test_bf_set_key(int n)
     return ret;
 }
 
-static int test_bf_cbc(void)
+static int __cdecl test_bf_cbc(void)
 {
     unsigned char cbc_in[40], cbc_out[40], iv[8];
     int ret = 1;
@@ -370,7 +370,7 @@ static int test_bf_cbc(void)
     return ret;
 }
 
-static int test_bf_cfb64(void)
+static int __cdecl test_bf_cfb64(void)
 {
     unsigned char cbc_in[40], cbc_out[40], iv[8];
     int n, ret = 1;
@@ -402,7 +402,7 @@ static int test_bf_cfb64(void)
     return ret;
 }
 
-static int test_bf_ofb64(void)
+static int __cdecl test_bf_ofb64(void)
 {
     unsigned char cbc_in[40], cbc_out[40], iv[8];
     int n, ret = 1;

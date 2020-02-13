@@ -31,8 +31,8 @@
 #  warning "AFALG ENGINE requires Kernel Headers >= 4.1.0"
 #  warning "Skipping Compilation of AFALG engine"
 # endif
-void engine_load_afalg_int(void);
-void engine_load_afalg_int(void)
+void __cdecl engine_load_afalg_int(void);
+void __cdecl engine_load_afalg_int(void)
 {
 }
 #else
@@ -818,7 +818,7 @@ static ENGINE *engine_afalg(void)
     return ret;
 }
 
-void engine_load_afalg_int(void)
+void __cdecl engine_load_afalg_int(void)
 {
     ENGINE *toadd;
 

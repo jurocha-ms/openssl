@@ -110,17 +110,17 @@ void __cdecl crypto_cleanup_all_ex_data_int(void)
  * Unregister a new index by replacing the callbacks with no-ops.
  * Any in-use instances are leaked.
  */
-static void dummy_new(void *parent, void *ptr, CRYPTO_EX_DATA *ad, int idx,
+static void __cdecl dummy_new(void *parent, void *ptr, CRYPTO_EX_DATA *ad, int idx,
                      long argl, void *argp)
 {
 }
 
-static void dummy_free(void *parent, void *ptr, CRYPTO_EX_DATA *ad, int idx,
+static void __cdecl dummy_free(void *parent, void *ptr, CRYPTO_EX_DATA *ad, int idx,
                        long argl, void *argp)
 {
 }
 
-static int dummy_dup(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
+static int __cdecl dummy_dup(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
                      void *from_d, int idx,
                      long argl, void *argp)
 {

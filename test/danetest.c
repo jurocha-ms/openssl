@@ -45,14 +45,14 @@ static void save_errno(void)
     saved_errno = errno;
 }
 
-static int restore_errno(void)
+static int __cdecl restore_errno(void)
 {
     int ret = errno;
     errno = saved_errno;
     return ret;
 }
 
-static int verify_chain(SSL *ssl, STACK_OF(X509) *chain)
+static int __cdecl verify_chain(SSL *ssl, STACK_OF(X509) *chain)
 {
     X509_STORE_CTX *store_ctx = NULL;
     SSL_CTX *ssl_ctx = NULL;
@@ -243,7 +243,7 @@ struct tlsa_field {
     ossl_ssize_t (*parser)(const char *, void *);
 };
 
-static int tlsa_import_rr(SSL *ssl, const char *rrdata)
+static int __cdecl tlsa_import_rr(SSL *ssl, const char *rrdata)
 {
     static uint8_t usage;
     static uint8_t selector;
@@ -282,7 +282,7 @@ static int tlsa_import_rr(SSL *ssl, const char *rrdata)
     return ret;
 }
 
-static int allws(const char *cp)
+static int __cdecl allws(const char *cp)
 {
     while (*cp)
         if (!isspace(_UC(*cp++)))
@@ -290,7 +290,7 @@ static int allws(const char *cp)
     return 1;
 }
 
-static int test_tlsafile(SSL_CTX *ctx, const char *base_name,
+static int __cdecl test_tlsafile(SSL_CTX *ctx, const char *base_name,
                          BIO *f, const char *path)
 {
     char *line;
@@ -384,7 +384,7 @@ static int test_tlsafile(SSL_CTX *ctx, const char *base_name,
     return ret;
 }
 
-static int run_tlsatest(void)
+static int __cdecl run_tlsatest(void)
 {
     SSL_CTX *ctx = NULL;
     BIO *f = NULL;

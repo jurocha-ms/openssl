@@ -44,7 +44,7 @@ static int __cdecl int_cmp(const int *p, const int *q)
     return *p != *q;
 }
 
-static int int_find(int n)
+static int __cdecl int_find(int n)
 {
     unsigned int i;
 
@@ -66,7 +66,7 @@ static void int_doall_arg(int *p, short *f)
 
 IMPLEMENT_LHASH_DOALL_ARG(int, short);
 
-static int test_int_lhash(void)
+static int __cdecl test_int_lhash(void)
 {
     static struct {
         int data;
@@ -164,7 +164,7 @@ static unsigned long int __cdecl stress_hash(const int *p)
     return *p;
 }
 
-static int test_stress(void)
+static int __cdecl test_stress(void)
 {
     LHASH_OF(int) *h = lh_int_new(&stress_hash, &int_cmp);
     const unsigned int n = 2500000;

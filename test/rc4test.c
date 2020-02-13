@@ -55,7 +55,7 @@ static unsigned char output[6][30] = {
     {0xd6, 0xa1, 0x41, 0xa7, 0xec, 0x3c, 0x38, 0xdf, 0xbd, 0x61, 0x00},
 };
 
-static int test_rc4_encrypt(const int i)
+static int __cdecl test_rc4_encrypt(const int i)
 {
     unsigned char obuf[512];
     RC4_KEY key;
@@ -66,7 +66,7 @@ static int test_rc4_encrypt(const int i)
     return TEST_mem_eq(obuf, data_len[i] + 1, output[i], data_len[i] + 1);
 }
 
-static int test_rc4_end_processing(const int i)
+static int __cdecl test_rc4_end_processing(const int i)
 {
     unsigned char obuf[512];
     RC4_KEY key;
@@ -79,7 +79,7 @@ static int test_rc4_end_processing(const int i)
     return TEST_uchar_eq(obuf[i], 0);
 }
 
-static int test_rc4_multi_call(const int i)
+static int __cdecl test_rc4_multi_call(const int i)
 {
     unsigned char obuf[512];
     RC4_KEY key;
@@ -91,7 +91,7 @@ static int test_rc4_multi_call(const int i)
     return TEST_mem_eq(obuf, data_len[3] + 1, output[3], data_len[3] + 1);
 }
 
-static int test_rc_bulk(void)
+static int __cdecl test_rc_bulk(void)
 {
     RC4_KEY key;
     unsigned char buf[513];

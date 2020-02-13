@@ -25,7 +25,7 @@ static const char *k;
 static const char *t;
 static const char *e;
 
-static int test_x509_check_cert_pkey(void)
+static int __cdecl test_x509_check_cert_pkey(void)
 {
     BIO *bio = NULL;
     X509 *x509 = NULL;

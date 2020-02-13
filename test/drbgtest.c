@@ -150,7 +150,7 @@ static size_t kat_nonce(RAND_DRBG *drbg, unsigned char **pout,
     return t->noncelen;
 }
 
-static int uninstantiate(RAND_DRBG *drbg)
+static int __cdecl uninstantiate(RAND_DRBG *drbg)
 {
     int ret = drbg == NULL ? 1 : RAND_DRBG_uninstantiate(drbg);
 
@@ -161,7 +161,7 @@ static int uninstantiate(RAND_DRBG *drbg)
 /*
  * Do a single KAT test.  Return 0 on failure.
  */
-static int single_kat(DRBG_SELFTEST_DATA *td)
+static int __cdecl single_kat(DRBG_SELFTEST_DATA *td)
 {
     RAND_DRBG *drbg = NULL;
     TEST_CTX t;
@@ -252,7 +252,7 @@ err:
 /*
  * Initialise a DRBG based on selftest data
  */
-static int init(RAND_DRBG *drbg, DRBG_SELFTEST_DATA *td, TEST_CTX *t)
+static int __cdecl init(RAND_DRBG *drbg, DRBG_SELFTEST_DATA *td, TEST_CTX *t)
 {
     if (!TEST_true(RAND_DRBG_set(drbg, td->nid, td->flags))
             || !TEST_true(RAND_DRBG_set_callbacks(drbg, kat_entropy, NULL,
@@ -271,7 +271,7 @@ static int init(RAND_DRBG *drbg, DRBG_SELFTEST_DATA *td, TEST_CTX *t)
 /*
  * Initialise and instantiate DRBG based on selftest data
  */
-static int instantiate(RAND_DRBG *drbg, DRBG_SELFTEST_DATA *td,
+static int __cdecl instantiate(RAND_DRBG *drbg, DRBG_SELFTEST_DATA *td,
                        TEST_CTX *t)
 {
     if (!TEST_true(init(drbg, td, t))
@@ -284,7 +284,7 @@ static int instantiate(RAND_DRBG *drbg, DRBG_SELFTEST_DATA *td,
  * Perform extensive error checking as required by SP800-90.
  * Induce several failure modes and check an error condition is set.
  */
-static int error_check(DRBG_SELFTEST_DATA *td)
+static int __cdecl error_check(DRBG_SELFTEST_DATA *td)
 {
     static char zero[sizeof(RAND_DRBG)];
     RAND_DRBG *drbg = NULL;
@@ -465,7 +465,7 @@ err:
     return ret;
 }
 
-static int test_kats(int i)
+static int __cdecl test_kats(int i)
 {
     DRBG_SELFTEST_DATA *td = &drbg_test[i];
     int rv = 0;
@@ -478,7 +478,7 @@ err:
     return rv;
 }
 
-static int test_error_checks(int i)
+static int __cdecl test_error_checks(int i)
 {
     DRBG_SELFTEST_DATA *td = &drbg_test[i];
     int rv = 0;
@@ -582,7 +582,7 @@ static void reset_drbg_hook_ctx(void)
  * |reseed_time|: if nonzero, used instead of time(NULL) to set the
  *                |before_reseed| time.
  */
-static int test_drbg_reseed(int expect_success,
+static int __cdecl test_drbg_reseed(int expect_success,
                             RAND_DRBG *master,
                             RAND_DRBG *public,
                             RAND_DRBG *private,
@@ -682,7 +682,7 @@ static int test_drbg_reseed(int expect_success,
  * Test whether master, public and private DRBG are reseeded after
  * forking the process.
  */
-static int test_drbg_reseed_after_fork(RAND_DRBG *master,
+static int __cdecl test_drbg_reseed_after_fork(RAND_DRBG *master,
                                        RAND_DRBG *public,
                                        RAND_DRBG *private)
 {
@@ -715,7 +715,7 @@ static int test_drbg_reseed_after_fork(RAND_DRBG *master,
  * setup correctly, in particular whether reseeding  works
  * as designed.
  */
-static int test_rand_drbg_reseed(void)
+static int __cdecl test_rand_drbg_reseed(void)
 {
     RAND_DRBG *master, *public, *private;
     unsigned char rand_add_buf[256];
@@ -883,13 +883,13 @@ static DWORD WINAPI thread_run(LPVOID arg)
     return 0;
 }
 
-static int run_thread(thread_t *t)
+static int __cdecl run_thread(thread_t *t)
 {
     *t = CreateThread(NULL, 0, thread_run, NULL, 0, NULL);
     return *t != NULL;
 }
 
-static int wait_for_thread(thread_t thread)
+static int __cdecl wait_for_thread(thread_t thread)
 {
     return WaitForSingleObject(thread, INFINITE) == 0;
 }
@@ -909,12 +909,12 @@ static void *thread_run(void *arg)
     return NULL;
 }
 
-static int run_thread(thread_t *t)
+static int __cdecl run_thread(thread_t *t)
 {
     return pthread_create(t, NULL, thread_run, NULL) == 0;
 }
 
-static int wait_for_thread(thread_t thread)
+static int __cdecl wait_for_thread(thread_t thread)
 {
     return pthread_join(thread, NULL) == 0;
 }
@@ -927,7 +927,7 @@ static int wait_for_thread(thread_t thread)
  */
 # define THREADS 3
 
-static int test_multi_thread(void)
+static int __cdecl test_multi_thread(void)
 {
     thread_t t[THREADS];
     int i;
@@ -957,7 +957,7 @@ static int test_multi_thread(void)
  * If an os entropy source is available then RAND_seed(buffer, bufsize)
  * is expected to succeed always.
  */
-static int test_rand_seed(void)
+static int __cdecl test_rand_seed(void)
 {
     RAND_DRBG *master = NULL;
     unsigned char rand_buf[256];
@@ -992,7 +992,7 @@ static int test_rand_seed(void)
  * This should succeed regardless of whether an os entropy source is
  * available or not.
  */
-static int test_rand_add(void)
+static int __cdecl test_rand_add(void)
 {
     unsigned char rand_buf[256];
     size_t rand_buflen;

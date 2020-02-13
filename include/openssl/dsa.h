@@ -119,7 +119,7 @@ DEPRECATEDIN_0_9_8(DSA *DSA_generate_parameters(int bits,
                                                 int seed_len,
                                                 int *counter_ret,
                                                 unsigned long *h_ret, void
-                                                 (*callback) (int, int,
+                                                 (__cdecl *callback) (int, int,
                                                               void *),
                                                 void *cb_arg))
 
@@ -196,39 +196,39 @@ DSA_SIG *(__cdecl *DSA_meth_get_sign(const DSA_METHOD *dsam))
         (const unsigned char *, int, DSA *);
 int __cdecl DSA_meth_set_sign(DSA_METHOD *dsam,
                        DSA_SIG *(__cdecl *sign) (const unsigned char *, int, DSA *));
-int (* __cdecl DSA_meth_get_sign_setup(const DSA_METHOD *dsam))
+int (__cdecl *DSA_meth_get_sign_setup(const DSA_METHOD *dsam))
         (DSA *, BN_CTX *, BIGNUM **, BIGNUM **);
 int __cdecl DSA_meth_set_sign_setup(DSA_METHOD *dsam,
-        int (*sign_setup) (DSA *, BN_CTX *, BIGNUM **, BIGNUM **));
-int (* __cdecl DSA_meth_get_verify(const DSA_METHOD *dsam))
+        int (__cdecl *sign_setup) (DSA *, BN_CTX *, BIGNUM **, BIGNUM **));
+int (__cdecl *DSA_meth_get_verify(const DSA_METHOD *dsam))
         (const unsigned char *, int, DSA_SIG *, DSA *);
 int __cdecl DSA_meth_set_verify(DSA_METHOD *dsam,
-    int (*verify) (const unsigned char *, int, DSA_SIG *, DSA *));
-int (* __cdecl DSA_meth_get_mod_exp(const DSA_METHOD *dsam))
+    int (__cdecl *verify) (const unsigned char *, int, DSA_SIG *, DSA *));
+int (__cdecl *DSA_meth_get_mod_exp(const DSA_METHOD *dsam))
         (DSA *, BIGNUM *, const BIGNUM *, const BIGNUM *, const BIGNUM *,
          const BIGNUM *, const BIGNUM *, BN_CTX *, BN_MONT_CTX *);
 int __cdecl DSA_meth_set_mod_exp(DSA_METHOD *dsam,
-    int (*mod_exp) (DSA *, BIGNUM *, const BIGNUM *, const BIGNUM *,
+    int (__cdecl *mod_exp) (DSA *, BIGNUM *, const BIGNUM *, const BIGNUM *,
                     const BIGNUM *, const BIGNUM *, const BIGNUM *, BN_CTX *,
                     BN_MONT_CTX *));
-int (* __cdecl DSA_meth_get_bn_mod_exp(const DSA_METHOD *dsam))
+int (__cdecl *DSA_meth_get_bn_mod_exp(const DSA_METHOD *dsam))
     (DSA *, BIGNUM *, const BIGNUM *, const BIGNUM *, const BIGNUM *,
      BN_CTX *, BN_MONT_CTX *);
 int __cdecl DSA_meth_set_bn_mod_exp(DSA_METHOD *dsam,
-    int (*bn_mod_exp) (DSA *, BIGNUM *, const BIGNUM *, const BIGNUM *,
+    int (__cdecl *bn_mod_exp) (DSA *, BIGNUM *, const BIGNUM *, const BIGNUM *,
                        const BIGNUM *, BN_CTX *, BN_MONT_CTX *));
-int (* __cdecl DSA_meth_get_init(const DSA_METHOD *dsam))(DSA *);
-int __cdecl DSA_meth_set_init(DSA_METHOD *dsam, int (*init)(DSA *));
-int (* __cdecl DSA_meth_get_finish(const DSA_METHOD *dsam)) (DSA *);
-int __cdecl DSA_meth_set_finish(DSA_METHOD *dsam, int (*finish) (DSA *));
-int (* __cdecl DSA_meth_get_paramgen(const DSA_METHOD *dsam))
+int (__cdecl *DSA_meth_get_init(const DSA_METHOD *dsam))(DSA *);
+int __cdecl DSA_meth_set_init(DSA_METHOD *dsam, int (__cdecl *init)(DSA *));
+int (__cdecl *DSA_meth_get_finish(const DSA_METHOD *dsam)) (DSA *);
+int __cdecl DSA_meth_set_finish(DSA_METHOD *dsam, int (__cdecl *finish) (DSA *));
+int (__cdecl *DSA_meth_get_paramgen(const DSA_METHOD *dsam))
         (DSA *, int, const unsigned char *, int, int *, unsigned long *,
          BN_GENCB *);
 int __cdecl DSA_meth_set_paramgen(DSA_METHOD *dsam,
-        int (*paramgen) (DSA *, int, const unsigned char *, int, int *,
+        int (__cdecl *paramgen) (DSA *, int, const unsigned char *, int, int *,
                          unsigned long *, BN_GENCB *));
-int (* __cdecl DSA_meth_get_keygen(const DSA_METHOD *dsam)) (DSA *);
-int __cdecl DSA_meth_set_keygen(DSA_METHOD *dsam, int (*keygen) (DSA *));
+int (__cdecl *DSA_meth_get_keygen(const DSA_METHOD *dsam)) (DSA *);
+int __cdecl DSA_meth_set_keygen(DSA_METHOD *dsam, int (__cdecl *keygen) (DSA *));
 
 
 #  ifdef  __cplusplus

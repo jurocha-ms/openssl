@@ -64,7 +64,7 @@ static ASN1_TIME the_asn1_time = {
     0
 };
 
-static int test_offset(int idx)
+static int __cdecl test_offset(int idx)
 {
     ASN1_TIME at;
     const TESTDATA *testdata = &tests[idx];

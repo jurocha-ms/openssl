@@ -132,60 +132,60 @@ static int mr = 0;
 static int usertime = 1;
 
 #ifndef OPENSSL_NO_MD2
-static int EVP_Digest_MD2_loop(void *args);
+static int __cdecl EVP_Digest_MD2_loop(void *args);
 #endif
 
 #ifndef OPENSSL_NO_MDC2
-static int EVP_Digest_MDC2_loop(void *args);
+static int __cdecl EVP_Digest_MDC2_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_MD4
-static int EVP_Digest_MD4_loop(void *args);
+static int __cdecl EVP_Digest_MD4_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_MD5
-static int MD5_loop(void *args);
-static int HMAC_loop(void *args);
+static int __cdecl MD5_loop(void *args);
+static int __cdecl HMAC_loop(void *args);
 #endif
-static int SHA1_loop(void *args);
-static int SHA256_loop(void *args);
-static int SHA512_loop(void *args);
+static int __cdecl SHA1_loop(void *args);
+static int __cdecl SHA256_loop(void *args);
+static int __cdecl SHA512_loop(void *args);
 #ifndef OPENSSL_NO_WHIRLPOOL
-static int WHIRLPOOL_loop(void *args);
+static int __cdecl WHIRLPOOL_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_RMD160
-static int EVP_Digest_RMD160_loop(void *args);
+static int __cdecl EVP_Digest_RMD160_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_RC4
-static int RC4_loop(void *args);
+static int __cdecl RC4_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_DES
-static int DES_ncbc_encrypt_loop(void *args);
-static int DES_ede3_cbc_encrypt_loop(void *args);
+static int __cdecl DES_ncbc_encrypt_loop(void *args);
+static int __cdecl DES_ede3_cbc_encrypt_loop(void *args);
 #endif
-static int AES_cbc_128_encrypt_loop(void *args);
-static int AES_cbc_192_encrypt_loop(void *args);
-static int AES_ige_128_encrypt_loop(void *args);
-static int AES_cbc_256_encrypt_loop(void *args);
-static int AES_ige_192_encrypt_loop(void *args);
-static int AES_ige_256_encrypt_loop(void *args);
-static int CRYPTO_gcm128_aad_loop(void *args);
-static int RAND_bytes_loop(void *args);
-static int EVP_Update_loop(void *args);
-static int EVP_Update_loop_ccm(void *args);
-static int EVP_Update_loop_aead(void *args);
-static int EVP_Digest_loop(void *args);
+static int __cdecl AES_cbc_128_encrypt_loop(void *args);
+static int __cdecl AES_cbc_192_encrypt_loop(void *args);
+static int __cdecl AES_ige_128_encrypt_loop(void *args);
+static int __cdecl AES_cbc_256_encrypt_loop(void *args);
+static int __cdecl AES_ige_192_encrypt_loop(void *args);
+static int __cdecl AES_ige_256_encrypt_loop(void *args);
+static int __cdecl CRYPTO_gcm128_aad_loop(void *args);
+static int __cdecl RAND_bytes_loop(void *args);
+static int __cdecl EVP_Update_loop(void *args);
+static int __cdecl EVP_Update_loop_ccm(void *args);
+static int __cdecl EVP_Update_loop_aead(void *args);
+static int __cdecl EVP_Digest_loop(void *args);
 #ifndef OPENSSL_NO_RSA
-static int RSA_sign_loop(void *args);
-static int RSA_verify_loop(void *args);
+static int __cdecl RSA_sign_loop(void *args);
+static int __cdecl RSA_verify_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_DSA
-static int DSA_sign_loop(void *args);
-static int DSA_verify_loop(void *args);
+static int __cdecl DSA_sign_loop(void *args);
+static int __cdecl DSA_verify_loop(void *args);
 #endif
 #ifndef OPENSSL_NO_EC
-static int ECDSA_sign_loop(void *args);
-static int ECDSA_verify_loop(void *args);
-static int EdDSA_sign_loop(void *args);
-static int EdDSA_verify_loop(void *args);
+static int __cdecl ECDSA_sign_loop(void *args);
+static int __cdecl ECDSA_verify_loop(void *args);
+static int __cdecl EdDSA_sign_loop(void *args);
+static int __cdecl EdDSA_verify_loop(void *args);
 #endif
 
 static double Time_F(int s);
@@ -194,7 +194,7 @@ static void pkey_print_message(const char *str, const char *str2,
                                long num, unsigned int bits, int sec);
 static void print_result(int alg, int run_no, int count, double time_used);
 #ifndef NO_FORK
-static int do_multi(int multi, int size_num);
+static int __cdecl do_multi(int multi, int size_num);
 #endif
 
 static const int lengths_list[] = {
@@ -283,7 +283,7 @@ static void multiblock_speed(const EVP_CIPHER *evp_cipher, int lengths_single,
 
 #define found(value, pairs, result)\
     opt_found(value, result, pairs, OSSL_NELEM(pairs))
-static int opt_found(const char *name, unsigned int *result,
+static int __cdecl opt_found(const char *name, unsigned int *result,
                      const OPT_PAIR pairs[], unsigned int nbelem)
 {
     unsigned int idx;
@@ -628,7 +628,7 @@ typedef struct loopargs_st {
     HMAC_CTX *hctx;
     GCM128_CONTEXT *gcm_ctx;
 } loopargs_t;
-static int run_benchmark(int async_jobs, int (*loop_function) (void *),
+static int __cdecl run_benchmark(int async_jobs, int (__cdecl *loop_function) (void *),
                          loopargs_t * loopargs);
 
 static unsigned int testnum;
@@ -637,7 +637,7 @@ static unsigned int testnum;
 static long c[ALGOR_NUM][OSSL_NELEM(lengths_list)];
 
 #ifndef OPENSSL_NO_MD2
-static int EVP_Digest_MD2_loop(void *args)
+static int __cdecl EVP_Digest_MD2_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -654,7 +654,7 @@ static int EVP_Digest_MD2_loop(void *args)
 #endif
 
 #ifndef OPENSSL_NO_MDC2
-static int EVP_Digest_MDC2_loop(void *args)
+static int __cdecl EVP_Digest_MDC2_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -671,7 +671,7 @@ static int EVP_Digest_MDC2_loop(void *args)
 #endif
 
 #ifndef OPENSSL_NO_MD4
-static int EVP_Digest_MD4_loop(void *args)
+static int __cdecl EVP_Digest_MD4_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -688,7 +688,7 @@ static int EVP_Digest_MD4_loop(void *args)
 #endif
 
 #ifndef OPENSSL_NO_MD5
-static int MD5_loop(void *args)
+static int __cdecl MD5_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -699,7 +699,7 @@ static int MD5_loop(void *args)
     return count;
 }
 
-static int HMAC_loop(void *args)
+static int __cdecl HMAC_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -716,7 +716,7 @@ static int HMAC_loop(void *args)
 }
 #endif
 
-static int SHA1_loop(void *args)
+static int __cdecl SHA1_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -727,7 +727,7 @@ static int SHA1_loop(void *args)
     return count;
 }
 
-static int SHA256_loop(void *args)
+static int __cdecl SHA256_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -738,7 +738,7 @@ static int SHA256_loop(void *args)
     return count;
 }
 
-static int SHA512_loop(void *args)
+static int __cdecl SHA512_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -750,7 +750,7 @@ static int SHA512_loop(void *args)
 }
 
 #ifndef OPENSSL_NO_WHIRLPOOL
-static int WHIRLPOOL_loop(void *args)
+static int __cdecl WHIRLPOOL_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -763,7 +763,7 @@ static int WHIRLPOOL_loop(void *args)
 #endif
 
 #ifndef OPENSSL_NO_RMD160
-static int EVP_Digest_RMD160_loop(void *args)
+static int __cdecl EVP_Digest_RMD160_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -780,7 +780,7 @@ static int EVP_Digest_RMD160_loop(void *args)
 
 #ifndef OPENSSL_NO_RC4
 static RC4_KEY rc4_ks;
-static int RC4_loop(void *args)
+static int __cdecl RC4_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -796,7 +796,7 @@ static unsigned char DES_iv[8];
 static DES_key_schedule sch;
 static DES_key_schedule sch2;
 static DES_key_schedule sch3;
-static int DES_ncbc_encrypt_loop(void *args)
+static int __cdecl DES_ncbc_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -807,7 +807,7 @@ static int DES_ncbc_encrypt_loop(void *args)
     return count;
 }
 
-static int DES_ede3_cbc_encrypt_loop(void *args)
+static int __cdecl DES_ede3_cbc_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -823,7 +823,7 @@ static int DES_ede3_cbc_encrypt_loop(void *args)
 
 static unsigned char iv[2 * MAX_BLOCK_SIZE / 8];
 static AES_KEY aes_ks1, aes_ks2, aes_ks3;
-static int AES_cbc_128_encrypt_loop(void *args)
+static int __cdecl AES_cbc_128_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -834,7 +834,7 @@ static int AES_cbc_128_encrypt_loop(void *args)
     return count;
 }
 
-static int AES_cbc_192_encrypt_loop(void *args)
+static int __cdecl AES_cbc_192_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -845,7 +845,7 @@ static int AES_cbc_192_encrypt_loop(void *args)
     return count;
 }
 
-static int AES_cbc_256_encrypt_loop(void *args)
+static int __cdecl AES_cbc_256_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -856,7 +856,7 @@ static int AES_cbc_256_encrypt_loop(void *args)
     return count;
 }
 
-static int AES_ige_128_encrypt_loop(void *args)
+static int __cdecl AES_ige_128_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -868,7 +868,7 @@ static int AES_ige_128_encrypt_loop(void *args)
     return count;
 }
 
-static int AES_ige_192_encrypt_loop(void *args)
+static int __cdecl AES_ige_192_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -880,7 +880,7 @@ static int AES_ige_192_encrypt_loop(void *args)
     return count;
 }
 
-static int AES_ige_256_encrypt_loop(void *args)
+static int __cdecl AES_ige_256_encrypt_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -892,7 +892,7 @@ static int AES_ige_256_encrypt_loop(void *args)
     return count;
 }
 
-static int CRYPTO_gcm128_aad_loop(void *args)
+static int __cdecl CRYPTO_gcm128_aad_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -903,7 +903,7 @@ static int CRYPTO_gcm128_aad_loop(void *args)
     return count;
 }
 
-static int RAND_bytes_loop(void *args)
+static int __cdecl RAND_bytes_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -916,7 +916,7 @@ static int RAND_bytes_loop(void *args)
 
 static long save_count = 0;
 static int decrypt = 0;
-static int EVP_Update_loop(void *args)
+static int __cdecl EVP_Update_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -954,7 +954,7 @@ static int EVP_Update_loop(void *args)
  * each message is encrypted using the same (key,iv)-pair. Do not use this
  * code in your application.
  */
-static int EVP_Update_loop_ccm(void *args)
+static int __cdecl EVP_Update_loop_ccm(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -992,7 +992,7 @@ static int EVP_Update_loop_ccm(void *args)
  * 13-byte AAD followed by payload. But don't use TLS-formatted AAD, as
  * payload length is not actually limited by 16KB...
  */
-static int EVP_Update_loop_aead(void *args)
+static int __cdecl EVP_Update_loop_aead(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1024,7 +1024,7 @@ static int EVP_Update_loop_aead(void *args)
 }
 
 static const EVP_MD *evp_md = NULL;
-static int EVP_Digest_loop(void *args)
+static int __cdecl EVP_Digest_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1044,7 +1044,7 @@ static int EVP_Digest_loop(void *args)
 #ifndef OPENSSL_NO_RSA
 static long rsa_c[RSA_NUM][2];  /* # RSA iteration test */
 
-static int RSA_sign_loop(void *args)
+static int __cdecl RSA_sign_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1064,7 +1064,7 @@ static int RSA_sign_loop(void *args)
     return count;
 }
 
-static int RSA_verify_loop(void *args)
+static int __cdecl RSA_verify_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1088,7 +1088,7 @@ static int RSA_verify_loop(void *args)
 
 #ifndef OPENSSL_NO_DSA
 static long dsa_c[DSA_NUM][2];
-static int DSA_sign_loop(void *args)
+static int __cdecl DSA_sign_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1108,7 +1108,7 @@ static int DSA_sign_loop(void *args)
     return count;
 }
 
-static int DSA_verify_loop(void *args)
+static int __cdecl DSA_verify_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1131,7 +1131,7 @@ static int DSA_verify_loop(void *args)
 
 #ifndef OPENSSL_NO_EC
 static long ecdsa_c[ECDSA_NUM][2];
-static int ECDSA_sign_loop(void *args)
+static int __cdecl ECDSA_sign_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1151,7 +1151,7 @@ static int ECDSA_sign_loop(void *args)
     return count;
 }
 
-static int ECDSA_verify_loop(void *args)
+static int __cdecl ECDSA_verify_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1174,7 +1174,7 @@ static int ECDSA_verify_loop(void *args)
 /* ******************************************************************** */
 static long ecdh_c[EC_NUM][1];
 
-static int ECDH_EVP_derive_key_loop(void *args)
+static int __cdecl ECDH_EVP_derive_key_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     EVP_PKEY_CTX *ctx = tempargs->ecdh_ctx[testnum];
@@ -1189,7 +1189,7 @@ static int ECDH_EVP_derive_key_loop(void *args)
 }
 
 static long eddsa_c[EdDSA_NUM][2];
-static int EdDSA_sign_loop(void *args)
+static int __cdecl EdDSA_sign_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1210,7 +1210,7 @@ static int EdDSA_sign_loop(void *args)
     return count;
 }
 
-static int EdDSA_verify_loop(void *args)
+static int __cdecl EdDSA_verify_loop(void *args)
 {
     loopargs_t *tempargs = *(loopargs_t **) args;
     unsigned char *buf = tempargs->buf;
@@ -1232,8 +1232,8 @@ static int EdDSA_verify_loop(void *args)
 }
 #endif                          /* OPENSSL_NO_EC */
 
-static int run_benchmark(int async_jobs,
-                         int (*loop_function) (void *), loopargs_t * loopargs)
+static int __cdecl run_benchmark(int async_jobs,
+                         int (__cdecl *loop_function) (void *), loopargs_t * loopargs)
 {
     int job_op_count = 0;
     int total_op_count = 0;
@@ -2601,7 +2601,7 @@ int speed_main(int argc, char **argv)
 
     if (doit[D_EVP]) {
         if (evp_cipher != NULL) {
-            int (*loopfunc)(void *args) = EVP_Update_loop;
+            int (__cdecl *loopfunc)(void *args) = EVP_Update_loop;
 
             if (multiblock && (EVP_CIPHER_flags(evp_cipher) &
                                EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK)) {
@@ -3462,7 +3462,7 @@ static char *sstrsep(char **string, const char *delim)
     return token;
 }
 
-static int do_multi(int multi, int size_num)
+static int __cdecl do_multi(int multi, int size_num)
 {
     int n;
     int fd[2];

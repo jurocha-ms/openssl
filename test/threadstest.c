@@ -18,13 +18,13 @@
 
 typedef unsigned int thread_t;
 
-static int run_thread(thread_t *t, void (*f)(void))
+static int __cdecl run_thread(thread_t *t, void (__cdecl *f)(void))
 {
     f();
     return 1;
 }
 
-static int wait_for_thread(thread_t thread)
+static int __cdecl wait_for_thread(thread_t thread)
 {
     return 1;
 }
@@ -35,7 +35,7 @@ typedef HANDLE thread_t;
 
 static DWORD WINAPI thread_run(LPVOID arg)
 {
-    void (*f)(void);
+    void (__cdecl *f)(void);
 
     *(void **) (&f) = arg;
 
@@ -43,13 +43,13 @@ static DWORD WINAPI thread_run(LPVOID arg)
     return 0;
 }
 
-static int run_thread(thread_t *t, void (*f)(void))
+static int __cdecl run_thread(thread_t *t, void (__cdecl *f)(void))
 {
     *t = CreateThread(NULL, 0, thread_run, *(void **) &f, 0, NULL);
     return *t != NULL;
 }
 
-static int wait_for_thread(thread_t thread)
+static int __cdecl wait_for_thread(thread_t thread)
 {
     return WaitForSingleObject(thread, INFINITE) == 0;
 }
@@ -60,7 +60,7 @@ typedef pthread_t thread_t;
 
 static void *thread_run(void *arg)
 {
-    void (*f)(void);
+    void (__cdecl *f)(void);
 
     *(void **) (&f) = arg;
 
@@ -68,19 +68,19 @@ static void *thread_run(void *arg)
     return NULL;
 }
 
-static int run_thread(thread_t *t, void (*f)(void))
+static int __cdecl run_thread(thread_t *t, void (__cdecl *f)(void))
 {
     return pthread_create(t, NULL, thread_run, *(void **) &f) == 0;
 }
 
-static int wait_for_thread(thread_t thread)
+static int __cdecl wait_for_thread(thread_t thread)
 {
     return pthread_join(thread, NULL) == 0;
 }
 
 #endif
 
-static int test_lock(void)
+static int __cdecl test_lock(void)
 {
     CRYPTO_RWLOCK *lock = CRYPTO_THREAD_lock_new();
 
@@ -101,12 +101,12 @@ static void __cdecl once_do_run(void)
     once_run_count++;
 }
 
-static void once_run_thread_cb(void)
+static void __cdecl once_run_thread_cb(void)
 {
     CRYPTO_THREAD_run_once(&once_run, once_do_run);
 }
 
-static int test_once(void)
+static int __cdecl test_once(void)
 {
     thread_t thread;
 
@@ -122,7 +122,7 @@ static CRYPTO_THREAD_LOCAL thread_local_key;
 static unsigned destructor_run_count = 0;
 static int thread_local_thread_cb_ok = 0;
 
-static void thread_local_destructor(void *arg)
+static void __cdecl thread_local_destructor(void *arg)
 {
     unsigned *count;
 
@@ -134,7 +134,7 @@ static void thread_local_destructor(void *arg)
     (*count)++;
 }
 
-static void thread_local_thread_cb(void)
+static void __cdecl thread_local_thread_cb(void)
 {
     void *ptr;
 
@@ -151,7 +151,7 @@ static void thread_local_thread_cb(void)
     thread_local_thread_cb_ok = 1;
 }
 
-static int test_thread_local(void)
+static int __cdecl test_thread_local(void)
 {
     thread_t thread;
     void *ptr = NULL;

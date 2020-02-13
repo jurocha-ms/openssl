@@ -16,15 +16,15 @@
 #include <openssl/asn1.h>
 
 static DSA_SIG * __cdecl dsa_do_sign(const unsigned char *dgst, int dlen, DSA *dsa);
-static int dsa_sign_setup_no_digest(DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
+static int __cdecl dsa_sign_setup_no_digest(DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
                                     BIGNUM **rp);
-static int dsa_sign_setup(DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
+static int __cdecl dsa_sign_setup(DSA *dsa, BN_CTX *ctx_in, BIGNUM **kinvp,
                           BIGNUM **rp, const unsigned char *dgst, int dlen);
-static int dsa_do_verify(const unsigned char *dgst, int dgst_len,
+static int __cdecl dsa_do_verify(const unsigned char *dgst, int dgst_len,
                          DSA_SIG *sig, DSA *dsa);
-static int dsa_init(DSA *dsa);
-static int dsa_finish(DSA *dsa);
-static BIGNUM *dsa_mod_inverse_fermat(const BIGNUM *k, const BIGNUM *q,
+static int __cdecl dsa_init(DSA *dsa);
+static int __cdecl dsa_finish(DSA *dsa);
+static BIGNUM * __cdecl dsa_mod_inverse_fermat(const BIGNUM *k, const BIGNUM *q,
                                       BN_CTX *ctx);
 
 static DSA_METHOD openssl_dsa_meth = {
@@ -173,13 +173,13 @@ static DSA_SIG * __cdecl dsa_do_sign(const unsigned char *dgst, int dlen, DSA *d
     return ret;
 }
 
-static int dsa_sign_setup_no_digest(DSA *dsa, BN_CTX *ctx_in,
+static int __cdecl dsa_sign_setup_no_digest(DSA *dsa, BN_CTX *ctx_in,
                                     BIGNUM **kinvp, BIGNUM **rp)
 {
     return dsa_sign_setup(dsa, ctx_in, kinvp, rp, NULL, 0);
 }
 
-static int dsa_sign_setup(DSA *dsa, BN_CTX *ctx_in,
+static int __cdecl dsa_sign_setup(DSA *dsa, BN_CTX *ctx_in,
                           BIGNUM **kinvp, BIGNUM **rp,
                           const unsigned char *dgst, int dlen)
 {
@@ -296,7 +296,7 @@ static int dsa_sign_setup(DSA *dsa, BN_CTX *ctx_in,
     return ret;
 }
 
-static int dsa_do_verify(const unsigned char *dgst, int dgst_len,
+static int __cdecl dsa_do_verify(const unsigned char *dgst, int dgst_len,
                          DSA_SIG *sig, DSA *dsa)
 {
     BN_CTX *ctx;
@@ -401,13 +401,13 @@ static int dsa_do_verify(const unsigned char *dgst, int dgst_len,
     return ret;
 }
 
-static int dsa_init(DSA *dsa)
+static int __cdecl dsa_init(DSA *dsa)
 {
     dsa->flags |= DSA_FLAG_CACHE_MONT_P;
     return 1;
 }
 
-static int dsa_finish(DSA *dsa)
+static int __cdecl dsa_finish(DSA *dsa)
 {
     BN_MONT_CTX_free(dsa->method_mont_p);
     return 1;
@@ -420,7 +420,7 @@ static int dsa_finish(DSA *dsa)
  * so a mod-exp that doesn't leak the base is sufficient.  A newly allocated
  * BIGNUM is returned which the caller must free.
  */
-static BIGNUM *dsa_mod_inverse_fermat(const BIGNUM *k, const BIGNUM *q,
+static BIGNUM * __cdecl dsa_mod_inverse_fermat(const BIGNUM *k, const BIGNUM *q,
                                       BN_CTX *ctx)
 {
     BIGNUM *res = NULL;

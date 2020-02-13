@@ -20,7 +20,7 @@
 
 # define RANDOM_SIZE 32         /* use 256 bits on each side */
 
-static int run_srp(const char *username, const char *client_pass,
+static int __cdecl run_srp(const char *username, const char *client_pass,
                    const char *server_pass)
 {
     int ret = 0;
@@ -111,7 +111,7 @@ end:
     return ret;
 }
 
-static int check_bn(const char *name, const BIGNUM *bn, const char *hexbn)
+static int __cdecl check_bn(const char *name, const BIGNUM *bn, const char *hexbn)
 {
     BIGNUM *tmp = NULL;
     int r;
@@ -127,7 +127,7 @@ static int check_bn(const char *name, const BIGNUM *bn, const char *hexbn)
 }
 
 /* SRP test vectors from RFC5054 */
-static int run_srp_kat(void)
+static int __cdecl run_srp_kat(void)
 {
     int ret = 0;
     BIGNUM *s = NULL;
@@ -248,7 +248,7 @@ err:
     return ret;
 }
 
-static int run_srp_tests(void)
+static int __cdecl run_srp_tests(void)
 {
     /* "Negative" test, expect a mismatch */
     TEST_info("run_srp: expecting a mismatch");

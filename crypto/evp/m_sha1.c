@@ -17,22 +17,22 @@
 #include "internal/evp_int.h"
 #include "internal/sha.h"
 
-static int init(EVP_MD_CTX *ctx)
+static int __cdecl init(EVP_MD_CTX *ctx)
 {
     return SHA1_Init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int update(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     return SHA1_Update(EVP_MD_CTX_md_data(ctx), data, count);
 }
 
-static int final(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final(EVP_MD_CTX *ctx, unsigned char *md)
 {
     return SHA1_Final(md, EVP_MD_CTX_md_data(ctx));
 }
 
-static int ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
+static int __cdecl ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
 {
     unsigned char padtmp[40];
     unsigned char sha1tmp[SHA_DIGEST_LENGTH];
@@ -111,32 +111,32 @@ const EVP_MD * __cdecl EVP_sha1(void)
     return &sha1_md;
 }
 
-static int init224(EVP_MD_CTX *ctx)
+static int __cdecl init224(EVP_MD_CTX *ctx)
 {
     return SHA224_Init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int update224(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update224(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     return SHA224_Update(EVP_MD_CTX_md_data(ctx), data, count);
 }
 
-static int final224(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final224(EVP_MD_CTX *ctx, unsigned char *md)
 {
     return SHA224_Final(md, EVP_MD_CTX_md_data(ctx));
 }
 
-static int init256(EVP_MD_CTX *ctx)
+static int __cdecl init256(EVP_MD_CTX *ctx)
 {
     return SHA256_Init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int update256(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update256(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     return SHA256_Update(EVP_MD_CTX_md_data(ctx), data, count);
 }
 
-static int final256(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final256(EVP_MD_CTX *ctx, unsigned char *md)
 {
     return SHA256_Final(md, EVP_MD_CTX_md_data(ctx));
 }
@@ -179,43 +179,43 @@ const EVP_MD * __cdecl EVP_sha256(void)
     return &sha256_md;
 }
 
-static int init512_224(EVP_MD_CTX *ctx)
+static int __cdecl init512_224(EVP_MD_CTX *ctx)
 {
     return sha512_224_init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int init512_256(EVP_MD_CTX *ctx)
+static int __cdecl init512_256(EVP_MD_CTX *ctx)
 {
     return sha512_256_init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int init384(EVP_MD_CTX *ctx)
+static int __cdecl init384(EVP_MD_CTX *ctx)
 {
     return SHA384_Init(EVP_MD_CTX_md_data(ctx));
 }
 
-static int update384(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update384(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     return SHA384_Update(EVP_MD_CTX_md_data(ctx), data, count);
 }
 
-static int final384(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final384(EVP_MD_CTX *ctx, unsigned char *md)
 {
     return SHA384_Final(md, EVP_MD_CTX_md_data(ctx));
 }
 
-static int init512(EVP_MD_CTX *ctx)
+static int __cdecl init512(EVP_MD_CTX *ctx)
 {
     return SHA512_Init(EVP_MD_CTX_md_data(ctx));
 }
 
 /* See comment in SHA224/256 section */
-static int update512(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update512(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     return SHA512_Update(EVP_MD_CTX_md_data(ctx), data, count);
 }
 
-static int final512(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final512(EVP_MD_CTX *ctx, unsigned char *md)
 {
     return SHA512_Final(md, EVP_MD_CTX_md_data(ctx));
 }

@@ -107,7 +107,7 @@ static ASN1_TIME gtime = {
 };
 static time_t gtime_t = 946598400;
 
-static int test_table(struct testdata *tbl, int idx)
+static int __cdecl test_table(struct testdata *tbl, int idx)
 {
     int error = 0;
     ASN1_TIME atime;
@@ -255,22 +255,22 @@ static int test_table(struct testdata *tbl, int idx)
     return !error;
 }
 
-static int test_table_pos(int idx)
+static int __cdecl test_table_pos(int idx)
 {
     return test_table(tbl_testdata_pos, idx);
 }
 
-static int test_table_neg(int idx)
+static int __cdecl test_table_neg(int idx)
 {
     return test_table(tbl_testdata_neg, idx);
 }
 
-static int test_table_pos_64bit(int idx)
+static int __cdecl test_table_pos_64bit(int idx)
 {
     return test_table(tbl_testdata_pos_64bit, idx);
 }
 
-static int test_table_neg_64bit(int idx)
+static int __cdecl test_table_neg_64bit(int idx)
 {
     return test_table(tbl_testdata_neg_64bit, idx);
 }
@@ -313,7 +313,7 @@ static struct compare_testdata tbl_compare_testdata[] = {
     { TOMORROW_UTC, TOMORROW_UTC,  0 }
 };
 
-static int test_table_compare(int idx)
+static int __cdecl test_table_compare(int idx)
 {
     struct compare_testdata *td = &tbl_compare_testdata[idx];
 

@@ -128,7 +128,7 @@ EVP_PKEY_gen_cb * __cdecl EVP_PKEY_CTX_get_cb(EVP_PKEY_CTX *ctx)
  * callbacks.
  */
 
-static int trans_cb(int a, int b, BN_GENCB *gcb)
+static int __cdecl trans_cb(int a, int b, BN_GENCB *gcb)
 {
     EVP_PKEY_CTX *ctx = BN_GENCB_get_arg(gcb);
     ctx->keygen_info[0] = a;
@@ -136,7 +136,7 @@ static int trans_cb(int a, int b, BN_GENCB *gcb)
     return ctx->pkey_gencb(ctx);
 }
 
-void evp_pkey_set_cb_translate(BN_GENCB *cb, EVP_PKEY_CTX *ctx)
+void __cdecl evp_pkey_set_cb_translate(BN_GENCB *cb, EVP_PKEY_CTX *ctx)
 {
     BN_GENCB_set(cb, trans_cb, ctx);
 }

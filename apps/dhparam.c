@@ -31,7 +31,7 @@ NON_EMPTY_TRANSLATION_UNIT
 
 # define DEFBITS 2048
 
-static int dh_cb(int p, int n, BN_GENCB *cb);
+static int __cdecl dh_cb(int p, int n, BN_GENCB *cb);
 
 typedef enum OPTION_choice {
     OPT_ERR = -1, OPT_EOF = 0, OPT_HELP,
@@ -367,7 +367,7 @@ int dhparam_main(int argc, char **argv)
     return ret;
 }
 
-static int dh_cb(int p, int n, BN_GENCB *cb)
+static int __cdecl dh_cb(int p, int n, BN_GENCB *cb)
 {
     static const char symbols[] = ".+*\n";
     char c = (p >= 0 && (size_t)p < sizeof(symbols) - 1) ? symbols[p] : '?';

@@ -51,7 +51,7 @@ static const unsigned char cfb_cipher64[CFB_TEST_SIZE] = {
     0x3D,0x1E,0xAE,0x47,0xFC,0xCF,0x29,0x0B,*/
 };
 
-static int test_idea_ecb(void)
+static int __cdecl test_idea_ecb(void)
 {
     IDEA_KEY_SCHEDULE key, dkey;
 
@@ -65,7 +65,7 @@ static int test_idea_ecb(void)
     return TEST_mem_eq(out, IDEA_BLOCK, in, sizeof(in));
 }
 
-static int test_idea_cbc(void)
+static int __cdecl test_idea_cbc(void)
 {
     IDEA_KEY_SCHEDULE key, dkey;
     unsigned char iv[IDEA_BLOCK];
@@ -81,7 +81,7 @@ static int test_idea_cbc(void)
     return TEST_mem_eq(text, text_len, out, text_len);
 }
 
-static int test_idea_cfb64(void)
+static int __cdecl test_idea_cfb64(void)
 {
     IDEA_KEY_SCHEDULE eks, dks;
     int n;

@@ -145,7 +145,7 @@ static const uint32_t default_ciphers_in_order[] = {
 #endif
 };
 
-static int test_default_cipherlist(SSL_CTX *ctx)
+static int __cdecl test_default_cipherlist(SSL_CTX *ctx)
 {
     STACK_OF(SSL_CIPHER) *ciphers = NULL;
     SSL *ssl = NULL;
@@ -181,7 +181,7 @@ static int test_default_cipherlist(SSL_CTX *ctx)
     return ret;
 }
 
-static int execute_test(CIPHERLIST_TEST_FIXTURE *fixture)
+static int __cdecl execute_test(CIPHERLIST_TEST_FIXTURE *fixture)
 {
     return fixture != NULL
         && test_default_cipherlist(fixture->server)
@@ -194,7 +194,7 @@ static int execute_test(CIPHERLIST_TEST_FIXTURE *fixture)
 #define EXECUTE_CIPHERLIST_TEST() \
     EXECUTE_TEST(execute_test, tear_down)
 
-static int test_default_cipherlist_implicit(void)
+static int __cdecl test_default_cipherlist_implicit(void)
 {
     SETUP_CIPHERLIST_TEST_FIXTURE();
     if (fixture == NULL)
@@ -203,7 +203,7 @@ static int test_default_cipherlist_implicit(void)
     return result;
 }
 
-static int test_default_cipherlist_explicit(void)
+static int __cdecl test_default_cipherlist_explicit(void)
 {
     SETUP_CIPHERLIST_TEST_FIXTURE();
     if (fixture == NULL)
@@ -216,7 +216,7 @@ static int test_default_cipherlist_explicit(void)
 }
 
 /* SSL_CTX_set_cipher_list() should fail if it clears all TLSv1.2 ciphers. */
-static int test_default_cipherlist_clear(void)
+static int __cdecl test_default_cipherlist_clear(void)
 {
     SETUP_CIPHERLIST_TEST_FIXTURE();
     SSL *s = NULL;

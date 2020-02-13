@@ -286,7 +286,7 @@ static int __cdecl async_puts(BIO *bio, const char *str)
 
 #define MAX_ATTEMPTS    100
 
-static int test_asyncio(int test)
+static int __cdecl test_asyncio(int test)
 {
     SSL_CTX *serverctx = NULL, *clientctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;

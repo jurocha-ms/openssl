@@ -16,8 +16,8 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-static int ssl_set_cert(CERT *c, X509 *x509);
-static int ssl_set_pkey(CERT *c, EVP_PKEY *pkey);
+static int __cdecl ssl_set_cert(CERT *c, X509 *x509);
+static int __cdecl ssl_set_pkey(CERT *c, EVP_PKEY *pkey);
 
 #define  SYNTHV1CONTEXT     (SSL_EXT_TLS1_2_AND_BELOW_ONLY \
                              | SSL_EXT_CLIENT_HELLO \
@@ -125,7 +125,7 @@ int __cdecl SSL_use_RSAPrivateKey(SSL *ssl, RSA *rsa)
 }
 #endif
 
-static int ssl_set_pkey(CERT *c, EVP_PKEY *pkey)
+static int __cdecl ssl_set_pkey(CERT *c, EVP_PKEY *pkey)
 {
     size_t i;
 
@@ -313,7 +313,7 @@ int __cdecl SSL_CTX_use_certificate(SSL_CTX *ctx, X509 *x)
     return ssl_set_cert(ctx->cert, x);
 }
 
-static int ssl_set_cert(CERT *c, X509 *x)
+static int __cdecl ssl_set_cert(CERT *c, X509 *x)
 {
     EVP_PKEY *pkey;
     size_t i;
@@ -586,7 +586,7 @@ int __cdecl SSL_CTX_use_PrivateKey_ASN1(int type, SSL_CTX *ctx,
  * followed by a sequence of CA certificates that should be sent to the peer
  * in the Certificate message.
  */
-static int use_certificate_chain_file(SSL_CTX *ctx, SSL *ssl, const char *file)
+static int __cdecl use_certificate_chain_file(SSL_CTX *ctx, SSL *ssl, const char *file)
 {
     BIO *in;
     int ret = 0;
@@ -693,7 +693,7 @@ int __cdecl SSL_use_certificate_chain_file(SSL *ssl, const char *file)
     return use_certificate_chain_file(NULL, ssl, file);
 }
 
-static int serverinfo_find_extension(const unsigned char *serverinfo,
+static int __cdecl serverinfo_find_extension(const unsigned char *serverinfo,
                                      size_t serverinfo_length,
                                      unsigned int extension_type,
                                      const unsigned char **extension_data,
@@ -731,7 +731,7 @@ static int serverinfo_find_extension(const unsigned char *serverinfo,
     /* Unreachable */
 }
 
-static int serverinfoex_srv_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl serverinfoex_srv_parse_cb(SSL *s, unsigned int ext_type,
                                      unsigned int context,
                                      const unsigned char *in,
                                      size_t inlen, X509 *x, size_t chainidx,
@@ -746,7 +746,7 @@ static int serverinfoex_srv_parse_cb(SSL *s, unsigned int ext_type,
     return 1;
 }
 
-static int serverinfo_srv_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl serverinfo_srv_parse_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char *in,
                                    size_t inlen, int *al, void *arg)
 {
@@ -754,7 +754,7 @@ static int serverinfo_srv_parse_cb(SSL *s, unsigned int ext_type,
                                      arg);
 }
 
-static int serverinfoex_srv_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl serverinfoex_srv_add_cb(SSL *s, unsigned int ext_type,
                                    unsigned int context,
                                    const unsigned char **out,
                                    size_t *outlen, X509 *x, size_t chainidx,
@@ -785,7 +785,7 @@ static int serverinfoex_srv_add_cb(SSL *s, unsigned int ext_type,
                                  * extension */
 }
 
-static int serverinfo_srv_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl serverinfo_srv_add_cb(SSL *s, unsigned int ext_type,
                                  const unsigned char **out, size_t *outlen,
                                  int *al, void *arg)
 {
@@ -798,7 +798,7 @@ static int serverinfo_srv_add_cb(SSL *s, unsigned int ext_type,
  * parses correctly.  With a non-NULL context, it registers callbacks for
  * the included extensions.
  */
-static int serverinfo_process_buffer(unsigned int version,
+static int __cdecl serverinfo_process_buffer(unsigned int version,
                                      const unsigned char *serverinfo,
                                      size_t serverinfo_length, SSL_CTX *ctx)
 {
@@ -1036,7 +1036,7 @@ int __cdecl SSL_CTX_use_serverinfo_file(SSL_CTX *ctx, const char *file)
     return ret;
 }
 
-static int ssl_set_cert_and_key(SSL *ssl, SSL_CTX *ctx, X509 *x509, EVP_PKEY *privatekey,
+static int __cdecl ssl_set_cert_and_key(SSL *ssl, SSL_CTX *ctx, X509 *x509, EVP_PKEY *privatekey,
                                 STACK_OF(X509) *chain, int override)
 {
     int ret = 0;

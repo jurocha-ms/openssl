@@ -15,7 +15,7 @@
  * Attempt to look up all supported algorithms.
  */
 
-static int test_pbelu(void)
+static int __cdecl test_pbelu(void)
 {
     int i, failed = 0;
     int pbe_type, pbe_nid, last_type = -1, last_nid = -1;

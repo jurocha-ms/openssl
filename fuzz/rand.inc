@@ -9,7 +9,7 @@
  */
 #include <openssl/rand.h>
 
-static int fuzz_bytes(unsigned char *buf, int num)
+static int __cdecl fuzz_bytes(unsigned char *buf, int num)
 {
     unsigned char val = 1;
 
@@ -18,7 +18,7 @@ static int fuzz_bytes(unsigned char *buf, int num)
     return 1;
 }
 
-static int fuzz_status(void)
+static int __cdecl fuzz_status(void)
 {
     return 1;
 }

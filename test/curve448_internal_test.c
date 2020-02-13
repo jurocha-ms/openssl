@@ -605,7 +605,7 @@ static const uint8_t *dohash(EVP_MD_CTX *hashctx, const uint8_t *msg,
     return hashout;
 }
 
-static int test_ed448(void)
+static int __cdecl test_ed448(void)
 {
     uint8_t outsig[114];
     EVP_MD_CTX *hashctx = EVP_MD_CTX_new();
@@ -654,7 +654,7 @@ static int test_ed448(void)
     return 1;
 }
 
-static int test_x448(void)
+static int __cdecl test_x448(void)
 {
     uint8_t u[56], k[56], out[56];
     unsigned int i;

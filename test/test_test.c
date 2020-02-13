@@ -21,7 +21,7 @@
 
 #define TEST(expected, test) test_case((expected), #test, (test))
 
-static int test_case(int expected, const char *test, int result)
+static int __cdecl test_case(int expected, const char *test, int result)
 {
     if (result != expected) {
         fprintf(stderr, "# FATAL: %s != %d\n", test, expected);
@@ -30,7 +30,7 @@ static int test_case(int expected, const char *test, int result)
     return 1;
 }
 
-static int test_int(void)
+static int __cdecl test_int(void)
 {
     if (!TEST(1, TEST_int_eq(1, 1))
         | !TEST(0, TEST_int_eq(1, -1))
@@ -53,7 +53,7 @@ err:
     return 0;
 }
 
-static int test_uint(void)
+static int __cdecl test_uint(void)
 {
     if (!TEST(1, TEST_uint_eq(3u, 3u))
         | !TEST(0, TEST_uint_eq(3u, 5u))
@@ -76,7 +76,7 @@ err:
     return 0;
 }
 
-static int test_char(void)
+static int __cdecl test_char(void)
 {
     if (!TEST(1, TEST_char_eq('a', 'a'))
         | !TEST(0, TEST_char_eq('a', 'A'))
@@ -99,7 +99,7 @@ err:
     return 0;
 }
 
-static int test_uchar(void)
+static int __cdecl test_uchar(void)
 {
     if (!TEST(1, TEST_uchar_eq(49, 49))
         | !TEST(0, TEST_uchar_eq(49, 60))
@@ -122,7 +122,7 @@ err:
     return 0;
 }
 
-static int test_long(void)
+static int __cdecl test_long(void)
 {
     if (!TEST(1, TEST_long_eq(123l, 123l))
         | !TEST(0, TEST_long_eq(123l, -123l))
@@ -145,7 +145,7 @@ err:
     return 0;
 }
 
-static int test_ulong(void)
+static int __cdecl test_ulong(void)
 {
     if (!TEST(1, TEST_ulong_eq(919ul, 919ul))
         | !TEST(0, TEST_ulong_eq(919ul, 10234ul))
@@ -168,7 +168,7 @@ err:
     return 0;
 }
 
-static int test_size_t(void)
+static int __cdecl test_size_t(void)
 {
     if (!TEST(1, TEST_size_t_eq((size_t)10, (size_t)10))
         | !TEST(0, TEST_size_t_eq((size_t)10, (size_t)12))
@@ -191,7 +191,7 @@ err:
     return 0;
 }
 
-static int test_time_t(void)
+static int __cdecl test_time_t(void)
 {
     if (!TEST(1, TEST_time_t_eq((time_t)10, (time_t)10))
         | !TEST(0, TEST_time_t_eq((time_t)10, (time_t)12))
@@ -214,7 +214,7 @@ err:
     return 0;
 }
 
-static int test_pointer(void)
+static int __cdecl test_pointer(void)
 {
     int x = 0;
     char y = 1;
@@ -240,7 +240,7 @@ err:
     return 0;
 }
 
-static int test_bool(void)
+static int __cdecl test_bool(void)
 {
     if (!TEST(0, TEST_true(0))
         | !TEST(1, TEST_true(1))
@@ -253,7 +253,7 @@ err:
     return 0;
 }
 
-static int test_string(void)
+static int __cdecl test_string(void)
 {
     static char buf[] = "abc";
 
@@ -278,7 +278,7 @@ err:
     return 0;
 }
 
-static int test_memory(void)
+static int __cdecl test_memory(void)
 {
     static char buf[] = "xyz";
 
@@ -300,7 +300,7 @@ err:
     return 0;
 }
 
-static int test_memory_overflow(void)
+static int __cdecl test_memory_overflow(void)
 {
     /* Verify that the memory printing overflows without walking the stack */
     const char *p = "1234567890123456789012345678901234567890123456789012";
@@ -309,7 +309,7 @@ static int test_memory_overflow(void)
     return TEST(0, TEST_mem_eq(p, strlen(p), q, strlen(q)));
 }
 
-static int test_bignum(void)
+static int __cdecl test_bignum(void)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL;
     int r = 0;
@@ -380,7 +380,7 @@ err:
     return r;
 }
 
-static int test_long_output(void)
+static int __cdecl test_long_output(void)
 {
     const char *p = "1234567890123456789012345678901234567890123456789012";
     const char *q = "1234567890klmnopqrs01234567890EFGHIJKLM0123456789XYZ";
@@ -398,7 +398,7 @@ static int test_long_output(void)
            & TEST(0, TEST_mem_eq(r, strlen(r), s, strlen(s)));
 }
 
-static int test_long_bignum(void)
+static int __cdecl test_long_bignum(void)
 {
     int r;
     BIGNUM *a = NULL, *b = NULL, *c = NULL, *d = NULL;
@@ -438,14 +438,14 @@ static int test_long_bignum(void)
     return r;
 }
 
-static int test_messages(void)
+static int __cdecl test_messages(void)
 {
     TEST_info("This is an %s message.", "info");
     TEST_error("This is an %s message.", "error");
     return 1;
 }
 
-static int test_single_eval(void)
+static int __cdecl test_single_eval(void)
 {
     int i = 4;
     long l = -9000;
@@ -500,7 +500,7 @@ static int test_single_eval(void)
            && TEST_mem_eq(p--, sizeof("456"), "456", sizeof("456"));
 }
 
-static int test_output(void)
+static int __cdecl test_output(void)
 {
     const char s[] = "1234567890123456789012345678901234567890123456789012"
                      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -519,7 +519,7 @@ static const char *bn_output_tests[] = {
     "987657"
 };
 
-static int test_bn_output(int n)
+static int __cdecl test_bn_output(int n)
 {
     BIGNUM *b = NULL;
 

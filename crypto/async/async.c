@@ -165,7 +165,7 @@ void async_start_func(void)
 }
 
 int __cdecl ASYNC_start_job(ASYNC_JOB **job, ASYNC_WAIT_CTX *wctx, int *ret,
-                    int (*func)(void *), void *args, size_t size)
+                    int (__cdecl *func)(void *), void *args, size_t size)
 {
     async_ctx *ctx;
 

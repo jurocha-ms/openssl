@@ -24,7 +24,7 @@ NON_EMPTY_TRANSLATION_UNIT
 
 BIGNUM *BN_generate_prime(BIGNUM *ret, int bits, int safe,
                           const BIGNUM *add, const BIGNUM *rem,
-                          void (*callback) (int, int, void *), void *cb_arg)
+                          void (__cdecl *callback) (int, int, void *), void *cb_arg)
 {
     BN_GENCB cb;
     BIGNUM *rnd = NULL;
@@ -47,7 +47,7 @@ BIGNUM *BN_generate_prime(BIGNUM *ret, int bits, int safe,
 }
 
 int BN_is_prime(const BIGNUM *a, int checks,
-                void (*callback) (int, int, void *), BN_CTX *ctx_passed,
+                void (__cdecl *callback) (int, int, void *), BN_CTX *ctx_passed,
                 void *cb_arg)
 {
     BN_GENCB cb;
@@ -56,7 +56,7 @@ int BN_is_prime(const BIGNUM *a, int checks,
 }
 
 int BN_is_prime_fasttest(const BIGNUM *a, int checks,
-                         void (*callback) (int, int, void *),
+                         void (__cdecl *callback) (int, int, void *),
                          BN_CTX *ctx_passed, void *cb_arg,
                          int do_trial_division)
 {

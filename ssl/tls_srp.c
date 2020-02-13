@@ -428,10 +428,10 @@ int __cdecl SSL_CTX_set_srp_strength(SSL_CTX *ctx, int strength)
 }
 
 int __cdecl SSL_CTX_set_srp_verify_param_callback(SSL_CTX *ctx,
-                                          int (*cb) (SSL *, void *))
+                                          int (__cdecl *cb) (SSL *, void *))
 {
     return tls1_ctx_callback_ctrl(ctx, SSL_CTRL_SET_SRP_VERIFY_PARAM_CB,
-                                  (void (*)(void))cb);
+                                  (void (__cdecl *)(void))cb);
 }
 
 int __cdecl SSL_CTX_set_srp_cb_arg(SSL_CTX *ctx, void *arg)
@@ -440,17 +440,17 @@ int __cdecl SSL_CTX_set_srp_cb_arg(SSL_CTX *ctx, void *arg)
 }
 
 int __cdecl SSL_CTX_set_srp_username_callback(SSL_CTX *ctx,
-                                      int (*cb) (SSL *, int *, void *))
+                                      int (__cdecl *cb) (SSL *, int *, void *))
 {
     return tls1_ctx_callback_ctrl(ctx, SSL_CTRL_SET_TLS_EXT_SRP_USERNAME_CB,
-                                  (void (*)(void))cb);
+                                  (void (__cdecl *)(void))cb);
 }
 
 int __cdecl SSL_CTX_set_srp_client_pwd_callback(SSL_CTX *ctx,
-                                        char *(*cb) (SSL *, void *))
+                                        char *(__cdecl *cb) (SSL *, void *))
 {
     return tls1_ctx_callback_ctrl(ctx, SSL_CTRL_SET_SRP_GIVE_CLIENT_PWD_CB,
-                                  (void (*)(void))cb);
+                                  (void (__cdecl *)(void))cb);
 }
 
 #endif

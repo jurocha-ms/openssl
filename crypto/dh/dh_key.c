@@ -12,13 +12,13 @@
 #include "dh_locl.h"
 #include "internal/bn_int.h"
 
-static int generate_key(DH *dh);
-static int compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh);
-static int dh_bn_mod_exp(const DH *dh, BIGNUM *r,
+static int __cdecl generate_key(DH *dh);
+static int __cdecl compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh);
+static int __cdecl dh_bn_mod_exp(const DH *dh, BIGNUM *r,
                          const BIGNUM *a, const BIGNUM *p,
                          const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx);
-static int dh_init(DH *dh);
-static int dh_finish(DH *dh);
+static int __cdecl dh_init(DH *dh);
+static int __cdecl dh_finish(DH *dh);
 
 int __cdecl DH_generate_key(DH *dh)
 {
@@ -73,7 +73,7 @@ const DH_METHOD * __cdecl DH_get_default_method(void)
     return default_DH_method;
 }
 
-static int generate_key(DH *dh)
+static int __cdecl generate_key(DH *dh)
 {
     int ok = 0;
     int generate_new_key = 0;
@@ -167,7 +167,7 @@ static int generate_key(DH *dh)
     return ok;
 }
 
-static int compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh)
+static int __cdecl compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh)
 {
     BN_CTX *ctx = NULL;
     BN_MONT_CTX *mont = NULL;
@@ -219,20 +219,20 @@ static int compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh)
     return ret;
 }
 
-static int dh_bn_mod_exp(const DH *dh, BIGNUM *r,
+static int __cdecl dh_bn_mod_exp(const DH *dh, BIGNUM *r,
                          const BIGNUM *a, const BIGNUM *p,
                          const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx)
 {
     return BN_mod_exp_mont(r, a, p, m, ctx, m_ctx);
 }
 
-static int dh_init(DH *dh)
+static int __cdecl dh_init(DH *dh)
 {
     dh->flags |= DH_FLAG_CACHE_MONT_P;
     return 1;
 }
 
-static int dh_finish(DH *dh)
+static int __cdecl dh_finish(DH *dh)
 {
     BN_MONT_CTX_free(dh->method_mont_p);
     return 1;

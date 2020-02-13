@@ -49,9 +49,9 @@ static union {
     CRYPTO_THREAD_LOCAL value;
 } destructor_key = { -1 };
 
-static void ossl_init_thread_stop(struct thread_local_inits_st *locals);
+static void __cdecl ossl_init_thread_stop(struct thread_local_inits_st *locals);
 
-static void ossl_init_thread_destructor(void *local)
+static void __cdecl ossl_init_thread_destructor(void *local)
 {
     ossl_init_thread_stop((struct thread_local_inits_st *)local);
 }
@@ -77,7 +77,7 @@ static struct thread_local_inits_st *ossl_init_get_thread_local(int alloc)
 
 typedef struct ossl_init_stop_st OPENSSL_INIT_STOP;
 struct ossl_init_stop_st {
-    void (*handler)(void);
+    void (__cdecl *handler)(void);
     OPENSSL_INIT_STOP *next;
 };
 
@@ -416,7 +416,7 @@ DEFINE_RUN_ONCE_STATIC(ossl_init_zlib)
 }
 #endif
 
-static void ossl_init_thread_stop(struct thread_local_inits_st *locals)
+static void __cdecl ossl_init_thread_stop(struct thread_local_inits_st *locals)
 {
     /* Can't do much about this */
     if (locals == NULL)
@@ -759,7 +759,7 @@ int __cdecl OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *sett
     return 1;
 }
 
-int __cdecl OPENSSL_atexit(void (*handler)(void))
+int __cdecl OPENSSL_atexit(void (__cdecl *handler)(void))
 {
     OPENSSL_INIT_STOP *newhand;
 
@@ -768,7 +768,7 @@ int __cdecl OPENSSL_atexit(void (*handler)(void))
     {
         union {
             void *sym;
-            void (*func)(void);
+            void (__cdecl *func)(void);
         } handlersym;
 
         handlersym.func = handler;

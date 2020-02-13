@@ -76,7 +76,7 @@ static const char *const exceptions[] = {
     NULL
 };
 
-static int is_exception(const char *msg)
+static int __cdecl is_exception(const char *msg)
 {
     const char *const *p;
 
@@ -86,7 +86,7 @@ static int is_exception(const char *msg)
     return 0;
 }
 
-static int set_cn(X509 *crt, ...)
+static int __cdecl set_cn(X509 *crt, ...)
 {
     int ret = 0;
     X509_NAME *n = NULL;
@@ -125,7 +125,7 @@ X509_EXTENSION *X509_EXTENSION_create_by_NID(X509_EXTENSION **ex,
 int             X509_add_ext(X509 *x, X509_EXTENSION *ex, int loc);
 */
 
-static int set_altname(X509 *crt, ...)
+static int __cdecl set_altname(X509 *crt, ...)
 {
     int ret = 0;
     GENERAL_NAMES *gens = NULL;
@@ -175,64 +175,64 @@ static int set_altname(X509 *crt, ...)
     return ret;
 }
 
-static int set_cn1(X509 *crt, const char *name)
+static int __cdecl set_cn1(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_commonName, name, 0);
 }
 
-static int set_cn_and_email(X509 *crt, const char *name)
+static int __cdecl set_cn_and_email(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_commonName, name,
                   NID_pkcs9_emailAddress, "dummy@example.com", 0);
 }
 
-static int set_cn2(X509 *crt, const char *name)
+static int __cdecl set_cn2(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_commonName, "dummy value",
                   NID_commonName, name, 0);
 }
 
-static int set_cn3(X509 *crt, const char *name)
+static int __cdecl set_cn3(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_commonName, name,
                   NID_commonName, "dummy value", 0);
 }
 
-static int set_email1(X509 *crt, const char *name)
+static int __cdecl set_email1(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_pkcs9_emailAddress, name, 0);
 }
 
-static int set_email2(X509 *crt, const char *name)
+static int __cdecl set_email2(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_pkcs9_emailAddress, "dummy@example.com",
                   NID_pkcs9_emailAddress, name, 0);
 }
 
-static int set_email3(X509 *crt, const char *name)
+static int __cdecl set_email3(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_pkcs9_emailAddress, name,
                   NID_pkcs9_emailAddress, "dummy@example.com", 0);
 }
 
-static int set_email_and_cn(X509 *crt, const char *name)
+static int __cdecl set_email_and_cn(X509 *crt, const char *name)
 {
     return set_cn(crt, NID_pkcs9_emailAddress, name,
                   NID_commonName, "www.example.org", 0);
 }
 
-static int set_altname_dns(X509 *crt, const char *name)
+static int __cdecl set_altname_dns(X509 *crt, const char *name)
 {
     return set_altname(crt, GEN_DNS, name, 0);
 }
 
-static int set_altname_email(X509 *crt, const char *name)
+static int __cdecl set_altname_email(X509 *crt, const char *name)
 {
     return set_altname(crt, GEN_EMAIL, name, 0);
 }
 
 struct set_name_fn {
-    int (*fn) (X509 *, const char *);
+    int (__cdecl *fn) (X509 *, const char *);
     const char *name;
     int host;
     int email;
@@ -264,7 +264,7 @@ static X509 *make_cert(void)
     return crt;
 }
 
-static int check_message(const struct set_name_fn *fn, const char *op,
+static int __cdecl check_message(const struct set_name_fn *fn, const char *op,
                          const char *nameincert, int match, const char *name)
 {
     char msg[1024];
@@ -280,7 +280,7 @@ static int check_message(const struct set_name_fn *fn, const char *op,
     return 0;
 }
 
-static int run_cert(X509 *crt, const char *nameincert,
+static int __cdecl run_cert(X509 *crt, const char *nameincert,
                      const struct set_name_fn *fn)
 {
     const char *const *pname = names;
@@ -341,7 +341,7 @@ static int run_cert(X509 *crt, const char *nameincert,
     return failed == 0;
 }
 
-static int call_run_cert(int i)
+static int __cdecl call_run_cert(int i)
 {
     int failed = 0;
     const struct set_name_fn *pfn = &name_fns[i];

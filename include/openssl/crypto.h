@@ -163,11 +163,11 @@ const char * __cdecl OpenSSL_version(int type);
 
 int __cdecl OPENSSL_issetugid(void);
 
-typedef void CRYPTO_EX_new (void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+typedef void __cdecl CRYPTO_EX_new (void *parent, void *ptr, CRYPTO_EX_DATA *ad,
                            int idx, long argl, void *argp);
-typedef void CRYPTO_EX_free (void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+typedef void __cdecl CRYPTO_EX_free (void *parent, void *ptr, CRYPTO_EX_DATA *ad,
                              int idx, long argl, void *argp);
-typedef int CRYPTO_EX_dup (CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
+typedef int __cdecl CRYPTO_EX_dup (CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
                            void *from_d, int idx, long argl, void *argp);
 __owur int __cdecl CRYPTO_get_ex_new_index(int class_index, long argl, void *argp,
                             CRYPTO_EX_new *new_func, CRYPTO_EX_dup *dup_func,
@@ -310,7 +310,7 @@ void __cdecl CRYPTO_mem_debug_realloc(void *addr1, void *addr2, size_t num, int 
 void __cdecl CRYPTO_mem_debug_free(void *addr, int flag,
         const char *file, int line);
 
-int __cdecl CRYPTO_mem_leaks_cb(int (*cb) (const char *str, size_t len, void *u),
+int __cdecl CRYPTO_mem_leaks_cb(int (__cdecl *cb) (const char *str, size_t len, void *u),
                         void *u);
 #  ifndef OPENSSL_NO_STDIO
 int __cdecl CRYPTO_mem_leaks_fp(FILE *);
@@ -386,7 +386,7 @@ int __cdecl CRYPTO_memcmp(const void * in_a, const void * in_b, size_t len);
 /* Library initialisation functions */
 void __cdecl OPENSSL_cleanup(void);
 int __cdecl OPENSSL_init_crypto(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings);
-int __cdecl OPENSSL_atexit(void (*handler)(void));
+int __cdecl OPENSSL_atexit(void (__cdecl *handler)(void));
 void __cdecl OPENSSL_thread_stop(void);
 
 /* Low-level control of initialization */
@@ -430,7 +430,7 @@ typedef unsigned int CRYPTO_THREAD_ID;
 
 int __cdecl CRYPTO_THREAD_run_once(CRYPTO_ONCE *once, void (__cdecl *init)(void));
 
-int __cdecl CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (*cleanup)(void *));
+int __cdecl CRYPTO_THREAD_init_local(CRYPTO_THREAD_LOCAL *key, void (__cdecl *cleanup)(void *));
 void * __cdecl CRYPTO_THREAD_get_local(CRYPTO_THREAD_LOCAL *key);
 int __cdecl CRYPTO_THREAD_set_local(CRYPTO_THREAD_LOCAL *key, void *val);
 int __cdecl CRYPTO_THREAD_cleanup_local(CRYPTO_THREAD_LOCAL *key);

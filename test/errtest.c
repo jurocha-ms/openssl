@@ -19,7 +19,7 @@
 #endif
 
 /* Test that querying the error queue preserves the OS error. */
-static int preserves_system_error(void)
+static int __cdecl preserves_system_error(void)
 {
 #if defined(OPENSSL_SYS_WINDOWS)
     SetLastError(ERROR_INVALID_FUNCTION);

@@ -16,7 +16,7 @@
 #include "testutil.h"
 
 /* Test of EVP_PKEY_ASN1_METHOD ordering */
-static int test_asn1_meths(void)
+static int __cdecl test_asn1_meths(void)
 {
     int i;
     int prev = -1;
@@ -48,7 +48,7 @@ static int test_asn1_meths(void)
 }
 
 /* Test of EVP_PKEY_METHOD ordering */
-static int test_pkey_meths(void)
+static int __cdecl test_pkey_meths(void)
 {
     size_t i;
     int prev = -1;

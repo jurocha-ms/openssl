@@ -42,7 +42,7 @@ ASN1_SEQUENCE(ASN1_LONG_DATA) = {
 IMPLEMENT_STATIC_ASN1_ENCODE_FUNCTIONS(ASN1_LONG_DATA)
 IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS(ASN1_LONG_DATA)
 
-static int test_long(void)
+static int __cdecl test_long(void)
 {
     const unsigned char *p = t_invalid_zero;
     ASN1_LONG_DATA *dectst =
@@ -69,7 +69,7 @@ ASN1_SEQUENCE(ASN1_INT32_DATA) = {
 IMPLEMENT_STATIC_ASN1_ENCODE_FUNCTIONS(ASN1_INT32_DATA)
 IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS(ASN1_INT32_DATA)
 
-static int test_int32(void)
+static int __cdecl test_int32(void)
 {
     const unsigned char *p = t_invalid_zero;
     ASN1_INT32_DATA *dectst =
@@ -95,7 +95,7 @@ ASN1_SEQUENCE(ASN1_UINT32_DATA) = {
 IMPLEMENT_STATIC_ASN1_ENCODE_FUNCTIONS(ASN1_UINT32_DATA)
 IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS(ASN1_UINT32_DATA)
 
-static int test_uint32(void)
+static int __cdecl test_uint32(void)
 {
     const unsigned char *p = t_invalid_zero;
     ASN1_UINT32_DATA *dectst =
@@ -121,7 +121,7 @@ ASN1_SEQUENCE(ASN1_INT64_DATA) = {
 IMPLEMENT_STATIC_ASN1_ENCODE_FUNCTIONS(ASN1_INT64_DATA)
 IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS(ASN1_INT64_DATA)
 
-static int test_int64(void)
+static int __cdecl test_int64(void)
 {
     const unsigned char *p = t_invalid_zero;
     ASN1_INT64_DATA *dectst =
@@ -147,7 +147,7 @@ ASN1_SEQUENCE(ASN1_UINT64_DATA) = {
 IMPLEMENT_STATIC_ASN1_ENCODE_FUNCTIONS(ASN1_UINT64_DATA)
 IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS(ASN1_UINT64_DATA)
 
-static int test_uint64(void)
+static int __cdecl test_uint64(void)
 {
     const unsigned char *p = t_invalid_zero;
     ASN1_UINT64_DATA *dectst =

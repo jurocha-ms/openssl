@@ -84,7 +84,7 @@ static SSL_CTX *s_ctx2 = NULL;
 #define COMP_ZLIB       1
 
 static int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx);
-static int app_verify_callback(X509_STORE_CTX *ctx, void *arg);
+static unsigned int __cdecl app_verify_callback(X509_STORE_CTX *ctx, void *arg);
 #define APP_CALLBACK_STRING "Test Callback Argument"
 struct app_verify_arg {
     char *string;
@@ -99,12 +99,12 @@ static DH *get_dh1024dsa(void);
 
 static char *psk_key = NULL;    /* by default PSK is not used */
 #ifndef OPENSSL_NO_PSK
-static unsigned int psk_client_callback(SSL *ssl, const char *hint,
+static unsigned int __cdecl psk_client_callback(SSL *ssl, const char *hint,
                                         char *identity,
                                         unsigned int max_identity_len,
                                         unsigned char *psk,
                                         unsigned int max_psk_len);
-static unsigned int psk_server_callback(SSL *ssl, const char *identity,
+static unsigned int __cdecl psk_server_callback(SSL *ssl, const char *identity,
                                         unsigned char *psk,
                                         unsigned int max_psk_len);
 #endif
@@ -119,7 +119,7 @@ static int npn_client = 0;
 static int npn_server = 0;
 static int npn_server_reject = 0;
 
-static int cb_client_npn(SSL *s, unsigned char **out, unsigned char *outlen,
+static int __cdecl cb_client_npn(SSL *s, unsigned char **out, unsigned char *outlen,
                          const unsigned char *in, unsigned int inlen,
                          void *arg)
 {
@@ -133,7 +133,7 @@ static int cb_client_npn(SSL *s, unsigned char **out, unsigned char *outlen,
     return SSL_TLSEXT_ERR_OK;
 }
 
-static int cb_server_npn(SSL *s, const unsigned char **data,
+static int __cdecl cb_server_npn(SSL *s, const unsigned char **data,
                          unsigned int *len, void *arg)
 {
     *data = (const unsigned char *)NEXT_PROTO_STRING;
@@ -141,13 +141,13 @@ static int cb_server_npn(SSL *s, const unsigned char **data,
     return SSL_TLSEXT_ERR_OK;
 }
 
-static int cb_server_rejects_npn(SSL *s, const unsigned char **data,
+static int __cdecl cb_server_rejects_npn(SSL *s, const unsigned char **data,
                                  unsigned int *len, void *arg)
 {
     return SSL_TLSEXT_ERR_NOACK;
 }
 
-static int verify_npn(SSL *client, SSL *server)
+static int __cdecl verify_npn(SSL *client, SSL *server)
 {
     const unsigned char *client_s;
     unsigned client_len;
@@ -214,7 +214,7 @@ static const char *client_sess_in;
 static SSL_SESSION *server_sess;
 static SSL_SESSION *client_sess;
 
-static int servername_cb(SSL *s, int *ad, void *arg)
+static int __cdecl servername_cb(SSL *s, int *ad, void *arg)
 {
     const char *servername = SSL_get_servername(s, TLSEXT_NAMETYPE_host_name);
     if (sn_server2 == NULL) {
@@ -231,7 +231,7 @@ static int servername_cb(SSL *s, int *ad, void *arg)
     }
     return SSL_TLSEXT_ERR_OK;
 }
-static int verify_servername(SSL *client, SSL *server)
+static int __cdecl verify_servername(SSL *client, SSL *server)
 {
     /* just need to see if sn_context is what we expect */
     SSL_CTX* ctx = SSL_get_SSL_CTX(server);
@@ -291,7 +291,7 @@ static unsigned char *next_protos_parse(size_t *outlen,
     return out;
 }
 
-static int cb_server_alpn(SSL *s, const unsigned char **out,
+static int __cdecl cb_server_alpn(SSL *s, const unsigned char **out,
                           unsigned char *outlen, const unsigned char *in,
                           unsigned int inlen, void *arg)
 {
@@ -325,7 +325,7 @@ static int cb_server_alpn(SSL *s, const unsigned char **out,
     return SSL_TLSEXT_ERR_OK;
 }
 
-static int verify_alpn(SSL *client, SSL *server)
+static int __cdecl verify_alpn(SSL *client, SSL *server)
 {
     const unsigned char *client_proto, *server_proto;
     unsigned int client_proto_len = 0, server_proto_len = 0;
@@ -410,7 +410,7 @@ static int custom_ext = 0;
 /* This set based on extension callbacks */
 static int custom_ext_error = 0;
 
-static int serverinfo_cli_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl serverinfo_cli_parse_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char *in, size_t inlen,
                                    int *al, void *arg)
 {
@@ -423,7 +423,7 @@ static int serverinfo_cli_parse_cb(SSL *s, unsigned int ext_type,
     return 1;
 }
 
-static int verify_serverinfo(void)
+static int __cdecl verify_serverinfo(void)
 {
     if (serverinfo_sct != serverinfo_sct_seen)
         return -1;
@@ -442,7 +442,7 @@ static int verify_serverinfo(void)
  * 3 - ClientHello with "abc", "defg" response
  */
 
-static int custom_ext_0_cli_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_0_cli_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -451,14 +451,14 @@ static int custom_ext_0_cli_add_cb(SSL *s, unsigned int ext_type,
     return 0;                   /* Don't send an extension */
 }
 
-static int custom_ext_0_cli_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_0_cli_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
     return 1;
 }
 
-static int custom_ext_1_cli_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_1_cli_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -469,14 +469,14 @@ static int custom_ext_1_cli_add_cb(SSL *s, unsigned int ext_type,
     return 1;                   /* Send "abc" */
 }
 
-static int custom_ext_1_cli_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_1_cli_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
     return 1;
 }
 
-static int custom_ext_2_cli_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_2_cli_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -487,7 +487,7 @@ static int custom_ext_2_cli_add_cb(SSL *s, unsigned int ext_type,
     return 1;                   /* Send "abc" */
 }
 
-static int custom_ext_2_cli_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_2_cli_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
@@ -498,7 +498,7 @@ static int custom_ext_2_cli_parse_cb(SSL *s, unsigned int ext_type,
     return 1;
 }
 
-static int custom_ext_3_cli_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_3_cli_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -509,7 +509,7 @@ static int custom_ext_3_cli_add_cb(SSL *s, unsigned int ext_type,
     return 1;                   /* Send "abc" */
 }
 
-static int custom_ext_3_cli_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_3_cli_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
@@ -526,7 +526,7 @@ static int custom_ext_3_cli_parse_cb(SSL *s, unsigned int ext_type,
  * custom_ext_0_cli_add_cb returns 0 - the server won't receive a callback
  * for this extension
  */
-static int custom_ext_0_srv_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_0_srv_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
@@ -535,7 +535,7 @@ static int custom_ext_0_srv_parse_cb(SSL *s, unsigned int ext_type,
 }
 
 /* 'add' callbacks are only called if the 'parse' callback is called */
-static int custom_ext_0_srv_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_0_srv_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -544,7 +544,7 @@ static int custom_ext_0_srv_add_cb(SSL *s, unsigned int ext_type,
     return 0;                   /* Don't send an extension */
 }
 
-static int custom_ext_1_srv_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_1_srv_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
@@ -558,14 +558,14 @@ static int custom_ext_1_srv_parse_cb(SSL *s, unsigned int ext_type,
     return 1;
 }
 
-static int custom_ext_1_srv_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_1_srv_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
     return 0;                   /* Don't send an extension */
 }
 
-static int custom_ext_2_srv_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_2_srv_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
@@ -579,7 +579,7 @@ static int custom_ext_2_srv_parse_cb(SSL *s, unsigned int ext_type,
     return 1;
 }
 
-static int custom_ext_2_srv_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_2_srv_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -588,7 +588,7 @@ static int custom_ext_2_srv_add_cb(SSL *s, unsigned int ext_type,
     return 1;                   /* Send empty extension */
 }
 
-static int custom_ext_3_srv_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_3_srv_parse_cb(SSL *s, unsigned int ext_type,
                                      const unsigned char *in,
                                      size_t inlen, int *al, void *arg)
 {
@@ -602,7 +602,7 @@ static int custom_ext_3_srv_parse_cb(SSL *s, unsigned int ext_type,
     return 1;
 }
 
-static int custom_ext_3_srv_add_cb(SSL *s, unsigned int ext_type,
+static int __cdecl custom_ext_3_srv_add_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char **out,
                                    size_t *outlen, int *al, void *arg)
 {
@@ -794,7 +794,7 @@ static void print_details(SSL *c_ssl, const char *prefix)
  *
  * Returns -1 on failure or the version on success
  */
-static int protocol_from_string(const char *value)
+static int __cdecl protocol_from_string(const char *value)
 {
     struct protocol_versions {
         const char *name;
@@ -836,7 +836,7 @@ static SSL_SESSION *read_session(const char *filename)
     return sess;
 }
 
-static int write_session(const char *filename, SSL_SESSION *sess)
+static int __cdecl write_session(const char *filename, SSL_SESSION *sess)
 {
     BIO *f = BIO_new_file(filename, "w");
 
@@ -859,7 +859,7 @@ static int write_session(const char *filename, SSL_SESSION *sess)
  *
  * Returns 0 on failure and 1 on success
  */
-static int set_protocol_version(const char *version, SSL *ssl, int setting)
+static int __cdecl set_protocol_version(const char *version, SSL *ssl, int setting)
 {
     if (version != NULL) {
         int ver = protocol_from_string(version);
@@ -2842,7 +2842,7 @@ static int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx)
     return ok;
 }
 
-static int app_verify_callback(X509_STORE_CTX *ctx, void *arg)
+static unsigned int __cdecl app_verify_callback(X509_STORE_CTX *ctx, void *arg)
 {
     int ok = 1;
     struct app_verify_arg *cb_arg = arg;
@@ -3023,7 +3023,7 @@ static DH *get_dh1024dsa(void)
 
 #ifndef OPENSSL_NO_PSK
 /* convert the PSK key (psk_key) in ascii to binary (psk) */
-static int psk_key2bn(const char *pskkey, unsigned char *psk,
+static unsigned int __cdecl psk_key2bn(const char *pskkey, unsigned char *psk,
                       unsigned int max_psk_len)
 {
     int ret;
@@ -3048,7 +3048,7 @@ static int psk_key2bn(const char *pskkey, unsigned char *psk,
     return ret;
 }
 
-static unsigned int psk_client_callback(SSL *ssl, const char *hint,
+static unsigned int __cdecl psk_client_callback(SSL *ssl, const char *hint,
                                         char *identity,
                                         unsigned int max_identity_len,
                                         unsigned char *psk,
@@ -3071,7 +3071,7 @@ static unsigned int psk_client_callback(SSL *ssl, const char *hint,
     return psk_len;
 }
 
-static unsigned int psk_server_callback(SSL *ssl, const char *identity,
+static unsigned int __cdecl psk_server_callback(SSL *ssl, const char *identity,
                                         unsigned char *psk,
                                         unsigned int max_psk_len)
 {

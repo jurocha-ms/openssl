@@ -11,7 +11,7 @@
 #include "testutil.h"
 #include "internal/numbers.h"
 
-static int test_sanity_null_zero(void)
+static int __cdecl test_sanity_null_zero(void)
 {
     char *p;
     char bytes[sizeof(p)];
@@ -22,7 +22,7 @@ static int test_sanity_null_zero(void)
     return TEST_mem_eq(&p, sizeof(p), bytes, sizeof(bytes));
 }
 
-static int test_sanity_enum_size(void)
+static int __cdecl test_sanity_enum_size(void)
 {
     enum smallchoices { sa, sb, sc };
     enum medchoices { ma, mb, mc, md, me, mf, mg, mh, mi, mj, mk, ml };
@@ -47,7 +47,7 @@ static int test_sanity_enum_size(void)
     return 1;
 }
 
-static int test_sanity_twos_complement(void)
+static int __cdecl test_sanity_twos_complement(void)
 {
     /* Basic two's complement checks. */
     if (!TEST_int_eq(~(-1), 0)
@@ -56,7 +56,7 @@ static int test_sanity_twos_complement(void)
     return 1;
 }
 
-static int test_sanity_sign(void)
+static int __cdecl test_sanity_sign(void)
 {
     /* Check that values with sign bit 1 and value bits 0 are valid */
     if (!TEST_int_eq(-(INT_MIN + 1), INT_MAX)
@@ -65,7 +65,7 @@ static int test_sanity_sign(void)
     return 1;
 }
 
-static int test_sanity_unsigned_conversion(void)
+static int __cdecl test_sanity_unsigned_conversion(void)
 {
     /* Check that unsigned-to-signed conversions preserve bit patterns */
     if (!TEST_int_eq((int)((unsigned int)INT_MAX + 1), INT_MIN)
@@ -74,7 +74,7 @@ static int test_sanity_unsigned_conversion(void)
     return 1;
 }
 
-static int test_sanity_range(void)
+static int __cdecl test_sanity_range(void)
 {
     /* This isn't possible to check using the framework functions */
     if (SIZE_MAX < INT_MAX) {
@@ -84,7 +84,7 @@ static int test_sanity_range(void)
     return 1;
 }
 
-static int test_sanity_memcmp(void)
+static int __cdecl test_sanity_memcmp(void)
 {
     return CRYPTO_memcmp("ab","cd",2);
 }

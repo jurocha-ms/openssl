@@ -26,8 +26,8 @@
  */
 typedef struct test_info {
     const char *test_case_name;
-    int (*test_fn) (void);
-    int (*param_test_fn)(int idx);
+    int (__cdecl *test_fn) (void);
+    int (__cdecl *param_test_fn)(int idx);
     int num;
 
     /* flags */
@@ -44,7 +44,7 @@ static int seed = 0;
  */
 static int num_test_cases = 0;
 
-void add_test(const char *test_case_name, int (*test_fn) (void))
+void __cdecl add_test(const char *test_case_name, int (__cdecl *test_fn) (void))
 {
     assert(num_tests != OSSL_NELEM(all_tests));
     all_tests[num_tests].test_case_name = test_case_name;
@@ -54,7 +54,7 @@ void add_test(const char *test_case_name, int (*test_fn) (void))
     ++num_test_cases;
 }
 
-void add_all_tests(const char *test_case_name, int(*test_fn)(int idx),
+void __cdecl add_all_tests(const char *test_case_name, int(__cdecl *test_fn)(int idx),
                    int num, int subtest)
 {
     assert(num_tests != OSSL_NELEM(all_tests));

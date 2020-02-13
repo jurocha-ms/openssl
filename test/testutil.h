@@ -139,8 +139,8 @@ const char *test_get_option_argument(const char *option);
  * rather link to one of the helper main() methods.
  */
 
-void add_test(const char *test_case_name, int (*test_fn) (void));
-void add_all_tests(const char *test_case_name, int (*test_fn)(int idx), int num,
+void __cdecl add_test(const char *test_case_name, int (__cdecl *test_fn) (void));
+void __cdecl add_all_tests(const char *test_case_name, int (__cdecl *test_fn)(int idx), int num,
                    int subtest);
 
 /*

@@ -63,7 +63,7 @@ err:
     return NULL;
 }
 
-static int test_curve(void)
+static int __cdecl test_curve(void)
 {
     EC_GROUP *group = NULL;
     EC_POINT *point = NULL;
@@ -101,7 +101,7 @@ err:
 }
 #endif
 
-static int atoi64(const char *in, int64_t *result)
+static int __cdecl atoi64(const char *in, int64_t *result)
 {
     int64_t ret = 0;
 

@@ -14,7 +14,7 @@
 #define PORT            "4433"
 #define PROTOCOL        "tcp"
 
-typedef int (*do_server_cb)(int s, int stype, int prot, unsigned char *context);
+typedef int (__cdecl *do_server_cb)(int s, int stype, int prot, unsigned char *context);
 int do_server(int *accept_sock, const char *host, const char *port,
               int family, int type, int protocol, do_server_cb cb,
               unsigned char *context, int naccept, BIO *bio_s_out);
@@ -37,14 +37,14 @@ long __cdecl bio_dump_callback(BIO *bio, int cmd, const char *argp,
                        int argi, long argl, long ret);
 
 void __cdecl apps_ssl_info_callback(const SSL *s, int where, int ret);
-void msg_cb(int write_p, int version, int content_type, const void *buf,
+void __cdecl msg_cb(int write_p, int version, int content_type, const void *buf,
             size_t len, SSL *ssl, void *arg);
-void tlsext_cb(SSL *s, int client_server, int type, const unsigned char *data,
+void __cdecl tlsext_cb(SSL *s, int client_server, int type, const unsigned char *data,
                int len, void *arg);
 
-int generate_cookie_callback(SSL *ssl, unsigned char *cookie,
+int __cdecl generate_cookie_callback(SSL *ssl, unsigned char *cookie,
                              unsigned int *cookie_len);
-int verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
+int __cdecl verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
                            unsigned int cookie_len);
 
 #ifdef __VMS                     /* 31 char symbol name limit */
@@ -52,9 +52,9 @@ int verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
 # define verify_stateless_cookie_callback        verify_stateless_cookie_cb
 #endif
 
-int generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
+int __cdecl generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
                                        size_t *cookie_len);
-int verify_stateless_cookie_callback(SSL *ssl, const unsigned char *cookie,
+int __cdecl verify_stateless_cookie_callback(SSL *ssl, const unsigned char *cookie,
                                      size_t cookie_len);
 
 typedef struct ssl_excert_st SSL_EXCERT;

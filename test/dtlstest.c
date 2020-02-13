@@ -42,7 +42,7 @@ static unsigned char certstatus[] = {
 
 #define RECORD_SEQUENCE 10
 
-static unsigned int timer_cb(SSL *s, unsigned int timer_us)
+static unsigned int __cdecl timer_cb(SSL *s, unsigned int timer_us)
 {
     ++timer_cb_count;
 
@@ -52,7 +52,7 @@ static unsigned int timer_cb(SSL *s, unsigned int timer_us)
         return 2 * timer_us;
 }
 
-static int test_dtls_unprocessed(int testidx)
+static int __cdecl test_dtls_unprocessed(int testidx)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl1 = NULL, *clientssl1 = NULL;
@@ -146,7 +146,7 @@ static int test_dtls_unprocessed(int testidx)
 
 #define TOTAL_RECORDS (TOTAL_FULL_HAND_RECORDS + TOTAL_RESUME_HAND_RECORDS)
 
-static int test_dtls_drop_records(int idx)
+static int __cdecl test_dtls_drop_records(int idx)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -247,7 +247,7 @@ static int test_dtls_drop_records(int idx)
 
 static const char dummy_cookie[] = "0123456";
 
-static int generate_cookie_cb(SSL *ssl, unsigned char *cookie,
+static int __cdecl generate_cookie_cb(SSL *ssl, unsigned char *cookie,
                               unsigned int *cookie_len)
 {
     memcpy(cookie, dummy_cookie, sizeof(dummy_cookie));
@@ -255,13 +255,13 @@ static int generate_cookie_cb(SSL *ssl, unsigned char *cookie,
     return 1;
 }
 
-static int verify_cookie_cb(SSL *ssl, const unsigned char *cookie,
+static int __cdecl verify_cookie_cb(SSL *ssl, const unsigned char *cookie,
                             unsigned int cookie_len)
 {
     return TEST_mem_eq(cookie, cookie_len, dummy_cookie, sizeof(dummy_cookie));
 }
 
-static int test_cookie(void)
+static int __cdecl test_cookie(void)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -293,7 +293,7 @@ static int test_cookie(void)
     return testresult;
 }
 
-static int test_dtls_duplicate_records(void)
+static int __cdecl test_dtls_duplicate_records(void)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;

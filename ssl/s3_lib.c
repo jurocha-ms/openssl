@@ -3379,7 +3379,7 @@ int __cdecl ssl3_clear(SSL *s)
 }
 
 #ifndef OPENSSL_NO_SRP
-static char *srp_password_from_info_cb(SSL *s, void *arg)
+static char * __cdecl srp_password_from_info_cb(SSL *s, void *arg)
 {
     return OPENSSL_strdup(s->srp_ctx.info);
 }
@@ -3732,7 +3732,7 @@ long __cdecl ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
     return ret;
 }
 
-long __cdecl ssl3_callback_ctrl(SSL *s, int cmd, void (*fp) (void))
+long __cdecl ssl3_callback_ctrl(SSL *s, int cmd, void (__cdecl *fp) (void))
 {
     int ret = 0;
 
@@ -3740,18 +3740,18 @@ long __cdecl ssl3_callback_ctrl(SSL *s, int cmd, void (*fp) (void))
 #ifndef OPENSSL_NO_DH
     case SSL_CTRL_SET_TMP_DH_CB:
         {
-            s->cert->dh_tmp_cb = (DH *(*)(SSL *, int, int))fp;
+            s->cert->dh_tmp_cb = (DH *(__cdecl *)(SSL *, int, int))fp;
         }
         break;
 #endif
     case SSL_CTRL_SET_TLSEXT_DEBUG_CB:
-        s->ext.debug_cb = (void (*)(SSL *, int, int,
+        s->ext.debug_cb = (void (__cdecl *)(SSL *, int, int,
                                     const unsigned char *, int, void *))fp;
         break;
 
     case SSL_CTRL_SET_NOT_RESUMABLE_SESS_CB:
         {
-            s->not_resumable_session_cb = (int (*)(SSL *, int))fp;
+            s->not_resumable_session_cb = (int (__cdecl *)(SSL *, int))fp;
         }
         break;
     default:
@@ -3875,7 +3875,7 @@ long __cdecl ssl3_ctx_ctrl(SSL_CTX *ctx, int cmd, long larg, void *parg)
         break;
 
     case SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB:
-        *(int (**)(SSL*, void*))parg = ctx->ext.status_cb;
+        *(int (__cdecl **)(SSL*, void*))parg = ctx->ext.status_cb;
         break;
 
 #ifndef OPENSSL_NO_SRP
@@ -4003,26 +4003,26 @@ long __cdecl ssl3_ctx_ctrl(SSL_CTX *ctx, int cmd, long larg, void *parg)
     return 1;
 }
 
-long __cdecl ssl3_ctx_callback_ctrl(SSL_CTX *ctx, int cmd, void (*fp) (void))
+long __cdecl ssl3_ctx_callback_ctrl(SSL_CTX *ctx, int cmd, void (__cdecl *fp) (void))
 {
     switch (cmd) {
 #ifndef OPENSSL_NO_DH
     case SSL_CTRL_SET_TMP_DH_CB:
         {
-            ctx->cert->dh_tmp_cb = (DH *(*)(SSL *, int, int))fp;
+            ctx->cert->dh_tmp_cb = (DH *(__cdecl *)(SSL *, int, int))fp;
         }
         break;
 #endif
     case SSL_CTRL_SET_TLSEXT_SERVERNAME_CB:
-        ctx->ext.servername_cb = (int (*)(SSL *, int *, void *))fp;
+        ctx->ext.servername_cb = (int (__cdecl *)(SSL *, int *, void *))fp;
         break;
 
     case SSL_CTRL_SET_TLSEXT_STATUS_REQ_CB:
-        ctx->ext.status_cb = (int (*)(SSL *, void *))fp;
+        ctx->ext.status_cb = (int (__cdecl *)(SSL *, void *))fp;
         break;
 
     case SSL_CTRL_SET_TLSEXT_TICKET_KEY_CB:
-        ctx->ext.ticket_key_cb = (int (*)(SSL *, unsigned char *,
+        ctx->ext.ticket_key_cb = (int (__cdecl *)(SSL *, unsigned char *,
                                              unsigned char *,
                                              EVP_CIPHER_CTX *,
                                              HMAC_CTX *, int))fp;
@@ -4031,22 +4031,22 @@ long __cdecl ssl3_ctx_callback_ctrl(SSL_CTX *ctx, int cmd, void (*fp) (void))
 #ifndef OPENSSL_NO_SRP
     case SSL_CTRL_SET_SRP_VERIFY_PARAM_CB:
         ctx->srp_ctx.srp_Mask |= SSL_kSRP;
-        ctx->srp_ctx.SRP_verify_param_callback = (int (*)(SSL *, void *))fp;
+        ctx->srp_ctx.SRP_verify_param_callback = (int (__cdecl *)(SSL *, void *))fp;
         break;
     case SSL_CTRL_SET_TLS_EXT_SRP_USERNAME_CB:
         ctx->srp_ctx.srp_Mask |= SSL_kSRP;
         ctx->srp_ctx.TLS_ext_srp_username_callback =
-            (int (*)(SSL *, int *, void *))fp;
+            (int (__cdecl *)(SSL *, int *, void *))fp;
         break;
     case SSL_CTRL_SET_SRP_GIVE_CLIENT_PWD_CB:
         ctx->srp_ctx.srp_Mask |= SSL_kSRP;
         ctx->srp_ctx.SRP_give_srp_client_pwd_callback =
-            (char *(*)(SSL *, void *))fp;
+            (char *(__cdecl *)(SSL *, void *))fp;
         break;
 #endif
     case SSL_CTRL_SET_NOT_RESUMABLE_SESS_CB:
         {
-            ctx->not_resumable_session_cb = (int (*)(SSL *, int))fp;
+            ctx->not_resumable_session_cb = (int (__cdecl *)(SSL *, int))fp;
         }
         break;
     default:

@@ -1504,7 +1504,7 @@ static TESTDATA tests[] = {
     }
 };
 
-static int test_poly1305(int idx)
+static int __cdecl test_poly1305(int idx)
 {
     POLY1305 poly1305;
     const TESTDATA test = tests[idx];

@@ -1668,7 +1668,7 @@ long __cdecl SSL_get_default_timeout(const SSL *s)
 }
 
 static int ssl_start_async_job(SSL *s, struct ssl_async_args *args,
-                               int (*func) (void *))
+                               int (__cdecl *func) (void *))
 {
     int ret;
     if (s->waitctx == NULL) {
@@ -1699,7 +1699,7 @@ static int ssl_start_async_job(SSL *s, struct ssl_async_args *args,
     }
 }
 
-static int ssl_io_intern(void *vargs)
+static int __cdecl ssl_io_intern(void *vargs)
 {
     struct ssl_async_args *args;
     SSL *s;
@@ -2256,11 +2256,11 @@ long __cdecl SSL_ctrl(SSL *s, int cmd, long larg, void *parg)
     }
 }
 
-long __cdecl SSL_callback_ctrl(SSL *s, int cmd, void (*fp) (void))
+long __cdecl SSL_callback_ctrl(SSL *s, int cmd, void (__cdecl *fp) (void))
 {
     switch (cmd) {
     case SSL_CTRL_SET_MSG_CALLBACK:
-        s->msg_callback = (void (*)
+        s->msg_callback = (void (__cdecl *)
                            (int write_p, int version, int content_type,
                             const void *buf, size_t len, SSL *ssl,
                             void *arg))(fp);
@@ -2396,11 +2396,11 @@ long __cdecl SSL_CTX_ctrl(SSL_CTX *ctx, int cmd, long larg, void *parg)
     }
 }
 
-long __cdecl SSL_CTX_callback_ctrl(SSL_CTX *ctx, int cmd, void (*fp) (void))
+long __cdecl SSL_CTX_callback_ctrl(SSL_CTX *ctx, int cmd, void (__cdecl *fp) (void))
 {
     switch (cmd) {
     case SSL_CTRL_SET_MSG_CALLBACK:
-        ctx->msg_callback = (void (*)
+        ctx->msg_callback = (void (__cdecl *)
                              (int write_p, int version, int content_type,
                               const void *buf, size_t len, SSL *ssl,
                               void *arg))(fp);
@@ -3210,7 +3210,7 @@ void * __cdecl SSL_get_default_passwd_cb_userdata(SSL *s)
 }
 
 void __cdecl SSL_CTX_set_cert_verify_callback(SSL_CTX *ctx,
-                                      int (*cb) (X509_STORE_CTX *, void *),
+                                      int (__cdecl *cb) (X509_STORE_CTX *, void *),
                                       void *arg)
 {
     ctx->app_verify_callback = cb;
@@ -3229,12 +3229,12 @@ void __cdecl SSL_CTX_set_verify_depth(SSL_CTX *ctx, int depth)
     X509_VERIFY_PARAM_set_depth(ctx->param, depth);
 }
 
-void __cdecl SSL_CTX_set_cert_cb(SSL_CTX *c, int (*cb) (SSL *ssl, void *arg), void *arg)
+void __cdecl SSL_CTX_set_cert_cb(SSL_CTX *c, int (__cdecl *cb) (SSL *ssl, void *arg), void *arg)
 {
     ssl_cert_set_cert_cb(c->cert, cb, arg);
 }
 
-void __cdecl SSL_set_cert_cb(SSL *s, int (*cb) (SSL *ssl, void *arg), void *arg)
+void __cdecl SSL_set_cert_cb(SSL *s, int (__cdecl *cb) (SSL *ssl, void *arg), void *arg)
 {
     ssl_cert_set_cert_cb(s->cert, cb, arg);
 }
@@ -3572,7 +3572,7 @@ int __cdecl SSL_get_error(const SSL *s, int i)
     return SSL_ERROR_SYSCALL;
 }
 
-static int ssl_do_handshake_intern(void *vargs)
+static int __cdecl ssl_do_handshake_intern(void *vargs)
 {
     struct ssl_async_args *args;
     SSL *s;
@@ -4205,16 +4205,16 @@ int __cdecl SSL_want(const SSL *s)
 
 #ifndef OPENSSL_NO_DH
 void __cdecl SSL_CTX_set_tmp_dh_callback(SSL_CTX *ctx,
-                                 DH *(*dh) (SSL *ssl, int is_export,
+                                 DH *(__cdecl *dh) (SSL *ssl, int is_export,
                                             int keylength))
 {
-    SSL_CTX_callback_ctrl(ctx, SSL_CTRL_SET_TMP_DH_CB, (void (*)(void))dh);
+    SSL_CTX_callback_ctrl(ctx, SSL_CTRL_SET_TMP_DH_CB, (void (__cdecl *)(void))dh);
 }
 
-void __cdecl SSL_set_tmp_dh_callback(SSL *ssl, DH *(*dh) (SSL *ssl, int is_export,
+void __cdecl SSL_set_tmp_dh_callback(SSL *ssl, DH *(__cdecl *dh) (SSL *ssl, int is_export,
                                                   int keylength))
 {
-    SSL_callback_ctrl(ssl, SSL_CTRL_SET_TMP_DH_CB, (void (*)(void))dh);
+    SSL_callback_ctrl(ssl, SSL_CTRL_SET_TMP_DH_CB, (void (__cdecl *)(void))dh);
 }
 #endif
 
@@ -4312,40 +4312,40 @@ void __cdecl SSL_CTX_set_psk_use_session_callback(SSL_CTX *ctx,
 }
 
 void __cdecl SSL_CTX_set_msg_callback(SSL_CTX *ctx,
-                              void (*cb) (int write_p, int version,
+                              void (__cdecl *cb) (int write_p, int version,
                                           int content_type, const void *buf,
                                           size_t len, SSL *ssl, void *arg))
 {
-    SSL_CTX_callback_ctrl(ctx, SSL_CTRL_SET_MSG_CALLBACK, (void (*)(void))cb);
+    SSL_CTX_callback_ctrl(ctx, SSL_CTRL_SET_MSG_CALLBACK, (void (__cdecl *)(void))cb);
 }
 
 void __cdecl SSL_set_msg_callback(SSL *ssl,
-                          void (*cb) (int write_p, int version,
+                          void (__cdecl *cb) (int write_p, int version,
                                       int content_type, const void *buf,
                                       size_t len, SSL *ssl, void *arg))
 {
-    SSL_callback_ctrl(ssl, SSL_CTRL_SET_MSG_CALLBACK, (void (*)(void))cb);
+    SSL_callback_ctrl(ssl, SSL_CTRL_SET_MSG_CALLBACK, (void (__cdecl *)(void))cb);
 }
 
 void __cdecl SSL_CTX_set_not_resumable_session_callback(SSL_CTX *ctx,
-                                                int (*cb) (SSL *ssl,
+                                                int (__cdecl *cb) (SSL *ssl,
                                                            int
                                                            is_forward_secure))
 {
     SSL_CTX_callback_ctrl(ctx, SSL_CTRL_SET_NOT_RESUMABLE_SESS_CB,
-                          (void (*)(void))cb);
+                          (void (__cdecl *)(void))cb);
 }
 
 void __cdecl SSL_set_not_resumable_session_callback(SSL *ssl,
-                                            int (*cb) (SSL *ssl,
+                                            int (__cdecl *cb) (SSL *ssl,
                                                        int is_forward_secure))
 {
     SSL_callback_ctrl(ssl, SSL_CTRL_SET_NOT_RESUMABLE_SESS_CB,
-                      (void (*)(void))cb);
+                      (void (__cdecl *)(void))cb);
 }
 
 void __cdecl SSL_CTX_set_record_padding_callback(SSL_CTX *ctx,
-                                         size_t (*cb) (SSL *ssl, int type,
+                                         size_t (__cdecl *cb) (SSL *ssl, int type,
                                                        size_t len, void *arg))
 {
     ctx->record_padding_cb = cb;
@@ -4374,7 +4374,7 @@ int __cdecl SSL_CTX_set_block_padding(SSL_CTX *ctx, size_t block_size)
 }
 
 void __cdecl SSL_set_record_padding_callback(SSL *ssl,
-                                     size_t (*cb) (SSL *ssl, int type,
+                                     size_t (__cdecl *cb) (SSL *ssl, int type,
                                                    size_t len, void *arg))
 {
     ssl->record_padding_cb = cb;
@@ -4775,13 +4775,13 @@ const STACK_OF(SCT) * __cdecl SSL_get0_peer_scts(SSL *s)
     return NULL;
 }
 
-static int ct_permissive(const CT_POLICY_EVAL_CTX * ctx,
+static int __cdecl ct_permissive(const CT_POLICY_EVAL_CTX * ctx,
                          const STACK_OF(SCT) *scts, void *unused_arg)
 {
     return 1;
 }
 
-static int ct_strict(const CT_POLICY_EVAL_CTX * ctx,
+static int __cdecl ct_strict(const CT_POLICY_EVAL_CTX * ctx,
                      const STACK_OF(SCT) *scts, void *unused_arg)
 {
     int count = scts != NULL ? sk_SCT_num(scts) : 0;

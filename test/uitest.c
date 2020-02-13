@@ -20,7 +20,7 @@ char *default_config_file = NULL;
 #include <openssl/ui.h>
 
 /* Old style PEM password callback */
-static int test_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
+static int __cdecl test_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
 {
     OPENSSL_strlcpy(buf, (char *)userdata, (size_t)size);
     return strlen(buf);
@@ -30,7 +30,7 @@ static int test_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
  * Test wrapping old style PEM password callback in a UI method through the
  * use of UI utility functions
  */
-static int test_old(void)
+static int __cdecl test_old(void)
 {
     UI_METHOD *ui_method = NULL;
     UI *ui = NULL;
@@ -71,7 +71,7 @@ static int test_old(void)
 }
 
 /* Test of UI.  This uses the UI method defined in apps/apps.c */
-static int test_new_ui(void)
+static int __cdecl test_new_ui(void)
 {
     PW_CB_DATA cb_data = {
         "password",

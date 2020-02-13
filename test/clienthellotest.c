@@ -50,7 +50,7 @@ static const char alpn_prots[] =
     "0123456789012345678901234567890123456789012345678901234567890123456789"
     "01234567890123456789";
 
-static int test_client_hello(int currtest)
+static int __cdecl test_client_hello(int currtest)
 {
     SSL_CTX *ctx;
     SSL *con = NULL;

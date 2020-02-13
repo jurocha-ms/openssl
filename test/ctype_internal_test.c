@@ -19,13 +19,13 @@
  * tests, we therefore define our own.
  */
 #if (defined(__VMS) && __CRTL_VER <= 80400000) || defined(__osf__)
-static int isblank(int c)
+static int __cdecl isblank(int c)
 {
     return c == ' ' || c == '\t';
 }
 #endif
 
-static int test_ctype_chars(int n)
+static int __cdecl test_ctype_chars(int n)
 {
     if (!TEST_int_eq(isascii((unsigned char)n) != 0, ossl_isascii(n) != 0))
         return 0;
@@ -63,19 +63,19 @@ static struct {
     { EOF, EOF }
 };
 
-static int test_ctype_toupper(int n)
+static int __cdecl test_ctype_toupper(int n)
 {
     return TEST_int_eq(ossl_toupper(case_change[n].l), case_change[n].u)
            && TEST_int_eq(ossl_toupper(case_change[n].u), case_change[n].u);
 }
 
-static int test_ctype_tolower(int n)
+static int __cdecl test_ctype_tolower(int n)
 {
     return TEST_int_eq(ossl_tolower(case_change[n].u), case_change[n].l)
            && TEST_int_eq(ossl_tolower(case_change[n].l), case_change[n].l);
 }
 
-static int test_ctype_eof(void)
+static int __cdecl test_ctype_eof(void)
 {
     return test_ctype_chars(EOF);
 }

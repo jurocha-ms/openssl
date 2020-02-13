@@ -24,7 +24,7 @@ typedef struct {
     POLY1305 ctx;
 } POLY1305_PKEY_CTX;
 
-static int pkey_poly1305_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_poly1305_init(EVP_PKEY_CTX *ctx)
 {
     POLY1305_PKEY_CTX *pctx;
 
@@ -39,7 +39,7 @@ static int pkey_poly1305_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_poly1305_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_poly1305_cleanup(EVP_PKEY_CTX *ctx)
 {
     POLY1305_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
 
@@ -50,7 +50,7 @@ static void pkey_poly1305_cleanup(EVP_PKEY_CTX *ctx)
     }
 }
 
-static int pkey_poly1305_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_poly1305_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     POLY1305_PKEY_CTX *sctx, *dctx;
 
@@ -69,7 +69,7 @@ static int pkey_poly1305_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
     return 1;
 }
 
-static int pkey_poly1305_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_poly1305_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     ASN1_OCTET_STRING *key;
     POLY1305_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
@@ -82,7 +82,7 @@ static int pkey_poly1305_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     return EVP_PKEY_assign_POLY1305(pkey, key);
 }
 
-static int int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     POLY1305_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(EVP_MD_CTX_pkey_ctx(ctx));
 
@@ -90,7 +90,7 @@ static int int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
     return 1;
 }
 
-static int poly1305_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
+static int __cdecl poly1305_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
 {
     POLY1305_PKEY_CTX *pctx = ctx->data;
     ASN1_OCTET_STRING *key = (ASN1_OCTET_STRING *)ctx->pkey->pkey.ptr;
@@ -102,7 +102,7 @@ static int poly1305_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
     Poly1305_Init(&pctx->ctx, key->data);
     return 1;
 }
-static int poly1305_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
+static int __cdecl poly1305_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
                             EVP_MD_CTX *mctx)
 {
     POLY1305_PKEY_CTX *pctx = ctx->data;
@@ -113,7 +113,7 @@ static int poly1305_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *sigle
     return 1;
 }
 
-static int pkey_poly1305_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_poly1305_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     POLY1305_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
     const unsigned char *key;
@@ -148,7 +148,7 @@ static int pkey_poly1305_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     return 1;
 }
 
-static int pkey_poly1305_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_poly1305_ctrl_str(EVP_PKEY_CTX *ctx,
                                   const char *type, const char *value)
 {
     if (value == NULL)

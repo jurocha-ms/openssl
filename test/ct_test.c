@@ -104,7 +104,7 @@ static X509 *load_pem_cert(const char *dir, const char *file)
     return cert;
 }
 
-static int read_text_file(const char *dir, const char *file,
+static int __cdecl read_text_file(const char *dir, const char *file,
                           char *buffer, int buffer_length)
 {
     int len = -1;
@@ -122,7 +122,7 @@ static int read_text_file(const char *dir, const char *file,
     return len;
 }
 
-static int compare_sct_list_printout(STACK_OF(SCT) *sct,
+static int __cdecl compare_sct_list_printout(STACK_OF(SCT) *sct,
                                      const char *expected_output)
 {
     BIO *text_buffer = NULL;
@@ -148,7 +148,7 @@ end:
     return result;
 }
 
-static int compare_extension_printout(X509_EXTENSION *extension,
+static int __cdecl compare_extension_printout(X509_EXTENSION *extension,
                                       const char *expected_output)
 {
     BIO *text_buffer = NULL;
@@ -175,7 +175,7 @@ end:
     return result;
 }
 
-static int assert_validity(CT_TEST_FIXTURE *fixture, STACK_OF(SCT) *scts,
+static int __cdecl assert_validity(CT_TEST_FIXTURE *fixture, STACK_OF(SCT) *scts,
                            CT_POLICY_EVAL_CTX *policy_ctx)
 {
     int invalid_sct_count = 0;
@@ -216,7 +216,7 @@ static int assert_validity(CT_TEST_FIXTURE *fixture, STACK_OF(SCT) *scts,
     return 1;
 }
 
-static int execute_cert_test(CT_TEST_FIXTURE *fixture)
+static int __cdecl execute_cert_test(CT_TEST_FIXTURE *fixture)
 {
     int success = 0;
     X509 *cert = NULL, *issuer = NULL;
@@ -328,7 +328,7 @@ end:
 # define SETUP_CT_TEST_FIXTURE() SETUP_TEST_FIXTURE(CT_TEST_FIXTURE, set_up)
 # define EXECUTE_CT_TEST() EXECUTE_TEST(execute_cert_test, tear_down)
 
-static int test_no_scts_in_certificate(void)
+static int __cdecl test_no_scts_in_certificate(void)
 {
     SETUP_CT_TEST_FIXTURE();
     if (fixture == NULL)
@@ -341,7 +341,7 @@ static int test_no_scts_in_certificate(void)
     return result;
 }
 
-static int test_one_sct_in_certificate(void)
+static int __cdecl test_one_sct_in_certificate(void)
 {
     SETUP_CT_TEST_FIXTURE();
     if (fixture == NULL)
@@ -356,7 +356,7 @@ static int test_one_sct_in_certificate(void)
     return result;
 }
 
-static int test_multiple_scts_in_certificate(void)
+static int __cdecl test_multiple_scts_in_certificate(void)
 {
     SETUP_CT_TEST_FIXTURE();
     if (fixture == NULL)
@@ -371,7 +371,7 @@ static int test_multiple_scts_in_certificate(void)
     return result;
 }
 
-static int test_verify_one_sct(void)
+static int __cdecl test_verify_one_sct(void)
 {
     SETUP_CT_TEST_FIXTURE();
     if (fixture == NULL)
@@ -385,7 +385,7 @@ static int test_verify_one_sct(void)
     return result;
 }
 
-static int test_verify_multiple_scts(void)
+static int __cdecl test_verify_multiple_scts(void)
 {
     SETUP_CT_TEST_FIXTURE();
     if (fixture == NULL)
@@ -399,7 +399,7 @@ static int test_verify_multiple_scts(void)
     return result;
 }
 
-static int test_verify_fails_for_future_sct(void)
+static int __cdecl test_verify_fails_for_future_sct(void)
 {
     SETUP_CT_TEST_FIXTURE();
     if (fixture == NULL)
@@ -415,7 +415,7 @@ static int test_verify_fails_for_future_sct(void)
     return result;
 }
 
-static int test_decode_tls_sct(void)
+static int __cdecl test_decode_tls_sct(void)
 {
     const unsigned char tls_sct_list[] = "\x00\x78" /* length of list */
         "\x00\x76"
@@ -446,7 +446,7 @@ static int test_decode_tls_sct(void)
     return result;
 }
 
-static int test_encode_tls_sct(void)
+static int __cdecl test_encode_tls_sct(void)
 {
     const char log_id[] = "3xwuwRUAlFJHqWFoMl3cXHlZ6PfG04j8AC4LvT9012Q=";
     const uint64_t timestamp = 1;
@@ -477,7 +477,7 @@ static int test_encode_tls_sct(void)
  * Tests that the CT_POLICY_EVAL_CTX default time is approximately now.
  * Allow +-10 minutes, as it may compensate for clock skew.
  */
-static int test_default_ct_policy_eval_ctx_time_is_now(void)
+static int __cdecl test_default_ct_policy_eval_ctx_time_is_now(void)
 {
     int success = 0;
     CT_POLICY_EVAL_CTX *ct_policy_ctx = CT_POLICY_EVAL_CTX_new();
@@ -495,7 +495,7 @@ end:
     return success;
 }
 
-static int test_ctlog_from_base64(void)
+static int __cdecl test_ctlog_from_base64(void)
 {
     CTLOG *ctlogp = NULL;
     const char notb64[] = "\01\02\03\04";

@@ -94,11 +94,11 @@ BN_GENCB * __cdecl BN_GENCB_new(void);
 void __cdecl BN_GENCB_free(BN_GENCB *cb);
 
 /* Populate a BN_GENCB structure with an "old"-style callback */
-void __cdecl BN_GENCB_set_old(BN_GENCB *gencb, void (*callback) (int, int, void *),
+void __cdecl BN_GENCB_set_old(BN_GENCB *gencb, void (__cdecl *callback) (int, int, void *),
                       void *cb_arg);
 
 /* Populate a BN_GENCB structure with a "new"-style callback */
-void __cdecl BN_GENCB_set(BN_GENCB *gencb, int (*callback) (int, int, BN_GENCB *),
+void __cdecl BN_GENCB_set(BN_GENCB *gencb, int (__cdecl *callback) (int, int, BN_GENCB *),
                   void *cb_arg);
 
 void * __cdecl BN_GENCB_get_arg(BN_GENCB *cb);
@@ -326,16 +326,16 @@ void __cdecl BN_consttime_swap(BN_ULONG swap, BIGNUM *a, BIGNUM *b, int nwords);
 DEPRECATEDIN_0_9_8(BIGNUM *BN_generate_prime(BIGNUM *ret, int bits, int safe,
                                              const BIGNUM *add,
                                              const BIGNUM *rem,
-                                             void (*callback) (int, int,
+                                             void (__cdecl *callback) (int, int,
                                                                void *),
                                              void *cb_arg))
 DEPRECATEDIN_0_9_8(int
                    BN_is_prime(const BIGNUM *p, int nchecks,
-                               void (*callback) (int, int, void *),
+                               void (__cdecl *callback) (int, int, void *),
                                BN_CTX *ctx, void *cb_arg))
 DEPRECATEDIN_0_9_8(int
                    BN_is_prime_fasttest(const BIGNUM *p, int nchecks,
-                                        void (*callback) (int, int, void *),
+                                        void (__cdecl *callback) (int, int, void *),
                                         BN_CTX *ctx, void *cb_arg,
                                         int do_trial_division))
 

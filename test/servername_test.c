@@ -222,7 +222,7 @@ static sni_test_fn sni_test_fns[3] = {
     server_setup_sni
 };
 
-static int test_servername(int test)
+static int __cdecl test_servername(int test)
 {
     /*
      * For each test set up an SSL_CTX and SSL and see

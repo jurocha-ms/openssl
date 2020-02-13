@@ -30,7 +30,7 @@ static uint8_t *fake_rand_bytes = NULL;
 static size_t fake_rand_bytes_offset = 0;
 static size_t fake_rand_size = 0;
 
-static int get_faked_bytes(unsigned char *buf, int num)
+static int __cdecl get_faked_bytes(unsigned char *buf, int num)
 {
     int i;
 
@@ -46,7 +46,7 @@ static int get_faked_bytes(unsigned char *buf, int num)
     return 1;
 }
 
-static int start_fake_rand(const char *hex_bytes)
+static int __cdecl start_fake_rand(const char *hex_bytes)
 {
     /* save old rand method */
     if (!TEST_ptr(saved_rand = RAND_get_rand_method()))
@@ -66,7 +66,7 @@ static int start_fake_rand(const char *hex_bytes)
     return 1;
 }
 
-static int restore_rand(void)
+static int __cdecl restore_rand(void)
 {
     OPENSSL_free(fake_rand_bytes);
     fake_rand_bytes = NULL;
@@ -134,7 +134,7 @@ done:
     return group;
 }
 
-static int test_sm2_crypt(const EC_GROUP *group,
+static int __cdecl test_sm2_crypt(const EC_GROUP *group,
                           const EVP_MD *digest,
                           const char *privkey_hex,
                           const char *message,
@@ -207,7 +207,7 @@ static int test_sm2_crypt(const EC_GROUP *group,
     return rc;
 }
 
-static int sm2_crypt_test(void)
+static int __cdecl sm2_crypt_test(void)
 {
     int testresult = 0;
     EC_GROUP *test_group =
@@ -259,7 +259,7 @@ static int sm2_crypt_test(void)
     return testresult;
 }
 
-static int test_sm2_sign(const EC_GROUP *group,
+static int __cdecl test_sm2_sign(const EC_GROUP *group,
                          const char *userid,
                          const char *privkey_hex,
                          const char *message,
@@ -328,7 +328,7 @@ static int test_sm2_sign(const EC_GROUP *group,
     return ok;
 }
 
-static int sm2_sig_test(void)
+static int __cdecl sm2_sig_test(void)
 {
     int testresult = 0;
     /* From draft-shen-sm2-ecdsa-02 */

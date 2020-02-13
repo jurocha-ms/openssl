@@ -60,21 +60,21 @@ typedef unsigned int u_int;
 #endif
 #include "internal/sockets.h"
 
-static int not_resumable_sess_cb(SSL *s, int is_forward_secure);
-static int sv_body(int s, int stype, int prot, unsigned char *context);
-static int www_body(int s, int stype, int prot, unsigned char *context);
-static int rev_body(int s, int stype, int prot, unsigned char *context);
-static void close_accept_socket(void);
-static int init_ssl_connection(SSL *s);
-static void print_stats(BIO *bp, SSL_CTX *ctx);
-static int generate_session_id(SSL *ssl, unsigned char *id,
+static int __cdecl not_resumable_sess_cb(SSL *s, int is_forward_secure);
+static int __cdecl sv_body(int s, int stype, int prot, unsigned char *context);
+static int __cdecl www_body(int s, int stype, int prot, unsigned char *context);
+static int __cdecl rev_body(int s, int stype, int prot, unsigned char *context);
+static void __cdecl close_accept_socket(void);
+static int __cdecl init_ssl_connection(SSL *s);
+static void __cdecl print_stats(BIO *bp, SSL_CTX *ctx);
+static int __cdecl generate_session_id(SSL *ssl, unsigned char *id,
                                unsigned int *id_len);
-static void init_session_cache_ctx(SSL_CTX *sctx);
-static void free_sessions(void);
+static void __cdecl init_session_cache_ctx(SSL_CTX *sctx);
+static void __cdecl free_sessions(void);
 #ifndef OPENSSL_NO_DH
 static DH *load_dh_param(const char *dhfile);
 #endif
-static void print_connection_info(SSL *con);
+static void __cdecl print_connection_info(SSL *con);
 
 static const int bufsize = 16 * 1024;
 static int accept_socket = -1;
@@ -124,7 +124,7 @@ static char *psk_identity = "Client_identity";
 char *psk_key = NULL;           /* by default PSK is not used */
 
 #ifndef OPENSSL_NO_PSK
-static unsigned int psk_server_cb(SSL *ssl, const char *identity,
+static unsigned int __cdecl psk_server_cb(SSL *ssl, const char *identity,
                                   unsigned char *psk,
                                   unsigned int max_psk_len)
 {
@@ -183,7 +183,7 @@ static unsigned int psk_server_cb(SSL *ssl, const char *identity,
 #define TLS13_AES_128_GCM_SHA256_BYTES  ((const unsigned char *)"\x13\x01")
 #define TLS13_AES_256_GCM_SHA384_BYTES  ((const unsigned char *)"\x13\x02")
 
-static int psk_find_session_cb(SSL *ssl, const unsigned char *identity,
+static int __cdecl psk_find_session_cb(SSL *ssl, const unsigned char *identity,
                                size_t identity_len, SSL_SESSION **sess)
 {
     SSL_SESSION *tmpsess = NULL;
@@ -249,7 +249,7 @@ static srpsrvparm srp_callback_parm;
  * (which would normally occur after a worker has finished) and we set the
  * user parameters.
  */
-static int ssl_srp_server_param_cb(SSL *s, int *ad, void *arg)
+static int __cdecl ssl_srp_server_param_cb(SSL *s, int *ad, void *arg)
 {
     srpsrvparm *p = (srpsrvparm *) arg;
     int ret = SSL3_AL_FATAL;
@@ -289,13 +289,13 @@ static int local_argc = 0;
 static char **local_argv;
 
 #ifdef CHARSET_EBCDIC
-static int ebcdic_new(BIO *bi);
-static int ebcdic_free(BIO *a);
-static int ebcdic_read(BIO *b, char *out, int outl);
-static int ebcdic_write(BIO *b, const char *in, int inl);
-static long ebcdic_ctrl(BIO *b, int cmd, long num, void *ptr);
-static int ebcdic_gets(BIO *bp, char *buf, int size);
-static int ebcdic_puts(BIO *bp, const char *str);
+static int __cdecl ebcdic_new(BIO *bi);
+static int __cdecl ebcdic_free(BIO *a);
+static int __cdecl ebcdic_read(BIO *b, char *out, int outl);
+static int __cdecl ebcdic_write(BIO *b, const char *in, int inl);
+static long __cdecl ebcdic_ctrl(BIO *b, int cmd, long num, void *ptr);
+static int __cdecl ebcdic_gets(BIO *bp, char *buf, int size);
+static int __cdecl ebcdic_puts(BIO *bp, const char *str);
 
 # define BIO_TYPE_EBCDIC_FILTER  (18|0x0200)
 static BIO_METHOD *methods_ebcdic = NULL;
@@ -324,7 +324,7 @@ static const BIO_METHOD *BIO_f_ebcdic_filter()
     return methods_ebcdic;
 }
 
-static int ebcdic_new(BIO *bi)
+static int __cdecl ebcdic_new(BIO *bi)
 {
     EBCDIC_OUTBUFF *wbuf;
 
@@ -337,7 +337,7 @@ static int ebcdic_new(BIO *bi)
     return 1;
 }
 
-static int ebcdic_free(BIO *a)
+static int __cdecl ebcdic_free(BIO *a)
 {
     EBCDIC_OUTBUFF *wbuf;
 
@@ -351,7 +351,7 @@ static int ebcdic_free(BIO *a)
     return 1;
 }
 
-static int ebcdic_read(BIO *b, char *out, int outl)
+static int __cdecl ebcdic_read(BIO *b, char *out, int outl)
 {
     int ret = 0;
     BIO *next = BIO_next(b);
@@ -367,7 +367,7 @@ static int ebcdic_read(BIO *b, char *out, int outl)
     return ret;
 }
 
-static int ebcdic_write(BIO *b, const char *in, int inl)
+static int __cdecl ebcdic_write(BIO *b, const char *in, int inl)
 {
     EBCDIC_OUTBUFF *wbuf;
     BIO *next = BIO_next(b);
@@ -401,7 +401,7 @@ static int ebcdic_write(BIO *b, const char *in, int inl)
     return ret;
 }
 
-static long ebcdic_ctrl(BIO *b, int cmd, long num, void *ptr)
+static long __cdecl ebcdic_ctrl(BIO *b, int cmd, long num, void *ptr)
 {
     long ret;
     BIO *next = BIO_next(b);
@@ -419,7 +419,7 @@ static long ebcdic_ctrl(BIO *b, int cmd, long num, void *ptr)
     return ret;
 }
 
-static int ebcdic_gets(BIO *bp, char *buf, int size)
+static int __cdecl ebcdic_gets(BIO *bp, char *buf, int size)
 {
     int i, ret = 0;
     BIO *next = BIO_next(bp);
@@ -441,7 +441,7 @@ static int ebcdic_gets(BIO *bp, char *buf, int size)
     return (ret < 0 && i == 0) ? ret : i;
 }
 
-static int ebcdic_puts(BIO *bp, const char *str)
+static int __cdecl ebcdic_puts(BIO *bp, const char *str)
 {
     if (BIO_next(bp) == NULL)
         return 0;
@@ -456,7 +456,7 @@ typedef struct tlsextctx_st {
     int extension_error;
 } tlsextctx;
 
-static int ssl_servername_cb(SSL *s, int *ad, void *arg)
+static int __cdecl ssl_servername_cb(SSL *s, int *ad, void *arg)
 {
     tlsextctx *p = (tlsextctx *) arg;
     const char *servername = SSL_get_servername(s, TLSEXT_NAMETYPE_host_name);
@@ -508,7 +508,7 @@ static tlsextstatusctx tlscstatp = { -1 };
  * the OCSP certificate IDs and minimise the number of OCSP responses by caching
  * them until they were considered "expired".
  */
-static int get_ocsp_resp_from_responder(SSL *s, tlsextstatusctx *srctx,
+static int __cdecl get_ocsp_resp_from_responder(SSL *s, tlsextstatusctx *srctx,
                                         OCSP_RESPONSE **resp)
 {
     char *host = NULL, *port = NULL, *path = NULL;
@@ -611,7 +611,7 @@ static int get_ocsp_resp_from_responder(SSL *s, tlsextstatusctx *srctx,
  * certificate status request extension. The response is either obtained from a
  * file, or from an OCSP responder.
  */
-static int cert_status_cb(SSL *s, void *arg)
+static int __cdecl cert_status_cb(SSL *s, void *arg)
 {
     tlsextstatusctx *srctx = arg;
     OCSP_RESPONSE *resp = NULL;
@@ -669,7 +669,7 @@ typedef struct tlsextnextprotoctx_st {
     size_t len;
 } tlsextnextprotoctx;
 
-static int next_proto_cb(SSL *s, const unsigned char **data,
+static int __cdecl next_proto_cb(SSL *s, const unsigned char **data,
                          unsigned int *len, void *arg)
 {
     tlsextnextprotoctx *next_proto = arg;
@@ -687,7 +687,7 @@ typedef struct tlsextalpnctx_st {
     size_t len;
 } tlsextalpnctx;
 
-static int alpn_cb(SSL *s, const unsigned char **out, unsigned char *outlen,
+static int __cdecl alpn_cb(SSL *s, const unsigned char **out, unsigned char *outlen,
                    const unsigned char *in, unsigned int inlen, void *arg)
 {
     tlsextalpnctx *alpn_ctx = arg;
@@ -720,7 +720,7 @@ static int alpn_cb(SSL *s, const unsigned char **out, unsigned char *outlen,
     return SSL_TLSEXT_ERR_OK;
 }
 
-static int not_resumable_sess_cb(SSL *s, int is_forward_secure)
+static int __cdecl not_resumable_sess_cb(SSL *s, int is_forward_secure)
 {
     /* disable resumption for sessions with forward secure ciphers */
     return is_forward_secure;
@@ -2200,7 +2200,7 @@ int s_server_main(int argc, char *argv[])
     return ret;
 }
 
-static void print_stats(BIO *bio, SSL_CTX *ssl_ctx)
+static void __cdecl print_stats(BIO *bio, SSL_CTX *ssl_ctx)
 {
     BIO_printf(bio, "%4ld items in the session cache\n",
                SSL_CTX_sess_number(ssl_ctx));
@@ -2228,7 +2228,7 @@ static void print_stats(BIO *bio, SSL_CTX *ssl_ctx)
                SSL_CTX_sess_get_cache_size(ssl_ctx));
 }
 
-static int sv_body(int s, int stype, int prot, unsigned char *context)
+static int __cdecl sv_body(int s, int stype, int prot, unsigned char *context)
 {
     char *buf = NULL;
     fd_set readfds;
@@ -2718,7 +2718,7 @@ static int sv_body(int s, int stype, int prot, unsigned char *context)
     return ret;
 }
 
-static void close_accept_socket(void)
+static void __cdecl close_accept_socket(void)
 {
     BIO_printf(bio_err, "shutdown accept socket\n");
     if (accept_socket >= 0) {
@@ -2726,7 +2726,7 @@ static void close_accept_socket(void)
     }
 }
 
-static int is_retryable(SSL *con, int i)
+static int __cdecl is_retryable(SSL *con, int i)
 {
     int err = SSL_get_error(con, i);
 
@@ -2736,7 +2736,7 @@ static int is_retryable(SSL *con, int i)
            && (err != SSL_ERROR_ZERO_RETURN);
 }
 
-static int init_ssl_connection(SSL *con)
+static int __cdecl init_ssl_connection(SSL *con)
 {
     int i;
     long verify_err;
@@ -2845,7 +2845,7 @@ static int init_ssl_connection(SSL *con)
     return 1;
 }
 
-static void print_connection_info(SSL *con)
+static void __cdecl print_connection_info(SSL *con)
 {
     const char *str;
     X509 *peer;
@@ -2945,7 +2945,7 @@ static DH *load_dh_param(const char *dhfile)
 }
 #endif
 
-static int www_body(int s, int stype, int prot, unsigned char *context)
+static int __cdecl www_body(int s, int stype, int prot, unsigned char *context)
 {
     char *buf = NULL;
     int ret = 1;
@@ -3332,7 +3332,7 @@ static int www_body(int s, int stype, int prot, unsigned char *context)
     return ret;
 }
 
-static int rev_body(int s, int stype, int prot, unsigned char *context)
+static int __cdecl rev_body(int s, int stype, int prot, unsigned char *context)
 {
     char *buf = NULL;
     int i;
@@ -3488,7 +3488,7 @@ static int rev_body(int s, int stype, int prot, unsigned char *context)
 }
 
 #define MAX_SESSION_ID_ATTEMPTS 10
-static int generate_session_id(SSL *ssl, unsigned char *id,
+static int __cdecl generate_session_id(SSL *ssl, unsigned char *id,
                                unsigned int *id_len)
 {
     unsigned int count = 0;
@@ -3606,7 +3606,7 @@ static void __cdecl del_session(SSL_CTX *sctx, SSL_SESSION *session)
     }
 }
 
-static void init_session_cache_ctx(SSL_CTX *sctx)
+static void __cdecl init_session_cache_ctx(SSL_CTX *sctx)
 {
     SSL_CTX_set_session_cache_mode(sctx,
                                    SSL_SESS_CACHE_NO_INTERNAL |
@@ -3616,7 +3616,7 @@ static void init_session_cache_ctx(SSL_CTX *sctx)
     SSL_CTX_sess_set_remove_cb(sctx, del_session);
 }
 
-static void free_sessions(void)
+static void __cdecl free_sessions(void)
 {
     simple_ssl_session *sess, *tsess;
     for (sess = first; sess;) {

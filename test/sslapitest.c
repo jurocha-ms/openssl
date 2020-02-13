@@ -31,9 +31,9 @@ static SSL_SESSION *serverpsk = NULL;
 static const char *pskid = "Identity";
 static const char *srvid;
 
-static int use_session_cb(SSL *ssl, const EVP_MD *md, const unsigned char **id,
+static int __cdecl use_session_cb(SSL *ssl, const EVP_MD *md, const unsigned char **id,
                           size_t *idlen, SSL_SESSION **sess);
-static int find_session_cb(SSL *ssl, const unsigned char *identity,
+static int __cdecl find_session_cb(SSL *ssl, const unsigned char *identity,
                            size_t identity_len, SSL_SESSION **sess);
 
 static int use_session_cb_cnt = 0;
@@ -98,7 +98,7 @@ static unsigned char serverinfov2[] = {
     0xff        /* Dummy extension data */
 };
 
-static void client_keylog_callback(const SSL *ssl, const char *line)
+static void __cdecl client_keylog_callback(const SSL *ssl, const char *line)
 {
     int line_length = strlen(line);
 
@@ -114,7 +114,7 @@ static void client_keylog_callback(const SSL *ssl, const char *line)
     client_log_buffer[client_log_buffer_index++] = '\n';
 }
 
-static void server_keylog_callback(const SSL *ssl, const char *line)
+static void __cdecl server_keylog_callback(const SSL *ssl, const char *line)
 {
     int line_length = strlen(line);
 
@@ -130,7 +130,7 @@ static void server_keylog_callback(const SSL *ssl, const char *line)
     server_log_buffer[server_log_buffer_index++] = '\n';
 }
 
-static int compare_hex_encoded_buffer(const char *hex_encoded,
+static int __cdecl compare_hex_encoded_buffer(const char *hex_encoded,
                                       size_t hex_length,
                                       const uint8_t *raw,
                                       size_t raw_length)
@@ -151,7 +151,7 @@ static int compare_hex_encoded_buffer(const char *hex_encoded,
     return 0;
 }
 
-static int test_keylog_output(char *buffer, const SSL *ssl,
+static int __cdecl test_keylog_output(char *buffer, const SSL *ssl,
                               const SSL_SESSION *session,
                               struct sslapitest_log_counts *expected)
 {
@@ -301,7 +301,7 @@ static int test_keylog_output(char *buffer, const SSL *ssl,
 }
 
 #if !defined(OPENSSL_NO_TLS1_2) || defined(OPENSSL_NO_TLS1_3)
-static int test_keylog(void)
+static int __cdecl test_keylog(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -381,7 +381,7 @@ end:
 #endif
 
 #ifndef OPENSSL_NO_TLS1_3
-static int test_keylog_no_master_key(void)
+static int __cdecl test_keylog_no_master_key(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -497,7 +497,7 @@ end:
 #endif
 
 #ifndef OPENSSL_NO_TLS1_2
-static int full_client_hello_callback(SSL *s, int *al, void *arg)
+static int __cdecl full_client_hello_callback(SSL *s, int *al, void *arg)
 {
     int *ctr = arg;
     const unsigned char *p;
@@ -538,7 +538,7 @@ static int full_client_hello_callback(SSL *s, int *al, void *arg)
     return SSL_CLIENT_HELLO_SUCCESS;
 }
 
-static int test_client_hello_cb(void)
+static int __cdecl test_client_hello_cb(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -581,7 +581,7 @@ end:
 }
 #endif
 
-static int execute_test_large_message(const SSL_METHOD *smeth,
+static int __cdecl execute_test_large_message(const SSL_METHOD *smeth,
                                       const SSL_METHOD *cmeth,
                                       int min_version, int max_version,
                                       int read_ahead)
@@ -657,14 +657,14 @@ static int execute_test_large_message(const SSL_METHOD *smeth,
     return testresult;
 }
 
-static int test_large_message_tls(void)
+static int __cdecl test_large_message_tls(void)
 {
     return execute_test_large_message(TLS_server_method(), TLS_client_method(),
                                       TLS1_VERSION, TLS_MAX_VERSION,
                                       0);
 }
 
-static int test_large_message_tls_read_ahead(void)
+static int __cdecl test_large_message_tls_read_ahead(void)
 {
     return execute_test_large_message(TLS_server_method(), TLS_client_method(),
                                       TLS1_VERSION, TLS_MAX_VERSION,
@@ -672,7 +672,7 @@ static int test_large_message_tls_read_ahead(void)
 }
 
 #ifndef OPENSSL_NO_DTLS
-static int test_large_message_dtls(void)
+static int __cdecl test_large_message_dtls(void)
 {
     /*
      * read_ahead is not relevant to DTLS because DTLS always acts as if
@@ -686,7 +686,7 @@ static int test_large_message_dtls(void)
 #endif
 
 #ifndef OPENSSL_NO_OCSP
-static int ocsp_server_cb(SSL *s, void *arg)
+static int __cdecl ocsp_server_cb(SSL *s, void *arg)
 {
     int *argi = (int *)arg;
     unsigned char *copy = NULL;
@@ -714,7 +714,7 @@ static int ocsp_server_cb(SSL *s, void *arg)
     return SSL_TLSEXT_ERR_OK;
 }
 
-static int ocsp_client_cb(SSL *s, void *arg)
+static int __cdecl ocsp_client_cb(SSL *s, void *arg)
 {
     int *argi = (int *)arg;
     const unsigned char *respderin;
@@ -731,7 +731,7 @@ static int ocsp_client_cb(SSL *s, void *arg)
     return 1;
 }
 
-static int test_tlsext_status_type(void)
+static int __cdecl test_tlsext_status_type(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -891,7 +891,7 @@ static SSL_SESSION * __cdecl get_session_cb(SSL *ssl, const unsigned char *id, i
     return get_sess_val;
 }
 
-static int execute_test_session(int maxprot, int use_int_cache,
+static int __cdecl execute_test_session(int maxprot, int use_int_cache,
                                 int use_ext_cache)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
@@ -1176,7 +1176,7 @@ static int execute_test_session(int maxprot, int use_int_cache,
 }
 #endif /* !defined(OPENSSL_NO_TLS1_3) || !defined(OPENSSL_NO_TLS1_2) */
 
-static int test_session_with_only_int_cache(void)
+static int __cdecl test_session_with_only_int_cache(void)
 {
 #ifndef OPENSSL_NO_TLS1_3
     if (!execute_test_session(TLS1_3_VERSION, 1, 0))
@@ -1190,7 +1190,7 @@ static int test_session_with_only_int_cache(void)
 #endif
 }
 
-static int test_session_with_only_ext_cache(void)
+static int __cdecl test_session_with_only_ext_cache(void)
 {
 #ifndef OPENSSL_NO_TLS1_3
     if (!execute_test_session(TLS1_3_VERSION, 0, 1))
@@ -1204,7 +1204,7 @@ static int test_session_with_only_ext_cache(void)
 #endif
 }
 
-static int test_session_with_both_cache(void)
+static int __cdecl test_session_with_both_cache(void)
 {
 #ifndef OPENSSL_NO_TLS1_3
     if (!execute_test_session(TLS1_3_VERSION, 1, 1))
@@ -1235,7 +1235,7 @@ static int __cdecl new_cachesession_cb(SSL *ssl, SSL_SESSION *sess)
     return 1;
 }
 
-static int post_handshake_verify(SSL *sssl, SSL *cssl)
+static int __cdecl post_handshake_verify(SSL *sssl, SSL *cssl)
 {
     SSL_set_verify(sssl, SSL_VERIFY_PEER, NULL);
     if (!TEST_true(SSL_verify_client_post_handshake(sssl)))
@@ -1252,7 +1252,7 @@ static int post_handshake_verify(SSL *sssl, SSL *cssl)
     return 1;
 }
 
-static int setup_ticket_test(int stateful, int idx, SSL_CTX **sctx,
+static int __cdecl setup_ticket_test(int stateful, int idx, SSL_CTX **sctx,
                              SSL_CTX **cctx)
 {
     int sess_id_ctx = 1;
@@ -1276,7 +1276,7 @@ static int setup_ticket_test(int stateful, int idx, SSL_CTX **sctx,
     return 1;
 }
 
-static int check_resumption(int idx, SSL_CTX *sctx, SSL_CTX *cctx, int succ)
+static int __cdecl check_resumption(int idx, SSL_CTX *sctx, SSL_CTX *cctx, int succ)
 {
     SSL *serverssl = NULL, *clientssl = NULL;
     int i;
@@ -1333,7 +1333,7 @@ static int check_resumption(int idx, SSL_CTX *sctx, SSL_CTX *cctx, int succ)
     return 0;
 }
 
-static int test_tickets(int stateful, int idx)
+static int __cdecl test_tickets(int stateful, int idx)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -1440,17 +1440,17 @@ static int test_tickets(int stateful, int idx)
     return testresult;
 }
 
-static int test_stateless_tickets(int idx)
+static int __cdecl test_stateless_tickets(int idx)
 {
     return test_tickets(0, idx);
 }
 
-static int test_stateful_tickets(int idx)
+static int __cdecl test_stateful_tickets(int idx)
 {
     return test_tickets(1, idx);
 }
 
-static int test_psk_tickets(void)
+static int __cdecl test_psk_tickets(void)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -1527,7 +1527,7 @@ static int test_psk_tickets(void)
                                 + TOTAL_CONN_SUCCESS_SSL_SET_BIO_TESTS \
                                 + TOTAL_CONN_FAIL_SSL_SET_BIO_TESTS
 
-static void setupbio(BIO **res, BIO *bio1, BIO *bio2, int type)
+static void __cdecl setupbio(BIO **res, BIO *bio1, BIO *bio2, int type)
 {
     switch (type) {
     case USE_NULL:
@@ -1554,7 +1554,7 @@ static void setupbio(BIO **res, BIO *bio1, BIO *bio2, int type)
  * following a failed connection. In this last case we are looking to check that
  * SSL_set_bio() functions correctly in the case where s->bbio is not NULL.
  */
-static int test_ssl_set_bio(int idx)
+static int __cdecl test_ssl_set_bio(int idx)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     BIO *bio1 = NULL;
@@ -1681,7 +1681,7 @@ static int test_ssl_set_bio(int idx)
 
 typedef enum { NO_BIO_CHANGE, CHANGE_RBIO, CHANGE_WBIO } bio_change_t;
 
-static int execute_test_ssl_bio(int pop_ssl, bio_change_t change_bio)
+static int __cdecl execute_test_ssl_bio(int pop_ssl, bio_change_t change_bio)
 {
     BIO *sslbio = NULL, *membio1 = NULL, *membio2 = NULL;
     SSL_CTX *ctx;
@@ -1728,22 +1728,22 @@ static int execute_test_ssl_bio(int pop_ssl, bio_change_t change_bio)
     return testresult;
 }
 
-static int test_ssl_bio_pop_next_bio(void)
+static int __cdecl test_ssl_bio_pop_next_bio(void)
 {
     return execute_test_ssl_bio(0, NO_BIO_CHANGE);
 }
 
-static int test_ssl_bio_pop_ssl_bio(void)
+static int __cdecl test_ssl_bio_pop_ssl_bio(void)
 {
     return execute_test_ssl_bio(1, NO_BIO_CHANGE);
 }
 
-static int test_ssl_bio_change_rbio(void)
+static int __cdecl test_ssl_bio_change_rbio(void)
 {
     return execute_test_ssl_bio(0, CHANGE_RBIO);
 }
 
-static int test_ssl_bio_change_wbio(void)
+static int __cdecl test_ssl_bio_change_wbio(void)
 {
     return execute_test_ssl_bio(0, CHANGE_WBIO);
 }
@@ -1792,7 +1792,7 @@ static const sigalgs_list testsigalgs[] = {
     {NULL, 0, "Invalid", 0, 0}
 };
 
-static int test_set_sigalgs(int idx)
+static int __cdecl test_set_sigalgs(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -1883,7 +1883,7 @@ static int test_set_sigalgs(int idx)
 static int psk_client_cb_cnt = 0;
 static int psk_server_cb_cnt = 0;
 
-static int use_session_cb(SSL *ssl, const EVP_MD *md, const unsigned char **id,
+static int __cdecl use_session_cb(SSL *ssl, const EVP_MD *md, const unsigned char **id,
                           size_t *idlen, SSL_SESSION **sess)
 {
     switch (++use_session_cb_cnt) {
@@ -1915,7 +1915,7 @@ static int use_session_cb(SSL *ssl, const EVP_MD *md, const unsigned char **id,
 }
 
 #ifndef OPENSSL_NO_PSK
-static unsigned int psk_client_cb(SSL *ssl, const char *hint, char *id,
+static unsigned int __cdecl psk_client_cb(SSL *ssl, const char *hint, char *id,
                                   unsigned int max_id_len,
                                   unsigned char *psk,
                                   unsigned int max_psk_len)
@@ -1944,7 +1944,7 @@ static unsigned int psk_client_cb(SSL *ssl, const char *hint, char *id,
 }
 #endif /* OPENSSL_NO_PSK */
 
-static int find_session_cb(SSL *ssl, const unsigned char *identity,
+static int __cdecl find_session_cb(SSL *ssl, const unsigned char *identity,
                            size_t identity_len, SSL_SESSION **sess)
 {
     find_session_cb_cnt++;
@@ -1971,7 +1971,7 @@ static int find_session_cb(SSL *ssl, const unsigned char *identity,
 }
 
 #ifndef OPENSSL_NO_PSK
-static unsigned int psk_server_cb(SSL *ssl, const char *identity,
+static unsigned int __cdecl psk_server_cb(SSL *ssl, const char *identity,
                                   unsigned char *psk, unsigned int max_psk_len)
 {
     unsigned int psklen = 0;
@@ -2043,7 +2043,7 @@ static SSL_SESSION *create_a_psk(SSL *ssl)
  * Helper method to setup objects for early data test. Caller frees objects on
  * error.
  */
-static int setupearly_data_test(SSL_CTX **cctx, SSL_CTX **sctx, SSL **clientssl,
+static int __cdecl setupearly_data_test(SSL_CTX **cctx, SSL_CTX **sctx, SSL **clientssl,
                                 SSL **serverssl, SSL_SESSION **sess, int idx)
 {
     if (*sctx == NULL
@@ -2133,7 +2133,7 @@ static int setupearly_data_test(SSL_CTX **cctx, SSL_CTX **sctx, SSL **clientssl,
     return 1;
 }
 
-static int test_early_data_read_write(int idx)
+static int __cdecl test_early_data_read_write(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -2342,7 +2342,7 @@ static int test_early_data_read_write(int idx)
 
 static int allow_ed_cb_called = 0;
 
-static int allow_early_data_cb(SSL *s, void *arg)
+static int __cdecl allow_early_data_cb(SSL *s, void *arg)
 {
     int *usecb = (int *)arg;
 
@@ -2363,7 +2363,7 @@ static int allow_early_data_cb(SSL *s, void *arg)
  * confopt == 0: Configure anti-replay directly
  * confopt == 1: Configure anti-replay using SSL_CONF
  */
-static int test_early_data_replay_int(int idx, int usecb, int confopt)
+static int __cdecl test_early_data_replay_int(int idx, int usecb, int confopt)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -2479,7 +2479,7 @@ static int test_early_data_replay_int(int idx, int usecb, int confopt)
     return testresult;
 }
 
-static int test_early_data_replay(int idx)
+static int __cdecl test_early_data_replay(int idx)
 {
     int ret = 1, usecb, confopt;
 
@@ -2499,7 +2499,7 @@ static int test_early_data_replay(int idx)
  * testtype: 2 == HRR, invalid early_data sent after HRR
  * testtype: 3 == recv_max_early_data set to 0
  */
-static int early_data_skip_helper(int testtype, int idx)
+static int __cdecl early_data_skip_helper(int testtype, int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -2644,7 +2644,7 @@ static int early_data_skip_helper(int testtype, int idx)
  * Test that a server attempting to read early data can handle a connection
  * from a client where the early data is not acceptable.
  */
-static int test_early_data_skip(int idx)
+static int __cdecl test_early_data_skip(int idx)
 {
     return early_data_skip_helper(0, idx);
 }
@@ -2653,7 +2653,7 @@ static int test_early_data_skip(int idx)
  * Test that a server attempting to read early data can handle a connection
  * from a client where an HRR occurs.
  */
-static int test_early_data_skip_hrr(int idx)
+static int __cdecl test_early_data_skip_hrr(int idx)
 {
     return early_data_skip_helper(1, idx);
 }
@@ -2663,7 +2663,7 @@ static int test_early_data_skip_hrr(int idx)
  * from a client where an HRR occurs and correctly fails if early_data is sent
  * after the HRR
  */
-static int test_early_data_skip_hrr_fail(int idx)
+static int __cdecl test_early_data_skip_hrr_fail(int idx)
 {
     return early_data_skip_helper(2, idx);
 }
@@ -2672,7 +2672,7 @@ static int test_early_data_skip_hrr_fail(int idx)
  * Test that a server attempting to read early data will abort if it tries to
  * skip over too much.
  */
-static int test_early_data_skip_abort(int idx)
+static int __cdecl test_early_data_skip_abort(int idx)
 {
     return early_data_skip_helper(3, idx);
 }
@@ -2681,7 +2681,7 @@ static int test_early_data_skip_abort(int idx)
  * Test that a server attempting to read early data can handle a connection
  * from a client that doesn't send any.
  */
-static int test_early_data_not_sent(int idx)
+static int __cdecl test_early_data_not_sent(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -2737,7 +2737,7 @@ static int test_early_data_not_sent(int idx)
     return testresult;
 }
 
-static int hostname_cb(SSL *s, int *al, void *arg)
+static int __cdecl hostname_cb(SSL *s, int *al, void *arg)
 {
     const char *hostname = SSL_get_servername(s, TLSEXT_NAMETYPE_host_name);
 
@@ -2749,7 +2749,7 @@ static int hostname_cb(SSL *s, int *al, void *arg)
 
 static const char *servalpn;
 
-static int alpn_select_cb(SSL *ssl, const unsigned char **out,
+static int __cdecl alpn_select_cb(SSL *ssl, const unsigned char **out,
                           unsigned char *outlen, const unsigned char *in,
                           unsigned int inlen, void *arg)
 {
@@ -2773,7 +2773,7 @@ static int alpn_select_cb(SSL *ssl, const unsigned char **out,
 }
 
 /* Test that a PSK can be used to send early_data */
-static int test_early_data_psk(int idx)
+static int __cdecl test_early_data_psk(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -2950,7 +2950,7 @@ static int test_early_data_psk(int idx)
  * Test that a server that doesn't try to read early data can handle a
  * client sending some.
  */
-static int test_early_data_not_expected(int idx)
+static int __cdecl test_early_data_not_expected(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -3010,7 +3010,7 @@ static int test_early_data_not_expected(int idx)
  * Test that a server attempting to read early data can handle a connection
  * from a TLSv1.2 client.
  */
-static int test_early_data_tls1_2(int idx)
+static int __cdecl test_early_data_tls1_2(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -3093,7 +3093,7 @@ static int test_early_data_tls1_2(int idx)
  * Test 8: Set a default ciphersuite in the SSL (SSL cipher_list)
  * Test 9: Set a non-default ciphersuite in the SSL (SSL cipher_list)
  */
-static int test_set_ciphersuite(int idx)
+static int __cdecl test_set_ciphersuite(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -3160,7 +3160,7 @@ static int test_set_ciphersuite(int idx)
     return testresult;
 }
 
-static int test_ciphersuite_change(void)
+static int __cdecl test_ciphersuite_change(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -3296,7 +3296,7 @@ static int test_ciphersuite_change(void)
  * Test 2 = Set TLS1.3 and TLS1.2 cipher on context
  * Test 3 = Set TLS1.3 and TLS1.2 cipher on SSL
  */
-static int test_tls13_ciphersuite(int idx)
+static int __cdecl test_tls13_ciphersuite(int idx)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -3432,7 +3432,7 @@ static int test_tls13_ciphersuite(int idx)
  * Test 2 = Test old style callbacks
  * Test 3 = Test old style callbacks with no certificate
  */
-static int test_tls13_psk(int idx)
+static int __cdecl test_tls13_psk(int idx)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -3649,7 +3649,7 @@ static int test_tls13_psk(int idx)
 
 static unsigned char cookie_magic_value[] = "cookie magic";
 
-static int generate_cookie_callback(SSL *ssl, unsigned char *cookie,
+static int __cdecl generate_cookie_callback(SSL *ssl, unsigned char *cookie,
                                     unsigned int *cookie_len)
 {
     /*
@@ -3662,7 +3662,7 @@ static int generate_cookie_callback(SSL *ssl, unsigned char *cookie,
     return 1;
 }
 
-static int verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
+static int __cdecl verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
                                   unsigned int cookie_len)
 {
     if (cookie_len == sizeof(cookie_magic_value) - 1
@@ -3672,7 +3672,7 @@ static int verify_cookie_callback(SSL *ssl, const unsigned char *cookie,
     return 0;
 }
 
-static int generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
+static int __cdecl generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
                                         size_t *cookie_len)
 {
     unsigned int temp;
@@ -3681,13 +3681,13 @@ static int generate_stateless_cookie_callback(SSL *ssl, unsigned char *cookie,
     return res;
 }
 
-static int verify_stateless_cookie_callback(SSL *ssl, const unsigned char *cookie,
+static int __cdecl verify_stateless_cookie_callback(SSL *ssl, const unsigned char *cookie,
                                       size_t cookie_len)
 {
     return verify_cookie_callback(ssl, cookie, cookie_len);
 }
 
-static int test_stateless(void)
+static int __cdecl test_stateless(void)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *serverssl = NULL, *clientssl = NULL;
@@ -3785,7 +3785,7 @@ static int snicb = 0;
 
 #define TEST_EXT_TYPE1  0xff00
 
-static int old_add_cb(SSL *s, unsigned int ext_type, const unsigned char **out,
+static int __cdecl old_add_cb(SSL *s, unsigned int ext_type, const unsigned char **out,
                       size_t *outlen, int *al, void *add_arg)
 {
     int *server = (int *)add_arg;
@@ -3806,13 +3806,13 @@ static int old_add_cb(SSL *s, unsigned int ext_type, const unsigned char **out,
     return 1;
 }
 
-static void old_free_cb(SSL *s, unsigned int ext_type, const unsigned char *out,
+static void __cdecl old_free_cb(SSL *s, unsigned int ext_type, const unsigned char *out,
                         void *add_arg)
 {
     OPENSSL_free((unsigned char *)out);
 }
 
-static int old_parse_cb(SSL *s, unsigned int ext_type, const unsigned char *in,
+static int __cdecl old_parse_cb(SSL *s, unsigned int ext_type, const unsigned char *in,
                         size_t inlen, int *al, void *parse_arg)
 {
     int *server = (int *)parse_arg;
@@ -3830,7 +3830,7 @@ static int old_parse_cb(SSL *s, unsigned int ext_type, const unsigned char *in,
     return 1;
 }
 
-static int new_add_cb(SSL *s, unsigned int ext_type, unsigned int context,
+static int __cdecl new_add_cb(SSL *s, unsigned int ext_type, unsigned int context,
                       const unsigned char **out, size_t *outlen, X509 *x,
                       size_t chainidx, int *al, void *add_arg)
 {
@@ -3852,13 +3852,13 @@ static int new_add_cb(SSL *s, unsigned int ext_type, unsigned int context,
     return 1;
 }
 
-static void new_free_cb(SSL *s, unsigned int ext_type, unsigned int context,
+static void __cdecl new_free_cb(SSL *s, unsigned int ext_type, unsigned int context,
                         const unsigned char *out, void *add_arg)
 {
     OPENSSL_free((unsigned char *)out);
 }
 
-static int new_parse_cb(SSL *s, unsigned int ext_type, unsigned int context,
+static int __cdecl new_parse_cb(SSL *s, unsigned int ext_type, unsigned int context,
                         const unsigned char *in, size_t inlen, X509 *x,
                         size_t chainidx, int *al, void *parse_arg)
 {
@@ -3876,7 +3876,7 @@ static int new_parse_cb(SSL *s, unsigned int ext_type, unsigned int context,
     return 1;
 }
 
-static int sni_cb(SSL *s, int *al, void *arg)
+static int __cdecl sni_cb(SSL *s, int *al, void *arg)
 {
     SSL_CTX *ctx = (SSL_CTX *)arg;
 
@@ -3896,7 +3896,7 @@ static int sni_cb(SSL *s, int *al, void *arg)
  * Test 3: New style callbacks in TLSv1.3. Extensions in CH and EE
  * Test 4: New style callbacks in TLSv1.3. Extensions in CH, SH, EE, Cert + NST
  */
-static int test_custom_exts(int tst)
+static int __cdecl test_custom_exts(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL, *sctx2 = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -4107,7 +4107,7 @@ end:
  * Test loading of serverinfo data in various formats. test_sslmessages actually
  * tests to make sure the extensions appear in the handshake
  */
-static int test_serverinfo(int tst)
+static int __cdecl test_serverinfo(int tst)
 {
     unsigned int version;
     unsigned char *sibuf;
@@ -4167,7 +4167,7 @@ static int test_serverinfo(int tst)
  */
 #define SMALL_LABEL_LEN 10
 #define LONG_LABEL_LEN  249
-static int test_export_key_mat(int tst)
+static int __cdecl test_export_key_mat(int tst)
 {
     int testresult = 0;
     SSL_CTX *cctx = NULL, *sctx = NULL, *sctx2 = NULL;
@@ -4317,7 +4317,7 @@ static int test_export_key_mat(int tst)
  * sides of the communication produce the same results for different
  * protocol versions.
  */
-static int test_export_key_mat_early(int idx)
+static int __cdecl test_export_key_mat_early(int idx)
 {
     static const char label[] = "test label";
     static const unsigned char context[] = "context";
@@ -4392,7 +4392,7 @@ static int test_export_key_mat_early(int idx)
 /*
  * Test KeyUpdate.
  */
-static int test_key_update(void)
+static int __cdecl test_key_update(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -4451,7 +4451,7 @@ static int test_key_update(void)
  * Test 0: Client sends KeyUpdate while Server is writing
  * Test 1: Server sends KeyUpdate while Client is writing
  */
-static int test_key_update_in_write(int tst)
+static int __cdecl test_key_update_in_write(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -4531,7 +4531,7 @@ static int test_key_update_in_write(int tst)
 }
 #endif /* OPENSSL_NO_TLS1_3 */
 
-static int test_ssl_clear(int idx)
+static int __cdecl test_ssl_clear(int idx)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -4586,7 +4586,7 @@ static int test_ssl_clear(int idx)
 }
 
 /* Parse CH and retrieve any MFL extension value if present */
-static int get_MFL_from_client_hello(BIO *bio, int *mfl_codemfl_code)
+static int __cdecl get_MFL_from_client_hello(BIO *bio, int *mfl_codemfl_code)
 {
     long len;
     unsigned char *data;
@@ -4642,7 +4642,7 @@ static const unsigned char max_fragment_len_test[] = {
     TLSEXT_max_fragment_length_4096
 };
 
-static int test_max_fragment_len_ext(int idx_tst)
+static int __cdecl test_max_fragment_len_ext(int idx_tst)
 {
     SSL_CTX *ctx;
     SSL *con = NULL;
@@ -4693,7 +4693,7 @@ end:
 }
 
 #ifndef OPENSSL_NO_TLS1_3
-static int test_pha_key_update(void)
+static int __cdecl test_pha_key_update(void)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -4754,7 +4754,7 @@ static int test_pha_key_update(void)
 
 static SRP_VBASE *vbase = NULL;
 
-static int ssl_srp_cb(SSL *s, int *ad, void *arg)
+static int __cdecl ssl_srp_cb(SSL *s, int *ad, void *arg)
 {
     int ret = SSL3_AL_FATAL;
     char *username;
@@ -4785,7 +4785,7 @@ static int ssl_srp_cb(SSL *s, int *ad, void *arg)
     return ret;
 }
 
-static int create_new_vfile(char *userid, char *password, const char *filename)
+static int __cdecl create_new_vfile(char *userid, char *password, const char *filename)
 {
     char *gNid = NULL;
     OPENSSL_STRING *row = OPENSSL_zalloc(sizeof(row) * (DB_NUMBER + 1));
@@ -4843,7 +4843,7 @@ static int create_new_vfile(char *userid, char *password, const char *filename)
     return ret;
 }
 
-static int create_new_vbase(char *userid, char *password)
+static int __cdecl create_new_vbase(char *userid, char *password)
 {
     BIGNUM *verifier = NULL, *salt = NULL;
     const SRP_gN *lgN = NULL;
@@ -4896,7 +4896,7 @@ end:
  * Test 4: Simple successful SRP connection, vbase loaded from new file
  * Test 5: Connection failure due to bad password, vbase loaded from new file
  */
-static int test_srp(int tst)
+static int __cdecl test_srp(int tst)
 {
     char *userid = "test", *password = "password", *tstsrpfile;
     SSL_CTX *cctx = NULL, *sctx = NULL;
@@ -5117,7 +5117,7 @@ static void __cdecl sslapi_info_callback(const SSL *s, int where, int ret)
  * Test 4: TLSv1.3, server, early_data
  * Test 5: TLSv1.3, client, early_data
  */
-static int test_info_callback(int tst)
+static int __cdecl test_info_callback(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -5233,7 +5233,7 @@ static int test_info_callback(int tst)
     return testresult;
 }
 
-static int test_ssl_pending(int tst)
+static int __cdecl test_ssl_pending(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -5355,7 +5355,7 @@ static struct {
 #endif
 };
 
-static int test_ssl_get_shared_ciphers(int tst)
+static int __cdecl test_ssl_get_shared_ciphers(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -5410,7 +5410,7 @@ static int gen_tick_called, dec_tick_called, tick_key_cb_called;
 static int tick_key_renew = 0;
 static SSL_TICKET_RETURN tick_dec_ret = SSL_TICKET_RETURN_ABORT;
 
-static int gen_tick_cb(SSL *s, void *arg)
+static int __cdecl gen_tick_cb(SSL *s, void *arg)
 {
     gen_tick_called = 1;
 
@@ -5418,7 +5418,7 @@ static int gen_tick_cb(SSL *s, void *arg)
                                            strlen(appdata));
 }
 
-static SSL_TICKET_RETURN dec_tick_cb(SSL *s, SSL_SESSION *ss,
+static SSL_TICKET_RETURN __cdecl dec_tick_cb(SSL *s, SSL_SESSION *ss,
                                      const unsigned char *keyname,
                                      size_t keyname_length,
                                      SSL_TICKET_STATUS status,
@@ -5462,7 +5462,7 @@ static SSL_TICKET_RETURN dec_tick_cb(SSL *s, SSL_SESSION *ss,
 
 }
 
-static int tick_key_cb(SSL *s, unsigned char key_name[16],
+static int __cdecl tick_key_cb(SSL *s, unsigned char key_name[16],
                        unsigned char iv[EVP_MAX_IV_LENGTH], EVP_CIPHER_CTX *ctx,
                        HMAC_CTX *hctx, int enc)
 {
@@ -5495,7 +5495,7 @@ static int tick_key_cb(SSL *s, unsigned char key_name[16],
  * Test 10: TLSv1.2, ticket key callback, ticket, renewal
  * Test 11: TLSv1.3, ticket key callback, ticket, renewal
  */
-static int test_ticket_callbacks(int tst)
+static int __cdecl test_ticket_callbacks(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -5644,7 +5644,7 @@ static int test_ticket_callbacks(int tst)
  * Test 6: TLSv1.3, server continues to read/write after client shutdown, client
  *                  doesn't read it
  */
-static int test_shutdown(int tst)
+static int __cdecl test_shutdown(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -5796,7 +5796,7 @@ static int test_shutdown(int tst)
 #if !defined(OPENSSL_NO_TLS1_2) || !defined(OPENSSL_NO_TLS1_3)
 static int cert_cb_cnt;
 
-static int cert_cb(SSL *s, void *arg)
+static int __cdecl cert_cb(SSL *s, void *arg)
 {
     SSL_CTX *ctx = (SSL_CTX *)arg;
     BIO *in = NULL;
@@ -5891,7 +5891,7 @@ static int cert_cb(SSL *s, void *arg)
  *                   chain
  * Test 5: Failure - SSL_check_chain fails from callback due to bad ee cert
  */
-static int test_cert_cb_int(int prot, int tst)
+static int __cdecl test_cert_cb_int(int prot, int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL, *snictx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -5963,7 +5963,7 @@ static int test_cert_cb_int(int prot, int tst)
 }
 #endif
 
-static int test_cert_cb(int tst)
+static int __cdecl test_cert_cb(int tst)
 {
     int testresult = 1;
 
@@ -6022,7 +6022,7 @@ static int __cdecl verify_cb(int preverify_ok, X509_STORE_CTX *x509_ctx)
     return 1;
 }
 
-static int test_client_cert_cb(int tst)
+static int __cdecl test_client_cert_cb(int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -6079,7 +6079,7 @@ static int test_client_cert_cb(int tst)
  * Test 1: Both SSL_CTX_set0_CA_list() and SSL_CTX_set_client_CA_list()
  * Test 2: Only SSL_CTX_set_client_CA_list()
  */
-static int test_ca_names_int(int prot, int tst)
+static int __cdecl test_ca_names_int(int prot, int tst)
 {
     SSL_CTX *cctx = NULL, *sctx = NULL;
     SSL *clientssl = NULL, *serverssl = NULL;
@@ -6191,7 +6191,7 @@ static int test_ca_names_int(int prot, int tst)
 }
 #endif
 
-static int test_ca_names(int tst)
+static int __cdecl test_ca_names(int tst)
 {
     int testresult = 1;
 

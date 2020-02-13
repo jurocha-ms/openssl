@@ -131,7 +131,7 @@ static void __cdecl int_free_str(char *s)
  * a "free" handler and that will get called if an ENGINE is being destroyed
  * and there was an ex_data element corresponding to our context type.
  */
-static void dynamic_data_ctx_free_func(void *parent, void *ptr,
+static void __cdecl dynamic_data_ctx_free_func(void *parent, void *ptr,
                                        CRYPTO_EX_DATA *ad, int idx, long argl,
                                        void *argp)
 {
@@ -249,7 +249,7 @@ static ENGINE *engine_dynamic(void)
     return ret;
 }
 
-void engine_load_dynamic_int(void)
+void __cdecl engine_load_dynamic_int(void)
 {
     ENGINE *toadd = engine_dynamic();
     if (!toadd)

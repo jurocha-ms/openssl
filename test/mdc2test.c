@@ -34,7 +34,7 @@ static unsigned char pad2[16] = {
     0x35, 0xD8, 0x7A, 0xFE, 0xAB, 0x33, 0xBE, 0xE2
 };
 
-static int test_mdc2(void)
+static int __cdecl test_mdc2(void)
 {
     int testresult = 0;
     unsigned char md[MDC2_DIGEST_LENGTH];

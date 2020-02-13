@@ -25,7 +25,7 @@
 
 #define NUM_EXTRA_PRIMES 1
 
-static int key2048p3(RSA *key)
+static int __cdecl key2048p3(RSA *key)
 {
     /* C90 requires string should <= 509 bytes */
     static const unsigned char n[] =
@@ -183,7 +183,7 @@ static int key2048p3(RSA *key)
     goto ret;
 }
 
-static int test_rsa_mp(void)
+static int __cdecl test_rsa_mp(void)
 {
     int ret = 0;
     RSA *key;

@@ -28,7 +28,7 @@ static const char *print_alert(int alert)
     return alert ? SSL_alert_desc_string_long(alert) : "no alert";
 }
 
-static int check_result(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_result(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (!TEST_int_eq(result->result, test_ctx->expected_result)) {
         TEST_info("ExpectedResult mismatch: expected %s, got %s.",
@@ -39,7 +39,7 @@ static int check_result(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return 1;
 }
 
-static int check_alerts(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_alerts(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (!TEST_int_eq(result->client_alert_sent,
                      result->client_alert_received)) {
@@ -97,7 +97,7 @@ static int check_alerts(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return 1;
 }
 
-static int check_protocol(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_protocol(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (!TEST_int_eq(result->client_protocol, result->server_protocol)) {
         TEST_info("Client has protocol %s but server has %s.",
@@ -118,7 +118,7 @@ static int check_protocol(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return 1;
 }
 
-static int check_servername(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_servername(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (!TEST_int_eq(result->servername, test_ctx->expected_servername)) {
       TEST_info("Client ServerName mismatch, expected %s, got %s.",
@@ -129,7 +129,7 @@ static int check_servername(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
   return 1;
 }
 
-static int check_session_ticket(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_session_ticket(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (test_ctx->session_ticket_expected == SSL_TEST_SESSION_TICKET_IGNORE)
         return 1;
@@ -143,7 +143,7 @@ static int check_session_ticket(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx
     return 1;
 }
 
-static int check_session_id(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_session_id(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (test_ctx->session_id_expected == SSL_TEST_SESSION_ID_IGNORE)
         return 1;
@@ -156,14 +156,14 @@ static int check_session_id(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return 1;
 }
 
-static int check_compression(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_compression(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (!TEST_int_eq(result->compression, test_ctx->compression_expected))
         return 0;
     return 1;
 }
 #ifndef OPENSSL_NO_NEXTPROTONEG
-static int check_npn(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_npn(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     int ret = 1;
     if (!TEST_str_eq(result->client_npn_negotiated,
@@ -176,7 +176,7 @@ static int check_npn(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 }
 #endif
 
-static int check_alpn(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_alpn(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     int ret = 1;
     if (!TEST_str_eq(result->client_alpn_negotiated,
@@ -188,7 +188,7 @@ static int check_alpn(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return ret;
 }
 
-static int check_session_ticket_app_data(HANDSHAKE_RESULT *result,
+static int __cdecl check_session_ticket_app_data(HANDSHAKE_RESULT *result,
                                          SSL_TEST_CTX *test_ctx)
 {
     size_t result_len = 0;
@@ -209,7 +209,7 @@ static int check_session_ticket_app_data(HANDSHAKE_RESULT *result,
     return 1;
 }
 
-static int check_resumption(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_resumption(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (!TEST_int_eq(result->client_resumed, result->server_resumed))
         return 0;
@@ -218,7 +218,7 @@ static int check_resumption(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return 1;
 }
 
-static int check_nid(const char *name, int expected_nid, int nid)
+static int __cdecl check_nid(const char *name, int expected_nid, int nid)
 {
     if (expected_nid == 0 || expected_nid == nid)
         return 1;
@@ -243,7 +243,7 @@ static void print_ca_names(STACK_OF(X509_NAME) *names)
     }
 }
 
-static int check_ca_names(const char *name,
+static int __cdecl check_ca_names(const char *name,
                           STACK_OF(X509_NAME) *expected_names,
                           STACK_OF(X509_NAME) *names)
 {
@@ -275,34 +275,34 @@ err:
     return 0;
 }
 
-static int check_tmp_key(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_tmp_key(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Tmp key", test_ctx->expected_tmp_key_type,
                      result->tmp_key_type);
 }
 
-static int check_server_cert_type(HANDSHAKE_RESULT *result,
+static int __cdecl check_server_cert_type(HANDSHAKE_RESULT *result,
                                   SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Server certificate", test_ctx->expected_server_cert_type,
                      result->server_cert_type);
 }
 
-static int check_server_sign_hash(HANDSHAKE_RESULT *result,
+static int __cdecl check_server_sign_hash(HANDSHAKE_RESULT *result,
                                   SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Server signing hash", test_ctx->expected_server_sign_hash,
                      result->server_sign_hash);
 }
 
-static int check_server_sign_type(HANDSHAKE_RESULT *result,
+static int __cdecl check_server_sign_type(HANDSHAKE_RESULT *result,
                                   SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Server signing", test_ctx->expected_server_sign_type,
                      result->server_sign_type);
 }
 
-static int check_server_ca_names(HANDSHAKE_RESULT *result,
+static int __cdecl check_server_ca_names(HANDSHAKE_RESULT *result,
                                  SSL_TEST_CTX *test_ctx)
 {
     return check_ca_names("Server CA names",
@@ -310,28 +310,28 @@ static int check_server_ca_names(HANDSHAKE_RESULT *result,
                           result->server_ca_names);
 }
 
-static int check_client_cert_type(HANDSHAKE_RESULT *result,
+static int __cdecl check_client_cert_type(HANDSHAKE_RESULT *result,
                                   SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Client certificate", test_ctx->expected_client_cert_type,
                      result->client_cert_type);
 }
 
-static int check_client_sign_hash(HANDSHAKE_RESULT *result,
+static int __cdecl check_client_sign_hash(HANDSHAKE_RESULT *result,
                                   SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Client signing hash", test_ctx->expected_client_sign_hash,
                      result->client_sign_hash);
 }
 
-static int check_client_sign_type(HANDSHAKE_RESULT *result,
+static int __cdecl check_client_sign_type(HANDSHAKE_RESULT *result,
                                   SSL_TEST_CTX *test_ctx)
 {
     return check_nid("Client signing", test_ctx->expected_client_sign_type,
                      result->client_sign_type);
 }
 
-static int check_client_ca_names(HANDSHAKE_RESULT *result,
+static int __cdecl check_client_ca_names(HANDSHAKE_RESULT *result,
                                  SSL_TEST_CTX *test_ctx)
 {
     return check_ca_names("Client CA names",
@@ -339,7 +339,7 @@ static int check_client_ca_names(HANDSHAKE_RESULT *result,
                           result->client_ca_names);
 }
 
-static int check_cipher(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_cipher(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     if (test_ctx->expected_cipher == NULL)
         return 1;
@@ -356,7 +356,7 @@ static int check_cipher(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
  * HANDSHAKE_RESULT, and implementing comparison methods for
  * its fields.
  */
-static int check_test(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
+static int __cdecl check_test(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
 {
     int ret = 1;
     ret &= check_result(result, test_ctx);
@@ -388,7 +388,7 @@ static int check_test(HANDSHAKE_RESULT *result, SSL_TEST_CTX *test_ctx)
     return ret;
 }
 
-static int test_handshake(int idx)
+static int __cdecl test_handshake(int idx)
 {
     int ret = 0;
     SSL_CTX *server_ctx = NULL, *server2_ctx = NULL, *client_ctx = NULL,

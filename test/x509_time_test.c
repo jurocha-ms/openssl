@@ -253,7 +253,7 @@ static TESTDATA x509_cmp_tests[] = {
     },
 };
 
-static int test_x509_cmp_time(int idx)
+static int __cdecl test_x509_cmp_time(int idx)
 {
     ASN1_TIME t;
     int result;
@@ -273,7 +273,7 @@ static int test_x509_cmp_time(int idx)
     return 1;
 }
 
-static int test_x509_cmp_time_current(void)
+static int __cdecl test_x509_cmp_time_current(void)
 {
     time_t now = time(NULL);
     /* Pick a day earlier and later, relative to any system clock. */
@@ -297,7 +297,7 @@ static int test_x509_cmp_time_current(void)
     return failed == 0;
 }
 
-static int test_x509_time(int idx)
+static int __cdecl test_x509_time(int idx)
 {
     ASN1_TIME *t = NULL;
     int result, rv = 0;
@@ -401,7 +401,7 @@ static const struct {
     { 2020, 12,  2, 336, 3 }
 };
 
-static int test_days(int n)
+static int __cdecl test_days(int n)
 {
     char d[16];
     ASN1_TIME *a = NULL;
@@ -454,7 +454,7 @@ static const struct {
             "Jul 31 22:20:00 2017 GMT"),
 };
 
-static int test_x509_time_print(int idx)
+static int __cdecl test_x509_time_print(int idx)
 {
     BIO *m;
     int ret = 0, rv;

@@ -29,7 +29,7 @@ typedef struct {
     int id_set;
 } SM2_PKEY_CTX;
 
-static int pkey_sm2_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_sm2_init(EVP_PKEY_CTX *ctx)
 {
     SM2_PKEY_CTX *smctx;
 
@@ -42,7 +42,7 @@ static int pkey_sm2_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_sm2_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_sm2_cleanup(EVP_PKEY_CTX *ctx)
 {
     SM2_PKEY_CTX *smctx = ctx->data;
 
@@ -54,7 +54,7 @@ static void pkey_sm2_cleanup(EVP_PKEY_CTX *ctx)
     }
 }
 
-static int pkey_sm2_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_sm2_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     SM2_PKEY_CTX *dctx, *sctx;
 
@@ -85,7 +85,7 @@ static int pkey_sm2_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
     return 1;
 }
 
-static int pkey_sm2_sign(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
+static int __cdecl pkey_sm2_sign(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
                          const unsigned char *tbs, size_t tbslen)
 {
     int ret;
@@ -115,7 +115,7 @@ static int pkey_sm2_sign(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
     return 1;
 }
 
-static int pkey_sm2_verify(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_sm2_verify(EVP_PKEY_CTX *ctx,
                            const unsigned char *sig, size_t siglen,
                            const unsigned char *tbs, size_t tbslen)
 {
@@ -124,7 +124,7 @@ static int pkey_sm2_verify(EVP_PKEY_CTX *ctx,
     return sm2_verify(tbs, tbslen, sig, siglen, ec);
 }
 
-static int pkey_sm2_encrypt(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_sm2_encrypt(EVP_PKEY_CTX *ctx,
                             unsigned char *out, size_t *outlen,
                             const unsigned char *in, size_t inlen)
 {
@@ -142,7 +142,7 @@ static int pkey_sm2_encrypt(EVP_PKEY_CTX *ctx,
     return sm2_encrypt(ec, md, in, inlen, out, outlen);
 }
 
-static int pkey_sm2_decrypt(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_sm2_decrypt(EVP_PKEY_CTX *ctx,
                             unsigned char *out, size_t *outlen,
                             const unsigned char *in, size_t inlen)
 {
@@ -160,7 +160,7 @@ static int pkey_sm2_decrypt(EVP_PKEY_CTX *ctx,
     return sm2_decrypt(ec, md, in, inlen, out, outlen);
 }
 
-static int pkey_sm2_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_sm2_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     SM2_PKEY_CTX *smctx = ctx->data;
     EC_GROUP *group;
@@ -225,7 +225,7 @@ static int pkey_sm2_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_sm2_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_sm2_ctrl_str(EVP_PKEY_CTX *ctx,
                              const char *type, const char *value)
 {
     if (strcmp(type, "ec_paramgen_curve") == 0) {
@@ -253,7 +253,7 @@ static int pkey_sm2_ctrl_str(EVP_PKEY_CTX *ctx,
     return -2;
 }
 
-static int pkey_sm2_digest_custom(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
+static int __cdecl pkey_sm2_digest_custom(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
 {
     uint8_t z[EVP_MAX_MD_SIZE];
     SM2_PKEY_CTX *smctx = ctx->data;

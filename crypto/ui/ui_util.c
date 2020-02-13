@@ -60,7 +60,7 @@ struct pem_password_cb_data {
     int rwflag;
 };
 
-static void ui_new_method_data(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+static void __cdecl ui_new_method_data(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
                                int idx, long argl, void *argp)
 {
     /*
@@ -69,7 +69,7 @@ static void ui_new_method_data(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
      */
 }
 
-static int ui_dup_method_data(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
+static int __cdecl ui_dup_method_data(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
                               void *from_d, int idx, long argl, void *argp)
 {
     void **pptr = (void **)from_d;
@@ -78,7 +78,7 @@ static int ui_dup_method_data(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
     return 1;
 }
 
-static void ui_free_method_data(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+static void __cdecl ui_free_method_data(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
                                 int idx, long argl, void *argp)
 {
     OPENSSL_free(ptr);

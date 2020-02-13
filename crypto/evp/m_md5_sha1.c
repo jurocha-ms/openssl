@@ -23,7 +23,7 @@ struct md5_sha1_ctx {
     SHA_CTX sha1;
 };
 
-static int init(EVP_MD_CTX *ctx)
+static int __cdecl init(EVP_MD_CTX *ctx)
 {
     struct md5_sha1_ctx *mctx = EVP_MD_CTX_md_data(ctx);
     if (!MD5_Init(&mctx->md5))
@@ -31,7 +31,7 @@ static int init(EVP_MD_CTX *ctx)
     return SHA1_Init(&mctx->sha1);
 }
 
-static int update(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl update(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     struct md5_sha1_ctx *mctx = EVP_MD_CTX_md_data(ctx);
     if (!MD5_Update(&mctx->md5, data, count))
@@ -39,7 +39,7 @@ static int update(EVP_MD_CTX *ctx, const void *data, size_t count)
     return SHA1_Update(&mctx->sha1, data, count);
 }
 
-static int final(EVP_MD_CTX *ctx, unsigned char *md)
+static int __cdecl final(EVP_MD_CTX *ctx, unsigned char *md)
 {
     struct md5_sha1_ctx *mctx = EVP_MD_CTX_md_data(ctx);
     if (!MD5_Final(md, &mctx->md5))
@@ -47,7 +47,7 @@ static int final(EVP_MD_CTX *ctx, unsigned char *md)
     return SHA1_Final(md + MD5_DIGEST_LENGTH, &mctx->sha1);
 }
 
-static int ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
+static int __cdecl ctrl(EVP_MD_CTX *ctx, int cmd, int mslen, void *ms)
 {
     unsigned char padtmp[48];
     unsigned char md5tmp[MD5_DIGEST_LENGTH];

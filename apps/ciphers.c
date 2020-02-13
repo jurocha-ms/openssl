@@ -64,7 +64,7 @@ const OPTIONS ciphers_options[] = {
 };
 
 #ifndef OPENSSL_NO_PSK
-static unsigned int dummy_psk(SSL *ssl, const char *hint, char *identity,
+static unsigned int __cdecl dummy_psk(SSL *ssl, const char *hint, char *identity,
                               unsigned int max_identity_len,
                               unsigned char *psk,
                               unsigned int max_psk_len)
@@ -73,7 +73,7 @@ static unsigned int dummy_psk(SSL *ssl, const char *hint, char *identity,
 }
 #endif
 #ifndef OPENSSL_NO_SRP
-static char *dummy_srp(SSL *ssl, void *arg)
+static char * __cdecl dummy_srp(SSL *ssl, void *arg)
 {
     return "";
 }

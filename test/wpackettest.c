@@ -35,13 +35,13 @@ static const unsigned char fixed[] = { 0xff, 0xff, 0xff };
 
 static BUF_MEM *buf;
 
-static int cleanup(WPACKET *pkt)
+static int __cdecl cleanup(WPACKET *pkt)
 {
     WPACKET_cleanup(pkt);
     return 0;
 }
 
-static int test_WPACKET_init(void)
+static int __cdecl test_WPACKET_init(void)
 {
     WPACKET pkt;
     int i;
@@ -117,7 +117,7 @@ static int test_WPACKET_init(void)
     return 1;
 }
 
-static int test_WPACKET_set_max_size(void)
+static int __cdecl test_WPACKET_set_max_size(void)
 {
     WPACKET pkt;
     size_t written;
@@ -164,7 +164,7 @@ static int test_WPACKET_set_max_size(void)
     return 1;
 }
 
-static int test_WPACKET_start_sub_packet(void)
+static int __cdecl test_WPACKET_start_sub_packet(void)
 {
     WPACKET pkt;
     size_t written;
@@ -246,7 +246,7 @@ static int test_WPACKET_start_sub_packet(void)
 }
 
 
-static int test_WPACKET_set_flags(void)
+static int __cdecl test_WPACKET_set_flags(void)
 {
     WPACKET pkt;
     size_t written;
@@ -306,7 +306,7 @@ static int test_WPACKET_set_flags(void)
     return 1;
 }
 
-static int test_WPACKET_allocate_bytes(void)
+static int __cdecl test_WPACKET_allocate_bytes(void)
 {
     WPACKET pkt;
     size_t written;
@@ -336,7 +336,7 @@ static int test_WPACKET_allocate_bytes(void)
     return 1;
 }
 
-static int test_WPACKET_memcpy(void)
+static int __cdecl test_WPACKET_memcpy(void)
 {
     WPACKET pkt;
     size_t written;

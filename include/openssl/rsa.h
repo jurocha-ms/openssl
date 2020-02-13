@@ -232,7 +232,7 @@ ENGINE * __cdecl RSA_get0_engine(const RSA *r);
 
 /* Deprecated version */
 DEPRECATEDIN_0_9_8(RSA *RSA_generate_key(int bits, unsigned long e, void
-                                         (*callback) (int, int, void *),
+                                         (__cdecl *callback) (int, int, void *),
                                          void *cb_arg))
 
 /* New version */

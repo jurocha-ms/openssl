@@ -35,7 +35,7 @@
 #endif
 
 /* changes path to that of the filename */
-static int change_path(const char *file)
+static int __cdecl change_path(const char *file)
 {
     char *s = OPENSSL_strdup(file);
     char *p = s;
@@ -66,7 +66,7 @@ static CONF *conf;
 static BIO *in;
 static int expect_failure = 0;
 
-static int test_load_config(void)
+static int __cdecl test_load_config(void)
 {
     long errline;
     long val;
@@ -123,7 +123,7 @@ static int test_load_config(void)
     return 1;
 }
 
-static int test_check_null_numbers(void)
+static int __cdecl test_check_null_numbers(void)
 {
 #if defined(_BSD_SOURCE) \
         || (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L) \
@@ -153,7 +153,7 @@ static int test_check_null_numbers(void)
     return 1;
 }
 
-static int test_check_overflow(void)
+static int __cdecl test_check_overflow(void)
 {
 #if defined(_BSD_SOURCE) \
         || (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L) \

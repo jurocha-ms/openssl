@@ -105,22 +105,22 @@ static const char *engine_capi_name = "CryptoAPI ENGINE";
 typedef struct CAPI_CTX_st CAPI_CTX;
 typedef struct CAPI_KEY_st CAPI_KEY;
 
-static void capi_addlasterror(void);
-static void capi_adderror(DWORD err);
+static void __cdecl capi_addlasterror(void);
+static void __cdecl capi_adderror(DWORD err);
 
-static void CAPI_trace(CAPI_CTX *ctx, char *format, ...);
+static void __cdecl CAPI_trace(CAPI_CTX *ctx, char *format, ...);
 
-static int capi_list_providers(CAPI_CTX *ctx, BIO *out);
-static int capi_list_containers(CAPI_CTX *ctx, BIO *out);
-int capi_list_certs(CAPI_CTX *ctx, BIO *out, char *storename);
-void capi_free_key(CAPI_KEY *key);
+static int __cdecl capi_list_providers(CAPI_CTX *ctx, BIO *out);
+static int __cdecl capi_list_containers(CAPI_CTX *ctx, BIO *out);
+int __cdecl capi_list_certs(CAPI_CTX *ctx, BIO *out, char *storename);
+void __cdecl capi_free_key(CAPI_KEY *key);
 
-static PCCERT_CONTEXT capi_find_cert(CAPI_CTX *ctx, const char *id,
+static PCCERT_CONTEXT __cdecl capi_find_cert(CAPI_CTX *ctx, const char *id,
                                      HCERTSTORE hstore);
 
-CAPI_KEY *capi_find_key(CAPI_CTX *ctx, const char *id);
+CAPI_KEY * __cdecl capi_find_key(CAPI_CTX *ctx, const char *id);
 
-static EVP_PKEY *capi_load_privkey(ENGINE *eng, const char *key_id,
+static EVP_PKEY * __cdecl capi_load_privkey(ENGINE *eng, const char *key_id,
                                    UI_METHOD *ui_method, void *callback_data);
 static int __cdecl capi_rsa_sign(int dtype, const unsigned char *m,
                          unsigned int m_len, unsigned char *sigret,
@@ -134,21 +134,21 @@ static int __cdecl capi_rsa_free(RSA *rsa);
 # ifndef OPENSSL_NO_DSA
 static DSA_SIG * __cdecl capi_dsa_do_sign(const unsigned char *digest, int dlen,
                                  DSA *dsa);
-static int capi_dsa_free(DSA *dsa);
+static int __cdecl capi_dsa_free(DSA *dsa);
 # endif
 
-static int capi_load_ssl_client_cert(ENGINE *e, SSL *ssl,
+static int __cdecl capi_load_ssl_client_cert(ENGINE *e, SSL *ssl,
                                      STACK_OF(X509_NAME) *ca_dn, X509 **pcert,
                                      EVP_PKEY **pkey, STACK_OF(X509) **pother,
                                      UI_METHOD *ui_method,
                                      void *callback_data);
 
-static int cert_select_simple(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs);
+static int __cdecl cert_select_simple(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs);
 # ifdef OPENSSL_CAPIENG_DIALOG
-static int cert_select_dialog(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs);
+static int __cdecl cert_select_dialog(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs);
 # endif
 
-void engine_load_capi_int(void);
+void __cdecl engine_load_capi_int(void);
 
 typedef PCCERT_CONTEXT(WINAPI *CERTDLG)(HCERTSTORE, HWND, LPCWSTR,
                                         LPCWSTR, DWORD, DWORD, void *);
@@ -187,16 +187,16 @@ struct CAPI_CTX_st {
 # define CAPI_DMP_PSKEY          0x10   /* Dump pseudo key (if possible) */
 # define CAPI_DMP_PKEYINFO       0x20   /* Dump key info (if possible) */
     DWORD dump_flags;
-    int (*client_cert_select) (ENGINE *e, SSL *ssl, STACK_OF(X509) *certs);
+    int (__cdecl *client_cert_select) (ENGINE *e, SSL *ssl, STACK_OF(X509) *certs);
     CERTDLG certselectdlg;
     GETCONSWIN getconswindow;
 };
 
-static CAPI_CTX *capi_ctx_new(void);
-static void capi_ctx_free(CAPI_CTX *ctx);
-static int capi_ctx_set_provname(CAPI_CTX *ctx, LPSTR pname, DWORD type,
+static CAPI_CTX * __cdecl capi_ctx_new(void);
+static void __cdecl capi_ctx_free(CAPI_CTX *ctx);
+static int __cdecl capi_ctx_set_provname(CAPI_CTX *ctx, LPSTR pname, DWORD type,
                                  int check);
-static int capi_ctx_set_provname_idx(CAPI_CTX *ctx, int idx);
+static int __cdecl capi_ctx_set_provname_idx(CAPI_CTX *ctx, int idx);
 
 # define CAPI_CMD_LIST_CERTS             ENGINE_CMD_BASE
 # define CAPI_CMD_LOOKUP_CERT            (ENGINE_CMD_BASE + 1)
@@ -280,7 +280,7 @@ static int rsa_capi_idx = -1;
 static int dsa_capi_idx = -1;
 static int cert_capi_idx = -1;
 
-static int capi_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f) (void))
+static int __cdecl capi_ctrl(ENGINE *e, int cmd, long i, void *p, void (__cdecl *f) (void))
 {
     int ret = 1;
     CAPI_CTX *ctx;
@@ -403,7 +403,7 @@ static const WCHAR rsa_aes_cspname[] =
 static const WCHAR rsa_enh_cspname[] =
     L"Microsoft Enhanced Cryptographic Provider v1.0";
 
-static int capi_init(ENGINE *e)
+static int __cdecl capi_init(ENGINE *e)
 {
     CAPI_CTX *ctx;
     const RSA_METHOD *ossl_rsa_meth;
@@ -492,7 +492,7 @@ static int capi_init(ENGINE *e)
     return 1;
 }
 
-static int capi_destroy(ENGINE *e)
+static int __cdecl capi_destroy(ENGINE *e)
 {
     RSA_meth_free(capi_rsa_method);
     capi_rsa_method = NULL;
@@ -504,7 +504,7 @@ static int capi_destroy(ENGINE *e)
     return 1;
 }
 
-static int capi_finish(ENGINE *e)
+static int __cdecl capi_finish(ENGINE *e)
 {
     CAPI_CTX *ctx;
     ctx = ENGINE_get_ex_data(e, capi_idx);
@@ -527,7 +527,7 @@ struct CAPI_KEY_st {
     DWORD keyspec;
 };
 
-static int bind_capi(ENGINE *e)
+static int __cdecl bind_capi(ENGINE *e)
 {
     capi_rsa_method = RSA_meth_new("CryptoAPI RSA method", 0);
     if (capi_rsa_method == NULL)
@@ -567,7 +567,7 @@ static int bind_capi(ENGINE *e)
 }
 
 # ifndef OPENSSL_NO_DYNAMIC_ENGINE
-static int bind_helper(ENGINE *e, const char *id)
+static int __cdecl bind_helper(ENGINE *e, const char *id)
 {
     if (id && (strcmp(id, engine_capi_id) != 0))
         return 0;
@@ -591,7 +591,7 @@ static ENGINE *engine_capi(void)
     return ret;
 }
 
-void engine_load_capi_int(void)
+void __cdecl engine_load_capi_int(void)
 {
     /* Copied from eng_[openssl|dyn].c */
     ENGINE *toadd = engine_capi();
@@ -603,7 +603,7 @@ void engine_load_capi_int(void)
 }
 # endif
 
-static int lend_tobn(BIGNUM *bn, unsigned char *bin, int binlen)
+static int __cdecl lend_tobn(BIGNUM *bn, unsigned char *bin, int binlen)
 {
     int i;
     /*
@@ -625,7 +625,7 @@ static int lend_tobn(BIGNUM *bn, unsigned char *bin, int binlen)
 
 /* Given a CAPI_KEY get an EVP_PKEY structure */
 
-static EVP_PKEY *capi_get_pkey(ENGINE *eng, CAPI_KEY *key)
+static EVP_PKEY * __cdecl capi_get_pkey(ENGINE *eng, CAPI_KEY *key)
 {
     unsigned char *pubkey = NULL;
     DWORD len;
@@ -780,7 +780,7 @@ static EVP_PKEY *capi_get_pkey(ENGINE *eng, CAPI_KEY *key)
 
 }
 
-static EVP_PKEY *capi_load_privkey(ENGINE *eng, const char *key_id,
+static EVP_PKEY * __cdecl capi_load_privkey(ENGINE *eng, const char *key_id,
                                    UI_METHOD *ui_method, void *callback_data)
 {
     CAPI_CTX *ctx;
@@ -1057,7 +1057,7 @@ static DSA_SIG * __cdecl capi_dsa_do_sign(const unsigned char *digest, int dlen,
     return ret;
 }
 
-static int capi_dsa_free(DSA *dsa)
+static int __cdecl capi_dsa_free(DSA *dsa)
 {
     CAPI_KEY *capi_key;
     capi_key = DSA_get_ex_data(dsa, dsa_capi_idx);
@@ -1067,7 +1067,7 @@ static int capi_dsa_free(DSA *dsa)
 }
 # endif
 
-static void capi_vtrace(CAPI_CTX *ctx, int level, char *format,
+static void __cdecl capi_vtrace(CAPI_CTX *ctx, int level, char *format,
                         va_list argptr)
 {
     BIO *out;
@@ -1083,7 +1083,7 @@ static void capi_vtrace(CAPI_CTX *ctx, int level, char *format,
     BIO_free(out);
 }
 
-static void CAPI_trace(CAPI_CTX *ctx, char *format, ...)
+static void __cdecl CAPI_trace(CAPI_CTX *ctx, char *format, ...)
 {
     va_list args;
     va_start(args, format);
@@ -1091,19 +1091,19 @@ static void CAPI_trace(CAPI_CTX *ctx, char *format, ...)
     va_end(args);
 }
 
-static void capi_addlasterror(void)
+static void __cdecl capi_addlasterror(void)
 {
     capi_adderror(GetLastError());
 }
 
-static void capi_adderror(DWORD err)
+static void __cdecl capi_adderror(DWORD err)
 {
     char errstr[10];
     BIO_snprintf(errstr, 10, "%lX", err);
     ERR_add_error_data(2, "Error code= 0x", errstr);
 }
 
-static char *wide_to_asc(LPCWSTR wstr)
+static char * __cdecl wide_to_asc(LPCWSTR wstr)
 {
     char *str;
     int len_0, sz;
@@ -1129,7 +1129,7 @@ static char *wide_to_asc(LPCWSTR wstr)
     return str;
 }
 
-static int capi_get_provname(CAPI_CTX *ctx, LPSTR *pname, DWORD *ptype,
+static int __cdecl capi_get_provname(CAPI_CTX *ctx, LPSTR *pname, DWORD *ptype,
                              DWORD idx)
 {
     DWORD len, err;
@@ -1171,7 +1171,7 @@ static int capi_get_provname(CAPI_CTX *ctx, LPSTR *pname, DWORD *ptype,
     return 1;
 }
 
-static int capi_list_providers(CAPI_CTX *ctx, BIO *out)
+static int __cdecl capi_list_providers(CAPI_CTX *ctx, BIO *out)
 {
     DWORD idx, ptype;
     int ret;
@@ -1190,7 +1190,7 @@ static int capi_list_providers(CAPI_CTX *ctx, BIO *out)
     return 1;
 }
 
-static int capi_list_containers(CAPI_CTX *ctx, BIO *out)
+static int __cdecl capi_list_containers(CAPI_CTX *ctx, BIO *out)
 {
     int ret = 1;
     HCRYPTPROV hprov;
@@ -1272,7 +1272,7 @@ static int capi_list_containers(CAPI_CTX *ctx, BIO *out)
     return ret;
 }
 
-static CRYPT_KEY_PROV_INFO *capi_get_prov_info(CAPI_CTX *ctx,
+static CRYPT_KEY_PROV_INFO * __cdecl capi_get_prov_info(CAPI_CTX *ctx,
                                                PCCERT_CONTEXT cert)
 {
     DWORD len;
@@ -1297,7 +1297,7 @@ static CRYPT_KEY_PROV_INFO *capi_get_prov_info(CAPI_CTX *ctx,
     return pinfo;
 }
 
-static void capi_dump_prov_info(CAPI_CTX *ctx, BIO *out,
+static void __cdecl capi_dump_prov_info(CAPI_CTX *ctx, BIO *out,
                                 CRYPT_KEY_PROV_INFO *pinfo)
 {
     char *provname = NULL, *contname = NULL;
@@ -1320,7 +1320,7 @@ static void capi_dump_prov_info(CAPI_CTX *ctx, BIO *out,
     OPENSSL_free(contname);
 }
 
-static char *capi_cert_get_fname(CAPI_CTX *ctx, PCCERT_CONTEXT cert)
+static char * __cdecl capi_cert_get_fname(CAPI_CTX *ctx, PCCERT_CONTEXT cert)
 {
     LPWSTR wfname;
     DWORD dlen;
@@ -1345,7 +1345,7 @@ static char *capi_cert_get_fname(CAPI_CTX *ctx, PCCERT_CONTEXT cert)
     return NULL;
 }
 
-static void capi_dump_cert(CAPI_CTX *ctx, BIO *out, PCCERT_CONTEXT cert)
+static void __cdecl capi_dump_cert(CAPI_CTX *ctx, BIO *out, PCCERT_CONTEXT cert)
 {
     X509 *x;
     const unsigned char *p;
@@ -1387,7 +1387,7 @@ static void capi_dump_cert(CAPI_CTX *ctx, BIO *out, PCCERT_CONTEXT cert)
     X509_free(x);
 }
 
-static HCERTSTORE capi_open_store(CAPI_CTX *ctx, char *storename)
+static HCERTSTORE __cdecl capi_open_store(CAPI_CTX *ctx, char *storename)
 {
     HCERTSTORE hstore;
 
@@ -1406,7 +1406,7 @@ static HCERTSTORE capi_open_store(CAPI_CTX *ctx, char *storename)
     return hstore;
 }
 
-int capi_list_certs(CAPI_CTX *ctx, BIO *out, char *id)
+int __cdecl capi_list_certs(CAPI_CTX *ctx, BIO *out, char *id)
 {
     char *storename;
     int idx;
@@ -1444,7 +1444,7 @@ int capi_list_certs(CAPI_CTX *ctx, BIO *out, char *id)
     return ret;
 }
 
-static PCCERT_CONTEXT capi_find_cert(CAPI_CTX *ctx, const char *id,
+static PCCERT_CONTEXT __cdecl capi_find_cert(CAPI_CTX *ctx, const char *id,
                                      HCERTSTORE hstore)
 {
     PCCERT_CONTEXT cert = NULL;
@@ -1475,7 +1475,7 @@ static PCCERT_CONTEXT capi_find_cert(CAPI_CTX *ctx, const char *id,
     }
 }
 
-static CAPI_KEY *capi_get_key(CAPI_CTX *ctx, const WCHAR *contname,
+static CAPI_KEY * __cdecl capi_get_key(CAPI_CTX *ctx, const WCHAR *contname,
                               const WCHAR *provname, DWORD ptype,
                               DWORD keyspec)
 {
@@ -1541,7 +1541,7 @@ static CAPI_KEY *capi_get_cert_key(CAPI_CTX *ctx, PCCERT_CONTEXT cert)
     return key;
 }
 
-CAPI_KEY *capi_find_key(CAPI_CTX *ctx, const char *id)
+CAPI_KEY * __cdecl capi_find_key(CAPI_CTX *ctx, const char *id)
 {
     PCCERT_CONTEXT cert;
     HCERTSTORE hstore;
@@ -1583,7 +1583,7 @@ CAPI_KEY *capi_find_key(CAPI_CTX *ctx, const char *id)
     return key;
 }
 
-void capi_free_key(CAPI_KEY *key)
+void __cdecl capi_free_key(CAPI_KEY *key)
 {
     if (!key)
         return;
@@ -1596,7 +1596,7 @@ void capi_free_key(CAPI_KEY *key)
 
 /* Initialize a CAPI_CTX structure */
 
-static CAPI_CTX *capi_ctx_new(void)
+static CAPI_CTX * __cdecl capi_ctx_new(void)
 {
     CAPI_CTX *ctx = OPENSSL_zalloc(sizeof(*ctx));
 
@@ -1614,7 +1614,7 @@ static CAPI_CTX *capi_ctx_new(void)
     return ctx;
 }
 
-static void capi_ctx_free(CAPI_CTX *ctx)
+static void __cdecl capi_ctx_free(CAPI_CTX *ctx)
 {
     CAPI_trace(ctx, "Calling capi_ctx_free with %lx\n", ctx);
     if (!ctx)
@@ -1626,7 +1626,7 @@ static void capi_ctx_free(CAPI_CTX *ctx)
     OPENSSL_free(ctx);
 }
 
-static int capi_ctx_set_provname(CAPI_CTX *ctx, LPSTR pname, DWORD type,
+static int __cdecl capi_ctx_set_provname(CAPI_CTX *ctx, LPSTR pname, DWORD type,
                                  int check)
 {
     LPSTR tmpcspname;
@@ -1661,7 +1661,7 @@ static int capi_ctx_set_provname(CAPI_CTX *ctx, LPSTR pname, DWORD type,
     return 1;
 }
 
-static int capi_ctx_set_provname_idx(CAPI_CTX *ctx, int idx)
+static int __cdecl capi_ctx_set_provname_idx(CAPI_CTX *ctx, int idx)
 {
     LPSTR pname;
     DWORD type;
@@ -1688,7 +1688,7 @@ static int cert_issuer_match(STACK_OF(X509_NAME) *ca_dn, X509 *x)
     return 0;
 }
 
-static int capi_load_ssl_client_cert(ENGINE *e, SSL *ssl,
+static int __cdecl capi_load_ssl_client_cert(ENGINE *e, SSL *ssl,
                                      STACK_OF(X509_NAME) *ca_dn, X509 **pcert,
                                      EVP_PKEY **pkey, STACK_OF(X509) **pother,
                                      UI_METHOD *ui_method,
@@ -1792,7 +1792,7 @@ static int capi_load_ssl_client_cert(ENGINE *e, SSL *ssl,
 
 /* Simple client cert selection function: always select first */
 
-static int cert_select_simple(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs)
+static int __cdecl cert_select_simple(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs)
 {
     return 0;
 }
@@ -1819,7 +1819,7 @@ static int cert_select_simple(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs)
 #  define dlg_columns      CRYPTUI_SELECT_LOCATION_COLUMN \
                         |CRYPTUI_SELECT_INTENDEDUSE_COLUMN
 
-static int cert_select_dialog(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs)
+static int __cdecl cert_select_dialog(ENGINE *e, SSL *ssl, STACK_OF(X509) *certs)
 {
     X509 *x;
     HCERTSTORE dstore;
@@ -1896,8 +1896,8 @@ OPENSSL_EXPORT
 
 IMPLEMENT_DYNAMIC_CHECK_FN()
 # else
-void engine_load_capi_int(void);
-void engine_load_capi_int(void)
+void __cdecl engine_load_capi_int(void);
+void __cdecl engine_load_capi_int(void)
 {
 }
 # endif

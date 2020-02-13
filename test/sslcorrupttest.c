@@ -13,7 +13,7 @@
 
 static int docorrupt = 0;
 
-static void copy_flags(BIO *bio)
+static void __cdecl copy_flags(BIO *bio)
 {
     int flags;
     BIO *next = BIO_next(bio);
@@ -123,7 +123,7 @@ static const BIO_METHOD *bio_f_tls_corrupt_filter(void)
     return method_tls_corrupt;
 }
 
-static void bio_f_tls_corrupt_filter_free(void)
+static void __cdecl bio_f_tls_corrupt_filter_free(void)
 {
     BIO_meth_free(method_tls_corrupt);
 }
@@ -137,7 +137,7 @@ static void bio_f_tls_corrupt_filter_free(void)
  */
 static const char **cipher_list = NULL;
 
-static int setup_cipher_list(void)
+static int __cdecl setup_cipher_list(void)
 {
     SSL_CTX *ctx = NULL;
     SSL *ssl = NULL;
@@ -179,7 +179,7 @@ err:
 static char *cert = NULL;
 static char *privkey = NULL;
 
-static int test_ssl_corrupt(int testidx)
+static int __cdecl test_ssl_corrupt(int testidx)
 {
     static unsigned char junk[16000] = { 0 };
     SSL_CTX *sctx = NULL, *cctx = NULL;

@@ -15,13 +15,13 @@
 #include "internal/evp_int.h"
 #include "evp_locl.h"
 
-static int update(EVP_MD_CTX *ctx, const void *data, size_t datalen)
+static int __cdecl update(EVP_MD_CTX *ctx, const void *data, size_t datalen)
 {
     EVPerr(EVP_F_UPDATE, EVP_R_ONLY_ONESHOT_SUPPORTED);
     return 0;
 }
 
-static int do_sigver_init(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
+static int __cdecl do_sigver_init(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
                           const EVP_MD *type, ENGINE *e, EVP_PKEY *pkey,
                           int ver)
 {

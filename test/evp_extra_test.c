@@ -373,7 +373,7 @@ end:
     return ret;
 }
 
-static int test_EVP_Enveloped(void)
+static int __cdecl test_EVP_Enveloped(void)
 {
     int ret = 0;
     EVP_CIPHER_CTX *ctx = NULL;
@@ -417,7 +417,7 @@ err:
 }
 
 
-static int test_EVP_DigestSignInit(void)
+static int __cdecl test_EVP_DigestSignInit(void)
 {
     int ret = 0;
     EVP_PKEY *pkey = NULL;
@@ -462,7 +462,7 @@ static int test_EVP_DigestSignInit(void)
     return ret;
 }
 
-static int test_EVP_DigestVerifyInit(void)
+static int __cdecl test_EVP_DigestVerifyInit(void)
 {
     int ret = 0;
     EVP_PKEY *pkey = NULL;
@@ -485,7 +485,7 @@ static int test_EVP_DigestVerifyInit(void)
     return ret;
 }
 
-static int test_d2i_AutoPrivateKey(int i)
+static int __cdecl test_d2i_AutoPrivateKey(int i)
 {
     int ret = 0;
     const unsigned char *p;
@@ -551,7 +551,7 @@ static struct ec_der_pub_keys_st {
  * Tests the range of the decoded EC char2 public point.
  * See ec_GF2m_simple_oct2point().
  */
-static int test_invalide_ec_char2_pub_range_decode(int id)
+static int __cdecl test_invalide_ec_char2_pub_range_decode(int id)
 {
     int ret = 0;
     BIO *bio = NULL;
@@ -570,7 +570,7 @@ err:
 }
 
 /* Tests loading a bad key in PKCS8 format */
-static int test_EVP_PKCS82PKEY(void)
+static int __cdecl test_EVP_PKCS82PKEY(void)
 {
     int ret = 0;
     const unsigned char *derp = kExampleBadECKeyDER;
@@ -600,7 +600,7 @@ static int test_EVP_PKCS82PKEY(void)
 
 #ifndef OPENSSL_NO_SM2
 
-static int test_EVP_SM2_verify(void)
+static int __cdecl test_EVP_SM2_verify(void)
 {
     /* From https://tools.ietf.org/html/draft-shen-sm2-ecdsa-02#appendix-A */
     const char *pubkey =
@@ -678,7 +678,7 @@ static int test_EVP_SM2_verify(void)
     return rc;
 }
 
-static int test_EVP_SM2(void)
+static int __cdecl test_EVP_SM2(void)
 {
     int ret = 0;
     EVP_PKEY *pkey = NULL;
@@ -841,7 +841,7 @@ static struct keys_st {
 #endif
 };
 
-static int test_set_get_raw_keys_int(int tst, int pub)
+static int __cdecl test_set_get_raw_keys_int(int tst, int pub)
 {
     int ret = 0;
     unsigned char buf[80];
@@ -886,30 +886,30 @@ static int test_set_get_raw_keys_int(int tst, int pub)
     return ret;
 }
 
-static int test_set_get_raw_keys(int tst)
+static int __cdecl test_set_get_raw_keys(int tst)
 {
     return test_set_get_raw_keys_int(tst, 0)
            && test_set_get_raw_keys_int(tst, 1);
 }
 
-static int pkey_custom_check(EVP_PKEY *pkey)
+static int __cdecl pkey_custom_check(EVP_PKEY *pkey)
 {
     return 0xbeef;
 }
 
-static int pkey_custom_pub_check(EVP_PKEY *pkey)
+static int __cdecl pkey_custom_pub_check(EVP_PKEY *pkey)
 {
     return 0xbeef;
 }
 
-static int pkey_custom_param_check(EVP_PKEY *pkey)
+static int __cdecl pkey_custom_param_check(EVP_PKEY *pkey)
 {
     return 0xbeef;
 }
 
 static EVP_PKEY_METHOD *custom_pmeth;
 
-static int test_EVP_PKEY_check(int i)
+static int __cdecl test_EVP_PKEY_check(int i)
 {
     int ret = 0;
     const unsigned char *p;
@@ -994,7 +994,7 @@ static int test_EVP_PKEY_check(int i)
     return ret;
 }
 
-static int test_HKDF(void)
+static int __cdecl test_HKDF(void)
 {
     EVP_PKEY_CTX *pctx;
     unsigned char out[20];
@@ -1039,7 +1039,7 @@ static int test_HKDF(void)
 }
 
 #ifndef OPENSSL_NO_EC
-static int test_X509_PUBKEY_inplace(void)
+static int __cdecl test_X509_PUBKEY_inplace(void)
 {
   int ret = 0;
   X509_PUBKEY *xp = NULL;

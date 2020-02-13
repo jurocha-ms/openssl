@@ -17,7 +17,7 @@ static size_t crv_len = 0;
 static EC_builtin_curve *curves = NULL;
 
 /* sanity checks field_inv function pointer in EC_METHOD */
-static int group_field_tests(const EC_GROUP *group, BN_CTX *ctx)
+static int __cdecl group_field_tests(const EC_GROUP *group, BN_CTX *ctx)
 {
     BIGNUM *a = NULL, *b = NULL, *c = NULL;
     int ret = 0;
@@ -67,7 +67,7 @@ static int group_field_tests(const EC_GROUP *group, BN_CTX *ctx)
 }
 
 /* wrapper for group_field_tests for explicit curve params and EC_METHOD */
-static int field_tests(const EC_METHOD *meth, const unsigned char *params,
+static int __cdecl field_tests(const EC_METHOD *meth, const unsigned char *params,
                        int len)
 {
     BN_CTX *ctx = NULL;
@@ -134,7 +134,7 @@ static const unsigned char params_b283[] = {
 #endif
 
 /* test EC_GFp_simple_method directly */
-static int field_tests_ecp_simple(void)
+static int __cdecl field_tests_ecp_simple(void)
 {
     TEST_info("Testing EC_GFp_simple_method()\n");
     return field_tests(EC_GFp_simple_method(), params_p256,
@@ -142,7 +142,7 @@ static int field_tests_ecp_simple(void)
 }
 
 /* test EC_GFp_mont_method directly */
-static int field_tests_ecp_mont(void)
+static int __cdecl field_tests_ecp_mont(void)
 {
     TEST_info("Testing EC_GFp_mont_method()\n");
     return field_tests(EC_GFp_mont_method(), params_p256,
@@ -151,7 +151,7 @@ static int field_tests_ecp_mont(void)
 
 #ifndef OPENSSL_NO_EC2M
 /* test EC_GF2m_simple_method directly */
-static int field_tests_ec2_simple(void)
+static int __cdecl field_tests_ec2_simple(void)
 {
     TEST_info("Testing EC_GF2m_simple_method()\n");
     return field_tests(EC_GF2m_simple_method(), params_b283,
@@ -160,7 +160,7 @@ static int field_tests_ec2_simple(void)
 #endif
 
 /* test default method for a named curve */
-static int field_tests_default(int n)
+static int __cdecl field_tests_default(int n)
 {
     BN_CTX *ctx = NULL;
     EC_GROUP *group = NULL;

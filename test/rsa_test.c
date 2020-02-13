@@ -45,7 +45,7 @@ int setup_tests(void)
     memcpy(c, ctext_ex, sizeof(ctext_ex) - 1);                  \
     return sizeof(ctext_ex) - 1;
 
-static int key1(RSA *key, unsigned char *c)
+static int __cdecl key1(RSA *key, unsigned char *c)
 {
     static unsigned char n[] =
         "\x00\xAA\x36\xAB\xCE\x88\xAC\xFD\xFF\x55\x52\x3C\x7F\xC4\x52\x3F"
@@ -94,7 +94,7 @@ static int key1(RSA *key, unsigned char *c)
     SetKey;
 }
 
-static int key2(RSA *key, unsigned char *c)
+static int __cdecl key2(RSA *key, unsigned char *c)
 {
     static unsigned char n[] =
         "\x00\xA3\x07\x9A\x90\xDF\x0D\xFD\x72\xAC\x09\x0C\xCC\x2A\x78\xB8"
@@ -139,7 +139,7 @@ static int key2(RSA *key, unsigned char *c)
     SetKey;
 }
 
-static int key3(RSA *key, unsigned char *c)
+static int __cdecl key3(RSA *key, unsigned char *c)
 {
     static unsigned char n[] =
         "\x00\xBB\xF8\x2F\x09\x06\x82\xCE\x9C\x23\x38\xAC\x2B\x9D\xA8\x71"
@@ -211,7 +211,7 @@ static int key3(RSA *key, unsigned char *c)
     SetKey;
 }
 
-static int pad_unknown(void)
+static int __cdecl pad_unknown(void)
 {
     unsigned long l;
     while ((l = ERR_get_error()) != 0)
@@ -220,7 +220,7 @@ static int pad_unknown(void)
     return 0;
 }
 
-static int rsa_setkey(RSA** key, unsigned char* ctext, int idx)
+static int __cdecl rsa_setkey(RSA** key, unsigned char* ctext, int idx)
 {
     int clen = 0;
     *key = RSA_new();
@@ -238,7 +238,7 @@ static int rsa_setkey(RSA** key, unsigned char* ctext, int idx)
     return clen;
 }
 
-static int test_rsa_pkcs1(int idx)
+static int __cdecl test_rsa_pkcs1(int idx)
 {
     int ret = 0;
     RSA *key;
@@ -268,7 +268,7 @@ err:
     return ret;
 }
 
-static int test_rsa_sslv23(int idx)
+static int __cdecl test_rsa_sslv23(int idx)
 {
     int ret = 0;
     RSA *key;
@@ -298,7 +298,7 @@ err:
     return ret;
 }
 
-static int test_rsa_oaep(int idx)
+static int __cdecl test_rsa_oaep(int idx)
 {
     int ret = 0;
     RSA *key;

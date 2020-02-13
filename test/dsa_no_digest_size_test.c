@@ -106,7 +106,7 @@ static DSA *load_dsa_params(void)
     return dsa;
 }
 
-static int genkeys(void)
+static int __cdecl genkeys(void)
 {
     if (!TEST_ptr(dsakey = load_dsa_params()))
         return 0;
@@ -117,7 +117,7 @@ static int genkeys(void)
     return 1;
 }
 
-static int sign_and_verify(int len)
+static int __cdecl sign_and_verify(int len)
 {
     /*
      * Per FIPS 186-4, the hash is recommended to be the same length as q.
@@ -206,7 +206,7 @@ end:
     return ok;
 }
 
-static int dsa_exact_size_test(void) {
+static int __cdecl dsa_exact_size_test(void) {
     /*
      * For a 2048-bit p, q should be either 224 or 256 bits per the table in
      * FIPS 186-4 4.2.
@@ -215,11 +215,11 @@ static int dsa_exact_size_test(void) {
     return sign_and_verify(224 / 8) && sign_and_verify(256 / 8);
 }
 
-static int dsa_small_digest_test(void) {
+static int __cdecl dsa_small_digest_test(void) {
     return sign_and_verify(16) && sign_and_verify(1);
 }
 
-static int dsa_large_digest_test(void) {
+static int __cdecl dsa_large_digest_test(void) {
     return sign_and_verify(33) && sign_and_verify(64);
 }
 

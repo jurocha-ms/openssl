@@ -17,7 +17,7 @@
 
 static int stopped;
 
-static void ssl_library_stop(void);
+static void __cdecl ssl_library_stop(void);
 
 static CRYPTO_ONCE ssl_base = CRYPTO_ONCE_STATIC_INIT;
 static int ssl_base_inited = 0;
@@ -141,7 +141,7 @@ DEFINE_RUN_ONCE_STATIC_ALT(ossl_init_no_load_ssl_strings,
     return 1;
 }
 
-static void ssl_library_stop(void)
+static void __cdecl ssl_library_stop(void)
 {
     /* Might be explicitly called and also by atexit */
     if (stopped)

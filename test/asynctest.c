@@ -19,14 +19,14 @@
 static int ctr = 0;
 static ASYNC_JOB *currjob = NULL;
 
-static int only_pause(void *args)
+static int __cdecl only_pause(void *args)
 {
     ASYNC_pause_job();
 
     return 1;
 }
 
-static int add_two(void *args)
+static int __cdecl add_two(void *args)
 {
     ctr++;
     ASYNC_pause_job();
@@ -35,7 +35,7 @@ static int add_two(void *args)
     return 2;
 }
 
-static int save_current(void *args)
+static int __cdecl save_current(void *args)
 {
     currjob = ASYNC_get_current_job();
     ASYNC_pause_job();
@@ -44,7 +44,7 @@ static int save_current(void *args)
 }
 
 #define MAGIC_WAIT_FD   ((OSSL_ASYNC_FD)99)
-static int waitfd(void *args)
+static int __cdecl waitfd(void *args)
 {
     ASYNC_JOB *job;
     ASYNC_WAIT_CTX *waitctx;
@@ -77,7 +77,7 @@ static int waitfd(void *args)
     return 1;
 }
 
-static int blockpause(void *args)
+static int __cdecl blockpause(void *args)
 {
     ASYNC_block_pause();
     ASYNC_pause_job();
@@ -87,7 +87,7 @@ static int blockpause(void *args)
     return 1;
 }
 
-static int test_ASYNC_init_thread(void)
+static int __cdecl test_ASYNC_init_thread(void)
 {
     ASYNC_JOB *job1 = NULL, *job2 = NULL, *job3 = NULL;
     int funcret1, funcret2, funcret3;
@@ -123,7 +123,7 @@ static int test_ASYNC_init_thread(void)
     return 1;
 }
 
-static int test_ASYNC_start_job(void)
+static int __cdecl test_ASYNC_start_job(void)
 {
     ASYNC_JOB *job = NULL;
     int funcret;
@@ -151,7 +151,7 @@ static int test_ASYNC_start_job(void)
     return 1;
 }
 
-static int test_ASYNC_get_current_job(void)
+static int __cdecl test_ASYNC_get_current_job(void)
 {
     ASYNC_JOB *job = NULL;
     int funcret;
@@ -178,7 +178,7 @@ static int test_ASYNC_get_current_job(void)
     return 1;
 }
 
-static int test_ASYNC_WAIT_CTX_get_all_fds(void)
+static int __cdecl test_ASYNC_WAIT_CTX_get_all_fds(void)
 {
     ASYNC_JOB *job = NULL;
     int funcret;
@@ -245,7 +245,7 @@ static int test_ASYNC_WAIT_CTX_get_all_fds(void)
     return 1;
 }
 
-static int test_ASYNC_block_pause(void)
+static int __cdecl test_ASYNC_block_pause(void)
 {
     ASYNC_JOB *job = NULL;
     int funcret;

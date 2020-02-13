@@ -48,18 +48,18 @@ typedef struct {
  * macro-generated wrapper functions.
  */
 static LHASH_OF(FUNCTION) *prog_init(void);
-static int do_cmd(LHASH_OF(FUNCTION) *prog, int argc, char *argv[]);
-static void list_pkey(void);
-static void list_pkey_meth(void);
-static void list_type(FUNC_TYPE ft, int one);
-static void list_disabled(void);
+static int __cdecl do_cmd(LHASH_OF(FUNCTION) *prog, int argc, char *argv[]);
+static void __cdecl list_pkey(void);
+static void __cdecl list_pkey_meth(void);
+static void __cdecl list_type(FUNC_TYPE ft, int one);
+static void __cdecl list_disabled(void);
 char *default_config_file = NULL;
 
 BIO *bio_in = NULL;
 BIO *bio_out = NULL;
 BIO *bio_err = NULL;
 
-static void calculate_columns(DISPLAY_COLUMNS *dc)
+static void __cdecl calculate_columns(DISPLAY_COLUMNS *dc)
 {
     FUNCTION *f;
     int len, maxlen = 0;
@@ -73,7 +73,7 @@ static void calculate_columns(DISPLAY_COLUMNS *dc)
     dc->columns = (80 - 1) / dc->width;
 }
 
-static int apps_startup(void)
+static int __cdecl apps_startup(void)
 {
 #ifdef SIGPIPE
     signal(SIGPIPE, SIG_IGN);
@@ -89,7 +89,7 @@ static int apps_startup(void)
     return 1;
 }
 
-static void apps_shutdown(void)
+static void __cdecl apps_shutdown(void)
 {
     destroy_ui_method();
     destroy_prefix_method();
@@ -268,7 +268,7 @@ int __cdecl main(int argc, char *argv[])
     EXIT(ret);
 }
 
-static void list_cipher_fn(const EVP_CIPHER *c,
+static void __cdecl list_cipher_fn(const EVP_CIPHER *c,
                            const char *from, const char *to, void *arg)
 {
     if (c != NULL) {
@@ -282,7 +282,7 @@ static void list_cipher_fn(const EVP_CIPHER *c,
     }
 }
 
-static void list_md_fn(const EVP_MD *m,
+static void __cdecl list_md_fn(const EVP_MD *m,
                        const char *from, const char *to, void *arg)
 {
     if (m != NULL) {
@@ -296,7 +296,7 @@ static void list_md_fn(const EVP_MD *m,
     }
 }
 
-static void list_missing_help(void)
+static void __cdecl list_missing_help(void)
 {
     const FUNCTION *fp;
     const OPTIONS *o;
@@ -315,7 +315,7 @@ static void list_missing_help(void)
     }
 }
 
-static void list_options_for_command(const char *command)
+static void __cdecl list_options_for_command(const char *command)
 {
     const FUNCTION *fp;
     const OPTIONS *o;
@@ -515,7 +515,7 @@ int help_main(int argc, char **argv)
     return 0;
 }
 
-static void list_type(FUNC_TYPE ft, int one)
+static void __cdecl list_type(FUNC_TYPE ft, int one)
 {
     FUNCTION *fp;
     int i = 0;
@@ -540,7 +540,7 @@ static void list_type(FUNC_TYPE ft, int one)
         BIO_printf(bio_out, "\n\n");
 }
 
-static int do_cmd(LHASH_OF(FUNCTION) *prog, int argc, char *argv[])
+static int __cdecl do_cmd(LHASH_OF(FUNCTION) *prog, int argc, char *argv[])
 {
     FUNCTION f, *fp;
 
@@ -585,7 +585,7 @@ static int do_cmd(LHASH_OF(FUNCTION) *prog, int argc, char *argv[])
     return 1;
 }
 
-static void list_pkey(void)
+static void __cdecl list_pkey(void)
 {
     int i;
 
@@ -614,7 +614,7 @@ static void list_pkey(void)
     }
 }
 
-static void list_pkey_meth(void)
+static void __cdecl list_pkey_meth(void)
 {
     size_t i;
     size_t meth_count = EVP_PKEY_meth_get_count();
@@ -650,7 +650,7 @@ static int __cdecl SortFnByName(const void *_f1, const void *_f2)
     return strcmp(f1->name, f2->name);
 }
 
-static void list_disabled(void)
+static void __cdecl list_disabled(void)
 {
     BIO_puts(bio_out, "Disabled algorithms:\n");
 #ifdef OPENSSL_NO_ARIA

@@ -481,7 +481,7 @@ typedef struct {
  *      0       decoded structure wasn't what was expected (failure)
  *      1       decoded structure was what was expected (success)
  */
-static int do_decode(unsigned char *bytes, long nbytes,
+static int __cdecl do_decode(unsigned char *bytes, long nbytes,
                      const EXPECTED *expected, size_t expected_size,
                      const TEST_PACKAGE *package)
 {
@@ -517,7 +517,7 @@ static int do_decode(unsigned char *bytes, long nbytes,
  *      0       encoded DER wasn't what was expected (failure)
  *      1       encoded DER was what was expected (success)
  */
-static int do_encode(EXPECTED *input,
+static int __cdecl do_encode(EXPECTED *input,
                      const unsigned char *expected, size_t expected_len,
                      const TEST_PACKAGE *package)
 {
@@ -546,7 +546,7 @@ static int do_encode(EXPECTED *input,
 }
 
 /* Do an encode/decode round trip */
-static int do_enc_dec(EXPECTED *bytes, long nbytes,
+static int __cdecl do_enc_dec(EXPECTED *bytes, long nbytes,
                       const TEST_PACKAGE *package)
 {
     unsigned char *data = NULL;
@@ -666,7 +666,7 @@ static size_t make_custom_der(const TEST_CUSTOM_DATA *custom_data,
 }
 
 /* Attempt to decode a custom encoding of the test structure */
-static int do_decode_custom(const TEST_CUSTOM_DATA *custom_data,
+static int __cdecl do_decode_custom(const TEST_CUSTOM_DATA *custom_data,
                             const EXPECTED *expected, size_t expected_size,
                             const TEST_PACKAGE *package)
 {
@@ -689,7 +689,7 @@ static int do_decode_custom(const TEST_CUSTOM_DATA *custom_data,
 }
 
 /* Attempt to encode the test structure and compare it to custom DER */
-static int do_encode_custom(EXPECTED *input,
+static int __cdecl do_encode_custom(EXPECTED *input,
                             const TEST_CUSTOM_DATA *custom_data,
                             const TEST_PACKAGE *package)
 {
@@ -706,7 +706,7 @@ static int do_encode_custom(EXPECTED *input,
     return ret;
 }
 
-static int do_print_item(const TEST_PACKAGE *package)
+static int __cdecl do_print_item(const TEST_PACKAGE *package)
 {
 #define DATA_BUF_SIZE 256
     const ASN1_ITEM *i = ASN1_ITEM_ptr(package->asn1_type);
@@ -726,7 +726,7 @@ static int do_print_item(const TEST_PACKAGE *package)
 }
 
 
-static int test_intern(const TEST_PACKAGE *package)
+static int __cdecl test_intern(const TEST_PACKAGE *package)
 {
     unsigned int i;
     size_t nelems;
@@ -825,33 +825,33 @@ static int test_intern(const TEST_PACKAGE *package)
 }
 
 #if OPENSSL_API_COMPAT < 0x10200000L
-static int test_long_32bit(void)
+static int __cdecl test_long_32bit(void)
 {
     return test_intern(&long_test_package_32bit);
 }
 
-static int test_long_64bit(void)
+static int __cdecl test_long_64bit(void)
 {
     return test_intern(&long_test_package_64bit);
 }
 #endif
 
-static int test_int32(void)
+static int __cdecl test_int32(void)
 {
     return test_intern(&int32_test_package);
 }
 
-static int test_uint32(void)
+static int __cdecl test_uint32(void)
 {
     return test_intern(&uint32_test_package);
 }
 
-static int test_int64(void)
+static int __cdecl test_int64(void)
 {
     return test_intern(&int64_test_package);
 }
 
-static int test_uint64(void)
+static int __cdecl test_uint64(void)
 {
     return test_intern(&uint64_test_package);
 }

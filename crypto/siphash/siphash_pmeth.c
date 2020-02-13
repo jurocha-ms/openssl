@@ -24,7 +24,7 @@ typedef struct siphash_pkey_ctx_st {
     SIPHASH ctx;
 } SIPHASH_PKEY_CTX;
 
-static int pkey_siphash_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_siphash_init(EVP_PKEY_CTX *ctx)
 {
     SIPHASH_PKEY_CTX *pctx;
 
@@ -39,7 +39,7 @@ static int pkey_siphash_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static void pkey_siphash_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_siphash_cleanup(EVP_PKEY_CTX *ctx)
 {
     SIPHASH_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
 
@@ -50,7 +50,7 @@ static void pkey_siphash_cleanup(EVP_PKEY_CTX *ctx)
     }
 }
 
-static int pkey_siphash_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_siphash_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     SIPHASH_PKEY_CTX *sctx, *dctx;
 
@@ -69,7 +69,7 @@ static int pkey_siphash_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
     return 1;
 }
 
-static int pkey_siphash_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_siphash_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     ASN1_OCTET_STRING *key;
     SIPHASH_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
@@ -82,7 +82,7 @@ static int pkey_siphash_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
     return EVP_PKEY_assign_SIPHASH(pkey, key);
 }
 
-static int int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
+static int __cdecl int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
 {
     SIPHASH_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(EVP_MD_CTX_pkey_ctx(ctx));
 
@@ -90,7 +90,7 @@ static int int_update(EVP_MD_CTX *ctx, const void *data, size_t count)
     return 1;
 }
 
-static int siphash_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
+static int __cdecl siphash_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
 {
     SIPHASH_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
     const unsigned char* key;
@@ -103,7 +103,7 @@ static int siphash_signctx_init(EVP_PKEY_CTX *ctx, EVP_MD_CTX *mctx)
     EVP_MD_CTX_set_update_fn(mctx, int_update);
     return SipHash_Init(&pctx->ctx, key, 0, 0);
 }
-static int siphash_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
+static int __cdecl siphash_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
                             EVP_MD_CTX *mctx)
 {
     SIPHASH_PKEY_CTX *pctx = ctx->data;
@@ -114,7 +114,7 @@ static int siphash_signctx(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen
     return 1;
 }
 
-static int pkey_siphash_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_siphash_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     SIPHASH_PKEY_CTX *pctx = EVP_PKEY_CTX_get_data(ctx);
     const unsigned char *key;
@@ -153,7 +153,7 @@ static int pkey_siphash_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     return 1;
 }
 
-static int pkey_siphash_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_siphash_ctrl_str(EVP_PKEY_CTX *ctx,
                                   const char *type, const char *value)
 {
     if (value == NULL)

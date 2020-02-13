@@ -62,7 +62,7 @@ static size_t kat_nonce(RAND_DRBG *drbg, unsigned char **pout,
  *
  * Return 0 on failure.
  */
-static int single_kat_no_reseed(const struct drbg_kat *td)
+static int __cdecl single_kat_no_reseed(const struct drbg_kat *td)
 {
     struct drbg_kat_no_reseed *data = (struct drbg_kat_no_reseed *)td->t;
     RAND_DRBG *drbg = NULL;
@@ -121,7 +121,7 @@ err:
  *
  * Return 0 on failure.
  */
-static int single_kat_pr_false(const struct drbg_kat *td)
+static int __cdecl single_kat_pr_false(const struct drbg_kat *td)
 {
     struct drbg_kat_pr_false *data = (struct drbg_kat_pr_false *)td->t;
     RAND_DRBG *drbg = NULL;
@@ -185,7 +185,7 @@ err:
  *
  * Return 0 on failure.
  */
-static int single_kat_pr_true(const struct drbg_kat *td)
+static int __cdecl single_kat_pr_true(const struct drbg_kat *td)
 {
     struct drbg_kat_pr_true *data = (struct drbg_kat_pr_true *)td->t;
     RAND_DRBG *drbg = NULL;
@@ -243,7 +243,7 @@ err:
     return failures == 0;
 }
 
-static int test_cavs_kats(int i)
+static int __cdecl test_cavs_kats(int i)
 {
     const struct drbg_kat *td = drbg_test[i];
     int rv = 0;

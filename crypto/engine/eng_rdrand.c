@@ -77,7 +77,7 @@ static ENGINE *ENGINE_rdrand(void)
     return ret;
 }
 
-void engine_load_rdrand_int(void)
+void __cdecl engine_load_rdrand_int(void)
 {
     extern unsigned int OPENSSL_ia32cap_P[];
 
@@ -91,7 +91,7 @@ void engine_load_rdrand_int(void)
     }
 }
 #else
-void engine_load_rdrand_int(void)
+void __cdecl engine_load_rdrand_int(void)
 {
 }
 #endif

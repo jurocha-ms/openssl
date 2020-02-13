@@ -22,7 +22,7 @@
 #include "internal/nelem.h"
 
 #ifndef OPENSSL_NO_DSA
-static int dsa_cb(int p, int n, BN_GENCB *arg);
+static int __cdecl dsa_cb(int p, int n, BN_GENCB *arg);
 
 /*
  * seed, out_p, out_q, out_g are taken from the updated Appendix 5 to FIPS
@@ -63,7 +63,7 @@ static unsigned char out_g[] = {
 
 static const unsigned char str1[] = "12345678901234567890";
 
-static int dsa_test(void)
+static int __cdecl dsa_test(void)
 {
     BN_GENCB *cb;
     DSA *dsa = NULL;
@@ -115,7 +115,7 @@ static int dsa_test(void)
     return ret;
 }
 
-static int dsa_cb(int p, int n, BN_GENCB *arg)
+static int __cdecl dsa_cb(int p, int n, BN_GENCB *arg)
 {
     static int ok = 0, num = 0;
 

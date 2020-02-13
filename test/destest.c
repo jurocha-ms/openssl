@@ -298,7 +298,7 @@ static char *pt(const unsigned char *p, char buf[DATA_BUF_SIZE])
     return ret;
 }
 
-static int test_des_ecb(int i)
+static int __cdecl test_des_ecb(int i)
 {
     DES_key_schedule ks;
     DES_cblock in, out, outin;
@@ -324,7 +324,7 @@ static int test_des_ecb(int i)
     return 1;
 }
 
-static int test_des_ede_ecb(int i)
+static int __cdecl test_des_ede_ecb(int i)
 {
     DES_cblock in, out, outin;
     DES_key_schedule ks, ks2, ks3;
@@ -352,7 +352,7 @@ static int test_des_ede_ecb(int i)
     return 1;
 }
 
-static int test_des_cbc(void)
+static int __cdecl test_des_cbc(void)
 {
     unsigned char cbc_in[40];
     unsigned char cbc_out[40];
@@ -376,7 +376,7 @@ static int test_des_cbc(void)
     return TEST_mem_eq(cbc_in, cbc_data_len, cbc_data, cbc_data_len);
 }
 
-static int test_des_ede_cbc(void)
+static int __cdecl test_des_ede_cbc(void)
 {
     DES_cblock iv3;
     DES_key_schedule ks;
@@ -399,7 +399,7 @@ static int test_des_ede_cbc(void)
     return TEST_mem_eq(cbc_data, n, cbc_data, n);
 }
 
-static int test_ede_cbc(void)
+static int __cdecl test_ede_cbc(void)
 {
     DES_cblock iv3;
     DES_key_schedule ks, ks2, ks3;
@@ -431,7 +431,7 @@ static int test_ede_cbc(void)
     return TEST_mem_eq(cbc_in, i, cbc_data, i);
 }
 
-static int test_input_align(int i)
+static int __cdecl test_input_align(int i)
 {
     unsigned char cbc_out[40];
     DES_cblock iv;
@@ -446,7 +446,7 @@ static int test_input_align(int i)
     return 1;
 }
 
-static int test_output_align(int i)
+static int __cdecl test_output_align(int i)
 {
     unsigned char cbc_out[40];
     DES_cblock iv;
@@ -461,7 +461,7 @@ static int test_output_align(int i)
     return 1;
 }
 
-static int test_des_crypt(void)
+static int __cdecl test_des_crypt(void)
 {
     if (!TEST_str_eq("efGnQx2725bI2", DES_crypt("testing", "ef")))
         return 0;
@@ -477,7 +477,7 @@ static int test_des_crypt(void)
     return 1;
 }
 
-static int test_des_pcbc(void)
+static int __cdecl test_des_pcbc(void)
 {
     unsigned char cbc_in[40];
     unsigned char cbc_out[40];
@@ -497,7 +497,7 @@ static int test_des_pcbc(void)
     return TEST_mem_eq(cbc_in, n, cbc_data, n);
 }
 
-static int cfb_test(int bits, unsigned char *cfb_cipher)
+static int __cdecl cfb_test(int bits, unsigned char *cfb_cipher)
 {
     DES_key_schedule ks;
 
@@ -513,27 +513,27 @@ static int cfb_test(int bits, unsigned char *cfb_cipher)
     return TEST_mem_eq(plain, sizeof(plain), cfb_buf2, sizeof(plain));
 }
 
-static int test_des_cfb8(void)
+static int __cdecl test_des_cfb8(void)
 {
     return cfb_test(8, cfb_cipher8);
 }
 
-static int test_des_cfb16(void)
+static int __cdecl test_des_cfb16(void)
 {
     return cfb_test(16, cfb_cipher16);
 }
 
-static int test_des_cfb32(void)
+static int __cdecl test_des_cfb32(void)
 {
     return cfb_test(32, cfb_cipher32);
 }
 
-static int test_des_cfb48(void)
+static int __cdecl test_des_cfb48(void)
 {
     return cfb_test(48, cfb_cipher48);
 }
 
-static int test_des_cfb64(void)
+static int __cdecl test_des_cfb64(void)
 {
     DES_key_schedule ks;
     int n;
@@ -572,7 +572,7 @@ static int test_des_cfb64(void)
     return TEST_mem_eq(plain, sizeof(plain), cfb_buf2, sizeof(plain));
 }
 
-static int test_des_ede_cfb64(void)
+static int __cdecl test_des_ede_cfb64(void)
 {
     DES_key_schedule ks;
     int n;
@@ -595,7 +595,7 @@ static int test_des_ede_cfb64(void)
     return TEST_mem_eq(plain, sizeof(plain), cfb_buf2, sizeof(plain));
 }
 
-static int test_des_ofb(void)
+static int __cdecl test_des_ofb(void)
 {
     DES_key_schedule ks;
 
@@ -611,7 +611,7 @@ static int test_des_ofb(void)
     return TEST_mem_eq(plain, sizeof(ofb_buf2), ofb_buf2, sizeof(ofb_buf2));
 }
 
-static int test_des_ofb64(void)
+static int __cdecl test_des_ofb64(void)
 {
     DES_key_schedule ks;
     int num;
@@ -634,7 +634,7 @@ static int test_des_ofb64(void)
     return TEST_mem_eq(plain, sizeof(ofb_buf2), ofb_buf2, sizeof(ofb_buf2));
 }
 
-static int test_des_ede_ofb64(void)
+static int __cdecl test_des_ede_ofb64(void)
 {
     DES_key_schedule ks;
     int num;
@@ -658,7 +658,7 @@ static int test_des_ede_ofb64(void)
     return TEST_mem_eq(plain, sizeof(ofb_buf2), ofb_buf2, sizeof(ofb_buf2));
 }
 
-static int test_des_cbc_cksum(void)
+static int __cdecl test_des_cbc_cksum(void)
 {
     DES_LONG cs;
     DES_key_schedule ks;
@@ -672,7 +672,7 @@ static int test_des_cbc_cksum(void)
     return TEST_mem_eq(cret, 8, cbc_cksum_data, 8);
 }
 
-static int test_des_quad_cksum(void)
+static int __cdecl test_des_quad_cksum(void)
 {
     DES_LONG cs, lqret[4];
 

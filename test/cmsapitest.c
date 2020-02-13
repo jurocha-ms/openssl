@@ -10,7 +10,7 @@
 static X509 *cert = NULL;
 static EVP_PKEY *privkey = NULL;
 
-static int test_encrypt_decrypt(void)
+static int __cdecl test_encrypt_decrypt(void)
 {
     int testresult = 0;
     STACK_OF(X509) *certstack = sk_X509_new_null();

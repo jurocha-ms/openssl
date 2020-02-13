@@ -24,7 +24,7 @@
 static SSL_CTX *ctx;
 static SSL *s;
 
-static int test_empty(void)
+static int __cdecl test_empty(void)
 {
     STACK_OF(SSL_CIPHER) *sk = NULL, *scsv = NULL;
     const unsigned char bytes[] = {0x00};
@@ -42,7 +42,7 @@ err:
     return ret;
 }
 
-static int test_unsupported(void)
+static int __cdecl test_unsupported(void)
 {
     STACK_OF(SSL_CIPHER) *sk, *scsv;
     /* ECDH-RSA-AES256 (unsupported), ECDHE-ECDSA-AES128, <unassigned> */
@@ -66,7 +66,7 @@ err:
     return ret;
 }
 
-static int test_v2(void)
+static int __cdecl test_v2(void)
 {
     STACK_OF(SSL_CIPHER) *sk, *scsv;
     /* ECDHE-ECDSA-AES256GCM, SSL2_RC4_1238_WITH_MD5,
@@ -96,7 +96,7 @@ err:
     return ret;
 }
 
-static int test_v3(void)
+static int __cdecl test_v3(void)
 {
     STACK_OF(SSL_CIPHER) *sk = NULL, *scsv = NULL;
     /* ECDHE-ECDSA-AES256GCM, ECDHE-ECDSA-CHACHAPOLY, DHE-RSA-AES256GCM,

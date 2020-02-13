@@ -71,10 +71,10 @@ static SSL_SESSION *psksess = NULL;
 
 static void print_stuff(BIO *berr, SSL *con, int full);
 #ifndef OPENSSL_NO_OCSP
-static int ocsp_resp_cb(SSL *s, void *arg);
+static int __cdecl ocsp_resp_cb(SSL *s, void *arg);
 #endif
-static int ldap_ExtendedResponse_parse(const char *buf, long rem);
-static int is_dNS_name(const char *host);
+static int __cdecl ldap_ExtendedResponse_parse(const char *buf, long rem);
+static int __cdecl is_dNS_name(const char *host);
 
 static int saved_errno;
 
@@ -84,7 +84,7 @@ static void save_errno(void)
     errno = 0;
 }
 
-static int restore_errno(void)
+static int __cdecl restore_errno(void)
 {
     int ret = errno;
     errno = saved_errno;
@@ -116,7 +116,7 @@ static void do_ssl_shutdown(SSL *ssl)
 static char *psk_identity = "Client_identity";
 
 #ifndef OPENSSL_NO_PSK
-static unsigned int psk_client_cb(SSL *ssl, const char *hint, char *identity,
+static unsigned int __cdecl psk_client_cb(SSL *ssl, const char *hint, char *identity,
                                   unsigned int max_identity_len,
                                   unsigned char *psk,
                                   unsigned int max_psk_len)
@@ -178,7 +178,7 @@ static unsigned int psk_client_cb(SSL *ssl, const char *hint, char *identity,
 const unsigned char tls13_aes128gcmsha256_id[] = { 0x13, 0x01 };
 const unsigned char tls13_aes256gcmsha384_id[] = { 0x13, 0x02 };
 
-static int psk_use_session_cb(SSL *s, const EVP_MD *md,
+static int __cdecl psk_use_session_cb(SSL *s, const EVP_MD *md,
                               const unsigned char **id, size_t *idlen,
                               SSL_SESSION **sess)
 {
@@ -246,7 +246,7 @@ typedef struct tlsextctx_st {
     int ack;
 } tlsextctx;
 
-static int ssl_servername_cb(SSL *s, int *ad, void *arg)
+static int __cdecl ssl_servername_cb(SSL *s, int *ad, void *arg)
 {
     tlsextctx *p = (tlsextctx *) arg;
     const char *hn = SSL_get_servername(s, TLSEXT_NAMETYPE_host_name);
@@ -272,7 +272,7 @@ typedef struct srp_arg_st {
 
 # define SRP_NUMBER_ITERATIONS_FOR_PRIME 64
 
-static int srp_Verify_N_and_g(const BIGNUM *N, const BIGNUM *g)
+static int __cdecl srp_Verify_N_and_g(const BIGNUM *N, const BIGNUM *g)
 {
     BN_CTX *bn_ctx = BN_CTX_new();
     BIGNUM *p = BN_new();
@@ -310,7 +310,7 @@ static int srp_Verify_N_and_g(const BIGNUM *N, const BIGNUM *g)
  * primality tests are rather cpu consuming.
  */
 
-static int ssl_srp_verify_param_cb(SSL *s, void *arg)
+static int __cdecl ssl_srp_verify_param_cb(SSL *s, void *arg)
 {
     SRP_ARG *srp_arg = (SRP_ARG *)arg;
     BIGNUM *N = NULL, *g = NULL;
@@ -348,7 +348,7 @@ static int ssl_srp_verify_param_cb(SSL *s, void *arg)
 
 # define PWD_STRLEN 1024
 
-static char *ssl_give_srp_client_pwd_cb(SSL *s, void *arg)
+static char * __cdecl ssl_give_srp_client_pwd_cb(SSL *s, void *arg)
 {
     SRP_ARG *srp_arg = (SRP_ARG *)arg;
     char *pass = app_malloc(PWD_STRLEN + 1, "SRP password buffer");
@@ -379,7 +379,7 @@ typedef struct tlsextnextprotoctx_st {
 
 static tlsextnextprotoctx next_proto;
 
-static int next_proto_cb(SSL *s, unsigned char **out, unsigned char *outlen,
+static int __cdecl next_proto_cb(SSL *s, unsigned char **out, unsigned char *outlen,
                          const unsigned char *in, unsigned int inlen,
                          void *arg)
 {
@@ -404,7 +404,7 @@ static int next_proto_cb(SSL *s, unsigned char **out, unsigned char *outlen,
 }
 #endif                         /* ndef OPENSSL_NO_NEXTPROTONEG */
 
-static int serverinfo_cli_parse_cb(SSL *s, unsigned int ext_type,
+static int __cdecl serverinfo_cli_parse_cb(SSL *s, unsigned int ext_type,
                                    const unsigned char *in, size_t inlen,
                                    int *al, void *arg)
 {
@@ -502,7 +502,7 @@ struct tlsa_field {
     ossl_ssize_t (*parser)(const char **, void *);
 };
 
-static int tlsa_import_rr(SSL *con, const char *rrdata)
+static int __cdecl tlsa_import_rr(SSL *con, const char *rrdata)
 {
     /* Not necessary to re-init these values; the "parsers" do that. */
     static uint8_t usage;
@@ -548,7 +548,7 @@ static int tlsa_import_rr(SSL *con, const char *rrdata)
     return ret;
 }
 
-static int tlsa_import_rrset(SSL *con, STACK_OF(OPENSSL_STRING) *rrset)
+static int __cdecl tlsa_import_rrset(SSL *con, STACK_OF(OPENSSL_STRING) *rrset)
 {
     int num = sk_OPENSSL_STRING_num(rrset);
     int count = 0;
@@ -3367,7 +3367,7 @@ static void print_stuff(BIO *bio, SSL *s, int full)
 }
 
 # ifndef OPENSSL_NO_OCSP
-static int ocsp_resp_cb(SSL *s, void *arg)
+static int __cdecl ocsp_resp_cb(SSL *s, void *arg)
 {
     const unsigned char *p;
     int len;
@@ -3392,7 +3392,7 @@ static int ocsp_resp_cb(SSL *s, void *arg)
 }
 # endif
 
-static int ldap_ExtendedResponse_parse(const char *buf, long rem)
+static int __cdecl ldap_ExtendedResponse_parse(const char *buf, long rem)
 {
     const unsigned char *cur, *end;
     long len;
@@ -3480,7 +3480,7 @@ static int ldap_ExtendedResponse_parse(const char *buf, long rem)
  * Host dNS Name verifier: used for checking that the hostname is in dNS format 
  * before setting it as SNI
  */
-static int is_dNS_name(const char *host)
+static int __cdecl is_dNS_name(const char *host)
 {
     const size_t MAX_LABEL_LENGTH = 63;
     size_t i;

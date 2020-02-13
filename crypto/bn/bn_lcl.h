@@ -257,9 +257,9 @@ struct bn_gencb_st {
     void *arg;                  /* callback-specific data */
     union {
         /* if (ver==1) - handles old style callbacks */
-        void (*cb_1) (int, int, void *);
+        void (__cdecl *cb_1) (int, int, void *);
         /* if (ver==2) - new callback style */
-        int (*cb_2) (int, int, BN_GENCB *);
+        int (__cdecl *cb_2) (int, int, BN_GENCB *);
     } cb;
 };
 

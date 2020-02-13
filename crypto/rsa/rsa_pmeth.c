@@ -50,7 +50,7 @@ typedef struct {
 /* True if PSS parameters are restricted */
 #define rsa_pss_restricted(rctx) (rctx->min_saltlen != -1)
 
-static int pkey_rsa_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_rsa_init(EVP_PKEY_CTX *ctx)
 {
     RSA_PKEY_CTX *rctx = OPENSSL_zalloc(sizeof(*rctx));
 
@@ -72,7 +72,7 @@ static int pkey_rsa_init(EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static int pkey_rsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
+static int __cdecl pkey_rsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
 {
     RSA_PKEY_CTX *dctx, *sctx;
 
@@ -99,7 +99,7 @@ static int pkey_rsa_copy(EVP_PKEY_CTX *dst, EVP_PKEY_CTX *src)
     return 1;
 }
 
-static int setup_tbuf(RSA_PKEY_CTX *ctx, EVP_PKEY_CTX *pk)
+static int __cdecl setup_tbuf(RSA_PKEY_CTX *ctx, EVP_PKEY_CTX *pk)
 {
     if (ctx->tbuf != NULL)
         return 1;
@@ -110,7 +110,7 @@ static int setup_tbuf(RSA_PKEY_CTX *ctx, EVP_PKEY_CTX *pk)
     return 1;
 }
 
-static void pkey_rsa_cleanup(EVP_PKEY_CTX *ctx)
+static void __cdecl pkey_rsa_cleanup(EVP_PKEY_CTX *ctx)
 {
     RSA_PKEY_CTX *rctx = ctx->data;
     if (rctx) {
@@ -121,7 +121,7 @@ static void pkey_rsa_cleanup(EVP_PKEY_CTX *ctx)
     }
 }
 
-static int pkey_rsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
+static int __cdecl pkey_rsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
                          size_t *siglen, const unsigned char *tbs,
                          size_t tbslen)
 {
@@ -188,7 +188,7 @@ static int pkey_rsa_sign(EVP_PKEY_CTX *ctx, unsigned char *sig,
     return 1;
 }
 
-static int pkey_rsa_verifyrecover(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_rsa_verifyrecover(EVP_PKEY_CTX *ctx,
                                   unsigned char *rout, size_t *routlen,
                                   const unsigned char *sig, size_t siglen)
 {
@@ -238,7 +238,7 @@ static int pkey_rsa_verifyrecover(EVP_PKEY_CTX *ctx,
     return 1;
 }
 
-static int pkey_rsa_verify(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_rsa_verify(EVP_PKEY_CTX *ctx,
                            const unsigned char *sig, size_t siglen,
                            const unsigned char *tbs, size_t tbslen)
 {
@@ -290,7 +290,7 @@ static int pkey_rsa_verify(EVP_PKEY_CTX *ctx,
 
 }
 
-static int pkey_rsa_encrypt(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_rsa_encrypt(EVP_PKEY_CTX *ctx,
                             unsigned char *out, size_t *outlen,
                             const unsigned char *in, size_t inlen)
 {
@@ -319,7 +319,7 @@ static int pkey_rsa_encrypt(EVP_PKEY_CTX *ctx,
     return 1;
 }
 
-static int pkey_rsa_decrypt(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_rsa_decrypt(EVP_PKEY_CTX *ctx,
                             unsigned char *out, size_t *outlen,
                             const unsigned char *in, size_t inlen)
 {
@@ -347,7 +347,7 @@ static int pkey_rsa_decrypt(EVP_PKEY_CTX *ctx,
     return ret;
 }
 
-static int check_padding_md(const EVP_MD *md, int padding)
+static int __cdecl check_padding_md(const EVP_MD *md, int padding)
 {
     int mdnid;
 
@@ -396,7 +396,7 @@ static int check_padding_md(const EVP_MD *md, int padding)
     return 1;
 }
 
-static int pkey_rsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
+static int __cdecl pkey_rsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 {
     RSA_PKEY_CTX *rctx = ctx->data;
 
@@ -586,7 +586,7 @@ static int pkey_rsa_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     }
 }
 
-static int pkey_rsa_ctrl_str(EVP_PKEY_CTX *ctx,
+static int __cdecl pkey_rsa_ctrl_str(EVP_PKEY_CTX *ctx,
                              const char *type, const char *value)
 {
     if (value == NULL) {
@@ -699,7 +699,7 @@ static int pkey_rsa_ctrl_str(EVP_PKEY_CTX *ctx,
 }
 
 /* Set PSS parameters when generating a key, if necessary */
-static int rsa_set_pss_param(RSA *rsa, EVP_PKEY_CTX *ctx)
+static int __cdecl rsa_set_pss_param(RSA *rsa, EVP_PKEY_CTX *ctx)
 {
     RSA_PKEY_CTX *rctx = ctx->data;
 
@@ -715,7 +715,7 @@ static int rsa_set_pss_param(RSA *rsa, EVP_PKEY_CTX *ctx)
     return 1;
 }
 
-static int pkey_rsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
+static int __cdecl pkey_rsa_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 {
     RSA *rsa = NULL;
     RSA_PKEY_CTX *rctx = ctx->data;
@@ -794,7 +794,7 @@ const EVP_PKEY_METHOD rsa_pkey_meth = {
  * sanity and sets any restrictions on key usage.
  */
 
-static int pkey_pss_init(EVP_PKEY_CTX *ctx)
+static int __cdecl pkey_pss_init(EVP_PKEY_CTX *ctx)
 {
     RSA *rsa;
     RSA_PKEY_CTX *rctx = ctx->data;

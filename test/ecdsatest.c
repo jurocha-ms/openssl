@@ -21,7 +21,7 @@
 # include "ecdsatest.h"
 
 /* functions to change the RAND_METHOD */
-static int fbytes(unsigned char *buf, int num);
+static int __cdecl fbytes(unsigned char *buf, int num);
 
 static RAND_METHOD fake_rand;
 static const RAND_METHOD *old_rand;
@@ -30,7 +30,7 @@ static const char *numbers[2];
 static size_t crv_len = 0;
 static EC_builtin_curve *curves = NULL;
 
-static int change_rand(void)
+static int __cdecl change_rand(void)
 {
     /* save old rand method */
     if (!TEST_ptr(old_rand = RAND_get_rand_method()))
@@ -45,14 +45,14 @@ static int change_rand(void)
     return 1;
 }
 
-static int restore_rand(void)
+static int __cdecl restore_rand(void)
 {
     if (!TEST_true(RAND_set_rand_method(old_rand)))
         return 0;
     return 1;
 }
 
-static int fbytes(unsigned char *buf, int num)
+static int __cdecl fbytes(unsigned char *buf, int num)
 {
     int ret = 0;
     static int fbytes_counter = 0;
@@ -92,7 +92,7 @@ static int fbytes(unsigned char *buf, int num)
  * - create ECDSA signatures that match those KATs
  * - accept those signatures as valid
  */
-static int x9_62_tests(int n)
+static int __cdecl x9_62_tests(int n)
 {
     int nid, md_nid, ret = 0;
     const char *r_in = NULL, *s_in = NULL, *tbs = NULL;
@@ -196,7 +196,7 @@ static int x9_62_tests(int n)
  * - reject that signature after modifying the signature
  * - accept that signature after un-modifying the signature
  */
-static int test_builtin(int n)
+static int __cdecl test_builtin(int n)
 {
     EC_KEY *eckey_neg = NULL, *eckey = NULL;
     unsigned char dirt, offset, tbs[128];

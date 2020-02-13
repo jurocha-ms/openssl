@@ -23,9 +23,9 @@
 #ifndef OPENSSL_NO_DH
 # include <openssl/dh.h>
 
-static int cb(int p, int n, BN_GENCB *arg);
+static int __cdecl cb(int p, int n, BN_GENCB *arg);
 
-static int dh_test(void)
+static int __cdecl dh_test(void)
 {
     DH *dh = NULL;
     BIGNUM *p = NULL, *q = NULL, *g = NULL;
@@ -225,7 +225,7 @@ static int dh_test(void)
     return ret;
 }
 
-static int cb(int p, int n, BN_GENCB *arg)
+static int __cdecl cb(int p, int n, BN_GENCB *arg)
 {
     return 1;
 }
@@ -512,7 +512,7 @@ static const rfc5114_td rfctd[] = {
         make_rfc5114_td(2048_256)
 };
 
-static int rfc5114_test(void)
+static int __cdecl rfc5114_test(void)
 {
     int i;
     DH *dhA = NULL;
@@ -623,7 +623,7 @@ static int rfc5114_test(void)
     return 0;
 }
 
-static int rfc7919_test(void)
+static int __cdecl rfc7919_test(void)
 {
     DH *a = NULL, *b = NULL;
     const BIGNUM *apub_key = NULL, *bpub_key = NULL;

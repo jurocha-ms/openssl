@@ -31,7 +31,7 @@
 #define test_cert_table(nid, amask, idx) \
     do_test_cert_table(nid, amask, idx, #idx)
 
-static int do_test_cert_table(int nid, uint32_t amask, size_t idx,
+static int __cdecl do_test_cert_table(int nid, uint32_t amask, size_t idx,
                               const char *idxname)
 {
     const SSL_CERT_LOOKUP *clu = &ssl_cert_info[idx];
@@ -51,7 +51,7 @@ static int do_test_cert_table(int nid, uint32_t amask, size_t idx,
 
 /* Sanity check of ssl_cert_table */
 
-static int test_ssl_cert_table(void)
+static int __cdecl test_ssl_cert_table(void)
 {
     TEST_size_t_eq(OSSL_NELEM(ssl_cert_info), SSL_PKEY_NUM);
     if (!test_cert_table(EVP_PKEY_RSA, SSL_aRSA, SSL_PKEY_RSA))

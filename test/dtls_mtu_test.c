@@ -22,7 +22,7 @@
 
 static int debug = 0;
 
-static unsigned int clnt_psk_callback(SSL *ssl, const char *hint,
+static unsigned int __cdecl clnt_psk_callback(SSL *ssl, const char *hint,
                                       char *ident, unsigned int max_ident_len,
                                       unsigned char *psk,
                                       unsigned int max_psk_len)
@@ -36,7 +36,7 @@ static unsigned int clnt_psk_callback(SSL *ssl, const char *hint,
     return max_psk_len;
 }
 
-static unsigned int srvr_psk_callback(SSL *ssl, const char *identity,
+static unsigned int __cdecl srvr_psk_callback(SSL *ssl, const char *identity,
                                       unsigned char *psk,
                                       unsigned int max_psk_len)
 {
@@ -46,7 +46,7 @@ static unsigned int srvr_psk_callback(SSL *ssl, const char *identity,
     return max_psk_len;
 }
 
-static int mtu_test(SSL_CTX *ctx, const char *cs, int no_etm)
+static int __cdecl mtu_test(SSL_CTX *ctx, const char *cs, int no_etm)
 {
     SSL *srvr_ssl = NULL, *clnt_ssl = NULL;
     BIO *sc_bio = NULL;
@@ -141,7 +141,7 @@ static int mtu_test(SSL_CTX *ctx, const char *cs, int no_etm)
     return rv;
 }
 
-static int run_mtu_tests(void)
+static int __cdecl run_mtu_tests(void)
 {
     SSL_CTX *ctx = NULL;
     STACK_OF(SSL_CIPHER) *ciphers;

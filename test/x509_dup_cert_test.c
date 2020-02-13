@@ -14,7 +14,7 @@
 
 #include "testutil.h"
 
-static int test_509_dup_cert(int n)
+static int __cdecl test_509_dup_cert(int n)
 {
     int ret = 0;
     X509_STORE_CTX *sctx = NULL;

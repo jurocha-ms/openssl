@@ -141,7 +141,7 @@ static struct bi_ige_test const bi_ige_test_vectors[] = {
 
 };
 
-static int test_ige_vectors(int n)
+static int __cdecl test_ige_vectors(int n)
 {
     const struct ige_test *const v = &ige_test_vectors[n];
     AES_KEY key;
@@ -183,7 +183,7 @@ static int test_ige_vectors(int n)
     return testresult;
 }
 
-static int test_bi_ige_vectors(int n)
+static int __cdecl test_bi_ige_vectors(int n)
 {
     const struct bi_ige_test *const v = &bi_ige_test_vectors[n];
     AES_KEY key1;
@@ -215,7 +215,7 @@ static int test_bi_ige_vectors(int n)
     return 1;
 }
 
-static int test_ige_enc_dec(void)
+static int __cdecl test_ige_enc_dec(void)
 {
     AES_KEY key;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -233,7 +233,7 @@ static int test_ige_enc_dec(void)
     return TEST_mem_eq(checktext, TEST_SIZE, plaintext, TEST_SIZE);
 }
 
-static int test_ige_enc_chaining(void)
+static int __cdecl test_ige_enc_chaining(void)
 {
     AES_KEY key;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -255,7 +255,7 @@ static int test_ige_enc_chaining(void)
     return TEST_mem_eq(checktext, TEST_SIZE, plaintext, TEST_SIZE);
 }
 
-static int test_ige_dec_chaining(void)
+static int __cdecl test_ige_dec_chaining(void)
 {
     AES_KEY key;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -281,7 +281,7 @@ static int test_ige_dec_chaining(void)
     return TEST_mem_eq(checktext, TEST_SIZE, plaintext, TEST_SIZE);
 }
 
-static int test_ige_garble_forwards(void)
+static int __cdecl test_ige_garble_forwards(void)
 {
     AES_KEY key;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -319,7 +319,7 @@ static int test_ige_garble_forwards(void)
     return testresult;
 }
 
-static int test_bi_ige_enc_dec(void)
+static int __cdecl test_bi_ige_enc_dec(void)
 {
     AES_KEY key, key2;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -340,7 +340,7 @@ static int test_bi_ige_enc_dec(void)
     return TEST_mem_eq(checktext, TEST_SIZE, plaintext, TEST_SIZE);
 }
 
-static int test_bi_ige_garble1(void)
+static int __cdecl test_bi_ige_garble1(void)
 {
     AES_KEY key, key2;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -371,7 +371,7 @@ static int test_bi_ige_garble1(void)
     return TEST_size_t_le(matches, sizeof(checktext) / 100);
 }
 
-static int test_bi_ige_garble2(void)
+static int __cdecl test_bi_ige_garble2(void)
 {
     AES_KEY key, key2;
     unsigned char iv[AES_BLOCK_SIZE * 4];
@@ -402,7 +402,7 @@ static int test_bi_ige_garble2(void)
     return TEST_size_t_le(matches, sizeof(checktext) / 100);
 }
 
-static int test_bi_ige_garble3(void)
+static int __cdecl test_bi_ige_garble3(void)
 {
     AES_KEY key, key2;
     unsigned char iv[AES_BLOCK_SIZE * 4];

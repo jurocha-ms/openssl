@@ -16,7 +16,7 @@
 static char *cert = NULL;
 static char *privkey = NULL;
 
-static int test_fatalerr(void)
+static int __cdecl test_fatalerr(void)
 {
     SSL_CTX *sctx = NULL, *cctx = NULL;
     SSL *sssl = NULL, *cssl = NULL;

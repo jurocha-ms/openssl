@@ -111,7 +111,7 @@ static void __cdecl info_cb(const SSL *s, int where, int ret)
  * Otherwise, returns SSL_TLSEXT_ERR_ALERT_FATAL on mismatch.
  * An empty SNI extension also returns SSL_TSLEXT_ERR_NOACK.
  */
-static int select_server_ctx(SSL *s, void *arg, int ignore)
+static int __cdecl select_server_ctx(SSL *s, void *arg, int ignore)
 {
     const char *servername = SSL_get_servername(s, TLSEXT_NAMETYPE_host_name);
     HANDSHAKE_EX_DATA *ex_data =
@@ -147,7 +147,7 @@ static int select_server_ctx(SSL *s, void *arg, int ignore)
     }
 }
 
-static int client_hello_select_server_ctx(SSL *s, void *arg, int ignore)
+static int __cdecl client_hello_select_server_ctx(SSL *s, void *arg, int ignore)
 {
     const char *servername;
     const unsigned char *p;
@@ -220,17 +220,17 @@ static int client_hello_select_server_ctx(SSL *s, void *arg, int ignore)
  * configurations to ensure the state machine propagates the result
  * correctly.
  */
-static int servername_ignore_cb(SSL *s, int *ad, void *arg)
+static int __cdecl servername_ignore_cb(SSL *s, int *ad, void *arg)
 {
     return select_server_ctx(s, arg, 1);
 }
 
-static int servername_reject_cb(SSL *s, int *ad, void *arg)
+static int __cdecl servername_reject_cb(SSL *s, int *ad, void *arg)
 {
     return select_server_ctx(s, arg, 0);
 }
 
-static int client_hello_ignore_cb(SSL *s, int *al, void *arg)
+static int __cdecl client_hello_ignore_cb(SSL *s, int *al, void *arg)
 {
     if (!client_hello_select_server_ctx(s, arg, 1)) {
         *al = SSL_AD_UNRECOGNIZED_NAME;
@@ -239,7 +239,7 @@ static int client_hello_ignore_cb(SSL *s, int *al, void *arg)
     return SSL_CLIENT_HELLO_SUCCESS;
 }
 
-static int client_hello_reject_cb(SSL *s, int *al, void *arg)
+static int __cdecl client_hello_reject_cb(SSL *s, int *al, void *arg)
 {
     if (!client_hello_select_server_ctx(s, arg, 0)) {
         *al = SSL_AD_UNRECOGNIZED_NAME;
@@ -248,7 +248,7 @@ static int client_hello_reject_cb(SSL *s, int *al, void *arg)
     return SSL_CLIENT_HELLO_SUCCESS;
 }
 
-static int client_hello_nov12_cb(SSL *s, int *al, void *arg)
+static int __cdecl client_hello_nov12_cb(SSL *s, int *al, void *arg)
 {
     int ret;
     unsigned int v;
@@ -279,7 +279,7 @@ static int client_hello_nov12_cb(SSL *s, int *al, void *arg)
 static unsigned char dummy_ocsp_resp_good_val = 0xff;
 static unsigned char dummy_ocsp_resp_bad_val = 0xfe;
 
-static int server_ocsp_cb(SSL *s, void *arg)
+static int __cdecl server_ocsp_cb(SSL *s, void *arg)
 {
     unsigned char *resp;
 
@@ -296,7 +296,7 @@ static int server_ocsp_cb(SSL *s, void *arg)
     return SSL_TLSEXT_ERR_OK;
 }
 
-static int client_ocsp_cb(SSL *s, void *arg)
+static int __cdecl client_ocsp_cb(SSL *s, void *arg)
 {
     const unsigned char *resp;
     int len;
@@ -308,22 +308,22 @@ static int client_ocsp_cb(SSL *s, void *arg)
     return 1;
 }
 
-static int verify_reject_cb(X509_STORE_CTX *ctx, void *arg) {
+static int __cdecl verify_reject_cb(X509_STORE_CTX *ctx, void *arg) {
     X509_STORE_CTX_set_error(ctx, X509_V_ERR_APPLICATION_VERIFICATION);
     return 0;
 }
 
-static int verify_accept_cb(X509_STORE_CTX *ctx, void *arg) {
+static int __cdecl verify_accept_cb(X509_STORE_CTX *ctx, void *arg) {
     return 1;
 }
 
-static int broken_session_ticket_cb(SSL *s, unsigned char *key_name, unsigned char *iv,
+static int __cdecl broken_session_ticket_cb(SSL *s, unsigned char *key_name, unsigned char *iv,
                                     EVP_CIPHER_CTX *ctx, HMAC_CTX *hctx, int enc)
 {
     return 0;
 }
 
-static int do_not_call_session_ticket_cb(SSL *s, unsigned char *key_name,
+static int __cdecl do_not_call_session_ticket_cb(SSL *s, unsigned char *key_name,
                                          unsigned char *iv,
                                          EVP_CIPHER_CTX *ctx,
                                          HMAC_CTX *hctx, int enc)
@@ -335,7 +335,7 @@ static int do_not_call_session_ticket_cb(SSL *s, unsigned char *key_name,
 }
 
 /* Parse the comma-separated list into TLS format. */
-static int parse_protos(const char *protos, unsigned char **out, size_t *outlen)
+static int __cdecl parse_protos(const char *protos, unsigned char **out, size_t *outlen)
 {
     size_t len, i, prefix;
 
@@ -383,7 +383,7 @@ err:
  * protocols, or the server doesn't advertise any, it SHOULD select the first
  * protocol that it supports.
  */
-static int client_npn_cb(SSL *s, unsigned char **out, unsigned char *outlen,
+static int __cdecl client_npn_cb(SSL *s, unsigned char **out, unsigned char *outlen,
                          const unsigned char *in, unsigned int inlen,
                          void *arg)
 {
@@ -398,7 +398,7 @@ static int client_npn_cb(SSL *s, unsigned char **out, unsigned char *outlen,
         ? SSL_TLSEXT_ERR_OK : SSL_TLSEXT_ERR_ALERT_FATAL;
 }
 
-static int server_npn_cb(SSL *s, const unsigned char **data,
+static int __cdecl server_npn_cb(SSL *s, const unsigned char **data,
                          unsigned int *len, void *arg)
 {
     CTX_DATA *ctx_data = (CTX_DATA*)(arg);
@@ -414,7 +414,7 @@ static int server_npn_cb(SSL *s, const unsigned char **data,
  * supports no protocols that the client advertises, then the server SHALL
  * respond with a fatal "no_application_protocol" alert.
  */
-static int server_alpn_cb(SSL *s, const unsigned char **out,
+static int __cdecl server_alpn_cb(SSL *s, const unsigned char **out,
                           unsigned char *outlen, const unsigned char *in,
                           unsigned int inlen, void *arg)
 {
@@ -440,13 +440,13 @@ static int server_alpn_cb(SSL *s, const unsigned char **out,
 }
 
 #ifndef OPENSSL_NO_SRP
-static char *client_srp_cb(SSL *s, void *arg)
+static char * __cdecl client_srp_cb(SSL *s, void *arg)
 {
     CTX_DATA *ctx_data = (CTX_DATA*)(arg);
     return OPENSSL_strdup(ctx_data->srp_password);
 }
 
-static int server_srp_cb(SSL *s, int *ad, void *arg)
+static int __cdecl server_srp_cb(SSL *s, int *ad, void *arg)
 {
     CTX_DATA *ctx_data = (CTX_DATA*)(arg);
     if (strcmp(ctx_data->srp_user, SSL_get_srp_username(s)) != 0)
@@ -461,7 +461,7 @@ static int server_srp_cb(SSL *s, int *ad, void *arg)
 }
 #endif  /* !OPENSSL_NO_SRP */
 
-static int generate_session_ticket_cb(SSL *s, void *arg)
+static int __cdecl generate_session_ticket_cb(SSL *s, void *arg)
 {
     CTX_DATA *server_ctx_data = arg;
     SSL_SESSION *ss = SSL_get_session(s);
@@ -473,7 +473,7 @@ static int generate_session_ticket_cb(SSL *s, void *arg)
     return SSL_SESSION_set1_ticket_appdata(ss, app_data, strlen(app_data));
 }
 
-static int decrypt_session_ticket_cb(SSL *s, SSL_SESSION *ss,
+static int __cdecl decrypt_session_ticket_cb(SSL *s, SSL_SESSION *ss,
                                      const unsigned char *keyname,
                                      size_t keyname_len,
                                      SSL_TICKET_STATUS status,
@@ -497,7 +497,7 @@ static int decrypt_session_ticket_cb(SSL *s, SSL_SESSION *ss,
  * Configure callbacks and other properties that can't be set directly
  * in the server/client CONF.
  */
-static int configure_handshake_ctx(SSL_CTX *server_ctx, SSL_CTX *server2_ctx,
+static int __cdecl configure_handshake_ctx(SSL_CTX *server_ctx, SSL_CTX *server2_ctx,
                                    SSL_CTX *client_ctx,
                                    const SSL_TEST_CTX *test,
                                    const SSL_TEST_EXTRA_CONF *extra,
@@ -756,7 +756,7 @@ typedef struct peer_st {
     peer_status_t status;
 } PEER;
 
-static int create_peer(PEER *peer, SSL_CTX *ctx)
+static int __cdecl create_peer(PEER *peer, SSL_CTX *ctx)
 {
     static const int peer_buffer_size = 64 * 1024;
     SSL *ssl = NULL;
@@ -1084,7 +1084,7 @@ typedef enum {
 } connect_phase_t;
 
 
-static int renegotiate_op(const SSL_TEST_CTX *test_ctx)
+static int __cdecl renegotiate_op(const SSL_TEST_CTX *test_ctx)
 {
     switch (test_ctx->handshake_mode) {
     case SSL_TEST_HANDSHAKE_RENEG_SERVER:
@@ -1094,7 +1094,7 @@ static int renegotiate_op(const SSL_TEST_CTX *test_ctx)
         return 0;
     }
 }
-static int post_handshake_op(const SSL_TEST_CTX *test_ctx)
+static int __cdecl post_handshake_op(const SSL_TEST_CTX *test_ctx)
 {
     switch (test_ctx->handshake_mode) {
     case SSL_TEST_HANDSHAKE_KEY_UPDATE_CLIENT:
@@ -1257,7 +1257,7 @@ static char *dup_str(const unsigned char *in, size_t len)
     return ret;
 }
 
-static int pkey_type(EVP_PKEY *pkey)
+static int __cdecl pkey_type(EVP_PKEY *pkey)
 {
     int nid = EVP_PKEY_id(pkey);
 
@@ -1270,7 +1270,7 @@ static int pkey_type(EVP_PKEY *pkey)
     return nid;
 }
 
-static int peer_pkey_type(SSL *s)
+static int __cdecl peer_pkey_type(SSL *s)
 {
     X509 *x = SSL_get_peer_certificate(s);
 
@@ -1284,7 +1284,7 @@ static int peer_pkey_type(SSL *s)
 }
 
 #if !defined(OPENSSL_NO_SCTP) && !defined(OPENSSL_NO_SOCK)
-static int set_sock_as_sctp(int sock)
+static int __cdecl set_sock_as_sctp(int sock)
 {
     struct sctp_assocparams assocparams;
     struct sctp_rtoinfo rto_info;
@@ -1321,7 +1321,7 @@ static int set_sock_as_sctp(int sock)
     return 1;
 }
 
-static int create_sctp_socks(int *ssock, int *csock)
+static int __cdecl create_sctp_socks(int *ssock, int *csock)
 {
     BIO_ADDRINFO *res = NULL;
     const BIO_ADDRINFO *ai = NULL;

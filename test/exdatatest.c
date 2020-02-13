@@ -25,7 +25,7 @@ static int gbl_result;
  * Apps explicitly set/get ex_data as needed
  */
 
-static void exnew(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+static void __cdecl exnew(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
           int idx, long argl, void *argp)
 {
     if (!TEST_int_eq(idx, saved_idx)
@@ -35,7 +35,7 @@ static void exnew(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
         gbl_result = 0;
 }
 
-static int exdup(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
+static int __cdecl exdup(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
           void *from_d, int idx, long argl, void *argp)
 {
     if (!TEST_int_eq(idx, saved_idx)
@@ -46,7 +46,7 @@ static int exdup(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
     return 1;
 }
 
-static void exfree(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+static void __cdecl exfree(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
             int idx, long argl, void *argp)
 {
     if (!TEST_int_eq(idx, saved_idx)
@@ -67,7 +67,7 @@ typedef struct myobj_ex_data_st {
     int dup;
 } MYOBJ_EX_DATA;
 
-static void exnew2(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+static void __cdecl exnew2(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
           int idx, long argl, void *argp)
 {
     MYOBJ_EX_DATA *ex_data = OPENSSL_zalloc(sizeof(*ex_data));
@@ -84,7 +84,7 @@ static void exnew2(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
     }
 }
 
-static int exdup2(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
+static int __cdecl exdup2(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
           void *from_d, int idx, long argl, void *argp)
 {
     MYOBJ_EX_DATA **update_ex_data = (MYOBJ_EX_DATA**)from_d;
@@ -108,7 +108,7 @@ static int exdup2(CRYPTO_EX_DATA *to, const CRYPTO_EX_DATA *from,
     return 1;
 }
 
-static void exfree2(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
+static void __cdecl exfree2(void *parent, void *ptr, CRYPTO_EX_DATA *ad,
             int idx, long argl, void *argp)
 {
     MYOBJ_EX_DATA *ex_data = CRYPTO_get_ex_data(ad, saved_idx2);
@@ -137,7 +137,7 @@ static MYOBJ *MYOBJ_new(void)
     return obj;
 }
 
-static void MYOBJ_sethello(MYOBJ *obj, char *cp)
+static void __cdecl MYOBJ_sethello(MYOBJ *obj, char *cp)
 {
     obj->st = CRYPTO_set_ex_data(&obj->ex_data, saved_idx, cp);
     if (!TEST_int_eq(obj->st, 1))
@@ -149,7 +149,7 @@ static char *MYOBJ_gethello(MYOBJ *obj)
     return CRYPTO_get_ex_data(&obj->ex_data, saved_idx);
 }
 
-static void MYOBJ_sethello2(MYOBJ *obj, char *cp)
+static void __cdecl MYOBJ_sethello2(MYOBJ *obj, char *cp)
 {
     MYOBJ_EX_DATA* ex_data = CRYPTO_get_ex_data(&obj->ex_data, saved_idx2);
     if (TEST_ptr(ex_data))
@@ -168,7 +168,7 @@ static char *MYOBJ_gethello2(MYOBJ *obj)
     return NULL;
 }
 
-static void MYOBJ_free(MYOBJ *obj)
+static void __cdecl MYOBJ_free(MYOBJ *obj)
 {
     CRYPTO_free_ex_data(CRYPTO_EX_INDEX_APP, obj, &obj->ex_data);
     OPENSSL_free(obj);
@@ -183,7 +183,7 @@ static MYOBJ *MYOBJ_dup(MYOBJ *in)
     return obj;
 }
 
-static int test_exdata(void)
+static int __cdecl test_exdata(void)
 {
     MYOBJ *t1, *t2, *t3;
     MYOBJ_EX_DATA *ex_data;

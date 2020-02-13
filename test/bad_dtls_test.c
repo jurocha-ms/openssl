@@ -60,7 +60,7 @@ static unsigned char key_block[104];
 
 static EVP_MD_CTX *handshake_md;
 
-static int do_PRF(const void *seed1, int seed1_len,
+static int __cdecl do_PRF(const void *seed1, int seed1_len,
                   const void *seed2, int seed2_len,
                   const void *seed3, int seed3_len,
                   unsigned char *out, int olen)
@@ -112,7 +112,7 @@ static SSL_SESSION *client_session(void)
 }
 
 /* Returns 1 for initial ClientHello, 2 for ClientHello with cookie */
-static int validate_client_hello(BIO *wbio)
+static int __cdecl validate_client_hello(BIO *wbio)
 {
     PACKET pkt, pkt2;
     long len;
@@ -189,7 +189,7 @@ static int validate_client_hello(BIO *wbio)
     return 1 + cookie_found;
 }
 
-static int send_hello_verify(BIO *rbio)
+static int __cdecl send_hello_verify(BIO *rbio)
 {
     static unsigned char hello_verify[] = {
         0x16, /* Handshake */
@@ -217,7 +217,7 @@ static int send_hello_verify(BIO *rbio)
     return 1;
 }
 
-static int send_server_hello(BIO *rbio)
+static int __cdecl send_server_hello(BIO *rbio)
 {
     static unsigned char server_hello[] = {
         0x16, /* Handshake */
@@ -268,7 +268,7 @@ static int send_server_hello(BIO *rbio)
 }
 
 /* Create header, HMAC, pad, encrypt and send a record */
-static int send_record(BIO *rbio, unsigned char type, uint64_t seqnr,
+static int __cdecl send_record(BIO *rbio, unsigned char type, uint64_t seqnr,
                        const void *msg, size_t len)
 {
     /* Note that the order of the record header fields on the wire,
@@ -342,7 +342,7 @@ static int send_record(BIO *rbio, unsigned char type, uint64_t seqnr,
     return 1;
 }
 
-static int send_finished(SSL *s, BIO *rbio)
+static int __cdecl send_finished(SSL *s, BIO *rbio)
 {
     static unsigned char finished_msg[DTLS1_HM_HEADER_LENGTH +
                                       TLS1_FINISH_MAC_LENGTH] = {
@@ -374,7 +374,7 @@ static int send_finished(SSL *s, BIO *rbio)
                        finished_msg, sizeof(finished_msg));
 }
 
-static int validate_ccs(BIO *wbio)
+static int __cdecl validate_ccs(BIO *wbio)
 {
     PACKET pkt;
     long len;
@@ -441,7 +441,7 @@ static struct {
     /* The last test should be NODROP, because a DROP wouldn't get tested. */
 };
 
-static int test_bad_dtls(void)
+static int __cdecl test_bad_dtls(void)
 {
     SSL_SESSION *sess = NULL;
     SSL_CTX *ctx = NULL;

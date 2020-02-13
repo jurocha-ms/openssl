@@ -498,27 +498,27 @@ void * __cdecl EVP_PKEY_CTX_get_app_data(EVP_PKEY_CTX *ctx)
 }
 
 void __cdecl EVP_PKEY_meth_set_init(EVP_PKEY_METHOD *pmeth,
-                            int (*init) (EVP_PKEY_CTX *ctx))
+                            int (__cdecl *init) (EVP_PKEY_CTX *ctx))
 {
     pmeth->init = init;
 }
 
 void __cdecl EVP_PKEY_meth_set_copy(EVP_PKEY_METHOD *pmeth,
-                            int (*copy) (EVP_PKEY_CTX *dst,
+                            int (__cdecl *copy) (EVP_PKEY_CTX *dst,
                                          EVP_PKEY_CTX *src))
 {
     pmeth->copy = copy;
 }
 
 void __cdecl EVP_PKEY_meth_set_cleanup(EVP_PKEY_METHOD *pmeth,
-                               void (*cleanup) (EVP_PKEY_CTX *ctx))
+                               void (__cdecl *cleanup) (EVP_PKEY_CTX *ctx))
 {
     pmeth->cleanup = cleanup;
 }
 
 void __cdecl EVP_PKEY_meth_set_paramgen(EVP_PKEY_METHOD *pmeth,
-                                int (*paramgen_init) (EVP_PKEY_CTX *ctx),
-                                int (*paramgen) (EVP_PKEY_CTX *ctx,
+                                int (__cdecl *paramgen_init) (EVP_PKEY_CTX *ctx),
+                                int (__cdecl *paramgen) (EVP_PKEY_CTX *ctx,
                                                  EVP_PKEY *pkey))
 {
     pmeth->paramgen_init = paramgen_init;
@@ -526,8 +526,8 @@ void __cdecl EVP_PKEY_meth_set_paramgen(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_keygen(EVP_PKEY_METHOD *pmeth,
-                              int (*keygen_init) (EVP_PKEY_CTX *ctx),
-                              int (*keygen) (EVP_PKEY_CTX *ctx,
+                              int (__cdecl *keygen_init) (EVP_PKEY_CTX *ctx),
+                              int (__cdecl *keygen) (EVP_PKEY_CTX *ctx,
                                              EVP_PKEY *pkey))
 {
     pmeth->keygen_init = keygen_init;
@@ -535,8 +535,8 @@ void __cdecl EVP_PKEY_meth_set_keygen(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_sign(EVP_PKEY_METHOD *pmeth,
-                            int (*sign_init) (EVP_PKEY_CTX *ctx),
-                            int (*sign) (EVP_PKEY_CTX *ctx,
+                            int (__cdecl *sign_init) (EVP_PKEY_CTX *ctx),
+                            int (__cdecl *sign) (EVP_PKEY_CTX *ctx,
                                          unsigned char *sig, size_t *siglen,
                                          const unsigned char *tbs,
                                          size_t tbslen))
@@ -546,8 +546,8 @@ void __cdecl EVP_PKEY_meth_set_sign(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_verify(EVP_PKEY_METHOD *pmeth,
-                              int (*verify_init) (EVP_PKEY_CTX *ctx),
-                              int (*verify) (EVP_PKEY_CTX *ctx,
+                              int (__cdecl *verify_init) (EVP_PKEY_CTX *ctx),
+                              int (__cdecl *verify) (EVP_PKEY_CTX *ctx,
                                              const unsigned char *sig,
                                              size_t siglen,
                                              const unsigned char *tbs,
@@ -558,9 +558,9 @@ void __cdecl EVP_PKEY_meth_set_verify(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_verify_recover(EVP_PKEY_METHOD *pmeth,
-                                      int (*verify_recover_init) (EVP_PKEY_CTX
+                                      int (__cdecl *verify_recover_init) (EVP_PKEY_CTX
                                                                   *ctx),
-                                      int (*verify_recover) (EVP_PKEY_CTX
+                                      int (__cdecl *verify_recover) (EVP_PKEY_CTX
                                                              *ctx,
                                                              unsigned char
                                                              *sig,
@@ -574,9 +574,9 @@ void __cdecl EVP_PKEY_meth_set_verify_recover(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_signctx(EVP_PKEY_METHOD *pmeth,
-                               int (*signctx_init) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl *signctx_init) (EVP_PKEY_CTX *ctx,
                                                     EVP_MD_CTX *mctx),
-                               int (*signctx) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl *signctx) (EVP_PKEY_CTX *ctx,
                                                unsigned char *sig,
                                                size_t *siglen,
                                                EVP_MD_CTX *mctx))
@@ -586,9 +586,9 @@ void __cdecl EVP_PKEY_meth_set_signctx(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_verifyctx(EVP_PKEY_METHOD *pmeth,
-                                 int (*verifyctx_init) (EVP_PKEY_CTX *ctx,
+                                 int (__cdecl *verifyctx_init) (EVP_PKEY_CTX *ctx,
                                                         EVP_MD_CTX *mctx),
-                                 int (*verifyctx) (EVP_PKEY_CTX *ctx,
+                                 int (__cdecl *verifyctx) (EVP_PKEY_CTX *ctx,
                                                    const unsigned char *sig,
                                                    int siglen,
                                                    EVP_MD_CTX *mctx))
@@ -598,8 +598,8 @@ void __cdecl EVP_PKEY_meth_set_verifyctx(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_encrypt(EVP_PKEY_METHOD *pmeth,
-                               int (*encrypt_init) (EVP_PKEY_CTX *ctx),
-                               int (*encryptfn) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl *encrypt_init) (EVP_PKEY_CTX *ctx),
+                               int (__cdecl *encryptfn) (EVP_PKEY_CTX *ctx,
                                                  unsigned char *out,
                                                  size_t *outlen,
                                                  const unsigned char *in,
@@ -610,8 +610,8 @@ void __cdecl EVP_PKEY_meth_set_encrypt(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_decrypt(EVP_PKEY_METHOD *pmeth,
-                               int (*decrypt_init) (EVP_PKEY_CTX *ctx),
-                               int (*decrypt) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl *decrypt_init) (EVP_PKEY_CTX *ctx),
+                               int (__cdecl *decrypt) (EVP_PKEY_CTX *ctx,
                                                unsigned char *out,
                                                size_t *outlen,
                                                const unsigned char *in,
@@ -622,8 +622,8 @@ void __cdecl EVP_PKEY_meth_set_decrypt(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_derive(EVP_PKEY_METHOD *pmeth,
-                              int (*derive_init) (EVP_PKEY_CTX *ctx),
-                              int (*derive) (EVP_PKEY_CTX *ctx,
+                              int (__cdecl *derive_init) (EVP_PKEY_CTX *ctx),
+                              int (__cdecl *derive) (EVP_PKEY_CTX *ctx,
                                              unsigned char *key,
                                              size_t *keylen))
 {
@@ -632,9 +632,9 @@ void __cdecl EVP_PKEY_meth_set_derive(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_ctrl(EVP_PKEY_METHOD *pmeth,
-                            int (*ctrl) (EVP_PKEY_CTX *ctx, int type, int p1,
+                            int (__cdecl *ctrl) (EVP_PKEY_CTX *ctx, int type, int p1,
                                          void *p2),
-                            int (*ctrl_str) (EVP_PKEY_CTX *ctx,
+                            int (__cdecl *ctrl_str) (EVP_PKEY_CTX *ctx,
                                              const char *type,
                                              const char *value))
 {
@@ -643,52 +643,52 @@ void __cdecl EVP_PKEY_meth_set_ctrl(EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_set_check(EVP_PKEY_METHOD *pmeth,
-                             int (*check) (EVP_PKEY *pkey))
+                             int (__cdecl *check) (EVP_PKEY *pkey))
 {
     pmeth->check = check;
 }
 
 void __cdecl EVP_PKEY_meth_set_public_check(EVP_PKEY_METHOD *pmeth,
-                                    int (*check) (EVP_PKEY *pkey))
+                                    int (__cdecl *check) (EVP_PKEY *pkey))
 {
     pmeth->public_check = check;
 }
 
 void __cdecl EVP_PKEY_meth_set_param_check(EVP_PKEY_METHOD *pmeth,
-                                   int (*check) (EVP_PKEY *pkey))
+                                   int (__cdecl *check) (EVP_PKEY *pkey))
 {
     pmeth->param_check = check;
 }
 
 void __cdecl EVP_PKEY_meth_set_digest_custom(EVP_PKEY_METHOD *pmeth,
-                                     int (*digest_custom) (EVP_PKEY_CTX *ctx,
+                                     int (__cdecl *digest_custom) (EVP_PKEY_CTX *ctx,
                                                            EVP_MD_CTX *mctx))
 {
     pmeth->digest_custom = digest_custom;
 }
 
 void __cdecl EVP_PKEY_meth_get_init(const EVP_PKEY_METHOD *pmeth,
-                            int (**pinit) (EVP_PKEY_CTX *ctx))
+                            int (__cdecl **pinit) (EVP_PKEY_CTX *ctx))
 {
     *pinit = pmeth->init;
 }
 
 void __cdecl EVP_PKEY_meth_get_copy(const EVP_PKEY_METHOD *pmeth,
-                            int (**pcopy) (EVP_PKEY_CTX *dst,
+                            int (__cdecl **pcopy) (EVP_PKEY_CTX *dst,
                                            EVP_PKEY_CTX *src))
 {
     *pcopy = pmeth->copy;
 }
 
 void __cdecl EVP_PKEY_meth_get_cleanup(const EVP_PKEY_METHOD *pmeth,
-                               void (**pcleanup) (EVP_PKEY_CTX *ctx))
+                               void (__cdecl **pcleanup) (EVP_PKEY_CTX *ctx))
 {
     *pcleanup = pmeth->cleanup;
 }
 
 void __cdecl EVP_PKEY_meth_get_paramgen(const EVP_PKEY_METHOD *pmeth,
-                                int (**pparamgen_init) (EVP_PKEY_CTX *ctx),
-                                int (**pparamgen) (EVP_PKEY_CTX *ctx,
+                                int (__cdecl **pparamgen_init) (EVP_PKEY_CTX *ctx),
+                                int (__cdecl **pparamgen) (EVP_PKEY_CTX *ctx,
                                                    EVP_PKEY *pkey))
 {
     if (pparamgen_init)
@@ -698,8 +698,8 @@ void __cdecl EVP_PKEY_meth_get_paramgen(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_keygen(const EVP_PKEY_METHOD *pmeth,
-                              int (**pkeygen_init) (EVP_PKEY_CTX *ctx),
-                              int (**pkeygen) (EVP_PKEY_CTX *ctx,
+                              int (__cdecl **pkeygen_init) (EVP_PKEY_CTX *ctx),
+                              int (__cdecl **pkeygen) (EVP_PKEY_CTX *ctx,
                                                EVP_PKEY *pkey))
 {
     if (pkeygen_init)
@@ -709,8 +709,8 @@ void __cdecl EVP_PKEY_meth_get_keygen(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_sign(const EVP_PKEY_METHOD *pmeth,
-                            int (**psign_init) (EVP_PKEY_CTX *ctx),
-                            int (**psign) (EVP_PKEY_CTX *ctx,
+                            int (__cdecl **psign_init) (EVP_PKEY_CTX *ctx),
+                            int (__cdecl **psign) (EVP_PKEY_CTX *ctx,
                                            unsigned char *sig, size_t *siglen,
                                            const unsigned char *tbs,
                                            size_t tbslen))
@@ -722,8 +722,8 @@ void __cdecl EVP_PKEY_meth_get_sign(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_verify(const EVP_PKEY_METHOD *pmeth,
-                              int (**pverify_init) (EVP_PKEY_CTX *ctx),
-                              int (**pverify) (EVP_PKEY_CTX *ctx,
+                              int (__cdecl **pverify_init) (EVP_PKEY_CTX *ctx),
+                              int (__cdecl **pverify) (EVP_PKEY_CTX *ctx,
                                                const unsigned char *sig,
                                                size_t siglen,
                                                const unsigned char *tbs,
@@ -736,9 +736,9 @@ void __cdecl EVP_PKEY_meth_get_verify(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_verify_recover(const EVP_PKEY_METHOD *pmeth,
-                                      int (**pverify_recover_init) (EVP_PKEY_CTX
+                                      int (__cdecl **pverify_recover_init) (EVP_PKEY_CTX
                                                                     *ctx),
-                                      int (**pverify_recover) (EVP_PKEY_CTX
+                                      int (__cdecl **pverify_recover) (EVP_PKEY_CTX
                                                                *ctx,
                                                                unsigned char
                                                                *sig,
@@ -754,9 +754,9 @@ void __cdecl EVP_PKEY_meth_get_verify_recover(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_signctx(const EVP_PKEY_METHOD *pmeth,
-                               int (**psignctx_init) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl **psignctx_init) (EVP_PKEY_CTX *ctx,
                                                       EVP_MD_CTX *mctx),
-                               int (**psignctx) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl **psignctx) (EVP_PKEY_CTX *ctx,
                                                  unsigned char *sig,
                                                  size_t *siglen,
                                                  EVP_MD_CTX *mctx))
@@ -768,9 +768,9 @@ void __cdecl EVP_PKEY_meth_get_signctx(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_verifyctx(const EVP_PKEY_METHOD *pmeth,
-                                 int (**pverifyctx_init) (EVP_PKEY_CTX *ctx,
+                                 int (__cdecl **pverifyctx_init) (EVP_PKEY_CTX *ctx,
                                                           EVP_MD_CTX *mctx),
-                                 int (**pverifyctx) (EVP_PKEY_CTX *ctx,
+                                 int (__cdecl **pverifyctx) (EVP_PKEY_CTX *ctx,
                                                      const unsigned char *sig,
                                                      int siglen,
                                                      EVP_MD_CTX *mctx))
@@ -782,8 +782,8 @@ void __cdecl EVP_PKEY_meth_get_verifyctx(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_encrypt(const EVP_PKEY_METHOD *pmeth,
-                               int (**pencrypt_init) (EVP_PKEY_CTX *ctx),
-                               int (**pencryptfn) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl **pencrypt_init) (EVP_PKEY_CTX *ctx),
+                               int (__cdecl **pencryptfn) (EVP_PKEY_CTX *ctx,
                                                    unsigned char *out,
                                                    size_t *outlen,
                                                    const unsigned char *in,
@@ -796,8 +796,8 @@ void __cdecl EVP_PKEY_meth_get_encrypt(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_decrypt(const EVP_PKEY_METHOD *pmeth,
-                               int (**pdecrypt_init) (EVP_PKEY_CTX *ctx),
-                               int (**pdecrypt) (EVP_PKEY_CTX *ctx,
+                               int (__cdecl **pdecrypt_init) (EVP_PKEY_CTX *ctx),
+                               int (__cdecl **pdecrypt) (EVP_PKEY_CTX *ctx,
                                                  unsigned char *out,
                                                  size_t *outlen,
                                                  const unsigned char *in,
@@ -810,8 +810,8 @@ void __cdecl EVP_PKEY_meth_get_decrypt(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_derive(const EVP_PKEY_METHOD *pmeth,
-                              int (**pderive_init) (EVP_PKEY_CTX *ctx),
-                              int (**pderive) (EVP_PKEY_CTX *ctx,
+                              int (__cdecl **pderive_init) (EVP_PKEY_CTX *ctx),
+                              int (__cdecl **pderive) (EVP_PKEY_CTX *ctx,
                                                unsigned char *key,
                                                size_t *keylen))
 {
@@ -822,9 +822,9 @@ void __cdecl EVP_PKEY_meth_get_derive(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_ctrl(const EVP_PKEY_METHOD *pmeth,
-                            int (**pctrl) (EVP_PKEY_CTX *ctx, int type, int p1,
+                            int (__cdecl **pctrl) (EVP_PKEY_CTX *ctx, int type, int p1,
                                            void *p2),
-                            int (**pctrl_str) (EVP_PKEY_CTX *ctx,
+                            int (__cdecl **pctrl_str) (EVP_PKEY_CTX *ctx,
                                                const char *type,
                                                const char *value))
 {
@@ -835,28 +835,28 @@ void __cdecl EVP_PKEY_meth_get_ctrl(const EVP_PKEY_METHOD *pmeth,
 }
 
 void __cdecl EVP_PKEY_meth_get_check(const EVP_PKEY_METHOD *pmeth,
-                             int (**pcheck) (EVP_PKEY *pkey))
+                             int (__cdecl **pcheck) (EVP_PKEY *pkey))
 {
     if (pcheck != NULL)
         *pcheck = pmeth->check;
 }
 
 void __cdecl EVP_PKEY_meth_get_public_check(const EVP_PKEY_METHOD *pmeth,
-                                    int (**pcheck) (EVP_PKEY *pkey))
+                                    int (__cdecl **pcheck) (EVP_PKEY *pkey))
 {
     if (pcheck != NULL)
         *pcheck = pmeth->public_check;
 }
 
 void __cdecl EVP_PKEY_meth_get_param_check(const EVP_PKEY_METHOD *pmeth,
-                                   int (**pcheck) (EVP_PKEY *pkey))
+                                   int (__cdecl **pcheck) (EVP_PKEY *pkey))
 {
     if (pcheck != NULL)
         *pcheck = pmeth->param_check;
 }
 
 void __cdecl EVP_PKEY_meth_get_digest_custom(EVP_PKEY_METHOD *pmeth,
-                                     int (**pdigest_custom) (EVP_PKEY_CTX *ctx,
+                                     int (__cdecl **pdigest_custom) (EVP_PKEY_CTX *ctx,
                                                              EVP_MD_CTX *mctx))
 {
     if (pdigest_custom != NULL)

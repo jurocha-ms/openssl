@@ -18,7 +18,7 @@
 
 static SSL_CTX *ctx;
 
-static int test_func(void)
+static int __cdecl test_func(void)
 {
     if (!TEST_int_eq(SSL_CTX_get_min_proto_version(ctx), TLS1_2_VERSION)
         && !TEST_int_eq(SSL_CTX_get_max_proto_version(ctx), TLS1_2_VERSION)) {

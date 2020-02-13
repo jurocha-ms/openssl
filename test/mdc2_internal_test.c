@@ -44,7 +44,7 @@ static TESTDATA tests[] = {
  *
  ***/
 
-static int test_mdc2(int idx)
+static int __cdecl test_mdc2(int idx)
 {
     unsigned char md[MDC2_DIGEST_LENGTH];
     MDC2_CTX c;
