@@ -107,7 +107,7 @@ static int __cdecl file_fill_pem_pass_data(struct pem_pass_data *pass_data,
 }
 
 /* This is used anywhere a pem_password_cb is needed */
-static int __cdecl file_get_pem_pass(char *buf, int num, int w, void *data)
+static int file_get_pem_pass(char *buf, int num, int w, void *data)
 {
     struct pem_pass_data *pass_data = data;
     char *pass = file_get_pass(pass_data->ui_method, buf, num,

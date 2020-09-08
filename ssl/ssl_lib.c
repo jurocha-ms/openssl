@@ -1440,7 +1440,7 @@ int __cdecl SSL_get_verify_depth(const SSL *s)
     return X509_VERIFY_PARAM_get_depth(s->param);
 }
 
-int (__cdecl *SSL_get_verify_callback(const SSL *s)) (int, X509_STORE_CTX *) {
+int (*SSL_get_verify_callback(const SSL *s)) (int, X509_STORE_CTX *) {
     return s->verify_callback;
 }
 
@@ -1454,12 +1454,12 @@ int __cdecl SSL_CTX_get_verify_depth(const SSL_CTX *ctx)
     return X509_VERIFY_PARAM_get_depth(ctx->param);
 }
 
-int (__cdecl *SSL_CTX_get_verify_callback(const SSL_CTX *ctx)) (int, X509_STORE_CTX *) {
+int (*SSL_CTX_get_verify_callback(const SSL_CTX *ctx)) (int, X509_STORE_CTX *) {
     return ctx->default_verify_callback;
 }
 
 void __cdecl SSL_set_verify(SSL *s, int mode,
-                    int (__cdecl *callback) (int ok, X509_STORE_CTX *ctx))
+                    int (*callback) (int ok, X509_STORE_CTX *ctx))
 {
     s->verify_mode = mode;
     if (callback != NULL)
@@ -3218,7 +3218,7 @@ void __cdecl SSL_CTX_set_cert_verify_callback(SSL_CTX *ctx,
 }
 
 void __cdecl SSL_CTX_set_verify(SSL_CTX *ctx, int mode,
-                        int (__cdecl *cb) (int, X509_STORE_CTX *))
+                        int (*cb) (int, X509_STORE_CTX *))
 {
     ctx->verify_mode = mode;
     ctx->default_verify_callback = cb;

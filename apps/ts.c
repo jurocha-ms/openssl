@@ -75,7 +75,7 @@ static TS_VERIFY_CTX *create_verify_ctx(const char *data, const char *digest,
                                         X509_VERIFY_PARAM *vpm);
 static X509_STORE *create_cert_store(const char *CApath, const char *CAfile,
                                      X509_VERIFY_PARAM *vpm);
-static int __cdecl verify_cb(int ok, X509_STORE_CTX *ctx);
+static int verify_cb(int ok, X509_STORE_CTX *ctx);
 
 typedef enum OPTION_choice {
     OPT_ERR = -1, OPT_EOF = 0, OPT_HELP,
@@ -979,7 +979,7 @@ static X509_STORE *create_cert_store(const char *CApath, const char *CAfile,
     return NULL;
 }
 
-static int __cdecl verify_cb(int ok, X509_STORE_CTX *ctx)
+static int verify_cb(int ok, X509_STORE_CTX *ctx)
 {
     return ok;
 }

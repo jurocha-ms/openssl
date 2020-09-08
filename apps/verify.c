@@ -18,7 +18,7 @@
 #include <openssl/x509v3.h>
 #include <openssl/pem.h>
 
-static int __cdecl cb(int ok, X509_STORE_CTX *ctx);
+static int cb(int ok, X509_STORE_CTX *ctx);
 static int check(X509_STORE *ctx, const char *file,
                  STACK_OF(X509) *uchain, STACK_OF(X509) *tchain,
                  STACK_OF(X509_CRL) *crls, int show_chain);
@@ -269,7 +269,7 @@ static int check(X509_STORE *ctx, const char *file,
     return ret;
 }
 
-static int __cdecl cb(int ok, X509_STORE_CTX *ctx)
+static int cb(int ok, X509_STORE_CTX *ctx)
 {
     int cert_error = X509_STORE_CTX_get_error(ctx);
     X509 *current_cert = X509_STORE_CTX_get_current_cert(ctx);

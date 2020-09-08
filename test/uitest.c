@@ -20,7 +20,7 @@ char *default_config_file = NULL;
 #include <openssl/ui.h>
 
 /* Old style PEM password callback */
-static int __cdecl test_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
+static int test_pem_password_cb(char *buf, int size, int rwflag, void *userdata)
 {
     OPENSSL_strlcpy(buf, (char *)userdata, (size_t)size);
     return strlen(buf);

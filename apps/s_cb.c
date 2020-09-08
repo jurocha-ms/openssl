@@ -40,7 +40,7 @@ static const char *lookup(int val, const STRINT_PAIR* list, const char* def)
     return def;
 }
 
-int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx)
+int verify_callback(int ok, X509_STORE_CTX *ctx)
 {
     X509 *err_cert;
     int err, depth;

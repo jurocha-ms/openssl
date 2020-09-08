@@ -875,7 +875,7 @@ struct ssl_ctx_st {
     size_t sid_ctx_length;
     unsigned char sid_ctx[SSL_MAX_SID_CTX_LENGTH];
     /* called 'verify_callback' in the SSL */
-    int (__cdecl *default_verify_callback) (int ok, X509_STORE_CTX *ctx);
+    int (*default_verify_callback) (int ok, X509_STORE_CTX *ctx);
 
     /* Default generate session ID callback. */
     GEN_SESSION_CB generate_session_id;
@@ -1206,7 +1206,7 @@ struct ssl_st {
      */
     uint32_t verify_mode;
     /* fail if callback returns 0 */
-    int (__cdecl *verify_callback) (int ok, X509_STORE_CTX *ctx);
+    int (*verify_callback) (int ok, X509_STORE_CTX *ctx);
     /* optional informational callback */
     void (__cdecl *info_callback) (const SSL *ssl, int type, int val);
     /* error bytes to be written */

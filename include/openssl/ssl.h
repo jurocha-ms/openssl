@@ -291,7 +291,7 @@ typedef int (__cdecl *SSL_custom_ext_parse_cb_ex)(SSL *s, unsigned int ext_type,
                                           int *al, void *parse_arg);
 
 /* Typedef for verification callback */
-typedef int (__cdecl *SSL_verify_cb)(int preverify_ok, X509_STORE_CTX *x509_ctx);
+typedef int (*SSL_verify_cb)(int preverify_ok, X509_STORE_CTX *x509_ctx);
 
 /*
  * Some values are reserved until OpenSSL 1.2.0 because they were previously

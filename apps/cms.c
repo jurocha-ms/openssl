@@ -24,7 +24,7 @@
 # include <openssl/cms.h>
 
 static int save_certs(char *signerfile, STACK_OF(X509) *signers);
-static int __cdecl cms_cb(int ok, X509_STORE_CTX *ctx);
+static int cms_cb(int ok, X509_STORE_CTX *ctx);
 static void receipt_request_print(CMS_ContentInfo *cms);
 static CMS_ReceiptRequest *make_receipt_request(STACK_OF(OPENSSL_STRING)
                                                 *rr_to, int rr_allorfirst, STACK_OF(OPENSSL_STRING)
@@ -1129,7 +1129,7 @@ static int save_certs(char *signerfile, STACK_OF(X509) *signers)
 
 /* Minimal callback just to output policy info (if any) */
 
-static int __cdecl cms_cb(int ok, X509_STORE_CTX *ctx)
+static int cms_cb(int ok, X509_STORE_CTX *ctx)
 {
     int error;
 

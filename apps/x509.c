@@ -32,7 +32,7 @@
 #define POSTFIX ".srl"
 #define DEF_DAYS        30
 
-static int __cdecl callb(int ok, X509_STORE_CTX *ctx);
+static int callb(int ok, X509_STORE_CTX *ctx);
 static int sign(X509 *x, EVP_PKEY *pkey, int days, int clrext,
                 const EVP_MD *digest, CONF *conf, const char *section,
                 int preserve_dates);
@@ -1021,7 +1021,7 @@ static int x509_certify(X509_STORE *ctx, const char *CAfile, const EVP_MD *diges
     return ret;
 }
 
-static int __cdecl callb(int ok, X509_STORE_CTX *ctx)
+static int callb(int ok, X509_STORE_CTX *ctx)
 {
     int err;
     X509 *err_cert;

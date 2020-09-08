@@ -19,7 +19,7 @@ int do_server(int *accept_sock, const char *host, const char *port,
               int family, int type, int protocol, do_server_cb cb,
               unsigned char *context, int naccept, BIO *bio_s_out);
 
-int __cdecl verify_callback(int ok, X509_STORE_CTX *ctx);
+int verify_callback(int ok, X509_STORE_CTX *ctx);
 
 int set_cert_stuff(SSL_CTX *ctx, char *cert_file, char *key_file);
 int set_cert_key_stuff(SSL_CTX *ctx, X509 *cert, EVP_PKEY *key,

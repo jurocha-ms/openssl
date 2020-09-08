@@ -20,7 +20,7 @@
 #include <openssl/x509v3.h>
 
 static int save_certs(char *signerfile, STACK_OF(X509) *signers);
-static int __cdecl smime_cb(int ok, X509_STORE_CTX *ctx);
+static int smime_cb(int ok, X509_STORE_CTX *ctx);
 
 #define SMIME_OP        0x10
 #define SMIME_IP        0x20
@@ -631,7 +631,7 @@ static int save_certs(char *signerfile, STACK_OF(X509) *signers)
 
 /* Minimal callback just to output policy info (if any) */
 
-static int __cdecl smime_cb(int ok, X509_STORE_CTX *ctx)
+static int smime_cb(int ok, X509_STORE_CTX *ctx)
 {
     int error;
 

@@ -206,7 +206,7 @@ struct x509_store_ctx_st {      /* X509_STORE_CTX */
     /* called to verify a certificate */
     int (__cdecl *verify) (X509_STORE_CTX *ctx);
     /* error callback */
-    int (__cdecl *verify_cb) (int ok, X509_STORE_CTX *ctx);
+    int (*verify_cb) (int ok, X509_STORE_CTX *ctx);
     /* get issuers cert from ctx */
     int (__cdecl *get_issuer) (X509 **issuer, X509_STORE_CTX *ctx, X509 *x);
     /* check issued */
