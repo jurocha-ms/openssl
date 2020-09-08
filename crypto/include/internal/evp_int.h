@@ -140,7 +140,7 @@ struct evp_cipher_st {
     int (__cdecl *init) (EVP_CIPHER_CTX *ctx, const unsigned char *key,
                  const unsigned char *iv, int enc);
     /* encrypt/decrypt data */
-    int (__cdecl *do_cipher) (EVP_CIPHER_CTX *ctx, unsigned char *out,
+    int (*do_cipher) (EVP_CIPHER_CTX *ctx, unsigned char *out,
                       const unsigned char *in, size_t inl);
     /* cleanup ctx */
     int (__cdecl *cleanup) (EVP_CIPHER_CTX *);
@@ -171,7 +171,7 @@ struct evp_cipher_st {
         for (i=0; i <= inl; i+=bl)
 
 #define BLOCK_CIPHER_func_ecb(cname, cprefix, kstruct, ksched) \
-static int __cdecl cname##_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
+static int cname##_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
 {\
         BLOCK_CIPHER_ecb_loop() \
             cprefix##_ecb_encrypt(in + i, out + i, &EVP_C_DATA(kstruct,ctx)->ksched, EVP_CIPHER_CTX_encrypting(ctx)); \
@@ -181,7 +181,7 @@ static int __cdecl cname##_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, c
 #define EVP_MAXCHUNK ((size_t)1<<(sizeof(long)*8-2))
 
 #define BLOCK_CIPHER_func_ofb(cname, cprefix, cbits, kstruct, ksched) \
-    static int __cdecl cname##_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
+    static int cname##_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
 {\
         while(inl>=EVP_MAXCHUNK) {\
             int num = EVP_CIPHER_CTX_num(ctx);\
@@ -200,7 +200,7 @@ static int __cdecl cname##_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, c
 }
 
 #define BLOCK_CIPHER_func_cbc(cname, cprefix, kstruct, ksched) \
-static int __cdecl cname##_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
+static int cname##_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
 {\
         while(inl>=EVP_MAXCHUNK) \
             {\
@@ -215,7 +215,7 @@ static int __cdecl cname##_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, c
 }
 
 #define BLOCK_CIPHER_func_cfb(cname, cprefix, cbits, kstruct, ksched)  \
-static int __cdecl cname##_cfb##cbits##_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
+static int cname##_cfb##cbits##_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out, const unsigned char *in, size_t inl) \
 {\
     size_t chunk = EVP_MAXCHUNK;\
     if (cbits == 1)  chunk >>= 3;\

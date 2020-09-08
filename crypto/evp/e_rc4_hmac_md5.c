@@ -62,7 +62,7 @@ static int __cdecl rc4_hmac_md5_init_key(EVP_CIPHER_CTX *ctx,
 #  define md5_off 0
 # endif
 
-static int __cdecl rc4_hmac_md5_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int rc4_hmac_md5_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     EVP_RC4_HMAC_MD5 *key = data(ctx);

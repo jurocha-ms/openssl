@@ -54,7 +54,7 @@ static int __cdecl chacha_init_key(EVP_CIPHER_CTX *ctx,
     return 1;
 }
 
-static int __cdecl chacha_cipher(EVP_CIPHER_CTX * ctx, unsigned char *out,
+static int chacha_cipher(EVP_CIPHER_CTX * ctx, unsigned char *out,
                          const unsigned char *inp, size_t len)
 {
     EVP_CHACHA_KEY *key = data(ctx);
@@ -362,7 +362,7 @@ static int chacha20_poly1305_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 static const unsigned char zero[CHACHA_BLK_SIZE] = { 0 };
 #  endif
 
-static int __cdecl chacha20_poly1305_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int chacha20_poly1305_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                     const unsigned char *in, size_t len)
 {
     EVP_CHACHA_AEAD_CTX *actx = aead_data(ctx);

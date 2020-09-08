@@ -52,7 +52,7 @@ static int __cdecl des_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr);
  * IMPLEMENT_BLOCK_CIPHER
  */
 
-static int __cdecl des_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int des_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t inl)
 {
     BLOCK_CIPHER_ecb_loop()
@@ -62,7 +62,7 @@ static int __cdecl des_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int __cdecl des_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int des_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t inl)
 {
     while (inl >= EVP_MAXCHUNK) {
@@ -85,7 +85,7 @@ static int __cdecl des_ofb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int __cdecl des_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int des_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t inl)
 {
     EVP_DES_KEY *dat = (EVP_DES_KEY *) EVP_CIPHER_CTX_get_cipher_data(ctx);
@@ -112,7 +112,7 @@ static int __cdecl des_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int __cdecl des_cfb64_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int des_cfb64_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                             const unsigned char *in, size_t inl)
 {
     while (inl >= EVP_MAXCHUNK) {
@@ -141,7 +141,7 @@ static int __cdecl des_cfb64_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
  * Although we have a CFB-r implementation for DES, it doesn't pack the right
  * way, so wrap it here
  */
-static int __cdecl des_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int des_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                            const unsigned char *in, size_t inl)
 {
     size_t n, chunk = EVP_MAXCHUNK / 8;
@@ -170,7 +170,7 @@ static int __cdecl des_cfb1_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return 1;
 }
 
-static int __cdecl des_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int des_cfb8_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                            const unsigned char *in, size_t inl)
 {
     while (inl >= EVP_MAXCHUNK) {

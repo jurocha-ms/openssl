@@ -195,7 +195,7 @@ int __cdecl EVP_CIPHER_meth_set_init(EVP_CIPHER *cipher,
                                           const unsigned char *iv,
                                           int enc));
 int __cdecl EVP_CIPHER_meth_set_do_cipher(EVP_CIPHER *cipher,
-                                  int (__cdecl *do_cipher) (EVP_CIPHER_CTX *ctx,
+                                  int (*do_cipher) (EVP_CIPHER_CTX *ctx,
                                                     unsigned char *out,
                                                     const unsigned char *in,
                                                     size_t inl));
@@ -215,7 +215,7 @@ int (__cdecl *EVP_CIPHER_meth_get_init(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX
                                                           const unsigned char *key,
                                                           const unsigned char *iv,
                                                           int enc);
-int (__cdecl *EVP_CIPHER_meth_get_do_cipher(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *ctx,
+int (*EVP_CIPHER_meth_get_do_cipher(const EVP_CIPHER *cipher))(EVP_CIPHER_CTX *ctx,
                                                                unsigned char *out,
                                                                const unsigned char *in,
                                                                size_t inl);
@@ -521,7 +521,7 @@ void BIO_set_md(BIO *, const EVP_MD *md);
 # define BIO_get_cipher_ctx(b,c_pp) BIO_ctrl(b,BIO_C_GET_CIPHER_CTX,0, \
                                              (char *)(c_pp))
 
-/*__owur*/ int __cdecl EVP_Cipher(EVP_CIPHER_CTX *c,
+/*__owur*/ int EVP_Cipher(EVP_CIPHER_CTX *c,
                           unsigned char *out,
                           const unsigned char *in, unsigned int inl);
 

@@ -168,7 +168,7 @@ static const EVP_CIPHER aria_##keylen##_##mode = { \
 const EVP_CIPHER * __cdecl EVP_aria_##keylen##_##mode(void) \
 { return &aria_##keylen##_##mode; }
 
-static int __cdecl aria_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int aria_ctr_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                                const unsigned char *in, size_t len)
 {
     unsigned int num = EVP_CIPHER_CTX_num(ctx);
@@ -390,7 +390,7 @@ static int __cdecl aria_gcm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr
     }
 }
 
-static int __cdecl aria_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int aria_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len)
 {
     EVP_ARIA_GCM_CTX *gctx = EVP_C_DATA(EVP_ARIA_GCM_CTX,ctx);
@@ -446,7 +446,7 @@ static int __cdecl aria_gcm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     return rv;
 }
 
-static int __cdecl aria_gcm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int aria_gcm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t len)
 {
     EVP_ARIA_GCM_CTX *gctx = EVP_C_DATA(EVP_ARIA_GCM_CTX,ctx);
@@ -628,7 +628,7 @@ static int __cdecl aria_ccm_ctrl(EVP_CIPHER_CTX *c, int type, int arg, void *ptr
     }
 }
 
-static int __cdecl aria_ccm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int aria_ccm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                               const unsigned char *in, size_t len)
 {
     EVP_ARIA_CCM_CTX *cctx = EVP_C_DATA(EVP_ARIA_CCM_CTX,ctx);
@@ -675,7 +675,7 @@ static int __cdecl aria_ccm_tls_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
     }
 }
 
-static int __cdecl aria_ccm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int aria_ccm_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                           const unsigned char *in, size_t len)
 {
     EVP_ARIA_CCM_CTX *cctx = EVP_C_DATA(EVP_ARIA_CCM_CTX,ctx);

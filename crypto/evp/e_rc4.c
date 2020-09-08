@@ -26,7 +26,7 @@ typedef struct {
 
 static int __cdecl rc4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
                         const unsigned char *iv, int enc);
-static int __cdecl rc4_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int rc4_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                       const unsigned char *in, size_t inl);
 static const EVP_CIPHER r4_cipher = {
     NID_rc4,
@@ -73,7 +73,7 @@ static int __cdecl rc4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
     return 1;
 }
 
-static int __cdecl rc4_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
+static int rc4_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
                       const unsigned char *in, size_t inl)
 {
     RC4(&data(ctx)->ks, inl, in, out);
